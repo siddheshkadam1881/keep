@@ -1,0 +1,11 @@
+<div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center" style=" overflow:hidden;">
+      <div class="allnotes"  (click)="openDialog()"  mat-card fxFlex="400px"  *ngFor="let data of dashDataFirst.slice().reverse()">
+
+          <div class="writeNotes1">
+
+            <p>{{data.title}}</p>
+            <p>{{data.note}}</p>
+
+          </div>
+        </div>
+ </div>

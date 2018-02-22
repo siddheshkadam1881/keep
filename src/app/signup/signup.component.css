@@ -1,0 +1,39 @@
+.form
+{
+background-color: #F5F5F5;
+font-size: 20px;
+border: solid 0.1em silver;
+fxFlexAlign:center;
+}
+
+.form1
+{
+  font-size: 30px;
+  fxFlexAlign:center;
+}
+
+.full_width1
+{
+ padding-top:40px;
+ padding-left: 330px;
+ width: 60%;
+}
+.full_width
+{
+ padding-top:10px;
+ padding-left: 330px;
+ width: 60%;
+}
+.button
+{
+  size:20%;
+  display: block;
+  width: 30px;
+  height: 4em;
+  font-size:20px;
+  padding-left: 330px;
+
+}
+.title-center {
+  margin: 0 auto;
+}
