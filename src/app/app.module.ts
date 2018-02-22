@@ -99,7 +99,7 @@ export function provideConfig() {
     SocialLoginModule.initialize(config)
   ],
   entryComponents: [
-     
+
      CommonComponent
    ],
 

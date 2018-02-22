@@ -14,14 +14,14 @@ id:string;
   constructor(private route: ActivatedRoute, private router: Router,public dialogRef: MatDialogRef<CommonComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,private commonService:BackendApiService)
     {
-       this.id = route.snapshot.params['id']
+       //this.id = route.snapshot.params['id']
      }
 
     ngOnInit():void {
 
-              this.commonService.getData('readTodos/'+this.id).subscribe(response => {
+              this.commonService.getData('readTodos').subscribe(response => {
                 if (response) {
-                  console.log(response);
+                  //console.log(response.data);
                   // items.slice().reverse();
                    this.dashDataFirst = response.reverse();
                   //console.log(this.dashDataFirst.reverse());

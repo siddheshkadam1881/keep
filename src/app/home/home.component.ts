@@ -107,17 +107,15 @@ export class HomeComponent  implements OnInit {
  this.router.navigate(['/signin']);
 }
 
-openDialog(): void {
+openDialog(data): void {
   let dialogRef = this.dialog.open(CommonComponent, {
     width: '400px',
-    height:'400px'
-
-    //data: { name: this.name, animal: this.animal }
+    height:'400px',
+    data: data
   });
 
   dialogRef.afterClosed().subscribe(result => {
     console.log('The dialog was closed');
-  //  this.animal = result;
   });
 }
 
