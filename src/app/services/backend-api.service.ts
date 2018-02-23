@@ -13,7 +13,7 @@ import { Response} from '@angular/http';
 //import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 @Injectable()
 export class BackendApiService {
-
+private Todo = new Subject<any>();
 base_url="http://localhost:3000/";
 result:any;
 public urlpath;
@@ -27,6 +27,7 @@ public urlpath;
   return this.http.post(this.urlpath,model)
   .map(res=>res.json());
   //this.toastr.success('You are awesome!', 'Success!', 'timeout: 3000');
+
 
   }
 
@@ -73,7 +74,14 @@ public urlpath;
      return this.http.put(this.urlpath,data)
      .map(res=>res.json());
   }
-
-
+  deleteData(path)
+  {
+    console.log("path", path);
+    let token = localStorage.getItem("token");
+    const headers = new Headers();
+    this.urlpath= this.base_url.concat(path);
+    return this.http.delete(this.urlpath)
+    .map(res=>res.json());
+  }
 
 }

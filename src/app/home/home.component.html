@@ -1,9 +1,9 @@
 <div class="example-container" style="background-color: Gray;" [class.example-is-mobile]="mobileQuery.matches" >
   <mat-toolbar color="primary" class="example-toolbar">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="example-app-name">Google keep</h1>
+    <button  matTooltip="main menu" matTooltipShowDelay="100" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1 matTooltip="Google keep" matTooltipShowDelay="100" class="example-app-name">Google keep</h1>
     <div  style="margin-left: 1030px">
- <button mat-icon-button (click)="logout()">Logout</button>
+ <button matTooltip="logout" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button>
 </div>
   </mat-toolbar>
 
@@ -42,31 +42,33 @@
           </mat-form-field>
         </div>
         <div style="margin-left: 420px">
-        <button mat-button mat-raised-button type="submit" (click)="!toggle();submitNote()"  >Done</button>
+        <button matTooltip="Done" matTooltipShowDelay="100" mat-button mat-raised-button type="submit" (click)="!toggle();submitNote()"  >Done</button>
         </div>
         </div>
 
       <!-- </form> -->
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center" style=" overflow:hidden;">
-      <div class="allnotes"  (click)="openDialog(data)"  mat-card fxFlex="400px"  *ngFor="let data of dashDataFirst.slice().reverse()">
+      <div class="allnotes"   mat-card fxFlex="400px"  *ngFor="let data of dashDataFirst.slice().reverse()">
 
-          <div class="writeNotes1">
+          <div class="writeNotes1" >
+              <div (click)="openDialog(data)">
+                  <p>{{data.title}}</p>
+                  <p>{{data.note}}</p>
+              </div>
+              <div class="imageNotes">
+                  <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg">
+                  <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
+                  <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px"src="assets/icon/color change.svg">
+                  <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px"src="assets/icon/image  add.svg">
+                  <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100"  style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
 
-            <p>{{data.title}}</p>
-            <p>{{data.note}}</p>
-            <div class="imageNotes" >
-                  <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="1000" style="width: 25px;margin-left: 12px" src="assets/icon/remind me.svg">
-                  <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="1000" style="width: 25px;margin-left: 12px" src="assets/icon/collabrator.svg">
-                  <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="1000"  style="width: 25px;margin-left: 12px"src="assets/icon/color change.svg">
-                  <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="1000" style="width: 25px;margin-left: 12px"src="assets/icon/image  add.svg">
-                  <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="1000"  style="width: 25px;margin-left: 12px"src="assets/icon/archive.svg">
-                  <img class="img-responsive" matTooltip="more" matTooltipShowDelay="1000" style="width: 25px;margin-left: 12px" src="assets/icon/more.svg">
-
+                  <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
+                  <mat-menu #menu="matMenu" >
+                         <button mat-menu-item type="submit" (click)="deleteNote(data._id)" style="font-size: 13px;">Delete note</button>
+                  </mat-menu>
             </div>
-
         </div>
-        </div>
-
+      </div>
  </div>
 
 

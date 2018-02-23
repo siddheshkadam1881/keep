@@ -2,6 +2,7 @@
   <div class="allnotes" (click)="openDialog()" mat-card fxFlex="400px">
 
     <div class="innerCardDiv">
+      <div (click)="openDialog(data)">
       <div>
       <mat-form-field>
         <input contenteditable="true" matInput [(ngModel)]="data.title">
@@ -12,8 +13,22 @@
         <input contenteditable="true" matInput [(ngModel)]="data.note">
       </mat-form-field>
         </div>
+        </div>
       <div class="updatebtn">
+        <div class="imageNotes">
+            <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="1000" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg">
+            <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="1000" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
+            <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="1000"  style="width: 22px;margin-left: 12px"src="assets/icon/color change.svg">
+            <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="1000" style="width: 22px;margin-left: 12px"src="assets/icon/image  add.svg">
+            <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="1000"  style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
+
+            <img class="img-responsive" matTooltip="more" matTooltipShowDelay="1000" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
+            <mat-menu #menu="matMenu" >
+                   <button mat-menu-item type="submit" (click)="deleteNote(data._id)" style="font-size: 13px;">Delete note</button>
+            </mat-menu>
+
         <button mat-raised-button matTooltip="Save Note" matTooltipShowDelay="1000"  type="submit" (click)="updateNote(data,data._id)">Done</button>
+      </div>
       </div>
     </div>
   </div>
