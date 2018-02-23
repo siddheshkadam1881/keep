@@ -42,7 +42,7 @@
           </mat-form-field>
         </div>
         <div style="margin-left: 420px">
-          <button mat-button mat-raised-button type="submit" (click)="!toggle();submitNote()"  >Done</button>
+        <button mat-button mat-raised-button type="submit" (click)="!toggle();submitNote()"  >Done</button>
         </div>
         </div>
 
@@ -54,9 +54,19 @@
 
             <p>{{data.title}}</p>
             <p>{{data.note}}</p>
+            <div class="imageNotes" >
+                  <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="1000" style="width: 25px;margin-left: 12px" src="assets/icon/remind me.svg">
+                  <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="1000" style="width: 25px;margin-left: 12px" src="assets/icon/collabrator.svg">
+                  <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="1000"  style="width: 25px;margin-left: 12px"src="assets/icon/color change.svg">
+                  <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="1000" style="width: 25px;margin-left: 12px"src="assets/icon/image  add.svg">
+                  <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="1000"  style="width: 25px;margin-left: 12px"src="assets/icon/archive.svg">
+                  <img class="img-responsive" matTooltip="more" matTooltipShowDelay="1000" style="width: 25px;margin-left: 12px" src="assets/icon/more.svg">
+
+            </div>
 
         </div>
         </div>
+
  </div>
 
 

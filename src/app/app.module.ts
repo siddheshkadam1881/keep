@@ -31,12 +31,14 @@ import { SocialLoginModule } from 'angularx-social-login';
 import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { CommonComponent } from './common/common.component';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
+
   { path: 'forgetpass/:token', component: ForgetpasswordComponent },
   //{ path: 'forgetpass', component: ForgetpasswordComponent },
   { path: 'forget', component: ForgetComponent }
@@ -76,6 +78,7 @@ export function provideConfig() {
   ],
   imports: [
   //  io
+  MatTooltipModule,
   MatDialogModule,
    LayoutModule,
    MatListModule,

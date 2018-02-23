@@ -40,6 +40,7 @@ invalidCredentialMsg: string;
    console.log(data,id);
    this.commonService.updateData('update/'+id,data).subscribe(
    data => {
+    this.dialogRef.close();
     //console.log("note updated ");
     //console.log(data);
     //this.toastr.success( 'Success!', 'timeout: 6000');
@@ -49,9 +50,9 @@ invalidCredentialMsg: string;
     console.log(err);
     //this.toastr.error(err);
     this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-    () => console.log('"Note updated !!!"')
+    () => console.log("Note updated !!!")
     //this.toastr.error(err);
-    //this.dialogRef.close();
+
   };
 });
 }

@@ -71,6 +71,10 @@ word-wrap: break-word;
   word-wrap: break-word;
 
   }
+  .imageNotes
+  {
+   background-color:rgb(255 , 255, 255);  
+  }
 /*.card-container
 {
   display: flex;

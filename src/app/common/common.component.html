@@ -1,15 +1,19 @@
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center" style=" overflow:hidden;">
   <div class="allnotes" (click)="openDialog()" mat-card fxFlex="400px">
 
-    <div class="writeNotes1">
+    <div class="innerCardDiv">
+      <div>
       <mat-form-field>
         <input contenteditable="true" matInput [(ngModel)]="data.title">
       </mat-form-field>
+    </div>
+    <div>
       <mat-form-field>
         <input contenteditable="true" matInput [(ngModel)]="data.note">
       </mat-form-field>
+        </div>
       <div class="updatebtn">
-        <button matTooltip="Save Note" mat-button mat-raised-button type="submit" (click)="updateNote(data,data._id)">Done</button>
+        <button mat-raised-button matTooltip="Save Note" matTooltipShowDelay="1000"  type="submit" (click)="updateNote(data,data._id)">Done</button>
       </div>
     </div>
   </div>
