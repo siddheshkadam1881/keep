@@ -10,11 +10,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class CommonComponent implements OnInit {
 public dashDataFirst;
-id:string;
+invalidCredentialMsg: string;
+  id:any;
   constructor(private route: ActivatedRoute, private router: Router,public dialogRef: MatDialogRef<CommonComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,private commonService:BackendApiService)
     {
-       //this.id = route.snapshot.params['id']
+      // this.id = this.route.params['id'];
      }
 
     ngOnInit():void {
@@ -33,5 +34,28 @@ id:string;
   onNoClick(): void {
      this.dialogRef.close();
    }
+
+
+   updateNote(data,id){
+   console.log(data,id);
+   this.commonService.updateData('update/'+id,data).subscribe(
+   data => {
+    //console.log("note updated ");
+    //console.log(data);
+    //this.toastr.success( 'Success!', 'timeout: 6000');
+
+    //console.log(this.responseStatus = data),
+    err =>{
+    console.log(err);
+    //this.toastr.error(err);
+    this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+    () => console.log('"Note updated !!!"')
+    //this.toastr.error(err);
+    //this.dialogRef.close();
+  };
+});
+}
+
+
 
 }

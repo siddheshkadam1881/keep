@@ -59,5 +59,21 @@ public urlpath;
       )
   }
 
+  ////////////////////////////////////////
+  /* update service  */
+  /////////////////////////
+  updateData(path,data) {
+    console.log(data);
+    //var headers = this.getTokenLocalStorage();
+    //return this.http.post(this.updateNotesUrl, note, { headers: headers });
+     console.log("path", path);
+     let token = localStorage.getItem("token");
+     const headers = new Headers();
+     this.urlpath= this.base_url.concat(path);
+     return this.http.put(this.urlpath,data)
+     .map(res=>res.json());
+  }
+
+
 
 }
