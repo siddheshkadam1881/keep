@@ -25,9 +25,12 @@ export class HomeComponent  implements OnInit {
    notes: Array<any>;
   //hide and see logic
   public show:boolean = false;
-  public show1:boolean = true;
+  public show1:boolean = false;
   responseStatus:Object= [];
   status:boolean ;
+  //hide and show grid
+  showHide:boolean;
+  showtoggle1:boolean;
   loading = false;
   returnUrl: string;
   invalidCredentialMsg: string;
@@ -76,6 +79,11 @@ export class HomeComponent  implements OnInit {
     this.show = !this.show;
 
 }
+toggle1() {
+ this.showtoggle1= !this.showtoggle1;
+
+}
+
 
  submitNote() {
 
@@ -137,6 +145,11 @@ data => {
 };
 });
 }
+changeShowStatus(){
+this.showHide = !this.showHide;
+
+}
+
 
 
 

@@ -2,6 +2,10 @@
   <mat-toolbar color="primary" class="example-toolbar">
     <button  matTooltip="main menu" matTooltipShowDelay="100" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
     <h1 matTooltip="Google keep" matTooltipShowDelay="100" class="example-app-name">Google keep</h1>
+      <!-- //grid view button -->
+       <!-- <div  class="gridView" matTooltip="List View" matTooltipShowDelay="100"  (click)="toggle1()" id="bt1" *ngIf="!show" style="margin-left: 872px;width:45px;" src="assets/icon/List View.svg"> -->
+         <img class="img-responsive" matTooltip="List View" matTooltipShowDelay="100" (click)="changeShowStatus()" id="bt2"  style="margin-left: 872px;width:45px;" src="assets/icon/List View.svg">
+       <!-- </div> -->
     <div  style="margin-left: 1030px">
  <button matTooltip="logout" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button>
 </div>
@@ -20,16 +24,17 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
+      <div *ngIf="!showHide">
       <p *ngFor="let content of fillerContent">{{content}}</p>
 
       <div  class="notes" (click)="toggle()" id="bt" *ngIf="!show">
-          <div style="margin-left: 30px"> Take a note...</div>
+          <div style="margin-left:30px;"> Take a note...</div>
       </div>
 
 
 
       <!-- <form class="writeNotes" *ngIf="show" fxLayout="column" fxFlexAlign="auto" #todoForm="ngForm" (ngSubmit)="todoForm.form.valid && submitNote(todoForm.value)"> -->
-        <div class="writeNotes" *ngIf="show">
+        <div class="writeNotes" id="bt" *ngIf="show">
         <div  class="example-full-width1" style="width=100%">
         <mat-form-field>
          <input matInput placeholder="Title" type="text" value="Title" name="title" [(ngModel)]= "model.title" >
@@ -47,7 +52,7 @@
         </div>
 
       <!-- </form> -->
-<div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center" style=" overflow:hidden;">
+<div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center" style=" overflow:hidden;" >
       <div class="allnotes"   mat-card fxFlex="400px"  *ngFor="let data of dashDataFirst.slice().reverse()">
 
           <div class="writeNotes1" >
@@ -70,13 +75,62 @@
         </div>
       </div>
  </div>
+</div>
+ <div  *ngIf="showHide">
+   <p *ngFor="let content of fillerContent">{{content}}</p>
+
+   <div  class="notes" (click)="toggle1()" id="bt" *ngIf="!showtoggle1">
+       <div style="margin-left: 80px;"> Take a note...</div>
+   </div>
 
 
 
+   <!-- <form class="writeNotes" *ngIf="show" fxLayout="column" fxFlexAlign="auto" #todoForm="ngForm" (ngSubmit)="todoForm.form.valid && submitNote(todoForm.value)"> -->
+   <div class="writeNotes" id="bt" *ngIf="showtoggle1">
+   <div  class="example-full-width1" style="width=100%">
+   <mat-form-field>
+    <input matInput placeholder="Title" type="text" value="Title" name="title" [(ngModel)]= "model.title" >
+   </mat-form-field>
+   </div>
 
+   <div class="example-full-width1" style="width=100%">
+     <mat-form-field>
+      <input matInput placeholder="Take a note" type="text" value="Take a note" name="note" [(ngModel)]= "model.note">
+     </mat-form-field>
+   </div>
+   <div style="margin-left: 420px">
+   <button matTooltip="Done" matTooltipShowDelay="100" mat-button mat-raised-button type="submit" (click)="!toggle();submitNote()"  >Done</button>
+   </div>
+   </div>
+   <!-- </form> -->
+ <div class="card-container"  fxLayoutWrap fxLayoutGap="120px" fxLayoutAlign="center" style=" overflow:hidden;">
+   <div class="allnotes"  mat-card fxFlex="700px"  *ngFor="let data of dashDataFirst.slice().reverse()">
 
+       <div class="writeNotes2" >
+           <div (click)="openDialog(data)">
+               <p>{{data.title}}</p>
+               <p>{{data.note}}</p>
+           </div>
+           <div class="imageNotes">
+               <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg">
+               <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
+               <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px"src="assets/icon/color change.svg">
+               <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px"src="assets/icon/image  add.svg">
+               <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100"  style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
 
+               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
+               <mat-menu #menu="matMenu" >
+                      <button mat-menu-item type="submit" (click)="deleteNote(data._id)" style="font-size: 13px;">Delete note</button>
+               </mat-menu>
+         </div>
+     </div>
+   </div>
+ </div>
+ </div>
     </mat-sidenav-content>
+
+
+
 
 
   </mat-sidenav-container>
