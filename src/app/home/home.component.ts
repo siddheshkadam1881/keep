@@ -104,10 +104,38 @@ toggle1() {
                    //this.toastr.error(err);
                    this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
                    () => console.log('Request Completed')
+
                 //  this.toastr.error(err);
 
          };
+         this.refreshNotes();
     });
+ }
+
+
+ copyNote(model)
+ {
+
+    console.log(model);
+    //let notes=new myData();
+    this.commonService.postServiceData('create',model)
+    .subscribe(model => {
+       console.log(model);
+
+      // this.toastr.success( 'Success!');
+      // this.router.navigate(['/home']);
+
+    //console.log(this.responseStatus = data),
+    err =>{
+             console.log(err);
+            //this.toastr.error(err);
+            this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+            () => console.log('Request Completed')
+         //  this.toastr.error(err);
+
+                  };
+                  this.refreshNotes();
+             });
  }
 
  logout() {
@@ -143,11 +171,24 @@ data => {
  //this.toastr.error(err);
 //this.ngOnDestroy()
 };
+this.refreshNotes();
 });
 }
 changeShowStatus(){
 this.showHide = !this.showHide;
-
+}
+//refresh purpose
+refreshNotes()
+{
+  this.commonService.getData('readTodos').subscribe(response => {
+    if (response) {
+      //console.log(response.data);
+      // items.slice().reverse();
+       this.dashDataFirst = response.reverse();
+        console.log(this.dashDataFirst.reverse());
+    }
+  },
+    error => console.log("Error while retrieving"))
 }
 
 

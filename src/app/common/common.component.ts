@@ -54,6 +54,7 @@ invalidCredentialMsg: string;
     //this.toastr.error(err);
 
   };
+  this.refreshNotes();
 });
 }
 
@@ -74,8 +75,23 @@ data => {
  //this.toastr.error(err);
 //this.ngOnDestroy()
 };
+this.refreshNotes();
 });
 }
+//refresh purpose
+refreshNotes()
+{
+  this.commonService.getData('readTodos').subscribe(response => {
+    if (response) {
+      //console.log(response.data);
+      // items.slice().reverse();
+       this.dashDataFirst = response.reverse();
+        console.log(this.dashDataFirst.reverse());
+    }
+  },
+    error => console.log("Error while retrieving"))
+}
+
 
 
 

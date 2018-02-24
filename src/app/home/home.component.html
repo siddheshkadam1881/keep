@@ -5,9 +5,11 @@
       <!-- //grid view button -->
        <!-- <div  class="gridView" matTooltip="List View" matTooltipShowDelay="100"  (click)="toggle1()" id="bt1" *ngIf="!show" style="margin-left: 872px;width:45px;" src="assets/icon/List View.svg"> -->
          <img class="img-responsive" matTooltip="List View" matTooltipShowDelay="100" (click)="changeShowStatus()" id="bt2"  style="margin-left: 872px;width:45px;" src="assets/icon/List View.svg">
+         <img class="img-responsive" matTooltip="List View" matTooltipShowDelay="100" (click)="logout()" id="bt2"  style="margin-left: 1072px;width:45px;" src="assets/icon/List View.svg">
+         <button style="margin-left: 930px" matTooltip="logout" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button>
        <!-- </div> -->
-    <div  style="margin-left: 1030px">
- <button matTooltip="logout" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button>
+    <div>
+ <button style="margin-left: 930px" matTooltip="logout" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button>
 </div>
   </mat-toolbar>
 
@@ -22,7 +24,7 @@
 
       </mat-nav-list>
     </mat-sidenav>
-
+  < !----------------------------------------------------------------- sidenav container logic ---------------------------------------------------------------->
     <mat-sidenav-content>
       <div *ngIf="!showHide">
       <p *ngFor="let content of fillerContent">{{content}}</p>
@@ -70,17 +72,21 @@
                   <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
                   <mat-menu #menu="matMenu" >
                          <button mat-menu-item type="submit" (click)="deleteNote(data._id)" style="font-size: 13px;">Delete note</button>
+                         <button mat-menu-item type="submit" (click)="copyNote(data)" style="font-size: 13px;">copy note</button>
                   </mat-menu>
             </div>
         </div>
       </div>
  </div>
 </div>
+
+
+<!--------------------------------Grid view logic----------------------------------------------------------------->
  <div  *ngIf="showHide">
    <p *ngFor="let content of fillerContent">{{content}}</p>
 
    <div  class="notes" (click)="toggle1()" id="bt" *ngIf="!showtoggle1">
-       <div style="margin-left: 80px;"> Take a note...</div>
+       <div > Take a note...</div>
    </div>
 
 
@@ -112,26 +118,24 @@
                <p>{{data.note}}</p>
            </div>
            <div class="imageNotes">
-               <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg">
-               <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
-               <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px"src="assets/icon/color change.svg">
-               <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px"src="assets/icon/image  add.svg">
-               <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100"  style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
+               <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 14px" src="assets/icon/remind me.svg">
+               <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 14px" src="assets/icon/collabrator.svg">
+               <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 14px"src="assets/icon/color change.svg">
+               <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 14px"src="assets/icon/image  add.svg">
+               <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100"  style="width: 22px;margin-left: 14px"src="assets/icon/archive.svg">
 
-               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
+               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 14px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
                <mat-menu #menu="matMenu" >
                       <button mat-menu-item type="submit" (click)="deleteNote(data._id)" style="font-size: 13px;">Delete note</button>
+                      <button mat-menu-item type="submit" (click)="copyNote(data)" style="font-size: 13px;">copy note</button>
                </mat-menu>
+
          </div>
      </div>
    </div>
  </div>
- </div>
+</div>
+       <!--------------------------------------------------------------- Grid logic over here ------------------------------------------------------------------>
     </mat-sidenav-content>
-
-
-
-
-
   </mat-sidenav-container>
 </div>
