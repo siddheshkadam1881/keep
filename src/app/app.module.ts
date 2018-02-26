@@ -32,6 +32,8 @@ import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'a
 import { CommonComponent } from './common/common.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatCardModule} from '@angular/material/card';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -79,6 +81,7 @@ export function provideConfig() {
   ],
   imports: [
   //  io
+   MatCardModule,
   MatTooltipModule,
   MatDialogModule,
    LayoutModule,

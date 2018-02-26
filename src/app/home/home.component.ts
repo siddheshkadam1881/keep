@@ -13,7 +13,8 @@ import { CommonComponent } from '../common/common.component';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent  implements OnInit {
-
+  someProperty = true;
+   anotherProperty = true;
   public dashDataFirst;
   public myData=[];
   note:string;
@@ -174,9 +175,13 @@ data => {
 this.refreshNotes();
 });
 }
-changeShowStatus(){
-this.showHide = !this.showHide;
-}
+// setClasses() {
+//        let classes =  {
+//           // extraclass: this.someProperty,
+//            writeNotes2: this.someProperty
+//        };
+//        return classes;
+//    }
 //refresh purpose
 refreshNotes()
 {

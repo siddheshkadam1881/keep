@@ -4,8 +4,8 @@
     <h1 matTooltip="Google keep" matTooltipShowDelay="100" class="example-app-name">Google keep</h1>
       <!-- //grid view button -->
        <!-- <div  class="gridView" matTooltip="List View" matTooltipShowDelay="100"  (click)="toggle1()" id="bt1" *ngIf="!show" style="margin-left: 872px;width:45px;" src="assets/icon/List View.svg"> -->
-         <img class="img-responsive" matTooltip="List View" matTooltipShowDelay="100" (click)="changeShowStatus()" id="bt2"  style="margin-left: 872px;width:45px;" src="assets/icon/List View.svg">
-         <img class="img-responsive" matTooltip="List View" matTooltipShowDelay="100" (click)="logout()" id="bt2"  style="margin-left: 1072px;width:45px;" src="assets/icon/List View.svg">
+         <img class="img-responsive"  (click)="myClasses='writeNotes2'" style="margin-left: 872px;width:45px;" src="assets/icon/List View.svg">
+         <!-- <img class="img-responsive" matTooltip="List View" (click)="logout()" id="bt2"  style="margin-left: 1072px;width:45px;" src="assets/icon/List View.svg"> -->
          <button style="margin-left: 930px" matTooltip="logout" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button>
        <!-- </div> -->
     <div>
@@ -54,10 +54,10 @@
         </div>
 
       <!-- </form> -->
-<div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center" style=" overflow:hidden;" >
-      <div class="allnotes"   mat-card fxFlex="400px"  *ngFor="let data of dashDataFirst.slice().reverse()">
+<div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
+      <div class="allnotes"  *ngFor="let data of dashDataFirst.reverse()"  fxFlexAlign="center center">
 
-          <div class="writeNotes1" >
+          <mat-card class="writeNotes1" [ngClass]="myClasses">
               <div (click)="openDialog(data)">
                   <p>{{data.title}}</p>
                   <p>{{data.note}}</p>
@@ -75,24 +75,25 @@
                          <button mat-menu-item type="submit" (click)="copyNote(data)" style="font-size: 13px;">copy note</button>
                   </mat-menu>
             </div>
-        </div>
+        </mat-card>
+
       </div>
  </div>
 </div>
 
 
 <!--------------------------------Grid view logic----------------------------------------------------------------->
- <div  *ngIf="showHide">
+ <!-- <div  *ngIf="showHide">
    <p *ngFor="let content of fillerContent">{{content}}</p>
 
    <div  class="notes" (click)="toggle1()" id="bt" *ngIf="!showtoggle1">
        <div > Take a note...</div>
-   </div>
+   </div> -->
 
 
 
    <!-- <form class="writeNotes" *ngIf="show" fxLayout="column" fxFlexAlign="auto" #todoForm="ngForm" (ngSubmit)="todoForm.form.valid && submitNote(todoForm.value)"> -->
-   <div class="writeNotes" id="bt" *ngIf="showtoggle1">
+   <!-- <div class="writeNotes" id="bt" *ngIf="showtoggle1">
    <div  class="example-full-width1" style="width=100%">
    <mat-form-field>
     <input matInput placeholder="Title" type="text" value="Title" name="title" [(ngModel)]= "model.title" >
@@ -107,9 +108,9 @@
    <div style="margin-left: 420px">
    <button matTooltip="Done" matTooltipShowDelay="100" mat-button mat-raised-button type="submit" (click)="!toggle();submitNote()"  >Done</button>
    </div>
-   </div>
+   </div> -->
    <!-- </form> -->
- <div class="card-container"  fxLayoutWrap fxLayoutGap="120px" fxLayoutAlign="center" style=" overflow:hidden;">
+ <!-- <div class="card-container"  fxLayoutWrap fxLayoutGap="120px" fxLayoutAlign="center" style=" overflow:hidden;">
    <div class="allnotes"  mat-card fxFlex="700px"  *ngFor="let data of dashDataFirst.slice().reverse()">
 
        <div class="writeNotes2" >
@@ -134,7 +135,7 @@
      </div>
    </div>
  </div>
-</div>
+</div> -->
        <!--------------------------------------------------------------- Grid logic over here ------------------------------------------------------------------>
     </mat-sidenav-content>
   </mat-sidenav-container>
