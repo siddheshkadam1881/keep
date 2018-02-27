@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { CommonComponent } from '../common/common.component';
+import { NgClass } from '@angular/common';
 //import {HttpModule} from '@angular/http';
 @Component({
   selector: 'app-home',
@@ -13,8 +14,7 @@ import { CommonComponent } from '../common/common.component';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent  implements OnInit {
-  someProperty = true;
-   anotherProperty = true;
+   isClassVisible: false;
   public dashDataFirst;
   public myData=[];
   note:string;
@@ -195,7 +195,6 @@ refreshNotes()
   },
     error => console.log("Error while retrieving"))
 }
-
 
 
 

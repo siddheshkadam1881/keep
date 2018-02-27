@@ -37,7 +37,7 @@ invalidCredentialMsg: string;
 
    updateNote(data,id){
 
-   console.log(data,id);
+   console.log("update",data,id);
    this.commonService.updateData('update/'+id,data).subscribe(
    data => {
     this.dialogRef.close();

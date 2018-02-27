@@ -4,33 +4,35 @@
     <h1 matTooltip="Google keep" matTooltipShowDelay="100" class="example-app-name">Google keep</h1>
       <!-- //grid view button -->
        <!-- <div  class="gridView" matTooltip="List View" matTooltipShowDelay="100"  (click)="toggle1()" id="bt1" *ngIf="!show" style="margin-left: 872px;width:45px;" src="assets/icon/List View.svg"> -->
-         <img class="img-responsive"  (click)="myClasses='writeNotes2'" style="margin-left: 872px;width:45px;" src="assets/icon/List View.svg">
-         <!-- <img class="img-responsive" matTooltip="List View" (click)="logout()" id="bt2"  style="margin-left: 1072px;width:45px;" src="assets/icon/List View.svg"> -->
-         <button style="margin-left: 930px" matTooltip="logout" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button>
-       <!-- </div> -->
+         <!-- <img class="Gridlayout"  (click)="flat=!flat"  style="margin-left: 872px;width:40px;" src="assets/icon/List View.svg"> -->
+         <!-- <img class="Gridlayout"  (click)="myClasses='writeNotes2'" style="margin-left: 872px;width:40px;" src="assets/icon/List View.svg"> -->
+          <img class="Gridlayout"  (click)="isClassVisible = !isClassVisible;"  matTooltip="List View" matTooltipShowDelay="100"   style="margin-left: 872px;width:40px;" src="assets/icon/List View.svg">
+         <button  matTooltip="logout" fxFlex  fxLayout="row"  fxLayoutAlign="end" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button>
+
     <div>
- <button style="margin-left: 930px" matTooltip="logout" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button>
 </div>
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container"
                        [style.marginTop.px]="mobileQuery.matches ? 1 : 0">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="1">
-      <mat-nav-list>
-        <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a>
-          //left part
 
+        <!-- <app-sidenav> </app-sidenav> -->
 
-      </mat-nav-list>
-    </mat-sidenav>
+                                <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                                            [fixedInViewport]="mobileQuery.matches" fixedTopGap="1">
+                                 <mat-nav-list>
+                                   <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a>
+                                     //left part
+                                 </mat-nav-list>
+                               </mat-sidenav>
+
   < !----------------------------------------------------------------- sidenav container logic ---------------------------------------------------------------->
     <mat-sidenav-content>
-      <div *ngIf="!showHide">
+      <div *ngIf="!showHide" >
       <p *ngFor="let content of fillerContent">{{content}}</p>
 
-      <div  class="notes" (click)="toggle()" id="bt" *ngIf="!show">
-          <div style="margin-left:30px;"> Take a note...</div>
+      <div  class="notes"  (click)="toggle()" id="bt" *ngIf="!show">
+          <div  fxLayoutWrap fxLayoutAlign="space-around center"> Take a note...</div>
       </div>
 
 
@@ -48,16 +50,18 @@
            <input matInput placeholder="Take a note" type="text" value="Take a note" name="note" [(ngModel)]= "model.note">
           </mat-form-field>
         </div>
-        <div style="margin-left: 420px">
+        <div >
+
         <button matTooltip="Done" matTooltipShowDelay="100" mat-button mat-raised-button type="submit" (click)="!toggle();submitNote()"  >Done</button>
         </div>
         </div>
 
-      <!-- </form> -->
+    <!-- note create here -->
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
-      <div class="allnotes"  *ngFor="let data of dashDataFirst.reverse()"  fxFlexAlign="center center">
-
-          <mat-card class="writeNotes1" [ngClass]="myClasses">
+      <div class="allnotes"  *ngFor="let data of dashDataFirst.reverse()" >
+         <!-- ng class logic are required for change class property -->
+      <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}">
+          <!-- <mat-card class="writeNotes1"  [ngClass]="myClasses"> -->
               <div (click)="openDialog(data)">
                   <p>{{data.title}}</p>
                   <p>{{data.note}}</p>

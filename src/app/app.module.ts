@@ -33,20 +33,19 @@ import { CommonComponent } from './common/common.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCardModule} from '@angular/material/card';
-
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
+  // { path: 'home', component: HomeComponent },
 
   { path: 'forgetpass/:token', component: ForgetpasswordComponent },
   //{ path: 'forgetpass', component: ForgetpasswordComponent },
   { path: 'forget', component: ForgetComponent }
 ];
-
 
 const config = new AuthServiceConfig([
   // {
@@ -64,9 +63,6 @@ export function provideConfig() {
 }
 
 
-
-
-
 @NgModule({
   declarations:
   [
@@ -76,7 +72,8 @@ export function provideConfig() {
     HomeComponent,
     ForgetpasswordComponent,
     ForgetComponent,
-    CommonComponent
+    CommonComponent,
+    SidenavComponent
 
   ],
   imports: [
