@@ -1,0 +1,54 @@
+<!--   sidenav content logic  -->
+   <mat-sidenav-content>
+     <div *ngIf="!showHide" >
+     <p *ngFor="let content of fillerContent">{{content}}</p>
+    <!-- take note here -->
+     <div  class="notes"  (click)="toggle1()" id="bt" *ngIf="!show">
+         <div  fxLayoutWrap fxLayoutAlign="space-around center"> Take a note...</div>
+     </div>
+
+        <!-- create note here -->
+       <div class="writeNotes" id="bt" *ngIf="show">
+       <div  class="example-full-width1" style="width=100%">
+       <mat-form-field>
+        <input matInput placeholder="Title" type="text" value="Title" name="title" [(ngModel)]= "model.title" >
+       </mat-form-field>
+       </div>
+
+       <div class="example-full-width1" style="width=100%">
+         <mat-form-field>
+          <input matInput placeholder="Take a note" type="text" value="Take a note" name="note" [(ngModel)]= "model.note">
+         </mat-form-field>
+       </div>
+       <div>
+       <button matTooltip="Done" matTooltipShowDelay="100" mat-button mat-raised-button type="submit" (click)="!toggle1();submitNote()"  >Done</button>
+       </div>
+       </div>
+
+   <!-- note create here -->
+<div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
+     <div class="allnotes"  *ngFor="let data of dashDataFirst.reverse()" >
+     <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}">
+             <div (click)="openDialog(data)">
+                 <p>{{data.title}}</p>
+                 <p>{{data.note}}</p>
+             </div>
+             <div class="imageNotes">
+                 <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg">
+                 <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
+                 <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px"src="assets/icon/color change.svg">
+                 <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px"src="assets/icon/image  add.svg">
+                 <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100"  style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
+
+                 <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
+                 <mat-menu #menu="matMenu" >
+                        <button mat-menu-item type="submit" (click)="deleteNote(data._id)" style="font-size: 13px;">Delete note</button>
+                        <button mat-menu-item type="submit" (click)="copyNote(data)" style="font-size: 13px;">copy note</button>
+                 </mat-menu>
+           </div>
+       </mat-card>
+
+     </div>
+</div>
+</div>
+  </mat-sidenav-content>

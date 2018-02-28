@@ -34,14 +34,20 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCardModule} from '@angular/material/card';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { SidebarService } from './services/sidebar.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'home', component: HomeComponent },
-  // { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent,
 
+  children: [
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
+      { path: 'overview', component: SidenavComponent }
+    ],
+},
   { path: 'forgetpass/:token', component: ForgetpasswordComponent },
   //{ path: 'forgetpass', component: ForgetpasswordComponent },
   { path: 'forget', component: ForgetComponent }
@@ -73,11 +79,11 @@ export function provideConfig() {
     ForgetpasswordComponent,
     ForgetComponent,
     CommonComponent,
-    SidenavComponent
+    SidenavComponent,
+    DashboardComponent
 
   ],
   imports: [
-  //  io
    MatCardModule,
   MatTooltipModule,
   MatDialogModule,
@@ -107,7 +113,7 @@ export function provideConfig() {
      CommonComponent
    ],
 
-  providers: [BackendApiService, { provide: AuthServiceConfig, useFactory: provideConfig } ],
+  providers: [BackendApiService, { provide: AuthServiceConfig, useFactory: provideConfig } ,SidebarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

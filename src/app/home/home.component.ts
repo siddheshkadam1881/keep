@@ -6,7 +6,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { CommonComponent } from '../common/common.component';
-import { NgClass } from '@angular/common';
+import { SidebarService } from '../services/sidebar.service';
+import { SidenavComponent } from '../sidenav/sidenav.component';
 //import {HttpModule} from '@angular/http';
 @Component({
   selector: 'app-home',
@@ -14,6 +15,8 @@ import { NgClass } from '@angular/common';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent  implements OnInit {
+  showFiller = false;
+
    isClassVisible: false;
   public dashDataFirst;
   public myData=[];
@@ -48,7 +51,7 @@ export class HomeComponent  implements OnInit {
 
    private _mobileQueryListener: () => void;
 
-   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
+   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog,private sideService:SidebarService) {
      this.mobileQuery = media.matchMedia('(max-width: 600px)');
      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
      this.mobileQuery.addListener(this._mobileQueryListener);
@@ -76,14 +79,15 @@ export class HomeComponent  implements OnInit {
    ngOnDestroy(): void {
      this.mobileQuery.removeListener(this._mobileQueryListener);
    }
-   toggle() {
+
+   toggle1() {
     this.show = !this.show;
 
 }
-toggle1() {
- this.showtoggle1= !this.showtoggle1;
-
-}
+// toggle1() {
+//  this.showtoggle1= !this.showtoggle1;
+//
+// }
 
 
  submitNote() {
@@ -175,14 +179,7 @@ data => {
 this.refreshNotes();
 });
 }
-// setClasses() {
-//        let classes =  {
-//           // extraclass: this.someProperty,
-//            writeNotes2: this.someProperty
-//        };
-//        return classes;
-//    }
-//refresh purpose
+//refresh notes here
 refreshNotes()
 {
   this.commonService.getData('readTodos').subscribe(response => {
@@ -195,7 +192,10 @@ refreshNotes()
   },
     error => console.log("Error while retrieving"))
 }
-
+//toggle nav
+ // toggleNav() {
+ //   this.sideService.sidenav.toggle();
+ // }
 
 
 }
