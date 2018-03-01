@@ -33,19 +33,20 @@ import { CommonComponent } from './common/common.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCardModule} from '@angular/material/card';
-import { SidenavComponent } from './sidenav/sidenav.component';
-import { SidebarService } from './services/sidebar.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { TrashComponent } from './trash/trash.component';
+import { ArchieveComponent } from './archieve/archieve.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent,
-
-  children: [
-      { path: '', redirectTo: 'overview', pathMatch: 'full' },
-      { path: 'overview', component: SidenavComponent }
+   children: [
+       { path: '', redirectTo: 'Dashboard', pathMatch: 'full' },
+       { path: 'Dashboard', component: DashboardComponent },
+       { path: 'Trash', component: TrashComponent },
+       { path: 'Archieve', component: ArchieveComponent }
     ],
 },
   { path: 'forgetpass/:token', component: ForgetpasswordComponent },
@@ -79,16 +80,17 @@ export function provideConfig() {
     ForgetpasswordComponent,
     ForgetComponent,
     CommonComponent,
-    SidenavComponent,
-    DashboardComponent
+    DashboardComponent,
+    TrashComponent,
+    ArchieveComponent
 
   ],
   imports: [
-   MatCardModule,
-  MatTooltipModule,
-  MatDialogModule,
-   LayoutModule,
-   MatListModule,
+    MatCardModule,
+    MatTooltipModule,
+    MatDialogModule,
+    LayoutModule,
+    MatListModule,
     MatSidenavModule,
     MatFormFieldModule,
     BrowserModule,
@@ -106,6 +108,7 @@ export function provideConfig() {
     HttpClientModule,
     RouterModule.forRoot(routes),
     ToastModule.forRoot(),
+    // RouterModule.forChild(routes),
     SocialLoginModule.initialize(config)
   ],
   entryComponents: [
@@ -113,7 +116,7 @@ export function provideConfig() {
      CommonComponent
    ],
 
-  providers: [BackendApiService, { provide: AuthServiceConfig, useFactory: provideConfig } ,SidebarService],
+  providers: [BackendApiService, { provide: AuthServiceConfig, useFactory: provideConfig }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

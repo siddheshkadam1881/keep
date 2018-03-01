@@ -6,8 +6,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { CommonComponent } from '../common/common.component';
-import { SidebarService } from '../services/sidebar.service';
-import { SidenavComponent } from '../sidenav/sidenav.component';
+import { GridService } from '../services/grid.service';
+
+import { DashboardComponent } from '../dashboard/dashboard.component';
 //import {HttpModule} from '@angular/http';
 @Component({
   selector: 'app-home',
@@ -51,7 +52,7 @@ export class HomeComponent  implements OnInit {
 
    private _mobileQueryListener: () => void;
 
-   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog,private sideService:SidebarService) {
+   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
      this.mobileQuery = media.matchMedia('(max-width: 600px)');
      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
      this.mobileQuery.addListener(this._mobileQueryListener);
@@ -159,9 +160,12 @@ openDialog(data): void {
     console.log('The dialog was closed');
   });
 }
+
 deleteNote(id){
 console.log(id);
+//this.commonService.deleteData('delete/'+id).subscribe(
 this.commonService.deleteData('delete/'+id).subscribe(
+
 data => {
  console.log("note delete");
  //console.log(data);
@@ -197,5 +201,8 @@ refreshNotes()
  //   this.sideService.sidenav.toggle();
  // }
 
+//  changeClass(class) {
+//        this.gridService.changeClass(this.class);
+//     }
 
-}
+ }

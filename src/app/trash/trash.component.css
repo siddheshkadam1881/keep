@@ -113,11 +113,9 @@ word-wrap: break-word;
 fxLayoutAlign:space-around center;
  /*visibility: hidden;*/
 }
-pin
-{
-
-
-}
+.flat {
+    box-shadow: none;
+  }
 /*.Gridlayout
 {
 

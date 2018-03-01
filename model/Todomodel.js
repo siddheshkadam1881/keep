@@ -22,7 +22,23 @@ var NoteSchema = new mongoose.Schema({
   },
   email: {
     type: String
+  },
+  is_deleted: {
+    type: Boolean,
+     default: false
+   },
+   is_archieved: {
+     type: Boolean,
+     default: false
+ },
+ is_pinned: {
+   type: Boolean,
+   default: false
+ },
+ note_color: {
+    type: String
   }
+
 });
 var Todomodel  = mongoose.model('todo', NoteSchema);
 module.exports = Todomodel;
@@ -112,6 +128,4 @@ module.exports = Todomodel;
 //   type: Date,
 //   default: Date.now()
 // },
-// note_color: {
-//   type: String
-// }
+//

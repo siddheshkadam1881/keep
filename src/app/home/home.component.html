@@ -1,76 +1,32 @@
-<div class="example-container" style="background-color: Gray;" [class.example-is-mobile]="mobileQuery.matches" >
-  <!-- toolbar create here -->
+<div class="example-container" style="background-color: Gray;" [class.example-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="example-toolbar">
-    <button   mat-button matTooltip="main menu" matTooltipShowDelay="100" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <!-- <p><button mat-button (click)="sidenav.toggle()">sidenav.toggle()</button></p> -->
+    <button mat-button matTooltip="main menu" matTooltipShowDelay="100" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
     <h1 matTooltip="Google keep" matTooltipShowDelay="100" class="example-app-name">Google keep</h1>
-    <img class="Gridlayout"  (click)="isClassVisible = !isClassVisible;"  matTooltip="List View" matTooltipShowDelay="100"   style="margin-left: 872px;width:40px;" src="assets/icon/List View.svg">
-   <button  matTooltip="logout" fxFlex  fxLayout="row"  fxLayoutAlign="end" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button>
+    <!-- //grid view button -->
+    <!-- <div  class="gridView" matTooltip="List View" matTooltipShowDelay="100"  (click)="toggle1()" id="bt1" *ngIf="!show" style="margin-left: 872px;width:45px;" src="assets/icon/List View.svg"> -->
+    <!-- <img class="Gridlayout"  (click)="flat=!flat"  style="margin-left: 872px;width:40px;" src="assets/icon/List View.svg"> -->
+    <!-- <img class="Gridlayout"  (click)="myClasses='writeNotes2'" style="margin-left: 872px;width:40px;" src="assets/icon/List View.svg"> -->
+    <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="margin-left: 872px;width:40px;" src="assets/icon/List View.svg">
+    <button matTooltip="logout" fxFlex fxLayout="row" fxLayoutAlign="end" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button>
 
     <div>
-</div>
+    </div>
   </mat-toolbar>
 
-<mat-sidenav-container class="example-sidenav-container">
-  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'">
-    <mat-nav-list>
-      <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a> //left part
-    </mat-nav-list>
-  </mat-sidenav>
+  <mat-sidenav-container class="example-sidenav-container">
 
- <!--   sidenav content logic  -->
-    <mat-sidenav-content>
-      <div *ngIf="!showHide" >
-      <p *ngFor="let content of fillerContent">{{content}}</p>
-     <!-- take note here -->
-      <div  class="notes"  (click)="toggle1()" id="bt" *ngIf="!show">
-          <div  fxLayoutWrap fxLayoutAlign="space-around center"> Take a note...</div>
-      </div>
 
-         <!-- create note here -->
-        <div class="writeNotes" id="bt" *ngIf="show">
-        <div  class="example-full-width1" style="width=100%">
-        <mat-form-field>
-         <input matInput placeholder="Title" type="text" value="Title" name="title" [(ngModel)]= "model.title" >
-        </mat-form-field>
-        </div>
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" >
+      <mat-nav-list>
+        <!-- <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a> -->
+  <a mat-list-item [routerLink]="['/home']"  routerLinkActive="active" class="btn">Notes</a>
+        <a mat-list-item [routerLink]="['/home/Trash']"  routerLinkActive="active" class="btn">Trash</a>
+        <a mat-list-item [routerLink]="['/home/Archieve']"  routerLinkActive="active" class="btn">archieve</a>
+         <!-- <img [src]="trashImg" style="width:18px"> -->
+      </mat-nav-list>
+    </mat-sidenav>
 
-        <div class="example-full-width1" style="width=100%">
-          <mat-form-field>
-           <input matInput placeholder="Take a note" type="text" value="Take a note" name="note" [(ngModel)]= "model.note">
-          </mat-form-field>
-        </div>
-        <div>
-        <button matTooltip="Done" matTooltipShowDelay="100" mat-button mat-raised-button type="submit" (click)="!toggle1();submitNote()"  >Done</button>
-        </div>
-        </div>
-
-    <!-- note create here -->
-<div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
-      <div class="allnotes"  *ngFor="let data of dashDataFirst.reverse()" >
-      <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}">
-              <div (click)="openDialog(data)">
-                  <p>{{data.title}}</p>
-                  <p>{{data.note}}</p>
-              </div>
-              <div class="imageNotes">
-                  <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg">
-                  <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
-                  <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px"src="assets/icon/color change.svg">
-                  <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px"src="assets/icon/image  add.svg">
-                  <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100"  style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
-
-                  <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
-                  <mat-menu #menu="matMenu" >
-                         <button mat-menu-item type="submit" (click)="deleteNote(data._id)" style="font-size: 13px;">Delete note</button>
-                         <button mat-menu-item type="submit" (click)="copyNote(data)" style="font-size: 13px;">copy note</button>
-                  </mat-menu>
-            </div>
-        </mat-card>
-
-      </div>
- </div>
-</div>
-   </mat-sidenav-content>
+  <router-outlet></router-outlet>
   </mat-sidenav-container>
-   <!--  sidenav container over here -->
 </div>
