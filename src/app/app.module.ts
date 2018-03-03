@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { registerLocaleData } from "@angular/common";
+import localeDe from "@angular/common/locales/de";
+import { NgModule, LOCALE_ID} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
@@ -36,7 +38,9 @@ import {MatCardModule} from '@angular/material/card';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TrashComponent } from './trash/trash.component';
 import { ArchieveComponent } from './archieve/archieve.component';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDatetimepickerModule,MatNativeDatetimeModule,MAT_DATETIME_FORMATS } from "@mat-datetimepicker/core";
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
@@ -83,9 +87,12 @@ export function provideConfig() {
     DashboardComponent,
     TrashComponent,
     ArchieveComponent
-
   ],
   imports: [
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    //MatNativeDatetimeModule,
+    //MatDatepickerModule,
     MatCardModule,
     MatTooltipModule,
     MatDialogModule,
@@ -116,7 +123,29 @@ export function provideConfig() {
      CommonComponent
    ],
 
-  providers: [BackendApiService, { provide: AuthServiceConfig, useFactory: provideConfig }],
+  providers: [BackendApiService, { provide: AuthServiceConfig, useFactory: provideConfig }, {
+      provide: LOCALE_ID,
+      useValue: "de-DE"
+    },
+
+    // {
+    //   provide: MAT_DATETIME_FORMATS,
+    //   useValue: {
+    //     parse: {
+    //       dateInput: null
+    //     },
+    //     display: {
+    //       dateInput: {year: "numeric", month: "numeric", day: "numeric"},
+    //       monthInput: {month: "long"},
+    //       datetimeInput: {year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric"},
+    //       timeInput: {hour: "numeric", minute: "numeric"},
+    //       monthYearLabel: {year: "numeric", month: "short"},
+    //       dateA11yLabel: {year: "numeric", month: "long", day: "numeric"},
+    //       monthYearA11yLabel: {year: "numeric", month: "long"}
+    //     }
+    //   }
+    // }
+   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

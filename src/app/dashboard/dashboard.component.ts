@@ -14,8 +14,7 @@ import { HomeComponent } from '../home/home.component';
 })
 export class DashboardComponent implements OnInit {
   showFiller = false;
-
-   isClassVisible: false;
+  isClassVisible: false;
   public dashDataFirst;
   public myData=[];
   note:string;
@@ -295,30 +294,29 @@ export class DashboardComponent implements OnInit {
    }
 
    changeColor(data,color)
-   {     var data1 =
+      {     var data1 =
 
-       {   note_color: color }
-        console.log(data1);
-     this.commonService.updateData('update/'+data._id,data1)
-     .subscribe(model => {
-        console.log(model);
+          {   note_color: color }
+           console.log(data1);
+        this.commonService.updateData('update/'+data._id,data1)
+        .subscribe(model => {
+           console.log(model);
 
-       // this.toastr.success( 'Success!');
-       // this.router.navigate(['/home']);
-     //console.log(this.responseStatus = data),
-     err =>{
-              console.log(err);
-             //this.toastr.error(err);
-             this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-             () => console.log('Request Completed')
+          // this.toastr.success( 'Success!');
+          // this.router.navigate(['/home']);
+        //console.log(this.responseStatus = data),
+        err =>{
+                 console.log(err);
+                //this.toastr.error(err);
+                this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+                () => console.log('Request Completed')
 
-          //  this.toastr.error(err);
+             //  this.toastr.error(err);
+      };
+      this.refreshNotes();
+      });
 
-   };
-   this.refreshNotes();
-   });
-
-   }
+      }
 
 
 

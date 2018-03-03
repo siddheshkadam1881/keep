@@ -133,7 +133,7 @@ export class TrashComponent implements OnInit {
   });
   }
 
-  untrashNotes(data)
+  trashNotes(data)
   {
     var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
        console.log(data1);

@@ -16,7 +16,7 @@
               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
               <mat-menu #menu="matMenu" >
                      <button mat-menu-item type="submit" (click)="deleteNote(data._id)" style="font-size: 13px;">Delete note</button>
-                     <button mat-menu-item type="submit" (click)="untrashNotes(data)" style="font-size: 13px;">restore</button>
+                     <button mat-menu-item type="submit" (click)="trashNotes(data)" style="font-size: 13px;">restore</button>
               </mat-menu>
         </div>
     </mat-card>

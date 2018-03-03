@@ -133,7 +133,7 @@ export class ArchieveComponent implements OnInit {
   });
   }
 
-  unarchievedNotes(data)
+  archiveNotes(data)
   {
     var data1 = { is_archieved: data.is_archieved ?  'false' : 'true'}
        console.log(data1);
