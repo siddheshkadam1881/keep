@@ -294,10 +294,10 @@ export class DashboardComponent implements OnInit {
 
    }
 
-   changeColor(data)
+   changeColor(data,color)
    {     var data1 =
 
-      // {   note_color: $scope.color }
+       {   note_color: color }
         console.log(data1);
      this.commonService.updateData('update/'+data._id,data1)
      .subscribe(model => {

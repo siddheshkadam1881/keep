@@ -33,7 +33,7 @@
   <div class="note" fxLayout="row" fxLayoutAlign=" none" ><h3>notes</h3></div>
   <div class="allnotes"  *ngFor="let data of dashDataFirst.reverse()" >
   <div *ngIf= "!data.is_deleted && !data.is_archieved && data.is_pinned">
-   <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}">
+   <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}"   >
 
      <img class="img-responsive" matTooltip="remind me" (click)="unpinNotes(data)"  matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/unpin.png">
           <div (click)="openDialog(data)">
@@ -43,7 +43,23 @@
           <div class="imageNotes">
               <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg">
               <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
-              <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  (click)="changeColor(data)"  style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg">
+              <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  (click)="changeColor(data)"  style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg" [matMenuTriggerFor]="menu1">
+              <mat-menu #menu1="matMenu">
+                   <div>
+                     <button class="dot" style="background-color:green;" (click)="changeColor(data,'green')"></button>
+                       <button class="dot"  style="background-color:red;" (click)="changeColor(data,'red')" ></button>
+                       <button class="dot"  style="background-color:yellow;" (click)="changeColor(data,'yellow') "></button>
+                       <button class="dot"  style="background-color:orange;" (click)="changeColor(data,'orange')" ></button>
+                       <button class="dot"  style="background-color:blue;" (click)="changeColor(data,'blue')"></button>
+                     </div>
+                     <div>
+                       <button class="dot"  style="background-color:Teal;" (click)="changeColor(data,'Teal')"></button>
+                       <button class="dot"  style="background-color:grey;" (click)="changeColor(data,'grey')"></button>
+                       <button class="dot"  style="background-color:purple;"(click)="changeColor(data,'purple')"></button>
+                       <button class="dot"  style="background-color:brown;" (click)="changeColor(data,'brown')"></button>
+                      <button class="dot"  style="background-color:pink;" (click)="changeColor(data,'pink')"></button>
+                   </div>
+          </mat-menu>
               <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg">
               <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100" (click)="archiveNotes(data)" style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
@@ -56,21 +72,39 @@
   </div>
   </div>
   </div>
+
   <div class="other" fxLayout="row" fxLayoutAlign=" none" ><h3>other</h3></div>
   <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
   <!-- <div class="other"><b>other</b></div> -->
   <div class="allnotes" *ngFor="let data of dashDataFirst.reverse()" >
   <div *ngIf= "!data.is_deleted && !data.is_archieved && !data.is_pinned">
-   <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}">
+   <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}"  [style.background]="data.note_color">
      <img class="img-responsive" matTooltip="remind me" (click)="pinNotes(data)"  matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/pin.svg">
-          <div (click)="openDialog(data)">
+          <div (click)="openDialog(data)"  >
               <p>{{data.title}}</p>
               <p>{{data.note}}</p>
+               <p>{{data.note_color}}</p>
           </div>
-          <div class="imageNotes">
+          <div class="imageNotes" [style.background]="data.note_color">
               <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg">
               <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
-              <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg">
+              <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg" [matMenuTriggerFor]="menu1">
+              <mat-menu #menu1="matMenu">
+                   <div>
+                     <button class="dot" style="background-color:green;" (click)="changeColor(data,'green')"></button>
+                       <button class="dot"  style="background-color:red;" (click)="changeColor(data,'red')" ></button>
+                       <button class="dot"  style="background-color:yellow;" (click)="changeColor(data,'yellow') "></button>
+                       <button class="dot"  style="background-color:orange;" (click)="changeColor(data,'orange')" ></button>
+                       <button class="dot"  style="background-color:blue;" (click)="changeColor(data,'blue')"></button>
+                     </div>
+                     <div>
+                       <button class="dot"  style="background-color:Teal;" (click)="changeColor(data,'Teal')"></button>
+                       <button class="dot"  style="background-color:grey;" (click)="changeColor(data,'grey')"></button>
+                       <button class="dot"  style="background-color:purple;"(click)="changeColor(data,'purple')"></button>
+                       <button class="dot"  style="background-color:brown;" (click)="changeColor(data,'brown')"></button>
+                      <button class="dot"  style="background-color:pink;" (click)="changeColor(data,'pink')"></button>
+                   </div>
+          </mat-menu>
               <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg">
               <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100" (click)="archiveNotes(data)" style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
