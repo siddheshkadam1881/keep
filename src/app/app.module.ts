@@ -41,6 +41,7 @@ import { ArchieveComponent } from './archieve/archieve.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDatetimepickerModule,MatNativeDatetimeModule,MAT_DATETIME_FORMATS } from "@mat-datetimepicker/core";
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import {MatChipsModule} from '@angular/material/chips';
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
@@ -89,6 +90,7 @@ export function provideConfig() {
     ArchieveComponent
   ],
   imports: [
+    MatChipsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     //MatNativeDatetimeModule,

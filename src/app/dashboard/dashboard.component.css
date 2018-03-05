@@ -108,12 +108,6 @@ word-wrap: break-word;
 fxLayoutAlign:space-around center;
  /*visibility: hidden;*/
 }
-pin
-{
-
-
+.demo-chip-list {
+  width: 100%;
 }
-/*.Gridlayout
-{
-
-}*/

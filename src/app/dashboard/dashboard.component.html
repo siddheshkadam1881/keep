@@ -39,35 +39,37 @@
           <div (click)="openDialog(data)">
               <p>{{data.title}}</p>
               <p>{{data.note}}</p>
+              <div  *ngIf="data.note_chip">
+               <mat-form-field class="demo-chip-list">
+                 <mat-chip-list>
+                <mat-chip  [removable]="removable" (remove)="remove(data)">
+                  <p>{{data.note_chip}}</p>
+                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                </mat-chip-list>
+              </mat-form-field>
+            </div>
           </div>
           <div class="imageNotes" [style.background]="data.note_color">
               <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg"  [matMenuTriggerFor]="menu2">
               <mat-menu #menu2="matMenu">
                 <mat-card>
-                <button mat-menu-item >Last Today  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  20.00</button>
-                <button mat-menu-item >Tommorrow   &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  08.00</button>
-                <button mat-menu-item >Last Today  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  20.00</button>
-               <button mat-menu-item ><img class="img-responsive"  style="width:18px;" src="assets/icon/watch.svg" > &nbsp; &nbsp;select date and time</button>
-               <!-- <mat-menu #menu3="matMenu">
-               <mat-card>
-               Date <input [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3">
-               <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
-               </mat-card>
-               <mat-card>
-               Time<input [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4">
-               <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
-               </mat-card>
-              </mat-menu> -->
+                  <button mat-menu-item style="word-spacing: 30px;" (click)="chipShow(data,'Later Today 20.00')">LaterToday  20.00</button>
+                  <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
+                   <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'NextWeek  Mon,08.00')" >NextWeek   Mon,08.00</button>
+                   <button mat-menu-item  [matMenuTriggerFor]="menu3"><img class="img-responsive"  style="width:18px;" src="assets/icon/watch.svg" >select date and time</button>
+                 <mat-menu #menu3="matMenu">
+                 <mat-card>
+                 Date <input [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3">
+                 <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                 </mat-card>
+                 <mat-card>
+                 Time<input [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4">
+                 <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
+                 </mat-card>
+                 </mat-menu>
               </mat-card>
-                  <!-- <mat-card>
-                Date <input [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3">
-                <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
-              </mat-card>
-              <mat-card>
-                Time<input [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4">
-                <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
-              </mat-card> -->
-               </mat-menu>
+          </mat-menu>
               <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
             <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg" [matMenuTriggerFor]="menu1">
               <mat-menu #menu1="matMenu">

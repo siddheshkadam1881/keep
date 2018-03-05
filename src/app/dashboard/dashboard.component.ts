@@ -7,12 +7,28 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { CommonComponent } from '../common/common.component';
 import { HomeComponent } from '../home/home.component';
+import {MatChipInputEvent} from '@angular/material';
+import {ENTER, COMMA} from '@angular/cdk/keycodes';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
+//CHIP EVENT
+  visible: boolean = true;
+  selectable: boolean = true;
+  removable: boolean = true;
+  addOnBlur: boolean = true;
+  separatorKeysCodes = [ENTER, COMMA];
+  fruits = [
+    // { name: 'Lemon' },
+    // { name: 'Lime' },
+    // { name: 'Apple' },
+  ];
+ // public chipData;
+ chipData: Array<Object>[];
   showFiller = false;
   isClassVisible: false;
   public dashDataFirst;
@@ -52,9 +68,10 @@ export class DashboardComponent implements OnInit {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
 
-
-
   }
+
+
+
 
   ////////////////////////////////read the data by calling service method//////////////////////////////////////////////
 
@@ -72,6 +89,59 @@ export class DashboardComponent implements OnInit {
   }
 
   //////////////////////////////////////////////////////////
+
+  add(event: MatChipInputEvent): void {
+     let input = event.input;
+     let value = event.value;
+
+     // Add our fruit
+     if ((value || '').trim()) {
+       this.fruits.push({ name: value.trim() });
+     }
+
+     // Reset the input value
+     if (input) {
+       this.chipData=[];
+
+     }
+   }
+
+   remove(data): void {
+
+
+            var chip=
+            {
+              note_chip: []
+            }
+           console.log(chip);
+           // this.chipData=data;
+           //console.log(this.chipData);
+           this.commonService.updateData('update/'+data._id,chip)
+           .subscribe(model => {
+              console.log(model);
+
+             // this.toastr.success( 'Success!');
+             // this.router.navigate(['/home']);
+           //console.log(this.responseStatus = data),
+           err =>{
+                    console.log(err);
+                   //this.toastr.error(err);
+                   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+                   () => console.log('Request Completed')
+
+                //  this.toastr.error(err);
+         };
+         this.refreshNotes();
+         });
+
+
+
+
+
+          }
+
+    /////////////////////////////////////////////////////////////////////
+
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
@@ -266,8 +336,6 @@ export class DashboardComponent implements OnInit {
 
    }
 
-
-
    unpinNotes(data)
    {
      var data1 = { is_pinned: data.is_pinned ? 'false' : 'true'}
@@ -318,6 +386,37 @@ export class DashboardComponent implements OnInit {
 
       }
 
+         chipShow(data,chip1)
+         {
+           var chip=
+           {
+             note_chip: chip1
+           }
+          console.log(chip);
+          // this.chipData=data;
+          //console.log(this.chipData);
+          this.commonService.updateData('update/'+data._id,chip)
+          .subscribe(model => {
+             console.log(model);
+
+            // this.toastr.success( 'Success!');
+            // this.router.navigate(['/home']);
+          //console.log(this.responseStatus = data),
+          err =>{
+                   console.log(err);
+                  //this.toastr.error(err);
+                  this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+                  () => console.log('Request Completed')
+
+               //  this.toastr.error(err);
+        };
+        this.refreshNotes();
+        });
+
+
+
+
+         }
 
 
   }

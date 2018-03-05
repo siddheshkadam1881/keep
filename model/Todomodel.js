@@ -41,7 +41,11 @@ var NoteSchema = new mongoose.Schema({
   reminder: {
      type: Date,
      default: null
-   }
+   },
+
+  note_chip: {
+    type: String
+  }
 });
 var Todomodel  = mongoose.model('todo', NoteSchema);
 module.exports = Todomodel;
