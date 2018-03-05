@@ -386,37 +386,56 @@ export class DashboardComponent implements OnInit {
 
       }
 
-         chipShow(data,chip1)
-         {
-           var chip=
-           {
-             note_chip: chip1
-           }
-          console.log(chip);
-          // this.chipData=data;
-          //console.log(this.chipData);
-          this.commonService.updateData('update/'+data._id,chip)
-          .subscribe(model => {
-             console.log(model);
+    chipShow(data, chip1)
+  {
+      var chip =
+    {
+      note_chip: chip1
+    }
+      console.log(chip);
+  // this.chipData=data;
+  //console.log(this.chipData);
+      this.commonService.updateData('update/' + data._id, chip)
+     .subscribe(model => {
+      console.log(model);
+      // this.toastr.success( 'Success!');
+      // this.router.navigate(['/home']);
+      //console.log(this.responseStatus = data),
+      err => {
+      console.log(err);
+      //this.toastr.error(err);
+      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+      () => console.log('Request Completed')
+        //  this.toastr.error(err);
+      };
+      this.refreshNotes();
+    });
+  }
+   submitReminder(data)
+   {
+     var reminder1 =
+   {
+     reminder: data
+   }
+     console.log(data,reminder1);
+ // this.chipData=data;
+ //console.log(this.chipData);
+     this.commonService.updateData('update/' + data._id, reminder1)
+    .subscribe(model => {
+     console.log(model);
+     // this.toastr.success( 'Success!');
+     // this.router.navigate(['/home']);
+     //console.log(this.responseStatus = data),
+     err => {
+     console.log(err);
+     //this.toastr.error(err);
+     this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+     () => console.log('Request Completed')
+       //  this.toastr.error(err);
+     };
+     this.refreshNotes();
+   });
 
-            // this.toastr.success( 'Success!');
-            // this.router.navigate(['/home']);
-          //console.log(this.responseStatus = data),
-          err =>{
-                   console.log(err);
-                  //this.toastr.error(err);
-                  this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-                  () => console.log('Request Completed')
-
-               //  this.toastr.error(err);
-        };
-        this.refreshNotes();
-        });
-
-
-
-
-         }
-
+   }
 
   }

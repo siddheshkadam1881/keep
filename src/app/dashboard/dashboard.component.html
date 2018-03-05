@@ -53,22 +53,25 @@
           <div class="imageNotes" [style.background]="data.note_color">
               <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg"  [matMenuTriggerFor]="menu2">
               <mat-menu #menu2="matMenu">
-                <mat-card>
                   <button mat-menu-item style="word-spacing: 30px;" (click)="chipShow(data,'Later Today 20.00')">LaterToday  20.00</button>
                   <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
                    <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'NextWeek  Mon,08.00')" >NextWeek   Mon,08.00</button>
                    <button mat-menu-item  [matMenuTriggerFor]="menu3"><img class="img-responsive"  style="width:18px;" src="assets/icon/watch.svg" >select date and time</button>
                  <mat-menu #menu3="matMenu">
                  <mat-card>
-                 Date <input [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3">
+
+                 Date <input [owlDateTimeTrigger]="dt3"   name="reminder"  [owlDateTime]="dt3" ngModel required />
                  <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
                  </mat-card>
                  <mat-card>
-                 Time<input [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4">
-                 <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
+                 Time<input [owlDateTimeTrigger]="dt4"  name="reminder"  [owlDateTime]="dt4"  ngModel required />
+                 <owl-date-time [pickerType]="'timer'"  #dt4></owl-date-time>
+                 <div fxLayout="row" fxLayoutAlign="end center" style="margin-top:5px;">
+                 <button  mat-button mat-raised-button color="primary" type="submit" (click)="submitReminder(data,reminder)" style="font-size: 10px;">save</button>
+               </div>
                  </mat-card>
                  </mat-menu>
-              </mat-card>
+
           </mat-menu>
               <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
             <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg" [matMenuTriggerFor]="menu1">
@@ -91,7 +94,7 @@
               <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg">
               <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100" (click)="archiveNotes(data)" style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
-              <mat-menu #menu="matMenu" >
+              <mat-menu #menu="matMenu">
                      <button mat-menu-item type="submit" (click)="trashNotes(data)" style="font-size: 13px;">Delete note</button>
                      <button mat-menu-item type="submit" (click)="copyNote(data)" style="font-size: 13px;">copy note</button>
               </mat-menu>
