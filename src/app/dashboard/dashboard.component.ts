@@ -106,42 +106,90 @@ export class DashboardComponent implements OnInit {
      }
    }
 
-   remove(data): void {
 
-
-            var chip=
-            {
-              note_chip: []
-            }
+ remove(data): void {
+  var chip=
+  {
+    note_chip: null
+  }
            console.log(chip);
-           // this.chipData=data;
-           //console.log(this.chipData);
-           this.commonService.updateData('update/'+data._id,chip)
-           .subscribe(model => {
-              console.log(model);
+  // this.chipData=data;
+  //console.log(this.chipData);
+  this.commonService.updateData('update/' + data._id, chip)
+    .subscribe(model => {
+      console.log(model);
 
-             // this.toastr.success( 'Success!');
-             // this.router.navigate(['/home']);
-           //console.log(this.responseStatus = data),
-           err =>{
-                    console.log(err);
-                   //this.toastr.error(err);
-                   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-                   () => console.log('Request Completed')
+      // this.toastr.success( 'Success!');
+      // this.router.navigate(['/home']);
+      //console.log(this.responseStatus = data),
+      err => {
+        console.log(err);
+        //this.toastr.error(err);
+        this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+        () => console.log('Request Completed')
 
-                //  this.toastr.error(err);
-         };
-         this.refreshNotes();
-         });
-
-
+        //  this.toastr.error(err);
+      };
+      this.refreshNotes();
+    });
 
 
+    var chip1=
+    {
+      reminder: null
+    }
+             console.log(chip1);
+    // this.chipData=data;
+    //console.log(this.chipData);
+    this.commonService.updateData('update/' + data._id, chip1)
+      .subscribe(model => {
+        console.log(model);
 
-          }
+        // this.toastr.success( 'Success!');
+        // this.router.navigate(['/home']);
+        //console.log(this.responseStatus = data),
+        err => {
+          console.log(err);
+          //this.toastr.error(err);
+          this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+          () => console.log('Request Completed')
+
+          //  this.toastr.error(err);
+        };
+        this.refreshNotes();
+      });
+}
 
     /////////////////////////////////////////////////////////////////////
+   //  removedateChip(data): void {
+   //   var chip=
+   //   {
+   //     reminder: []
+   //   }
+   //            console.log(chip);
+   //   // this.chipData=data;
+   //   //console.log(this.chipData);
+   //   this.commonService.updateData('update/' + data._id, chip)
+   //     .subscribe(model => {
+   //       console.log(model);
+   //
+   //       // this.toastr.success( 'Success!');
+   //       // this.router.navigate(['/home']);
+   //       //console.log(this.responseStatus = data),
+   //       err => {
+   //         console.log(err);
+   //         //this.toastr.error(err);
+   //         this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+   //         () => console.log('Request Completed')
+   //
+   //         //  this.toastr.error(err);
+   //       };
+   //       this.refreshNotes();
+   //     });
+   //
+   // }
 
+//////////////////////////////////////////////////////////////////////////////
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
@@ -415,7 +463,7 @@ export class DashboardComponent implements OnInit {
    {
      var reminder1 =
    {
-     reminder: data
+     reminder: this.model.reminder
    }
      console.log(data,reminder1);
  // this.chipData=data;

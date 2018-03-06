@@ -42,7 +42,7 @@ var NoteSchema = new mongoose.Schema({
      type: Date,
      default: null
    },
-
+   
   note_chip: {
     type: String
   }

@@ -39,16 +39,18 @@
           <div (click)="openDialog(data)">
               <p>{{data.title}}</p>
               <p>{{data.note}}</p>
-              <div  *ngIf="data.note_chip">
+            <div  *ngIf="data.note_chip || data.reminder">
                <mat-form-field class="demo-chip-list">
                  <mat-chip-list>
                 <mat-chip  [removable]="removable" (remove)="remove(data)">
                   <p>{{data.note_chip}}</p>
+                  <p>{{data.reminder}}</p>
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
                 </mat-chip-list>
               </mat-form-field>
             </div>
+
           </div>
           <div class="imageNotes" [style.background]="data.note_color">
               <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg"  [matMenuTriggerFor]="menu2">
@@ -58,18 +60,20 @@
                    <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'NextWeek  Mon,08.00')" >NextWeek   Mon,08.00</button>
                    <button mat-menu-item  [matMenuTriggerFor]="menu3"><img class="img-responsive"  style="width:18px;" src="assets/icon/watch.svg" >select date and time</button>
                  <mat-menu #menu3="matMenu">
-                 <mat-card>
 
-                 Date <input [owlDateTimeTrigger]="dt3"   name="reminder"  [owlDateTime]="dt3" ngModel required />
-                 <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
-                 </mat-card>
-                 <mat-card>
-                 Time<input [owlDateTimeTrigger]="dt4"  name="reminder"  [owlDateTime]="dt4"  ngModel required />
-                 <owl-date-time [pickerType]="'timer'"  #dt4></owl-date-time>
+                   Date Time:
+                   <input [(ngModel)]="invalidMoment"
+                   [min]="min" [max]="max"
+                   [owlDateTimeTrigger]="dt11" [owlDateTime]="dt11"
+                   #dateTime="ngModel" name="reminder"  [(ngModel)]="model.reminder" required/>
+                   <owl-date-time #dt11></owl-date-time>
+
+
                  <div fxLayout="row" fxLayoutAlign="end center" style="margin-top:5px;">
-                 <button  mat-button mat-raised-button color="primary" type="submit" (click)="submitReminder(data,reminder)" style="font-size: 10px;">save</button>
-               </div>
-                 </mat-card>
+                 <button  mat-button mat-raised-button color="primary" type="submit" (click)="submitReminder(data)" style="font-size: 10px;">save</button>
+                  </div>
+
+
                  </mat-menu>
 
           </mat-menu>
