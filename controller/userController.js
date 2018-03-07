@@ -213,6 +213,9 @@ exports.reset_password = function(req, res, next) {
   });
 };
 
+///////////////////////////////////////////////////
+          // facebook login//
+//////////////////////////////////////////////////
 exports.passport = function(passport) {
    // used to serialize the user for the session
    passport.serializeUser(function(user, done) {

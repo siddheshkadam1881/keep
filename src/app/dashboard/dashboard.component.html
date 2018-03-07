@@ -11,15 +11,21 @@
      <!-- create note here -->
     <div class="writeNotes" id="bt" *ngIf="show">
     <div  class="example-full-width1" style="width=100%">
-    <mat-form-field>
-     <input matInput placeholder="Title" type="text" value="Title" name="title" [(ngModel)]= "model.title" >
-    </mat-form-field>
+
+       <label>Title</label>
+     <div  contenteditable="true" type="text" value="Title" type="text" name="title"  (input)="model.title=$event.target.innerHTML" ></div>
+
     </div>
 
     <div class="example-full-width1" style="width=100%">
-      <mat-form-field>
-       <input matInput placeholder="Take a note" type="text" value="Take a note" name="note" [(ngModel)]= "model.note">
-      </mat-form-field>
+
+       <!-- <input matInput placeholder="Take a note" type="text" value="Take a note" name="note" [(ngModel)]= "model.note"> -->
+         <label>Take a note</label>
+        <div contenteditable="true" type="text"  name="note" (input)="model.note=$event.target.innerHTML"></div>
+
+       <!-- <div  type="text" contenteditable="true" [textContent]="model" (input)="model=$event.target.innerHtml" [(contenteditableModel)]= "model.note">some text</div> -->
+      <!-- <div class="textarea" contentEditable="true" data-placeholder="placeholder" type="text"  value="Take a note" name="note"  [(contenteditableModel)]= "model.note">placeholder</div> -->
+
     </div>
     <div>
     <button matTooltip="Done" matTooltipShowDelay="100" mat-button mat-raised-button type="submit" (click)="!toggle1();submitNote()"  >Done</button>
@@ -38,13 +44,13 @@
      <img class="img-responsive" matTooltip="remind me" (click)="pinNotes(data)"  matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/unpin.png">
           <div (click)="openDialog(data)">
               <p>{{data.title}}</p>
-              <p>{{data.note}}</p>
+              <p [innerHTML]="data.note"></p>
             <div  *ngIf="data.note_chip || data.reminder">
                <mat-form-field class="demo-chip-list">
                  <mat-chip-list>
                 <mat-chip  [removable]="removable" (remove)="remove(data)">
                   <p>{{data.note_chip}}</p>
-                  <p>{{data.reminder}}</p>
+                  <!-- <p>{{data.reminder}}</p> -->
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
                 </mat-chip-list>
@@ -117,10 +123,44 @@
      <img class="img-responsive" matTooltip="remind me" (click)="pinNotes(data)"  matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/pin.svg">
           <div (click)="openDialog(data)"  >
               <p>{{data.title}}</p>
-              <p>{{data.note}}</p>
+              <p [innerHTML]="data.note"></p>
+              <div  *ngIf="data.note_chip || data.reminder">
+                 <mat-form-field class="demo-chip-list">
+                   <mat-chip-list>
+                  <mat-chip  [removable]="removable" (remove)="remove(data)">
+                    <p>{{data.note_chip}}</p>
+                    <p>{{data.reminder}}</p>
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  </mat-chip>
+                  </mat-chip-list>
+                </mat-form-field>
+              </div>
           </div>
           <div class="imageNotes" [style.background]="data.note_color">
-              <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg">
+              <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg"  [matMenuTriggerFor]="menu2">
+              <mat-menu #menu2="matMenu">
+                  <button mat-menu-item style="word-spacing: 30px;" (click)="chipShow(data,'Later Today 20.00')">LaterToday  20.00</button>
+                  <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
+                   <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'NextWeek  Mon,08.00')" >NextWeek   Mon,08.00</button>
+                   <button mat-menu-item  [matMenuTriggerFor]="menu3"><img class="img-responsive"  style="width:18px;" src="assets/icon/watch.svg" >select date and time</button>
+                 <mat-menu #menu3="matMenu">
+
+                   Date Time:
+                   <input [(ngModel)]="invalidMoment"
+                   [min]="min" [max]="max"
+                   [owlDateTimeTrigger]="dt11" [owlDateTime]="dt11"
+                   #dateTime="ngModel" name="reminder"  [(ngModel)]="model.reminder" required/>
+                   <owl-date-time #dt11></owl-date-time>
+
+
+                 <div fxLayout="row" fxLayoutAlign="end center" style="margin-top:5px;">
+                 <button  mat-button mat-raised-button color="primary" type="submit" (click)="submitReminder(data)" style="font-size: 10px;">save</button>
+                  </div>
+
+
+                 </mat-menu>
+
+          </mat-menu>
               <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
               <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg" [matMenuTriggerFor]="menu1">
               <mat-menu #menu1="matMenu">

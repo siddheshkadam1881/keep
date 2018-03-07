@@ -68,7 +68,13 @@ word-wrap: break-word;
     width:250px;
     font-size: 18px;
     word-wrap: break-word;
-
+    word-break: break-all;
+    -webkit-user-modify: read-only;
+    direction: ltr;
+    unicode-bidi: isolate;
+    -webkit-user-modify: read-only;
+direction: ltr;
+unicode-bidi: isolate;
   }
   .imageNotes
   {

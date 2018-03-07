@@ -9,6 +9,11 @@ import { CommonComponent } from '../common/common.component';
 import { HomeComponent } from '../home/home.component';
 import {MatChipInputEvent} from '@angular/material';
 import {ENTER, COMMA} from '@angular/cdk/keycodes';
+import {NgModule, forwardRef, ViewChild, ElementRef} from '@angular/core'
+import {BrowserModule} from '@angular/platform-browser'
+import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {Observable} from 'rxjs/Rx';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -16,6 +21,10 @@ import {ENTER, COMMA} from '@angular/cdk/keycodes';
 })
 export class DashboardComponent implements OnInit {
 
+
+// remainder
+  private timerSubscription: any = null;
+  private lastActivityTime: Date;
 //CHIP EVENT
   visible: boolean = true;
   selectable: boolean = true;
@@ -76,6 +85,11 @@ export class DashboardComponent implements OnInit {
   ////////////////////////////////read the data by calling service method//////////////////////////////////////////////
 
   ngOnInit():void {
+
+    let timer = Observable.timer(1000, 1000);
+     this.timerSubscription = timer.subscribe((t:any) => {
+     this.timer1Executed();
+   });
      //
         this.commonService.getData('readTodos').subscribe(response => {
           if (response) {
@@ -89,6 +103,15 @@ export class DashboardComponent implements OnInit {
   }
 
   //////////////////////////////////////////////////////////
+  //
+  //
+ getData(data):void
+ {
+
+console.log(data);
+
+
+ }
 
   add(event: MatChipInputEvent): void {
      let input = event.input;
@@ -160,38 +183,13 @@ export class DashboardComponent implements OnInit {
       });
 }
 
-    /////////////////////////////////////////////////////////////////////
-   //  removedateChip(data): void {
-   //   var chip=
-   //   {
-   //     reminder: []
-   //   }
-   //            console.log(chip);
-   //   // this.chipData=data;
-   //   //console.log(this.chipData);
-   //   this.commonService.updateData('update/' + data._id, chip)
-   //     .subscribe(model => {
-   //       console.log(model);
-   //
-   //       // this.toastr.success( 'Success!');
-   //       // this.router.navigate(['/home']);
-   //       //console.log(this.responseStatus = data),
-   //       err => {
-   //         console.log(err);
-   //         //this.toastr.error(err);
-   //         this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-   //         () => console.log('Request Completed')
-   //
-   //         //  this.toastr.error(err);
-   //       };
-   //       this.refreshNotes();
-   //     });
-   //
-   // }
 
 //////////////////////////////////////////////////////////////////////////////
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+    //unsubscribe the subscription in ngDestroy
+    if (this.timerSubscription != null)
+        this.timerSubscription.unsubscribe();
   }
 
   toggle1() {
@@ -440,9 +438,13 @@ export class DashboardComponent implements OnInit {
     {
       note_chip: chip1
     }
-      console.log(chip);
-  // this.chipData=data;
-  //console.log(this.chipData);
+
+
+
+    var currentDate = new Date();
+    currentDate.setHours(currentDate.getHours() + 16);  //addition 24 hours  from current date
+    this.lastActivityTime = currentDate;
+
       this.commonService.updateData('update/' + data._id, chip)
      .subscribe(model => {
       console.log(model);
@@ -458,6 +460,37 @@ export class DashboardComponent implements OnInit {
       };
       this.refreshNotes();
     });
+
+
+  //
+ var reminder1 =
+{
+  reminder: this.lastActivityTime
+}
+  console.log(data,reminder1);
+// this.chipData=data;
+//console.log(this.chipData);
+  this.commonService.updateData('update/' + data._id, reminder1)
+ .subscribe(model => {
+  console.log(model);
+  // this.toastr.success( 'Success!');
+  // this.router.navigate(['/home']);
+  //console.log(this.responseStatus = data),
+  err => {
+  console.log(err);
+  //this.toastr.error(err);
+  this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+  () => console.log('Request Completed')
+    //  this.toastr.error(err);
+  };
+  this.refreshNotes();
+});
+
+
+
+
+
+
   }
    submitReminder(data)
    {
@@ -485,5 +518,25 @@ export class DashboardComponent implements OnInit {
    });
 
    }
+
+
+   private timer1Executed(): void
+   {
+     var tomorrow = new Date();
+     tomorrow.setDate(currentDate.getDate()+1);
+     tomorrow.setHours(20);//set setHours
+     tomorrow.setDate(currentDate.getDate()+1);
+     tomorrow.setHours(8);
+     tomorrow.setMinutes(0);
+     tomorrow.setMilliseconds(0);
+     var currentDate = new Date();
+     // currentDate.setHours(currentDate.getHours() - 2);  //subtract 2 hours or 120 minutes from current date
+     this.lastActivityTime = tomorrow;
+  }
+
+
+
+
+
 
   }
