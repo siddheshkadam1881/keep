@@ -42,20 +42,16 @@ var NoteSchema = new mongoose.Schema({
      type: Date,
      default: null
    },
-   
+
   note_chip: {
     type: String
+  },
+  image: {
+     data: Buffer
   }
 });
 var Todomodel  = mongoose.model('todo', NoteSchema);
 module.exports = Todomodel;
-
-
-
-
-
-
-
 
 
 

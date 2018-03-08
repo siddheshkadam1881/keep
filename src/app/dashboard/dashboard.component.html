@@ -43,8 +43,10 @@
 
      <img class="img-responsive" matTooltip="remind me" (click)="pinNotes(data)"  matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/unpin.png">
           <div (click)="openDialog(data)">
+            <p>{{data.image}}</p>
               <p>{{data.title}}</p>
               <p [innerHTML]="data.note"></p>
+
             <div  *ngIf="data.note_chip || data.reminder">
                <mat-form-field class="demo-chip-list">
                  <mat-chip-list>
@@ -61,9 +63,9 @@
           <div class="imageNotes" [style.background]="data.note_color">
               <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg"  [matMenuTriggerFor]="menu2">
               <mat-menu #menu2="matMenu">
-                  <button mat-menu-item style="word-spacing: 30px;" (click)="chipShow(data,'Later Today 20.00')">LaterToday  20.00</button>
-                  <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
-                   <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'NextWeek  Mon,08.00')" >NextWeek   Mon,08.00</button>
+                  <button mat-menu-item style="word-spacing: 30px;" (click)="chipShowtoday(data,'Later Today 20.00')">LaterToday  20.00</button>
+                  <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShowTommarrow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
+                   <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShowMonday(data,'NextWeek  Mon,08.00')" >NextWeek   Mon,08.00</button>
                    <button mat-menu-item  [matMenuTriggerFor]="menu3"><img class="img-responsive"  style="width:18px;" src="assets/icon/watch.svg" >select date and time</button>
                  <mat-menu #menu3="matMenu">
 
@@ -101,7 +103,12 @@
                       <button class="dot"  style="background-color:pink;" (click)="changeColor(data,'pink')"></button>
                    </div>
           </mat-menu>
-              <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg">
+         <!-- <input #fileInput (change)="fileUpload()" type="file" name="pic" accept="image/*"> -->
+         <!-- <img src="{{empProfile?(empProfile):('assets/images/employee.jpg')}}" class="profile-img" (click)="profileUpdate($event,'.picUpload')"> -->
+        <!-- <input type="file" style="display:none" class="picUpload" /> -->
+
+              <img class="img-responsive"   #fileInput  type="file" name="image" accept="image/*" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg" (click)="openDialogImage(data)">
+              <input type="file" style="display:none" class="picUpload" />
               <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100" (click)="archiveNotes(data)" style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
               <mat-menu #menu="matMenu">
@@ -129,7 +136,7 @@
                    <mat-chip-list>
                   <mat-chip  [removable]="removable" (remove)="remove(data)">
                     <p>{{data.note_chip}}</p>
-                    <p>{{data.reminder}}</p>
+                    <!-- <p>{{data.reminder}}</p> -->
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                   </mat-chip>
                   </mat-chip-list>
@@ -139,9 +146,9 @@
           <div class="imageNotes" [style.background]="data.note_color">
               <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg"  [matMenuTriggerFor]="menu2">
               <mat-menu #menu2="matMenu">
-                  <button mat-menu-item style="word-spacing: 30px;" (click)="chipShow(data,'Later Today 20.00')">LaterToday  20.00</button>
-                  <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
-                   <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'NextWeek  Mon,08.00')" >NextWeek   Mon,08.00</button>
+                <button mat-menu-item style="word-spacing: 30px;" (click)="chipShowtoday(data,'Later Today 20.00')">LaterToday  20.00</button>
+                <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShowTommarrow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
+                 <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShowMonday(data,'NextWeek  Mon,08.00')" >NextWeek   Mon,08.00</button>
                    <button mat-menu-item  [matMenuTriggerFor]="menu3"><img class="img-responsive"  style="width:18px;" src="assets/icon/watch.svg" >select date and time</button>
                  <mat-menu #menu3="matMenu">
 

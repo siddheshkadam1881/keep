@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,VERSION, Renderer2} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef} from '@angular/core';
 import { BackendApiService } from '../services/backend-api.service';
@@ -13,6 +13,9 @@ import {NgModule, forwardRef, ViewChild, ElementRef} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {Observable} from 'rxjs/Rx';
+import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
+
+// import * as $ from "jquery";
 
 @Component({
   selector: 'app-dashboard',
@@ -22,9 +25,12 @@ import {Observable} from 'rxjs/Rx';
 export class DashboardComponent implements OnInit {
 
 
+
 // remainder
   private timerSubscription: any = null;
   private lastActivityTime: Date;
+  private lastActivityTime1: Date;
+  private lastActivityTime2: Date;
 //CHIP EVENT
   visible: boolean = true;
   selectable: boolean = true;
@@ -47,12 +53,14 @@ export class DashboardComponent implements OnInit {
    title:string;
    values:any={};
    model:any={};
+   item:any={};
 //notes array
    notes: Array<any>;
   //hide and see logic
   public show:boolean = false;
   public show1:boolean = false;
   responseStatus:Object= [];
+
   status:boolean ;
   //hide and show grid
   showHide:boolean;
@@ -72,7 +80,7 @@ export class DashboardComponent implements OnInit {
 
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
+  constructor(private rd: Renderer2,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -88,7 +96,9 @@ export class DashboardComponent implements OnInit {
 
     let timer = Observable.timer(1000, 1000);
      this.timerSubscription = timer.subscribe((t:any) => {
-     this.timer1Executed();
+     this.timerTommarrowExecuted();
+     this.timerTodayExecuted();
+     this.timerMondayExecuted();
    });
      //
         this.commonService.getData('readTodos').subscribe(response => {
@@ -432,7 +442,7 @@ console.log(data);
 
       }
 
-    chipShow(data, chip1)
+    chipShowtoday(data, chip1)
   {
       var chip =
     {
@@ -441,9 +451,9 @@ console.log(data);
 
 
 
-    var currentDate = new Date();
-    currentDate.setHours(currentDate.getHours() + 16);  //addition 24 hours  from current date
-    this.lastActivityTime = currentDate;
+    // var currentDate = new Date();
+    // currentDate.setHours(currentDate.getHours() + 16);  //addition 24 hours  from current date
+    // this.lastActivityTime = currentDate;
 
       this.commonService.updateData('update/' + data._id, chip)
      .subscribe(model => {
@@ -486,12 +496,111 @@ console.log(data);
   this.refreshNotes();
 });
 
-
-
-
-
-
   }
+
+  chipShowTommarrow(data, chip1)
+{
+    var chip =
+  {
+    note_chip: chip1
+  }
+  // var currentDate = new Date();
+  // currentDate.setHours(currentDate.getHours() + 16);  //addition 24 hours  from current date
+  // this.lastActivityTime = currentDate;
+
+    this.commonService.updateData('update/' + data._id, chip)
+   .subscribe(model => {
+    console.log(model);
+    // this.toastr.success( 'Success!');
+    // this.router.navigate(['/home']);
+    //console.log(this.responseStatus = data),
+    err => {
+    console.log(err);
+    //this.toastr.error(err);
+    this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+    () => console.log('Request Completed')
+      //  this.toastr.error(err);
+    };
+    this.refreshNotes();
+  });
+//
+var reminder1 =
+{
+reminder: this.lastActivityTime1
+}
+console.log(data,reminder1);
+// this.chipData=data;
+//console.log(this.chipData);
+this.commonService.updateData('update/' + data._id, reminder1)
+.subscribe(model => {
+console.log(model);
+// this.toastr.success( 'Success!');
+// this.router.navigate(['/home']);
+//console.log(this.responseStatus = data),
+err => {
+console.log(err);
+//this.toastr.error(err);
+this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+() => console.log('Request Completed')
+  //  this.toastr.error(err);
+};
+this.refreshNotes();
+});
+
+}
+
+
+chipShowMonday(data, chip1)
+{
+  var chip =
+{
+  note_chip: chip1
+}
+// var currentDate = new Date();
+// currentDate.setHours(currentDate.getHours() + 16);  //addition 24 hours  from current date
+// this.lastActivityTime = currentDate;
+
+  this.commonService.updateData('update/' + data._id, chip)
+ .subscribe(model => {
+  console.log(model);
+  // this.toastr.success( 'Success!');
+  // this.router.navigate(['/home']);
+  //console.log(this.responseStatus = data),
+  err => {
+  console.log(err);
+  //this.toastr.error(err);
+  this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+  () => console.log('Request Completed')
+    //  this.toastr.error(err);
+  };
+  this.refreshNotes();
+});
+//
+var reminder2 =
+{
+reminder: this.lastActivityTime2
+}
+console.log(data,reminder2);
+// this.chipData=data;
+//console.log(this.chipData);
+this.commonService.updateData('update/' + data._id, reminder2)
+.subscribe(model => {
+console.log(model);
+// this.toastr.success( 'Success!');
+// this.router.navigate(['/home']);
+//console.log(this.responseStatus = data),
+err => {
+console.log(err);
+//this.toastr.error(err);
+this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+() => console.log('Request Completed')
+//  this.toastr.error(err);
+};
+this.refreshNotes();
+});
+
+}
+
    submitReminder(data)
    {
      var reminder1 =
@@ -520,23 +629,56 @@ console.log(data);
    }
 
 
-   private timer1Executed(): void
+   private timerTommarrowExecuted(): void
    {
      var tomorrow = new Date();
+     var currentDate = new Date();
      tomorrow.setDate(currentDate.getDate()+1);
-     tomorrow.setHours(20);//set setHours
-     tomorrow.setDate(currentDate.getDate()+1);
-     tomorrow.setHours(8);
+     tomorrow.setHours(8);//set setHours
      tomorrow.setMinutes(0);
      tomorrow.setMilliseconds(0);
-     var currentDate = new Date();
      // currentDate.setHours(currentDate.getHours() - 2);  //subtract 2 hours or 120 minutes from current date
-     this.lastActivityTime = tomorrow;
+     this.lastActivityTime1 = tomorrow;
   }
+  private timerTodayExecuted(): void
+  {
+    var currentDate = new Date();
+    //tomorrow.setDate(currentDate.getDate()+1);
+    currentDate.setHours(20);//set setHours
+    currentDate.setMinutes(0);
+    currentDate.setMilliseconds(0);
+    // currentDate.setHours(currentDate.getHours() - 2);  //subtract 2 hours or 120 minutes from current date
+    this.lastActivityTime = currentDate;
+ }
+ private timerMondayExecuted(): void
+ {
+   var currentDate = new Date();
+    var Monday = new Date();
+   Monday.setDate(currentDate.getDate()+6);
+   Monday.setHours(20);//set setHours
+   Monday.setMinutes(0);
+   Monday.setMilliseconds(0);
+   // currentDate.setHours(currentDate.getHours() - 2);  //subtract 2 hours or 120 minutes from current date
+   this.lastActivityTime2 = Monday;
+}
 
+    // profileUpdate(event,className):void
+    // {
+    //   $(className).trigger("click");
+    // }
+    openDialogImage(data): void
+    {
+    
+    let dialogRef = this.dialog.open(OpenDialogImageComponent, {
+     width: '300px',
+     height:'300px',
+     data: data
+    });
 
-
-
+    dialogRef.afterClosed().subscribe(result => {
+     console.log('The dialog was closed');
+    });
+    }
 
 
   }
