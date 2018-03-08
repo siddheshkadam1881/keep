@@ -36,7 +36,7 @@
 
 
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
-  <div class="note" fxLayout="row" fxLayoutAlign=" none" ><h3>Pinned</h3></div>
+  <!-- <div class="note" fxLayout="row" fxLayoutAlign=" none" ><h3>Pinned</h3></div> -->
   <div class="allnotes"  *ngFor="let data of dashDataFirst.reverse()" >
   <div *ngIf= "!data.is_deleted && !data.is_archieved && data.is_pinned">
    <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}" [style.background]="data.note_color">

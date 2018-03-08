@@ -6,7 +6,8 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var expressJwt = require('express-jwt');
  var  passport = require('passport');
-var cookieSession = require('cookie-session')
+var cookieSession = require('cookie-session');
+const multer = require('multer');
 app.use(cookieSession({
   name: 'session',
   keys: [{secret: 'session secret key' }],

@@ -21,7 +21,7 @@ var jwt = require('jsonwebtoken');
  var FacebookStrategy = require('passport-facebook').Strategy;
  var fbConfig = require('../config/auth');
  var  passport = require('passport');
-
+ var multer  = require('multer');
 // registration user here
 
 exports.signUp = function(req, res) {

@@ -1,7 +1,7 @@
 var express = require("express");
 var Todo = require("../model/Todomodel");
 var User = require("../model/User");
-
+var multer  = require('multer');
 // create todo notes here...
 exports.createNote = function(req, res) {
   console.log(req.body);

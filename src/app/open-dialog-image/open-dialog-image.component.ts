@@ -23,15 +23,12 @@ export class OpenDialogImageComponent implements OnInit {
   handleFileInput(event, data) {
     console.log(data)
     var image = event.target.files[0];
-
-    var image1 =
-  {
-    image: image
-  }
-    console.log(data,image1);
 // this.chipData=data;
 //console.log(this.chipData);
-    this.commonService.updateData('update/' + data._id, image1)
+
+  let formObj = new FormData();
+    formObj.append("image",image)
+    this.commonService.updateData('update/' + data._id, formObj)
    .subscribe(model => {
     console.log(model);
     // this.toastr.success( 'Success!');
