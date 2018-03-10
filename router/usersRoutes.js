@@ -1,6 +1,15 @@
 var router = require('express').Router();
 var userController=require('../controller/userController.js');
-var todoController=require('../controller/todoController.js')
+var todoController=require('../controller/todoController.js');
+// var multer  = require('multer');
+// var upload = multer({ storage: storage });
+  // var upload = multer({ dest: '/tmp/' });
+// const upload = multer({
+//   // var upload = multer({ dest: '/tmp/' });
+//   dest: 'uploads/' // this saves your file into a directory called "uploads"
+// });
+
+
 //var passport = require('passport');
 
 
@@ -18,6 +27,7 @@ router.post('/create',todoController.createNote);
 router.get('/readTodos',todoController.readTodos);
 router.get('/readTodos/:id',todoController.readTodoById);
 router.put('/update/:id',todoController.update);
+// router.put('/uploader/:id',todoController.uploader);
 router.delete('/delete/:id',todoController.delete);
 
 

@@ -11,14 +11,23 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class OpenDialogImageComponent implements OnInit {
   fileToUpload: File = null;
     invalidCredentialMsg: string;
+    public dashDataFirst;
   constructor(private route: ActivatedRoute, private router: Router,public dialogRef: MatDialogRef<OpenDialogImageComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,private commonService:BackendApiService)
     { }
 
-  ngOnInit() {
+  ngOnInit()
+  {
+        this.commonService.getData('readTodos').subscribe(response => {
+          if (response) {
+            //console.log(response.data);
+            // items.slice().reverse();
+             this.dashDataFirst = response.reverse();
+              console.log(this.dashDataFirst.reverse());
+          }
+        },
+          error => console.log("Error while retrieving"))
   }
-
-
 
   handleFileInput(event, data) {
     console.log(data)
@@ -41,9 +50,20 @@ export class OpenDialogImageComponent implements OnInit {
     () => console.log('Request Completed')
       //  this.toastr.error(err);
     };
+    this.refreshNotes();
   });
-
-
+ }
+ refreshNotes()
+ {
+   this.commonService.getData('readTodos').subscribe(response => {
+     if (response) {
+       //console.log(response.data);
+       // items.slice().reverse();
+        this.dashDataFirst = response.reverse();
+         console.log(this.dashDataFirst.reverse());
+     }
+   },
+     error => console.log("Error while retrieving"))
  }
 
 }

@@ -13,7 +13,11 @@
   position: fixed;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
   z-index: 2;
-  background: #f3f3f3;
+  background: #FFFF00;
+}
+.mat-toolbar.mat-primary {
+    background: #fb0;
+    color: #000;
 }
 
 h1.example-app-name {
@@ -35,6 +39,22 @@ h1.example-app-name {
   background: #f0f8ff;
 
 }
+
+
+/*mat-menu
+{
+  width: 350px;
+  height: 350px;
+}*/
+
+.cropcircle {
+width: 35px;
+height: 35px;
+border-radius: 100%;
+background: #eee no-repeat center;
+background-size: cover;
+}
+
 .notes
 {
   background-color:rgb(255 , 255, 255);

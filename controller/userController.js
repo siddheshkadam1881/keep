@@ -21,9 +21,12 @@ var jwt = require('jsonwebtoken');
  var FacebookStrategy = require('passport-facebook').Strategy;
  var fbConfig = require('../config/auth');
  var  passport = require('passport');
- var multer  = require('multer');
-// registration user here
+ // var multer  = require('multer');
+ // const upload = multer({
+ //   dest: 'uploads/' // this saves your file into a directory called "uploads"
+ // });
 
+// registration user here
 exports.signUp = function(req, res) {
   var user = new User(req.body);
   user.userpass = bcrypt.hashSync(req.body.userpass, 10);

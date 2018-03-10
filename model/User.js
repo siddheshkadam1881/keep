@@ -28,6 +28,9 @@
  reset_password_expires: {
    type: Date,
    default: Date.now
+ },
+ profile: {
+    data: Buffer
  }
 
 });

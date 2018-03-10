@@ -2,6 +2,17 @@ var express = require("express");
 var Todo = require("../model/Todomodel");
 var User = require("../model/User");
 var multer  = require('multer');
+var storage =multer.diskStorage({
+destination :function(req,file,callback)
+{
+  callback( null,'./uploads');
+},
+filename:function(req,file,callback)
+{
+  callback(null,file.originalname);
+},
+});
+var upload = multer({storage : storage}).single('image');
 // create todo notes here...
 exports.createNote = function(req, res) {
   console.log(req.body);
@@ -44,18 +55,26 @@ exports.readTodoById = function(req, res) {
    });
 }
 
-// update function to update a current note
-exports.update = function(req, res) {
- Todo.findOneAndUpdate({
-   _id: req.params.id,
- //  user_id:req.user.id
- }, req.body, {
-   new: true
- }, function(err, note) {
-   if (err)
-     res.send(err);
 
+
+//update function to update a current note
+exports.update = function(req, res) {
+
+  upload(req,res,function(err){
+    var todoObj = req.body || {};
+    if(req.file && req.file.path){
+      todoObj.image = req.file.path;
+    }
+    Todo.findOneAndUpdate({
+     _id : req.params.id
+ },todoObj , {
+   new: true
+ },
+ function(err, note) {
+     if (err)
+     res.send(err);
    res.json(note);
+   });
  });
 };
 
