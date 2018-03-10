@@ -40,9 +40,9 @@ invalidCredentialMsg: string;
   }
 
       signInUser(data) {
-        console.log(data);
+         console.log(data.email);
 
-               // console.log("submit Post click happend " + this.model.name)
+                localStorage.setItem('email',data.email);
 
                 this.commonService.postServiceData('signin',data)
                 .subscribe(data => {

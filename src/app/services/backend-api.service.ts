@@ -31,18 +31,16 @@ public urlpath;
 
   }
 
-
-
-
-////////////////////////////////////////
-/* get service  */
-/////////////////////////
+  ////////////////////////////////////////
+  /* get service  */
+  /////////////////////////
 
   getData(path) {
     //get url from the ts and concate it.
     console.log("path", path);
     let urlpath = this.base_url.concat(path);
-
+    //get token from the local storage
+    let email=localStorage.getItem("email");
     //get token from the local storage
     let token = localStorage.getItem("token");
     console.log("token", token);

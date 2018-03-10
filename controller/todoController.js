@@ -16,8 +16,6 @@ var upload = multer({storage : storage}).single('image');
 // create todo notes here...
 exports.createNote = function(req, res) {
   console.log(req.body);
-
-
   var new_note = new Todo();
   new_note.title = req.body.title;
   new_note.note = req.body.note;

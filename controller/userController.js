@@ -21,12 +21,10 @@ var jwt = require('jsonwebtoken');
  var FacebookStrategy = require('passport-facebook').Strategy;
  var fbConfig = require('../config/auth');
  var  passport = require('passport');
- // var multer  = require('multer');
- // const upload = multer({
- //   dest: 'uploads/' // this saves your file into a directory called "uploads"
- // });
 
 // registration user here
+
+
 exports.signUp = function(req, res) {
   var user = new User(req.body);
   user.userpass = bcrypt.hashSync(req.body.userpass, 10);
@@ -69,6 +67,7 @@ exports.signIn= function(req, res) {
       return res.status(401).json({ message: 'Unauthorized user!' });
   }
  };
+
 ////////////////////////////////////////////////////////////////////////////
  exports.forgot_password = function(req, res) {
   async.waterfall([
@@ -278,7 +277,42 @@ return passport;
 
 
 /////////////////////////////////////////////////////////////////////////////
-//
+
+exports.activateUser = function(req,res) {
+     console.log(res);
+    var email = req.params.email;
+    var userToken = req.params.token;
+
+    // cache.get(email,function(err,token) {
+    //
+    //   if(err) return res.json({message:'No valid token'})
+    //   if(!token) return       res.redirect('/signup');
+    //
+    //   //res.json({message:'No token provided'})
+    //    var data = {
+    //      'local.is_activated':true
+    //    }
+    //    cache.del(email);
+
+        User.findOneAndUpdate({'email':email},data,{new:true},function(err,user) {
+        console.log(user);
+         res.redirect('/');
+        //  res.json({token:token,Message:'User is Activated'})
+
+      })
+
+    //})
+      //res.redirect('/#!/register');
+  }
+
+
+
+
+
+
+
+
+
  // exports.passport = function(passport) {
  //    // used to serialize the user for the session
  //    passport.serializeUser(function(user, done) {

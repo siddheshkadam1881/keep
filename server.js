@@ -20,7 +20,7 @@ app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 var userRoutes=require('./router/usersRoutes.js');
-
+app.use("/uploads" , express.static("uploads"));
 app.use(cors());
 app.use(userRoutes);
 var mongoose = require('mongoose');

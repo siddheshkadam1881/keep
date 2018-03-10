@@ -662,13 +662,10 @@ this.refreshNotes();
    this.lastActivityTime2 = Monday;
 }
 
-    // profileUpdate(event,className):void
-    // {
-    //   $(className).trigger("click");
-    // }
+
     openDialogImage(data): void
     {
-    
+
     let dialogRef = this.dialog.open(OpenDialogImageComponent, {
      width: '300px',
      height:'300px',

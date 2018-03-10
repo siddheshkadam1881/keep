@@ -44,7 +44,7 @@
      <img class="img-responsive" matTooltip="remind me" (click)="pinNotes(data)"  matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/unpin.png">
           <div (click)="openDialog(data)">
             <div>
-            <img [src]='data.image' alt="pic" height="100px" width="250px" />
+            <img [src]='"http://localhost:3000/"+data.image' alt="pic" height="150px" width="250px" />
           </div>
               <p>{{data.title}}</p>
               <p [innerHTML]="data.note"></p>

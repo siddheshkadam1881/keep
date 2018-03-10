@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { CommonComponent } from '../common/common.component';
 import { GridService } from '../services/grid.service';
+import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
 
 import { DashboardComponent } from '../dashboard/dashboard.component';
 //import {HttpModule} from '@angular/http';
@@ -53,7 +54,7 @@ export class HomeComponent  implements OnInit {
    private _mobileQueryListener: () => void;
 
    constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
-     this.mobileQuery = media.matchMedia('(max-width: 600px)');
+     this.mobileQuery = media.matchMedia('(max-width: 600px)',);
      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
      this.mobileQuery.addListener(this._mobileQueryListener);
 
@@ -65,15 +66,15 @@ export class HomeComponent  implements OnInit {
 
    ngOnInit():void {
       //
-         this.commonService.getData('readTodos').subscribe(response => {
-           if (response) {
-             //console.log(response.data);
-             // items.slice().reverse();
-              this.dashDataFirst = response.reverse();
-               console.log(this.dashDataFirst.reverse());
-           }
-         },
-           error => console.log("Error while retrieving"))
+      this.commonService.getData('activateUser').subscribe(response => {
+        if (response) {
+          //console.log(response.data);
+          // items.slice().reverse();
+           this.dashDataFirst = response.reverse();
+          //console.log(this.dashDataFirst.reverse());
+        }
+      },
+        error => console.log("Error while retrieving"))
    }
 
 //////////////////////////////////////////////////////////
@@ -81,68 +82,96 @@ export class HomeComponent  implements OnInit {
      this.mobileQuery.removeListener(this._mobileQueryListener);
    }
 
-   toggle1() {
-    this.show = !this.show;
 
-}
+   openDialogImage(data): void
+   {
+
+   let dialogRef = this.dialog.open(OpenDialogImageComponent, {
+    width: '300px',
+    height:'300px',
+    data: data
+   });
+
+   dialogRef.afterClosed().subscribe(result => {
+    console.log('The dialog was closed');
+   });
+   }
+
+
+
+
+
+
+
+
+
+
+//
+//    toggle1() {
+//     this.show = !this.show;
+//
+// }
+
+
+
 // toggle1() {
 //  this.showtoggle1= !this.showtoggle1;
 //
 // }
 
+ //
+ // submitNote() {
+ //
+ //   console.log(this.model);
+ //
+ //          // console.log("submit Post click happend " + this.model.name)
+ //
+ //           this.commonService.postServiceData('create',this.model)
+ //           .subscribe(model => {
+ //              console.log(model);
+ //
+ //             // this.toastr.success( 'Success!');
+ //             // this.router.navigate(['/home']);
+ //
+ //           //console.log(this.responseStatus = data),
+ //           err =>{
+ //                    console.log(err);
+ //                   //this.toastr.error(err);
+ //                   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+ //                   () => console.log('Request Completed')
+ //
+ //                //  this.toastr.error(err);
+ //
+ //         };
+ //         this.refreshNotes();
+ //    });
+ // }
 
- submitNote() {
 
-   console.log(this.model);
-
-          // console.log("submit Post click happend " + this.model.name)
-
-           this.commonService.postServiceData('create',this.model)
-           .subscribe(model => {
-              console.log(model);
-
-             // this.toastr.success( 'Success!');
-             // this.router.navigate(['/home']);
-
-           //console.log(this.responseStatus = data),
-           err =>{
-                    console.log(err);
-                   //this.toastr.error(err);
-                   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-                   () => console.log('Request Completed')
-
-                //  this.toastr.error(err);
-
-         };
-         this.refreshNotes();
-    });
- }
-
-
- copyNote(model)
- {
-
-    console.log(model);
-    //let notes=new myData();
-    this.commonService.postServiceData('create',model)
-    .subscribe(model => {
-       console.log(model);
-
-      // this.toastr.success( 'Success!');
-      // this.router.navigate(['/home']);
-
-    //console.log(this.responseStatus = data),
-    err =>{
-             console.log(err);
-            //this.toastr.error(err);
-            this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-            () => console.log('Request Completed')
-         //  this.toastr.error(err);
-
-                  };
-                  this.refreshNotes();
-             });
- }
+ // copyNote(model)
+ // {
+ //
+ //    console.log(model);
+ //    //let notes=new myData();
+ //    this.commonService.postServiceData('create',model)
+ //    .subscribe(model => {
+ //       console.log(model);
+ //
+ //      // this.toastr.success( 'Success!');
+ //      // this.router.navigate(['/home']);
+ //
+ //    //console.log(this.responseStatus = data),
+ //    err =>{
+ //             console.log(err);
+ //            //this.toastr.error(err);
+ //            this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+ //            () => console.log('Request Completed')
+ //         //  this.toastr.error(err);
+ //
+ //                  };
+ //                  this.refreshNotes();
+ //             });
+ // }
 
  logout() {
  localStorage.removeItem("token");
@@ -161,41 +190,104 @@ openDialog(data): void {
   });
 }
 
-deleteNote(id){
-console.log(id);
-//this.commonService.deleteData('delete/'+id).subscribe(
-this.commonService.deleteData('delete/'+id).subscribe(
 
-data => {
- console.log("note delete");
- //console.log(data);
- //this.toastr.success( 'Success!', 'timeout: 6000');
 
- //console.log(this.responseStatus = data),
- err =>{
- console.log(err);
- //this.toastr.error(err);
- this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
- () => console.log("Note updated !!!")
- //this.toastr.error(err);
-//this.ngOnDestroy()
-};
-this.refreshNotes();
-});
-}
-//refresh notes here
-refreshNotes()
-{
-  this.commonService.getData('readTodos').subscribe(response => {
-    if (response) {
-      //console.log(response.data);
-      // items.slice().reverse();
-       this.dashDataFirst = response.reverse();
-        console.log(this.dashDataFirst.reverse());
-    }
-  },
-    error => console.log("Error while retrieving"))
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// deleteNote(id){
+// console.log(id);
+// //this.commonService.deleteData('delete/'+id).subscribe(
+// this.commonService.deleteData('delete/'+id).subscribe(
+//
+// data => {
+//  console.log("note delete");
+//  //console.log(data);
+//  //this.toastr.success( 'Success!', 'timeout: 6000');
+//
+//  //console.log(this.responseStatus = data),
+//  err =>{
+//  console.log(err);
+//  //this.toastr.error(err);
+//  this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+//  () => console.log("Note updated !!!")
+//  //this.toastr.error(err);
+// //this.ngOnDestroy()
+// };
+// this.refreshNotes();
+// });
+// }
+// //refresh notes here
+// refreshNotes()
+// {
+//   this.commonService.getData('readTodos').subscribe(response => {
+//     if (response) {
+//       //console.log(response.data);
+//       // items.slice().reverse();
+//        this.dashDataFirst = response.reverse();
+//         console.log(this.dashDataFirst.reverse());
+//     }
+//   },
+//     error => console.log("Error while retrieving"))
+// }
 //toggle nav
  // toggleNav() {
  //   this.sideService.sidenav.toggle();
