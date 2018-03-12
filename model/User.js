@@ -29,7 +29,7 @@
    type: Date,
    default: Date.now
  },
- profile: {
+ image: {
     data: Buffer
  }
 

@@ -21,6 +21,18 @@ var jwt = require('jsonwebtoken');
  var FacebookStrategy = require('passport-facebook').Strategy;
  var fbConfig = require('../config/auth');
  var  passport = require('passport');
+ var multer  = require('multer');
+ var storage =multer.diskStorage({
+ destination :function(req,file,callback)
+ {
+   callback( null,'./uploads');
+ },
+ filename:function(req,file,callback)
+ {
+   callback(null,file.originalname);
+ },
+ });
+ var upload = multer({storage : storage}).single('image');
 
 // registration user here
 
@@ -56,6 +68,56 @@ exports.signIn= function(req, res) {
     }
   });
 };
+
+
+//Read activeUser here...
+exports.readActiveUser = function(req, res) {
+   User.find({
+   // find by id and email
+   //user_id:req.user.id
+
+   }, function(err, note) {
+     if (err)
+     res.send(500, { err: 'something blew up' });
+     //res.send(err);
+     res.json(note);
+   });
+}
+
+
+
+// activeUser function to update a current user
+exports.activeUser = function(req, res) {
+
+  upload(req,res,function(err){
+    var userObj = req.body || {};
+    if(req.file && req.file.path){
+      userObj.image = req.file.path;
+    }
+    User.findOneAndUpdate({
+     _id : req.params.id
+ },userObj , {
+   new: true
+ },
+ function(err, note) {
+     if (err)
+     res.send(err);
+   res.json(note);
+   });
+ });
+};
+
+
+
+
+
+
+
+
+
+
+
+
 
 ///////////////////////////////////////////////////////////////////
  exports.loginRequired = function(req, res, next) {
@@ -304,6 +366,12 @@ exports.activateUser = function(req,res) {
     //})
       //res.redirect('/#!/register');
   }
+
+
+
+
+
+
 
 
 

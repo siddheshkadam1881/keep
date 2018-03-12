@@ -43,6 +43,7 @@ import {MatDatetimepickerModule,MatNativeDatetimeModule,MAT_DATETIME_FORMATS } f
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {MatChipsModule} from '@angular/material/chips';
 import { OpenDialogImageComponent } from './open-dialog-image/open-dialog-image.component';
+import { OpenDialogProfileComponent } from './open-dialog-profile/open-dialog-profile.component';
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
@@ -89,7 +90,8 @@ export function provideConfig() {
     DashboardComponent,
     TrashComponent,
     ArchieveComponent,
-    OpenDialogImageComponent
+    OpenDialogImageComponent,
+    OpenDialogProfileComponent
   ],
   imports: [
     MatChipsModule,
@@ -125,7 +127,8 @@ export function provideConfig() {
   entryComponents: [
 
      CommonComponent,
-     OpenDialogImageComponent
+     OpenDialogImageComponent,
+     OpenDialogProfileComponent
    ],
 
   providers: [BackendApiService, { provide: AuthServiceConfig, useFactory: provideConfig }, {

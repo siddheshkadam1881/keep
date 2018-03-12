@@ -57,8 +57,9 @@ background-size: cover;
 
 .profile
 {
-  width: 210px;
-  height: 200px;
+  margin-top:-50px;
+  width: 240px;
+  height: 165px;
 }
 .notes
 {

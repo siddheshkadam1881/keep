@@ -8,7 +8,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { CommonComponent } from '../common/common.component';
 import { GridService } from '../services/grid.service';
 import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
-
+import { OpenDialogProfileComponent } from '../open-dialog-profile/open-dialog-profile.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 //import {HttpModule} from '@angular/http';
 @Component({
@@ -20,7 +20,7 @@ export class HomeComponent  implements OnInit {
   showFiller = false;
 
    isClassVisible: false;
-  public dashDataFirst;
+  public Users;
   public myData=[];
   note:string;
 
@@ -66,12 +66,11 @@ export class HomeComponent  implements OnInit {
 
    ngOnInit():void {
       //
-      this.commonService.getData('activateUser').subscribe(response => {
+      this.commonService.getData('readActiveUser').subscribe(response => {
         if (response) {
-          //console.log(response.data);
+          console.log(response);
           // items.slice().reverse();
-           this.dashDataFirst = response.reverse();
-          //console.log(this.dashDataFirst.reverse());
+           this.Users = response;
         }
       },
         error => console.log("Error while retrieving"))
@@ -86,7 +85,7 @@ export class HomeComponent  implements OnInit {
    openDialogImage(data): void
    {
 
-   let dialogRef = this.dialog.open(OpenDialogImageComponent, {
+   let dialogRef = this.dialog.open(OpenDialogProfileComponent, {
     width: '300px',
     height:'300px',
     data: data

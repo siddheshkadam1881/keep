@@ -19,7 +19,11 @@ router.post('/signin',userController.signIn);
 router.post('/loginRequired',userController.loginRequired);
 router.post('/forgot_password',userController.forgot_password);
 router.post('/reset_password/:token',userController.reset_password);
-router.get('/activateUser/:data/:token', userController.activateUser);
+router.get('/readActiveUser',userController.readActiveUser);
+router.put('/activeUser/:id',userController.activeUser);
+
+
+
 
 ///////todo controller
 router.post('/create',todoController.createNote);
