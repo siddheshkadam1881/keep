@@ -22,116 +22,119 @@ export class OpenDialogProfileComponent implements OnInit {
     { }
 
 
-    ngOnInit()
-    {
-          this.commonService.getData('readActiveUser').subscribe(response => {
-            if (response) {
-              //console.log(response.data);
-              // items.slice().reverse();
-               this.dashDataFirst = response;
-              //  console.log(this.dashDataFirst.reverse());
-            }
-          },
-          error => console.log("Error while retrieving"))
-    }
-
-
-fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
-}
-imageCropped(image: string) {
-      this.croppedImage = image;
-
-
-  }
-  imageLoaded() {
-  }
-
-  saveImage(image,data)
+ngOnInit()
 {
-//console.log(image);
-var image = this.croppedImage;
-// this.chipData=data;
-//  console.log(this.chipData);
-var image1= this.dataURItoBlob(image);
-let formObj = new FormData();
-formObj.append("image",image1)
-this.commonService.updateData('activeUser/' + data._id, formObj)
-.subscribe(model => {
-console.log(model);
-// this.toastr.success( 'Success!');
-// this.router.navigate(['/home']);
-//console.log(this.responseStatus = data),
-err => {
-console.log(err);
-//this.toastr.error(err);
-this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-() => console.log('Request Completed')
-  //  this.toastr.error(err);
-};
-
-   this.refreshProfile();
-   this.imageChangedEvent = event;
-  });
+  this.commonService.getData('readActiveUser').subscribe(response => {
+    if (response) {
+      //console.log(response.data);
+      // items.slice().reverse();
+      this.dashDataFirst = response;
+      //  console.log(this.dashDataFirst.reverse());
+    }
+  },
+    error => console.log("Error while retrieving"))
 }
-    handleFileInput(event, data) {
-      console.log(data)
-      var image = event.target.files[0];
-      // this.chipData=data;
-      //  console.log(this.chipData);
 
-      let formObj = new FormData();
-      formObj.append("image",image)
-      this.commonService.updateData('activeUser/' + data._id, formObj)
-     .subscribe(model => {
+//change event function use for move rectangular crop
+fileChangeEvent(event: any): void {
+  this.imageChangedEvent = event;
+}
+//got cropped image
+imageCropped(image: string) {
+  this.croppedImage = image;
+
+
+}
+imageLoaded() {
+}
+
+//this function use for save crop image to backend...
+saveImage(image, data)
+{
+  //console.log(image);
+  var image = this.croppedImage;
+  // this.chipData=data;
+  //  console.log(this.chipData);
+  var image1 = this.dataURItoBlob(image);
+  let formObj = new FormData();
+  formObj.append("image", image1)
+  this.commonService.updateData('activeUser/' + data._id, formObj)
+    .subscribe(model => {
       console.log(model);
       // this.toastr.success( 'Success!');
       // this.router.navigate(['/home']);
       //console.log(this.responseStatus = data),
       err => {
-      console.log(err);
-      //this.toastr.error(err);
-      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-      () => console.log('Request Completed')
+        console.log(err);
+        //this.toastr.error(err);
+        this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+        () => console.log('Request Completed')
+        //  this.toastr.error(err);
+      };
+
+      this.refreshProfile();
+      this.imageChangedEvent = event;
+    });
+}
+//choose image from file here...
+handleFileInput(event, data) {
+  console.log(data)
+  var image = event.target.files[0];
+  // this.chipData=data;
+  //  console.log(this.chipData);
+
+  let formObj = new FormData();
+  formObj.append("image", image)
+  this.commonService.updateData('activeUser/' + data._id, formObj)
+    .subscribe(model => {
+      console.log(model);
+      // this.toastr.success( 'Success!');
+      // this.router.navigate(['/home']);
+      //console.log(this.responseStatus = data),
+      err => {
+        console.log(err);
+        //this.toastr.error(err);
+        this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+        () => console.log('Request Completed')
         //  this.toastr.error(err);
       };
       this.refreshProfile();
-       this.imageChangedEvent = event;
+      this.imageChangedEvent = event;
     });
-   }
+}
 
 //predefine function use for base 64 to image file
-   dataURItoBlob(dataURI) {
-      // convert base64 to raw binary data held in a string
-      // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-      var byteString = atob(dataURI.split(',')[1]);
+dataURItoBlob(dataURI) {
+  // convert base64 to raw binary data held in a string
+  // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+  var byteString = atob(dataURI.split(',')[1]);
 
-      // separate out the mime component
-      var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+  // separate out the mime component
+  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
 
-      // write the bytes of the string to an ArrayBuffer
-      var ab = new ArrayBuffer(byteString.length);
-      var ia = new Uint8Array(ab);
-      for (var i = 0; i < byteString.length; i++) {
-          ia[i] = byteString.charCodeAt(i);
-      }
-
-      // write the ArrayBuffer to a blob, and you're done
-      var bb = new Blob([ab]);
-      return bb;
+  // write the bytes of the string to an ArrayBuffer
+  var ab = new ArrayBuffer(byteString.length);
+  var ia = new Uint8Array(ab);
+  for (var i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
   }
 
-  //refresh profile here...
-   refreshProfile()
-   {
-     this.commonService.getData('readActiveUser').subscribe(response => {
-       if (response) {
-         //console.log(response.data);
-         // items.slice().reverse();
-          this.dashDataFirst = response;
+  // write the ArrayBuffer to a blob, and you're done
+  var bb = new Blob([ab]);
+  return bb;
+}
 
-       }
-     },
-       error => console.log("Error while retrieving"))
-   }
+//refresh profile here...
+refreshProfile()
+{
+  this.commonService.getData('readActiveUser').subscribe(response => {
+    if (response) {
+      //console.log(response.data);
+      // items.slice().reverse();
+      this.dashDataFirst = response;
+
+    }
+  },
+    error => console.log("Error while retrieving"))
+}
 }
