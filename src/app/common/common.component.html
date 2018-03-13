@@ -3,6 +3,9 @@
 
     <div class="innerCardDiv" [style.background]="data.note_color">
       <div>
+        <div *ngIf= "data.image">
+        <img [src]='"http://localhost:3000/"+data.image'  height="100px" width="250px" />
+      </div>
       <div>
       <mat-form-field>
         <input contenteditable="true" matInput [(ngModel)]="data.title">

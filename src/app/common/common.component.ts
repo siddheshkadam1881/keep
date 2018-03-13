@@ -18,7 +18,6 @@ invalidCredentialMsg: string;
     {
       // this.id = this.route.params['id'];
      }
-
     ngOnInit():void {
 
               this.commonService.getData('readTodos').subscribe(response => {

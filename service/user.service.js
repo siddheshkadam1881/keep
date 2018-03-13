@@ -1,22 +1,25 @@
-// var service = {};
-// service.upload = upload;
-// var Q = require('q');
-// module.exports = service;
-// function upload(_id,userParam)
-// {
-// var deferred = Q.defer();
-// Todo.findById(_id, function (err, note)
-// {
-//   if (err) deferred.reject(err.message);
-//
-//
-//
-//
-//
-//
-// }
-//
-// 
-//
-//
-// }
+
+var Q = require('q');
+var service = {};
+var User = require("../model/User");
+service.readActiveUser=readActiveUser;
+module.exports = service;
+
+
+
+function readActiveUser
+{
+
+User.find().toArray(function (err, User) {
+        if (err) deferred.reject(err);
+
+        // return users (without hashed passwords)
+        User = _.map(User, function (User) {
+            return _.omit(user, 'hash');
+        });
+
+        deferred.resolve(users);
+    });
+
+    return deferred.promise;
+}

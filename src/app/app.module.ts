@@ -44,6 +44,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {MatChipsModule} from '@angular/material/chips';
 import { OpenDialogImageComponent } from './open-dialog-image/open-dialog-image.component';
 import { OpenDialogProfileComponent } from './open-dialog-profile/open-dialog-profile.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
@@ -94,6 +95,7 @@ export function provideConfig() {
     OpenDialogProfileComponent
   ],
   imports: [
+    ImageCropperModule,
     MatChipsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,

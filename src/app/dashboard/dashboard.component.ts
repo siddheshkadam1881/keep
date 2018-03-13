@@ -112,16 +112,14 @@ export class DashboardComponent implements OnInit {
           error => console.log("Error while retrieving"))
   }
 
-  //////////////////////////////////////////////////////////
-  //
-  //
- getData(data):void
- {
 
-console.log(data);
-
-
- }
+//  getData(data):void
+//  {
+//
+// console.log(data);
+//
+//
+//  }
 
   add(event: MatChipInputEvent): void {
      let input = event.input;
@@ -273,7 +271,7 @@ console.log(data);
   openDialog(data): void {
   let dialogRef = this.dialog.open(CommonComponent, {
    width: '400px',
-   height:'400px',
+   height:'450px',
    data: data
   });
 

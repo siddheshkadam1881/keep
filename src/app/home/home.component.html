@@ -4,7 +4,7 @@
     <button mat-button matTooltip="main menu" matTooltipShowDelay="100" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
     <h1 matTooltip="Google keep" matTooltipShowDelay="100" class="example-app-name">Google keep</h1>
 
-      <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="margin-left: 872px;width:40px;" src="assets/icon/List View.svg">
+      <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="margin-left: 820px;width:40px;" src="assets/icon/List View.svg">
     <img [src]='"http://localhost:3000/"+user.image' class="cropcircle" fxLayout="row"  fxLayoutAlign="start" [matMenuTriggerFor]="menu"  fxLayoutAlign="end"/>
      <mat-menu #menu="matMenu">
     <div class="profile"  fxLayoutAlign="center center" mat-menu-item>
@@ -16,10 +16,6 @@
     <p><b>{{user.email}}</b></p>
     </div>
     <hr>
-
-    <!-- <div  class="profile1" style="width: 240px; height:40px" fxLayout="row" fxLayoutAlign="start end" mat-menu-item >
-    <button  matTooltip="logout" matTooltipShowDelay="100"   mat-button mat-raised-button color="primary" (click)="logout()" >Logout</button>
-  </div> -->
      <div  class="profile1" style="width: 240px; height:40px" fxLayout="row" fxLayoutAlign="end end" mat-menu-item >
      <button  matTooltip="logout" matTooltipShowDelay="100"   mat-button mat-raised-button color="primary" (click)="logout()" >Logout</button>
    </div>

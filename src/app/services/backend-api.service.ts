@@ -27,8 +27,6 @@ public urlpath;
   return this.http.post(this.urlpath,model)
   .map(res=>res.json());
   //this.toastr.success('You are awesome!', 'Success!', 'timeout: 3000');
-
-
   }
 
   ////////////////////////////////////////
