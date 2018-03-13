@@ -65,6 +65,8 @@ export class HomeComponent  implements OnInit {
 ////////////////////////////////read the data by calling service method//////////////////////////////////////////////
 
    ngOnInit():void {
+
+
       //
       this.commonService.getData('readActiveUser').subscribe(response => {
         if (response) {
@@ -188,13 +190,18 @@ openDialog(data): void {
     console.log('The dialog was closed');
   });
 }
+//refresh profile here...
+refreshProfile()
+{
+  this.commonService.getData('readActiveUser').subscribe(response => {
+    if (response) {
+      //console.log(response.data);
+      // items.slice().reverse();
+      this.Users = response;
 
-
-
-
-
-
-
-
+    }
+  },
+    error => console.log("Error while retrieving"))
+}
 
  }
