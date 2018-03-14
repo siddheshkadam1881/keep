@@ -1,0 +1,64 @@
+<div class="example-container" style="background-color: Gray;" [class.example-is-mobile]="mobileQuery.matches" >
+  <mat-toolbar color="primary" class="example-toolbar" *ngFor="let user of Users">
+    <!-- <p><button mat-button (click)="sidenav.toggle()">sidenav.toggle()</button></p> -->
+    <button mat-button matTooltip="main menu" matTooltipShowDelay="100" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1 matTooltip="Google keep" matTooltipShowDelay="100" class="example-app-name">Google keep</h1>
+
+      <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="margin-left: 820px;width:40px;" src="assets/icon/List View.svg">
+    <img [src]='"http://localhost:3000/"+user.image' class="cropcircle" fxLayout="row"  fxLayoutAlign="start" [matMenuTriggerFor]="menu"  fxLayoutAlign="end"/>
+     <mat-menu #menu="matMenu">
+    <div class="profile"  fxLayoutAlign="center center" mat-menu-item>
+    <img [src]='"http://localhost:3000/"+user.image' class="cropcircle1" style="width: 100px; height:100px ;border-radius: 100%; margin-top: 65px; background: #eee no-repeat center; background-size: cover;" (click)="openDialogImage(user)" />
+    </div>
+  <hr>
+    <div>
+    <p><b>{{user.username}}</b></p>
+    <p><b>{{user.email}}</b></p>
+    </div>
+    <hr>
+     <div  class="profile1" style="width: 240px; height:40px" fxLayout="row" fxLayoutAlign="end end" mat-menu-item >
+     <button  matTooltip="logout" matTooltipShowDelay="100"   mat-button mat-raised-button color="primary" (click)="logout()" >Logout</button>
+   </div>
+     </mat-menu>
+    <!-- <button matTooltip="logout" fxFlex fxLayout="row" fxLayoutAlign="end" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button> -->
+
+    <div>
+    </div>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" style="width:140px;background-color:#E6E6FA;">
+      <mat-nav-list >
+        <!-- <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a> -->
+       <a mat-list-item [routerLink]="['/home']"  routerLinkActive="active" class="btn">Notes</a>
+        <a mat-list-item [routerLink]="['/home/Trash']"  routerLinkActive="active" class="btn">Trash</a>
+        <a mat-list-item [routerLink]="['/home/Archieve']"  routerLinkActive="active" class="btn">archieve</a>
+        <hr>
+         <div fxLayout="row" fxLayoutAlign="center center">
+          <div fxFlex="5" >
+            <label>Labels</label>
+          </div>
+          <div fxFlex="55">
+          </div>
+
+          <div fxFlex="40" fxLayoutAlign="center center">
+            <button mat-button  style="font-size: 13px;">Edit</button>
+          </div>
+         </div>
+         <div *ngFor="let label of Labels">
+
+             <p>{{label.title}}</p>
+
+            <div fxLayout="row" fxLayoutAlign="center">
+           <button mat-button  style="font-size: 12px;width:130px;"><img class="img-responsive" style="font-size: 12px;width:170px;" (click)="openDialoglabel(label)" style="width: 22px;" src="assets/icon/add.svg">Create new label</button>
+        </div>
+      </div>
+
+
+
+
+      </mat-nav-list>
+    </mat-sidenav>
+   <router-outlet></router-outlet>
+   </mat-sidenav-container>
+</div>

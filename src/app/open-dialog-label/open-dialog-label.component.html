@@ -1,0 +1,18 @@
+<h3>Edit labels</h3>
+ <div class="card-container"  fxLayoutAlign="center" style=" overflow:hidden;">
+
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="15" >
+       <img class="img-responsive" matTooltip="Delete label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" [src]="imgSrc" (mouseover)="onMouseOver()" (mouseout)="onMouseOut()"/>
+    </div>
+
+    <div fxFlex="70">
+             <mat-form-field>
+               <input contenteditable="true" matInput [(ngModel)]="data.title">
+            </mat-form-field>
+    </div>
+    <div fxFlex="15">
+        <img class="img-responsive" matTooltip="rename label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" [src]="imgSrc1"  (click)="renameLabel(data)" />
+    </div>
+  </div>
+  </div>
