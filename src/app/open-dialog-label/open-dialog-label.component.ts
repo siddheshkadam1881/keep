@@ -13,12 +13,23 @@ export class OpenDialogLabelComponent implements OnInit {
   imgSrc: string = "assets/icon/label.svg";
   imgSrc1: string = "assets/icon/done.svg";
   invalidCredentialMsg: string;
+  public Labels;
   constructor(private route: ActivatedRoute, private router: Router,public dialogRef: MatDialogRef<OpenDialogLabelComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any,private commonService:BackendApiService)
   { }
 
   ngOnInit() {
+
+    this.commonService.getData('readLabel').subscribe(response => {
+      if (response) {
+        //console.log(response);
+        // items.slice().reverse();
+         this.Labels = response;
+      }
+    },
+      error => console.log("Error while retrieving"))
   }
+
    onMouseOut()
    {
     this.imgSrc = "assets/icon/label.svg";
@@ -32,7 +43,10 @@ export class OpenDialogLabelComponent implements OnInit {
 
    renameLabel(data)
    {
-     var data1 = { title: data.title }
+     var data1 =
+      {
+        title: data.title
+      }
      console.log(data1);
      this.commonService.updateData('updateLabel/' + data._id, data1)
      .subscribe(model => {
@@ -45,15 +59,48 @@ export class OpenDialogLabelComponent implements OnInit {
       //this.toastr.error(err);
       this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
       () => console.log('Request Completed')
-
-        //  this.toastr.error(err);
-
+      //  this.toastr.error(err);
       };
-      this.refreshLabel();
+     this.refreshLabel();
     });
+ }
 
+  deleteLabel(data)
+{
+   console.log(data);
+      var data1 =
+      {
+        title:null
+      }
+  // console.log(data1);
+     this.commonService.updateData('updateLabel/' + data._id, data1)
+     .subscribe(model => {
+      console.log(model);
+       // this.toastr.success( 'Success!');
+       // this.router.navigate(['/home']);
+       //console.log(this.responseStatus = data),
+       err => {
+       console.log(err);
+      //this.toastr.error(err);
+      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+      () => console.log('Request Completed')
+     //  this.toastr.error(err);
+     };
+       this.refreshLabel();
+   });
 }
 
-    refreshLabel(){}
+
+        refreshLabel()
+      {
+        this.commonService.getData('readLabel').subscribe(response => {
+         if (response) {
+         console.log(response);
+        // items.slice().reverse();
+         this.Labels = response;
+         }
+      },
+      error => console.log("Error while retrieving"))
+    }
 
 }

@@ -7,9 +7,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { CommonComponent } from '../common/common.component';
 import { GridService } from '../services/grid.service';
-import { OpenDialogLabelComponent } from '../open-dialog-label/open-dialog-label.component';
 import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
 import { OpenDialogProfileComponent } from '../open-dialog-profile/open-dialog-profile.component';
+import { OpenDialogLabelComponent } from '../open-dialog-label/open-dialog-label.component';
+
 import { DashboardComponent } from '../dashboard/dashboard.component';
 //import {HttpModule} from '@angular/http';
 @Component({
@@ -138,6 +139,7 @@ dialogRef.afterClosed().subscribe(result => {
  console.log('The dialog was closed');
 });
 }
+
 
 }
 

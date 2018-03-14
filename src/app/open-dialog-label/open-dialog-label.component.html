@@ -1,9 +1,11 @@
 <h3>Edit labels</h3>
- <div class="card-container"  fxLayoutAlign="center" style=" overflow:hidden;">
 
+
+ <div class="card-container" fxLayout="column" fxLayoutAlign="center" style=" overflow:hidden;">
+  //create here hide and see..
   <div fxLayout="row" fxLayoutAlign="center center">
     <div fxFlex="15" >
-       <img class="img-responsive" matTooltip="Delete label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" [src]="imgSrc" (mouseover)="onMouseOver()" (mouseout)="onMouseOut()"/>
+       <img class="img-responsive" matTooltip="Delete label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" [src]="imgSrc" (mouseover)="onMouseOver()" (mouseout)="onMouseOut()" (click)="deleteLabel(data)" />
     </div>
 
     <div fxFlex="70">
@@ -15,4 +17,4 @@
         <img class="img-responsive" matTooltip="rename label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" [src]="imgSrc1"  (click)="renameLabel(data)" />
     </div>
   </div>
-  </div>
+</div>

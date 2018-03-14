@@ -27,8 +27,9 @@
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container">
+
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" style="width:140px;background-color:#E6E6FA;">
-      <mat-nav-list >
+      <mat-nav-list>
         <!-- <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a> -->
        <a mat-list-item [routerLink]="['/home']"  routerLinkActive="active" class="btn">Notes</a>
         <a mat-list-item [routerLink]="['/home/Trash']"  routerLinkActive="active" class="btn">Trash</a>
@@ -53,10 +54,6 @@
            <button mat-button  style="font-size: 12px;width:130px;"><img class="img-responsive" style="font-size: 12px;width:170px;" (click)="openDialoglabel(label)" style="width: 22px;" src="assets/icon/add.svg">Create new label</button>
         </div>
       </div>
-
-
-
-
       </mat-nav-list>
     </mat-sidenav>
    <router-outlet></router-outlet>

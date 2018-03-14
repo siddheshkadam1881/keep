@@ -3,7 +3,7 @@ import { Inject} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { BackendApiService } from '../services/backend-api.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import * as moment from 'moment'
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-open-dialog-profile',

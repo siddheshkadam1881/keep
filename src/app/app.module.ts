@@ -47,7 +47,6 @@ import { OpenDialogProfileComponent } from './open-dialog-profile/open-dialog-pr
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { OpenDialogLabelComponent } from './open-dialog-label/open-dialog-label.component';
 
-
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
@@ -143,23 +142,6 @@ export function provideConfig() {
       useValue: "de-DE"
     },
 
-    // {
-    //   provide: MAT_DATETIME_FORMATS,
-    //   useValue: {
-    //     parse: {
-    //       dateInput: null
-    //     },
-    //     display: {
-    //       dateInput: {year: "numeric", month: "numeric", day: "numeric"},
-    //       monthInput: {month: "long"},
-    //       datetimeInput: {year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric"},
-    //       timeInput: {hour: "numeric", minute: "numeric"},
-    //       monthYearLabel: {year: "numeric", month: "short"},
-    //       dateA11yLabel: {year: "numeric", month: "long", day: "numeric"},
-    //       monthYearA11yLabel: {year: "numeric", month: "long"}
-    //     }
-    //   }
-    // }
    ],
   bootstrap: [AppComponent]
 })

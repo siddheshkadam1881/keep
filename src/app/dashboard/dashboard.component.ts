@@ -109,9 +109,18 @@ export class DashboardComponent implements OnInit {
               console.log(this.dashDataFirst.reverse());
           }
         },
-          error => console.log("Error while retrieving"))
+          error => console.log("Error while retrieving"));
+  //
+  this.commonService.getData('readTodos').subscribe(response => {
+    if (response) {
+      //console.log(response.data);
+      // items.slice().reverse();
+       this.dashDataFirst = response;
+        console.log(this.dashDataFirst.reverse());
+    }
+  },
+    error => console.log("Error while retrieving"))
   }
-
 
 //  getData(data):void
 //  {
