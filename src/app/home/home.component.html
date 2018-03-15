@@ -26,9 +26,9 @@
     </div>
   </mat-toolbar>
 
-  <mat-sidenav-container class="example-sidenav-container">
+  <mat-sidenav-container class="example-sidenav-container" fxLayout="column" >
 
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" style="width:140px;background-color:#E6E6FA;">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" style="width:180px;background-color:#E6E6FA;">
       <mat-nav-list>
         <!-- <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a> -->
        <a mat-list-item [routerLink]="['/home']"  routerLinkActive="active" class="btn">Notes</a>
@@ -36,24 +36,35 @@
         <a mat-list-item [routerLink]="['/home/Archieve']"  routerLinkActive="active" class="btn">archieve</a>
         <hr>
          <div fxLayout="row" fxLayoutAlign="center center">
-          <div fxFlex="5" >
+
+          <div fxFlex="20" >
             <label>Labels</label>
           </div>
           <div fxFlex="55">
           </div>
 
           <div fxFlex="40" fxLayoutAlign="center center">
-            <button mat-button  style="font-size: 13px;">Edit</button>
+            <button mat-button  style="font-size: 13px;" (click)="openDialoglabel(Labels)"  >Edit</button>
           </div>
          </div>
+
          <div *ngFor="let label of Labels">
 
+           <div fxFlex="20" fxLayoutAlign="center center">
+             <img class="img-responsive" matTooltip="Delete label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/add.svg"/>
+           </div>
+           <div fxFlex="35" fxLayoutAlign="center center">
              <p>{{label.title}}</p>
+           </div>
+           <div fxFlex="" fxLayoutAlign="center center">
 
+           </div>
+
+         </div>
             <div fxLayout="row" fxLayoutAlign="center">
-           <button mat-button  style="font-size: 12px;width:130px;"><img class="img-responsive" style="font-size: 12px;width:170px;" (click)="openDialoglabel(label)" style="width: 22px;" src="assets/icon/add.svg">Create new label</button>
+           <button mat-button  style="font-size: 12px;width:180px;"><img class="img-responsive" style="font-size: 12px;width:170px;" (click)="openDialoglabel(Labels)" style="width: 22px;" src="assets/icon/add.svg">Create new label</button>
         </div>
-      </div>
+
       </mat-nav-list>
     </mat-sidenav>
    <router-outlet></router-outlet>
