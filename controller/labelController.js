@@ -32,21 +32,17 @@ var Label = require("../model/labelModel");
     });
  }
 
-// //update Labels here...
-//  exports.updateLabel= function(req, res) {
-//
-//      Label.findOneAndUpdate({
-//       _id : req.params.id
-//   }, req.body,
-//    {
-//     new: true
-//   },
-//   function(err, label) {
-//       if (err)
-//       res.send(err);
-//     res.json(label);
-//     });
-//  };
+ //read particular Labels here...
+ exports.label= function(req, res) {
+     //console.log(req)
+      Label.findOne({
+       _id : req.params.id
+  }, function(err, label) {
+        if (err)
+        res.send(err);
+        res.json(label);
+     });
+  };
 
 // update labels here...
 exports.updateLabel = function(req, res) {

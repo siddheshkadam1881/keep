@@ -31,7 +31,7 @@ export class ForgetComponent  {
             this.commonService.postServiceData('forgot_password',data).subscribe(
             data => {
                console.log(data);
-    
+
               // this.toastr.success( 'Success!', 'timeout: 6000');
                this.router.navigate(['/forget']);
               //console.log(this.responseStatus = data),

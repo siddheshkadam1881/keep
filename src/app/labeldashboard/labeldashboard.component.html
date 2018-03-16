@@ -11,7 +11,6 @@
      <!-- create note here -->
     <div class="writeNotes" id="bt" *ngIf="show">
     <div  class="example-full-width1" style="width=100%">
-
        <label>Title</label>
      <div  contenteditable="true" type="text" value="Title" type="text" name="title"  (input)="model.title=$event.target.innerHTML" ></div>
 
@@ -38,7 +37,7 @@
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
 
   <div class="note" fxLayout="row" fxLayoutAlign=" none" ><h3>Pinned</h3></div>
-  <div class="allnotes"  *ngFor="let data of dashDataFirst">
+  <div class="allnotes"  *ngFor="let data of dashDataFirst" >
   <div *ngIf= "!data.is_deleted && !data.is_archieved && data.is_pinned">
    <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}" [style.background]="data.note_color">
 
@@ -46,6 +45,7 @@
           <div (click)="openDialog(data)">
             <div *ngIf= "data.image">
             <img [src]='"http://localhost:3000/"+data.image'  height="100px" width="250px" />
+
           </div>
               <p>{{data.title}}</p>
               <p [innerHTML]="data.note"></p>
@@ -111,11 +111,7 @@
 
               <img class="img-responsive"   #fileInput  type="file" name="image" accept="image/*" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg" (click)="openDialogImage(data)">
               <input type="file" style="display:none" class="picUpload" />
-
-              <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100" (click)="archiveNotes(data)" style="width: 22px;margin-left: 10px" src="assets/icon/archive.svg">
-
-
-
+              <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100" (click)="archiveNotes(data)" style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
               <mat-menu #menu="matMenu">
                      <button mat-menu-item type="submit" (click)="trashNotes(data)" style="font-size: 13px;">Delete note</button>
@@ -169,7 +165,6 @@
                  <div fxLayout="row" fxLayoutAlign="end center" style="margin-top:5px;">
                  <button  mat-button mat-raised-button color="primary" type="submit" (click)="submitReminder(data)" style="font-size: 10px;">save</button>
                   </div>
-
 
                  </mat-menu>
 

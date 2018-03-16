@@ -50,6 +50,7 @@ export class OpenDialogImageComponent implements OnInit {
     () => console.log('Request Completed')
       //  this.toastr.error(err);
     };
+    location.reload();
     this.refreshNotes();
   });
  }

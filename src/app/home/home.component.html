@@ -3,7 +3,7 @@
     <!-- <p><button mat-button (click)="sidenav.toggle()">sidenav.toggle()</button></p> -->
     <button mat-button matTooltip="main menu" matTooltipShowDelay="100" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
     <h1 matTooltip="Google keep" matTooltipShowDelay="100" class="example-app-name">Google keep</h1>
-
+      <!-- <input [(ngModel)]="searchText" placeholder="search text goes here" style="width: 3700px; height:30px ;" > -->
       <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="margin-left: 820px;width:40px;" src="assets/icon/List View.svg">
     <img [src]='"http://localhost:3000/"+user.image' class="cropcircle" fxLayout="row"  fxLayoutAlign="start" [matMenuTriggerFor]="menu"  fxLayoutAlign="end"/>
      <mat-menu #menu="matMenu">
@@ -26,39 +26,54 @@
     </div>
   </mat-toolbar>
 
-  <mat-sidenav-container class="example-sidenav-container">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" style="width:140px;background-color:#E6E6FA;">
-      <mat-nav-list >
+
+
+    <mat-sidenav-container class="example-sidenav-container" fxLayout="column" >
+
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" style="width:180px;background-color:#E6E6FA;">
+      <mat-nav-list>
         <!-- <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a> -->
        <a mat-list-item [routerLink]="['/home']"  routerLinkActive="active" class="btn">Notes</a>
         <a mat-list-item [routerLink]="['/home/Trash']"  routerLinkActive="active" class="btn">Trash</a>
         <a mat-list-item [routerLink]="['/home/Archieve']"  routerLinkActive="active" class="btn">archieve</a>
         <hr>
          <div fxLayout="row" fxLayoutAlign="center center">
-          <div fxFlex="5" >
+
+          <div fxFlex="20" >
             <label>Labels</label>
           </div>
           <div fxFlex="55">
           </div>
 
           <div fxFlex="40" fxLayoutAlign="center center">
-            <button mat-button  style="font-size: 13px;">Edit</button>
+            <button mat-button  style="font-size: 13px;" (click)="openDialoglabel(Labels)"  >Edit</button>
           </div>
          </div>
+
          <div *ngFor="let label of Labels">
 
+           <div fxFlex="20" fxLayoutAlign="center center" >
+             <img class="img-responsive" matTooltip="Delete label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/label.svg"/>
+           </div>
+           <div fxFlex="75" fxLayoutAlign="center center"  (click)="openLabel(label)">
              <p>{{label.title}}</p>
+           </div>
+           <div fxFlex="" fxLayoutAlign="center center">
 
+           </div>
+
+         </div>
             <div fxLayout="row" fxLayoutAlign="center">
-           <button mat-button  style="font-size: 12px;width:130px;"><img class="img-responsive" style="font-size: 12px;width:170px;" (click)="openDialoglabel(label)" style="width: 22px;" src="assets/icon/add.svg">Create new label</button>
-        </div>
-      </div>
+              <!-- <div fxFlex="20" fxLayoutAlign="center center">
+                <img class="img-responsive" style="font-size: 12px;width:170px;" (click)="openDialoglabel(Labels)" style="width: 22px;" src="assets/icon/add.svg">
+              </div> -->
 
-
-
+           <button mat-button  style="font-size: 12px;width:180px;"><img class="img-responsive" style="font-size: 12px;width:170px;" (click)="openDialoglabel(Labels)" style="width: 22px;" src="assets/icon/add.svg">Create new label</button>
+           </div>
 
       </mat-nav-list>
     </mat-sidenav>
    <router-outlet></router-outlet>
    </mat-sidenav-container>
+
 </div>

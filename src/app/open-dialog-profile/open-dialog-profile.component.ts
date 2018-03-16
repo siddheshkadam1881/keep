@@ -3,7 +3,7 @@ import { Inject} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { BackendApiService } from '../services/backend-api.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import * as moment from 'moment'
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-open-dialog-profile',
@@ -71,7 +71,7 @@ saveImage(image, data)
         () => console.log('Request Completed')
         //  this.toastr.error(err);
       };
-
+    location.reload();
       this.refreshProfile();
       this.imageChangedEvent = event;
     });
@@ -132,6 +132,7 @@ refreshProfile()
       //console.log(response.data);
       // items.slice().reverse();
       this.dashDataFirst = response;
+
 
     }
   },

@@ -8,10 +8,7 @@ var NoteSchema = new mongoose.Schema({
   reminder: {
     type: Date,
   },
-  // user_id: {
-  //   type: String,
-  //   ref: 'UserData'
-  // },
+  
   title: {
     type: String
     //unique: true

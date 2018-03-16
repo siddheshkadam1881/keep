@@ -75,21 +75,12 @@ word-wrap: break-word;
     direction: ltr;
     unicode-bidi: isolate;
     -webkit-user-modify: read-only;
-     direction: ltr;
-     unicode-bidi: isolate;
+direction: ltr;
+unicode-bidi: isolate;
   }
   .imageNotes
   {
    background-color:rgb(255 , 255, 255);
-  }
-
-  .img-responsive
-  {
-    visibility:hidden;
-  }
-
-  mat-card.writeNotes1:hover .img-responsive{
-    visibility:visible;
   }
 
 

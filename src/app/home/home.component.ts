@@ -7,9 +7,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { CommonComponent } from '../common/common.component';
 import { GridService } from '../services/grid.service';
-import { OpenDialogLabelComponent } from '../open-dialog-label/open-dialog-label.component';
 import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
 import { OpenDialogProfileComponent } from '../open-dialog-profile/open-dialog-profile.component';
+import { OpenDialogLabelComponent } from '../open-dialog-label/open-dialog-label.component';
+import { Location } from '@angular/common';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 //import {HttpModule} from '@angular/http';
 @Component({
@@ -55,7 +56,7 @@ export class HomeComponent  implements OnInit {
 
    private _mobileQueryListener: () => void;
 
-   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
+   constructor(private location: Location,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
      this.mobileQuery = media.matchMedia('(max-width: 600px)',);
      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
      this.mobileQuery.addListener(this._mobileQueryListener);
@@ -87,6 +88,7 @@ export class HomeComponent  implements OnInit {
         }
       },
         error => console.log("Error while retrieving"))
+
    }
 
 
@@ -139,33 +141,31 @@ dialogRef.afterClosed().subscribe(result => {
 });
 }
 
+logout() {
+localStorage.removeItem("token");
+this.router.navigate(['/signin']);
 }
+ openLabel(data)
+ {
+
+   console.log(data)
+   this.commonService.postServiceData('label/'+ data._id,data).subscribe(
+     data => {
+          // this.router.navigate(['/home']);
+          //this.toastr.success( 'Success!', 'timeout: 6000');
+          this.router.navigate(['/home/Label/'+data._id]);
+          //console.log(this.responseStatus = data),
+          err =>{
+          console.log(err);
+          //this.toastr.error(err);
+          this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+          () => console.log('get label')
+          // this.toastr.error(err);
+     };
+
+   });
+ }
 
 
-// //create labels
-// createLabel(data)
-// {
-//   console.log(this.data);
-//
-//          // console.log("submit Post click happend " + this.model.name)
-//
-//           this.commonService.postServiceData('createLabel',this.model)
-//           .subscribe(model => {
-//              console.log(model);
-//
-//             // this.toastr.success( 'Success!');
-//             // this.router.navigate(['/home']);
-//
-//           //console.log(this.responseStatus = data),
-//           err =>{
-//                    console.log(err);
-//                   //this.toastr.error(err);
-//                   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-//                   () => console.log('Request Completed')
-//
-//                //  this.toastr.error(err);
-//
-//         };
-//         //this.refreshNotes();
-//    });
-// }
+
+}
