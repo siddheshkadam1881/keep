@@ -46,7 +46,11 @@ import { OpenDialogImageComponent } from './open-dialog-image/open-dialog-image.
 import { OpenDialogProfileComponent } from './open-dialog-profile/open-dialog-profile.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { OpenDialogLabelComponent } from './open-dialog-label/open-dialog-label.component';
+<<<<<<< HEAD
 import { LabeldashboardComponent } from './labeldashboard/labeldashboard.component';
+=======
+
+>>>>>>> 33fb8eb6b8c3dbaed18c60c1dc6e68387a7f4e13
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
@@ -96,8 +100,12 @@ export function provideConfig() {
     ArchieveComponent,
     OpenDialogImageComponent,
     OpenDialogProfileComponent,
+<<<<<<< HEAD
     OpenDialogLabelComponent,
     LabeldashboardComponent
+=======
+    OpenDialogLabelComponent
+>>>>>>> 33fb8eb6b8c3dbaed18c60c1dc6e68387a7f4e13
   ],
   imports: [
     ImageCropperModule,

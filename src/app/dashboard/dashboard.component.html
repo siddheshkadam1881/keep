@@ -1,7 +1,7 @@
 <!-- <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="margin-left: 872px;width:40px;" src="assets/icon/List View.svg"> -->
  <!-- <app-home>  </app-home>  -->
 <mat-sidenav-content>
-  <div *ngIf="!showHide" >
+  <div>
   <p *ngFor="let content of fillerContent">{{content}}</p>
  <!-- take note here -->
   <div  class="notes"  (click)="toggle1()" id="bt" *ngIf="!show">
@@ -55,7 +55,7 @@
                  <mat-chip-list>
                 <mat-chip  [removable]="removable" (remove)="remove(data)">
                   <p>{{data.note_chip}}</p>
-                  <!-- <p>{{data.reminder}}</p> -->
+                   <!-- <p>{{data.reminder}}</p> -->
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
                 </mat-chip-list>
@@ -191,7 +191,7 @@
                        <button class="dot"  style="background-color:brown;" (click)="changeColor(data,'brown')"></button>
                       <button class="dot"  style="background-color:pink;" (click)="changeColor(data,'pink')"></button>
                    </div>
-          </mat-menu>
+              </mat-menu>
               <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg">
               <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100" (click)="archiveNotes(data)" style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">

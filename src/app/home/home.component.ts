@@ -10,7 +10,11 @@ import { GridService } from '../services/grid.service';
 import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
 import { OpenDialogProfileComponent } from '../open-dialog-profile/open-dialog-profile.component';
 import { OpenDialogLabelComponent } from '../open-dialog-label/open-dialog-label.component';
+<<<<<<< HEAD
 import { Location } from '@angular/common';
+=======
+
+>>>>>>> 33fb8eb6b8c3dbaed18c60c1dc6e68387a7f4e13
 import { DashboardComponent } from '../dashboard/dashboard.component';
 //import {HttpModule} from '@angular/http';
 @Component({
@@ -141,9 +145,13 @@ dialogRef.afterClosed().subscribe(result => {
 });
 }
 
+<<<<<<< HEAD
 logout() {
 localStorage.removeItem("token");
 this.router.navigate(['/signin']);
+=======
+
+>>>>>>> 33fb8eb6b8c3dbaed18c60c1dc6e68387a7f4e13
 }
  openLabel(data)
  {
@@ -166,6 +174,36 @@ this.router.navigate(['/signin']);
    });
  }
 
+<<<<<<< HEAD
 
 
 }
+=======
+// //create labels
+// createLabel(data)
+// {
+//   console.log(this.data);
+//
+//          // console.log("submit Post click happend " + this.model.name)
+//
+//           this.commonService.postServiceData('createLabel',this.model)
+//           .subscribe(model => {
+//              console.log(model);
+//
+//             // this.toastr.success( 'Success!');
+//             // this.router.navigate(['/home']);
+//
+//           //console.log(this.responseStatus = data),
+//           err =>{
+//                    console.log(err);
+//                   //this.toastr.error(err);
+//                   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+//                   () => console.log('Request Completed')
+//
+//                //  this.toastr.error(err);
+//
+//         };
+//         //this.refreshNotes();
+//    });
+// }
+>>>>>>> 33fb8eb6b8c3dbaed18c60c1dc6e68387a7f4e13
