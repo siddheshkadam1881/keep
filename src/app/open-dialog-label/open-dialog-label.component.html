@@ -1,0 +1,36 @@
+<h3>Edit labels</h3>
+
+
+ <div class="card-container" fxLayout="column" fxLayoutAlign="center" style=" overflow:hidden;">
+
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="15" >
+       <img class="img-responsive" matTooltip="Delete label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/add.svg"  (click)="changeShowStatus()"/>
+    </div>
+    <div fxFlex="70">
+             <mat-form-field>
+               <input contenteditable="true" matInput placeholder="create new label" type="text" name="title"  [(ngModel)]="model.title" (click)="changeShowStatus()">
+            </mat-form-field>
+    </div>
+    <div fxFlex="15" *ngIf="showHide1">
+        <img class="img-responsive" matTooltip="create label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" [src]="imgSrc1"  (click)="createLabel(data);changeShowStatus()" />
+    </div>
+  </div>
+
+
+  <div fxLayout="row" fxLayoutAlign="center center" *ngFor="let index of data">
+    <div fxFlex="15" >
+       <img class="img-responsive" matTooltip="Delete label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" [src]="imgSrc" (mouseover)="onMouseOver()" (mouseout)="onMouseOut()" (click)="deleteLabel(index._id)" />
+    </div>
+
+    <div fxFlex="70">
+             <mat-form-field>
+                 <input contenteditable="true" matInput [(ngModel)]="index.title">
+            </mat-form-field>
+    </div>
+    <div fxFlex="15">
+        <img class="img-responsive" matTooltip="rename label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" [src]="imgSrc1"  (click)="renameLabel(index)" />
+    </div>
+  </div>
+
+</div>

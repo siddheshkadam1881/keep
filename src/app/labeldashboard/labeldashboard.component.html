@@ -11,7 +11,6 @@
      <!-- create note here -->
     <div class="writeNotes" id="bt" *ngIf="show">
     <div  class="example-full-width1" style="width=100%">
-
        <label>Title</label>
      <div  contenteditable="true" type="text" value="Title" type="text" name="title"  (input)="model.title=$event.target.innerHTML" ></div>
 
@@ -38,7 +37,7 @@
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
 
   <div class="note" fxLayout="row" fxLayoutAlign=" none" ><h3>Pinned</h3></div>
-  <div class="allnotes"  *ngFor="let data of dashDataFirst.reverse()" >
+  <div class="allnotes"  *ngFor="let data of dashDataFirst" >
   <div *ngIf= "!data.is_deleted && !data.is_archieved && data.is_pinned">
    <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}" [style.background]="data.note_color">
 
@@ -53,37 +52,40 @@
 
             <div  *ngIf="data.note_chip || data.reminder">
                <mat-form-field class="demo-chip-list">
-                 <mat-chip-list>
-                <mat-chip  [removable]="removable" (remove)="remove(data)">
-                  <p>{{data.note_chip}}</p>
-                  <!-- <p>{{data.reminder}}</p> -->
-                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                </mat-chip>
-                </mat-chip-list>
-              </mat-form-field>
+                  <mat-chip-list>
+                    <mat-chip  [removable]="removable"  (remove)="remove(data)">
+                      {{data.note_chip}}
+                      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </mat-form-field>
             </div>
           </div>
           <div class="imageNotes" [style.background]="data.note_color">
-              <img class="img-responsive" y-position="below" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg"  [matMenuTriggerFor]="menu2" />
+              <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg" >
               <mat-menu #menu2="matMenu">
-                      <button mat-menu-item style="word-spacing: 30px;" (click)="chipShowtoday(data,'Later Today 20.00')">LaterToday  20.00</button>
-                      <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShowTommarrow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
-                       <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShowMonday(data,'NextWeek  Mon,08.00')" >NextWeek   Mon,08.00</button>
-                       <button mat-menu-item  [matMenuTriggerFor]="menu3"><img class="img-responsive"  style="width:18px;" src="assets/icon/watch.svg" >select date and time</button>
-                     <mat-menu #menu3="matMenu">
+                  <button mat-menu-item style="word-spacing: 30px;" (click)="chipShowtoday(data,'Later Today 20.00')">LaterToday  20.00</button>
+                  <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShowTommarrow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
+                   <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShowMonday(data,'NextWeek  Mon,08.00')" >NextWeek   Mon,08.00</button>
+                   <button mat-menu-item  [matMenuTriggerFor]="menu3"><img class="img-responsive"  style="width:18px;" src="assets/icon/watch.svg" >select date and time</button>
+                 <mat-menu #menu3="matMenu">
 
-                       Date Time:
-                       <input [(ngModel)]="invalidMoment"
-                       [min]="min" [max]="max"
-                       [owlDateTimeTrigger]="dt11" [owlDateTime]="dt11"
-                       #dateTime="ngModel" name="reminder"  [(ngModel)]="model.reminder" required/>
-                       <owl-date-time #dt11></owl-date-time>
-                     <div fxLayout="row" fxLayoutAlign="end center" style="margin-top:5px;">
-                     <button  mat-button mat-raised-button color="primary" type="submit" (click)="submitReminder(data)" style="font-size: 10px;">save</button>
-                      </div>
+                   Date Time:
+                   <input [(ngModel)]="invalidMoment"
+                   [min]="min" [max]="max"
+                   [owlDateTimeTrigger]="dt11" [owlDateTime]="dt11"
+                   #dateTime="ngModel" name="reminder"  [(ngModel)]="model.reminder" required/>
+                   <owl-date-time #dt11></owl-date-time>
 
-                     </mat-menu>
-              </mat-menu>
+
+                 <div fxLayout="row" fxLayoutAlign="end center" style="margin-top:5px;">
+                 <button  mat-button mat-raised-button color="primary" type="submit" (click)="submitReminder(data)" style="font-size: 10px;">save</button>
+                  </div>
+
+
+                 </mat-menu>
+
+          </mat-menu>
               <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
             <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg" [matMenuTriggerFor]="menu1">
               <mat-menu #menu1="matMenu">
@@ -123,7 +125,7 @@
   <div class="other" fxLayout="row" fxLayoutAlign=" none" ><h3>Other</h3></div>
   <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
   <!-- <div class="other"><b>other</b></div> -->
-  <div class="allnotes" *ngFor="let data of dashDataFirst.reverse()" >
+  <div class="allnotes" *ngFor="let data of dashDataFirst" >
   <div *ngIf= "!data.is_deleted && !data.is_archieved && !data.is_pinned">
    <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}"  [style.background]="data.note_color">
      <img class="img-responsive" matTooltip="remind me" (click)="pinNotes(data)"  matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/pin.svg">
@@ -162,7 +164,6 @@
                  <div fxLayout="row" fxLayoutAlign="end center" style="margin-top:5px;">
                  <button  mat-button mat-raised-button color="primary" type="submit" (click)="submitReminder(data)" style="font-size: 10px;">save</button>
                   </div>
-
 
                  </mat-menu>
 

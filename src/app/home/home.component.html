@@ -27,10 +27,10 @@
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" >
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"  style="width:119px;">
       <mat-nav-list>
         <!-- <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a> -->
-  <a mat-list-item [routerLink]="['/home']"  routerLinkActive="active" class="btn">Notes</a>
+        <a mat-list-item [routerLink]="['/home']"  routerLinkActive="active" class="btn">Notes</a>
         <a mat-list-item [routerLink]="['/home/Trash']"  routerLinkActive="active" class="btn">Trash</a>
         <a mat-list-item [routerLink]="['/home/Archieve']"  routerLinkActive="active" class="btn">archieve</a>
          <!-- <img [src]="trashImg" style="width:18px"> -->
