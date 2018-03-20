@@ -8,8 +8,6 @@ import * as io from 'socket.io-client';
 import { ViewContainerRef} from '@angular/core';
 //import { Todo } from("../model/Todomodel");
 import { Response} from '@angular/http';
-
-
 //import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 @Injectable()
 export class BackendApiService {

@@ -1,8 +1,8 @@
 <!-- <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="margin-left: 872px;width:40px;" src="assets/icon/List View.svg"> -->
  <!-- <app-home>  </app-home>  -->
 <mat-sidenav-content>
-  <div *ngIf="!showHide" >
-  <p *ngFor="let content of fillerContent">{{content}}</p>
+  <div>
+  <!-- <p *ngFor="let content of fillerContent">{{content}}</p> -->
  <!-- take note here -->
   <div  class="notes"  (click)="toggle1()" id="bt" *ngIf="!show">
       <div  fxLayoutWrap fxLayoutAlign="space-around center"> Take a note...</div>
@@ -38,7 +38,8 @@
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
 
   <div class="note" fxLayout="row" fxLayoutAlign=" none" ><h3>Pinned</h3></div>
-  <div class="allnotes"  *ngFor="let data of dashDataFirst.reverse()" >
+  <!-- <input type="text"  [(ngModel)]="term"> -->
+  <div class="allnotes"  *ngFor="let data of dashDataFirst">
   <div *ngIf= "!data.is_deleted && !data.is_archieved && data.is_pinned">
    <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}" [style.background]="data.note_color">
 
@@ -56,7 +57,7 @@
                  <mat-chip-list>
                 <mat-chip  [removable]="removable" (remove)="remove(data)">
                   <p>{{data.note_chip}}</p>
-                  <!-- <p>{{data.reminder}}</p> -->
+                   <!-- <p>{{data.reminder}}</p> -->
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
                 </mat-chip-list>
@@ -108,7 +109,11 @@
 
               <img class="img-responsive"   #fileInput  type="file" name="image" accept="image/*" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg" (click)="openDialogImage(data)">
               <input type="file" style="display:none" class="picUpload" />
-              <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100" (click)="archiveNotes(data)" style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
+
+              <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100" (click)="archiveNotes(data)" style="width: 22px;margin-left: 10px" src="assets/icon/archive.svg">
+
+
+
               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
               <mat-menu #menu="matMenu">
                      <button mat-menu-item type="submit" (click)="trashNotes(data)" style="font-size: 13px;">Delete note</button>
@@ -123,7 +128,7 @@
   <div class="other" fxLayout="row" fxLayoutAlign=" none" ><h3>Other</h3></div>
   <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
   <!-- <div class="other"><b>other</b></div> -->
-  <div class="allnotes" *ngFor="let data of dashDataFirst.reverse()" >
+  <div class="allnotes" *ngFor="let data of dashDataFirst" >
   <div *ngIf= "!data.is_deleted && !data.is_archieved && !data.is_pinned">
    <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}"  [style.background]="data.note_color">
      <img class="img-responsive" matTooltip="remind me" (click)="pinNotes(data)"  matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/pin.svg">
@@ -184,7 +189,7 @@
                        <button class="dot"  style="background-color:brown;" (click)="changeColor(data,'brown')"></button>
                       <button class="dot"  style="background-color:pink;" (click)="changeColor(data,'pink')"></button>
                    </div>
-          </mat-menu>
+              </mat-menu>
               <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg">
               <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100" (click)="archiveNotes(data)" style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">

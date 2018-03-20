@@ -7,7 +7,6 @@ var cors = require('cors');
 var expressJwt = require('express-jwt');
  var  passport = require('passport');
 var cookieSession = require('cookie-session');
-const multer = require('multer');
 app.use(cookieSession({
   name: 'session',
   keys: [{secret: 'session secret key' }],
@@ -20,6 +19,7 @@ app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 var userRoutes=require('./router/usersRoutes.js');
+//-------Route -------------------- folder location along with namer
 app.use("/uploads" , express.static("uploads"));
 app.use(cors());
 app.use(userRoutes);

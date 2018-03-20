@@ -2,7 +2,6 @@
   <div  class="innerCardDiv" mat-card fxFlex="400px">
     <h2>Upload Image</h2>
     <input type="file" name="image" accept="image/*" (change)="handleFileInput($event,data)"/>
-
     <image-cropper
       [imageChangedEvent]="imageChangedEvent"
       [maintainAspectRatio]="true"
@@ -12,10 +11,8 @@
       (imageCropped)="imageCropped($event)"
       (imageLoaded)="imageLoaded()"
       (loadImageFailed)="loadImageFailed()">
-
     </image-cropper>
-
-<button  mat-button mat-raised-button color="primary" name="image" accept="image/*" (click)="saveImage(croppedImage,data)" style="font-size: 10px;">save</button>
+  <button  mat-button mat-raised-button color="primary" name="image" accept="image/*" (click)="saveImage(croppedImage,data)" style="font-size: 10px;">save</button>
 <!-- <img [src]="croppedImage" /> -->
 
 

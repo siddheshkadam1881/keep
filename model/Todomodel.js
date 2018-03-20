@@ -5,19 +5,26 @@ var NoteSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  user_id: {
+    type : mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  label_ids:[{
+    type : mongoose.Schema.Types.ObjectId,
+    ref: 'Label'
+  }],
   reminder: {
     type: Date,
   },
-  // user_id: {
-  //   type: String,
-  //   ref: 'UserData'
-  // },
+
   title: {
-    type: String
+    type: String,
+     default: ""
     //unique: true
   },
   note: {
-    type: String
+    type: String,
+     default: ""
     //required: 'enter note'
   },
   email: {
@@ -50,6 +57,19 @@ var NoteSchema = new mongoose.Schema({
      data: Buffer
   }
 });
+
+  NoteSchema.statics.createUserTodo = function createUserTodo (todoObj,cb) {
+  var new_note = new this();
+  new_note.title = todoObj.title;
+  new_note.note = todoObj.note;
+  //new_note.email = req.body.email;
+  //new_note.user_id =req.body.user_id;
+  new_note.save(cb);
+}
+
+NoteSchema.statics.readUserTodo = function (userId,cb) {
+  this.find({ user_id:userId ,is_deleted :false}).exec(cb);
+}
 var Todomodel  = mongoose.model('todo', NoteSchema);
 module.exports = Todomodel;
 

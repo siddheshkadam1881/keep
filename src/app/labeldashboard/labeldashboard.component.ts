@@ -44,6 +44,7 @@ export class LabeldashboardComponent implements OnInit {
     showFiller = false;
     isClassVisible: false;
     public dashDataFirst;
+    public currentlabel;
     public myData=[];
     note:string;
 
@@ -91,6 +92,10 @@ export class LabeldashboardComponent implements OnInit {
 
     ngOnInit():void {
 
+      var a=localStorage.getItem("label");
+      this.currentlabel=a;
+      console.log(this.currentlabel);
+
       let timer = Observable.timer(1000, 1000);
        this.timerSubscription = timer.subscribe((t:any) => {
        this.timerTommarrowExecuted();
@@ -110,21 +115,34 @@ export class LabeldashboardComponent implements OnInit {
     }
 
 
-  //  getData(data):void
-  //  {
-  //
-  // console.log(data);
-  //
-  //
-  //  }
 
+    remove1(data)
+    {
+      var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
+         console.log(data1);
+      this.commonService.updateData('update/'+data._id,data1)
+      .subscribe(model => {
+         console.log(model);
 
+        // this.toastr.success( 'Success!');
+        // this.router.navigate(['/home']);
+      //console.log(this.responseStatus = data),
+      err =>{
+               console.log(err);
+              //this.toastr.error(err);
+              this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+              () => console.log('Request Completed')
+
+           //  this.toastr.error(err);
+
+    };
+    this.refreshNotes();
+   });
+ }
    remove(data): void {
-     debugger;
     var chip=
     {
       note_chip: null,
-      reminder : null
     }
              console.log(chip);
     // this.chipData=data;
@@ -155,7 +173,7 @@ export class LabeldashboardComponent implements OnInit {
                console.log(chip1);
       // this.chipData=data;
       //console.log(this.chipData);
-      this.commonService.updateData('update/' + data._id, chip1)
+        this.commonService.updateData('update/' + data._id, chip1)
         .subscribe(model => {
           console.log(model);
 

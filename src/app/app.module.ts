@@ -45,6 +45,8 @@ import {MatChipsModule} from '@angular/material/chips';
 import { OpenDialogImageComponent } from './open-dialog-image/open-dialog-image.component';
 import { OpenDialogProfileComponent } from './open-dialog-profile/open-dialog-profile.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { OpenDialogLabelComponent } from './open-dialog-label/open-dialog-label.component';
+import { LabeldashboardComponent } from './labeldashboard/labeldashboard.component';
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
@@ -54,7 +56,8 @@ const routes: Routes = [
        { path: '', redirectTo: 'Dashboard', pathMatch: 'full' },
        { path: 'Dashboard', component: DashboardComponent },
        { path: 'Trash', component: TrashComponent },
-       { path: 'Archieve', component: ArchieveComponent }
+       { path: 'Archieve', component: ArchieveComponent },
+       { path: 'Label/:id', component: LabeldashboardComponent }
     ],
 },
   { path: 'forgetpass/:token', component: ForgetpasswordComponent },
@@ -92,7 +95,9 @@ export function provideConfig() {
     TrashComponent,
     ArchieveComponent,
     OpenDialogImageComponent,
-    OpenDialogProfileComponent
+    OpenDialogProfileComponent,
+    OpenDialogLabelComponent,
+    LabeldashboardComponent
   ],
   imports: [
     ImageCropperModule,
@@ -130,7 +135,8 @@ export function provideConfig() {
 
      CommonComponent,
      OpenDialogImageComponent,
-     OpenDialogProfileComponent
+     OpenDialogProfileComponent,
+     OpenDialogLabelComponent
    ],
 
   providers: [BackendApiService, { provide: AuthServiceConfig, useFactory: provideConfig }, {
@@ -138,23 +144,6 @@ export function provideConfig() {
       useValue: "de-DE"
     },
 
-    // {
-    //   provide: MAT_DATETIME_FORMATS,
-    //   useValue: {
-    //     parse: {
-    //       dateInput: null
-    //     },
-    //     display: {
-    //       dateInput: {year: "numeric", month: "numeric", day: "numeric"},
-    //       monthInput: {month: "long"},
-    //       datetimeInput: {year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric"},
-    //       timeInput: {hour: "numeric", minute: "numeric"},
-    //       monthYearLabel: {year: "numeric", month: "short"},
-    //       dateA11yLabel: {year: "numeric", month: "long", day: "numeric"},
-    //       monthYearA11yLabel: {year: "numeric", month: "long"}
-    //     }
-    //   }
-    // }
    ],
   bootstrap: [AppComponent]
 })

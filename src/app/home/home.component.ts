@@ -9,6 +9,8 @@ import { CommonComponent } from '../common/common.component';
 import { GridService } from '../services/grid.service';
 import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
 import { OpenDialogProfileComponent } from '../open-dialog-profile/open-dialog-profile.component';
+import { OpenDialogLabelComponent } from '../open-dialog-label/open-dialog-label.component';
+import { Location } from '@angular/common';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 //import {HttpModule} from '@angular/http';
 @Component({
@@ -21,9 +23,11 @@ export class HomeComponent  implements OnInit {
 
    isClassVisible: false;
   public Users;
+  public Labels;
+  public currentlabel;
+  // public currentlabel1;
   public myData=[];
   note:string;
-
    title:string;
    values:any={};
    model:any={};
@@ -53,7 +57,7 @@ export class HomeComponent  implements OnInit {
 
    private _mobileQueryListener: () => void;
 
-   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
+   constructor(private location: Location,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
      this.mobileQuery = media.matchMedia('(max-width: 600px)',);
      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
      this.mobileQuery.addListener(this._mobileQueryListener);
@@ -66,17 +70,32 @@ export class HomeComponent  implements OnInit {
 
    ngOnInit():void {
 
+       // var currentlabel= localStorage.getItem('label');
+       //  console.log(currentlabel);
+
+     this.commonService.getData('readLabel').subscribe(response => {
+       if (response) {
+         console.log(response);
+         // items.slice().reverse();
+          this.Labels = response;
+       }
+     },
+     error => console.log("Error while retrieving"));
+
 
       //
       this.commonService.getData('readActiveUser').subscribe(response => {
         if (response) {
-          console.log(response);
+          //console.log(response);
           // items.slice().reverse();
            this.Users = response;
         }
       },
         error => console.log("Error while retrieving"))
+
    }
+
+
 
 //////////////////////////////////////////////////////////
    ngOnDestroy(): void {
@@ -98,98 +117,6 @@ export class HomeComponent  implements OnInit {
    });
    }
 
-
-
-
-
-
-
-
-
-
-//
-//    toggle1() {
-//     this.show = !this.show;
-//
-// }
-
-
-
-// toggle1() {
-//  this.showtoggle1= !this.showtoggle1;
-//
-// }
-
- //
- // submitNote() {
- //
- //   console.log(this.model);
- //
- //          // console.log("submit Post click happend " + this.model.name)
- //
- //           this.commonService.postServiceData('create',this.model)
- //           .subscribe(model => {
- //              console.log(model);
- //
- //             // this.toastr.success( 'Success!');
- //             // this.router.navigate(['/home']);
- //
- //           //console.log(this.responseStatus = data),
- //           err =>{
- //                    console.log(err);
- //                   //this.toastr.error(err);
- //                   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
- //                   () => console.log('Request Completed')
- //
- //                //  this.toastr.error(err);
- //
- //         };
- //         this.refreshNotes();
- //    });
- // }
-
-
- // copyNote(model)
- // {
- //
- //    console.log(model);
- //    //let notes=new myData();
- //    this.commonService.postServiceData('create',model)
- //    .subscribe(model => {
- //       console.log(model);
- //
- //      // this.toastr.success( 'Success!');
- //      // this.router.navigate(['/home']);
- //
- //    //console.log(this.responseStatus = data),
- //    err =>{
- //             console.log(err);
- //            //this.toastr.error(err);
- //            this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
- //            () => console.log('Request Completed')
- //         //  this.toastr.error(err);
- //
- //                  };
- //                  this.refreshNotes();
- //             });
- // }
-
- logout() {
- localStorage.removeItem("token");
- this.router.navigate(['/signin']);
-}
-
-openDialog(data): void {
-  let dialogRef = this.dialog.open(CommonComponent, {
-    width: '400px',
-    height:'400px',
-    data: data
-  });
-
-  dialogRef.afterClosed().subscribe(result => {
-    console.log('The dialog was closed');
-  });
-}
 //refresh profile here...
 refreshProfile()
 {
@@ -204,4 +131,99 @@ refreshProfile()
     error => console.log("Error while retrieving"))
 }
 
+openDialoglabel(data): void
+{
+console.log(data);
+let dialogRef = this.dialog.open(OpenDialogLabelComponent, {
+ width: '300px',
+ height:'300px',
+ data: data
+});
+
+dialogRef.afterClosed().subscribe(result => {
+ console.log('The dialog was closed');
+});
+}
+
+logout() {
+localStorage.removeItem("token");
+this.router.navigate(['/signin']);
+}
+ openLabel(data)
+ {
+
+    localStorage.setItem('label',data.title);
+    var a=localStorage.getItem("label");
+    this.currentlabel=a;
+    console.log(this.currentlabel);
+    this.commonService.postServiceData('label/'+ data._id,data).subscribe(
+    data => {
+          // this.router.navigate(['/home']);
+          //this.toastr.success( 'Success!', 'timeout: 6000');
+          //console.log(this.responseStatus = data);
+          this.router.navigate(['/home/Label/'+data._id]);
+          //console.log(this.responseStatus = data),
+          err =>{
+          console.log(err);
+          //this.toastr.error(err);
+          this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+          () => console.log('get label')
+          // this.toastr.error(err);
+     };
+
+     location.reload();
+   });
+
+   var data1 =
+    {
+      currentlabel: data.title
+    }
+    console.log(data1);
+    this.commonService.updateData('updateLabel/' + data._id, data1)
+   .subscribe(model => {
+    console.log(model);
+    // this.toastr.success( 'Success!');
+    // this.router.navigate(['/home']);
+    //console.log(this.responseStatus = data),
+    err => {
+    console.log(err);
+    //this.toastr.error(err);
+    this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+    () => console.log('Request Completed')
+    //  this.toastr.error(err);
+    };
+  });
  }
+
+
+
+
+}
+
+// //create labels
+// createLabel(data)
+// {
+//   console.log(this.data);
+//
+//          // console.log("submit Post click happend " + this.model.name)
+//
+//           this.commonService.postServiceData('createLabel',this.model)
+//           .subscribe(model => {
+//              console.log(model);
+//
+//             // this.toastr.success( 'Success!');
+//             // this.router.navigate(['/home']);
+//
+//           //console.log(this.responseStatus = data),
+//           err =>{
+//                    console.log(err);
+//                   //this.toastr.error(err);
+//                   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+//                   () => console.log('Request Completed')
+//
+//                //  this.toastr.error(err);
+//
+//         };
+//         //this.refreshNotes();
+//    });
+// }

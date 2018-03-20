@@ -2,7 +2,7 @@ var express = require("express");
 var Todo = require("../model/Todomodel");
 var User = require("../model/User");
 var multer  = require('multer');
-
+var todoService = require("../service/todo.service");
 
 var storage =multer.diskStorage({
 destination :function(req,file,callback)
@@ -15,23 +15,25 @@ filename:function(req,file,callback)
 },
 });
 var upload = multer({storage : storage}).single('image');
-// create todo notes here...
+
+/****************************
+create todo notes api here...
+*****************************/
 exports.createNote = function(req, res) {
-  console.log(req.body);
-  var new_note = new Todo();
-  new_note.title = req.body.title;
-  new_note.note = req.body.note;
-  //new_note.email = req.body.email;
-  //new_note.user_id =req.body.user_id;
-  new_note.save(function(err, user) {
+
+  todoService.createUserTodo(req.body,function(err, user) {
     if (err)
       res.send(err);
-      console.log(user);
+      // {
+      // status:boolean,message:"Successfully Todo Created"
+      // }
       res.json(user);
   });
 }
 
-//Read Todo notes here...
+/*************************
+Read Todo notes here
+************************/
 exports.readTodos = function(req, res) {
    Todo.find({
    // find by id and email
@@ -45,7 +47,9 @@ exports.readTodos = function(req, res) {
    });
 }
 
-//read specific TodobyId
+/*************************
+read specific TodobyId
+************************/
 exports.readTodoById = function(req, res) {
  console.log(req.params.id);
    Todo.findById(req.params.id, function(err, note) {
@@ -56,8 +60,9 @@ exports.readTodoById = function(req, res) {
 }
 
 
-
-//update function to update a current note
+/**************************************
+update function to update a current note
+*************************************/
 exports.update = function(req, res) {
 
   upload(req,res,function(err){
@@ -78,7 +83,9 @@ exports.update = function(req, res) {
  });
 };
 
-//delete function to delete a current notes
+/******************************************
+delete function to delete a current notes
+*****************************************/
 exports.delete = function(req, res) {
  Todo.remove({
    _id: req.params.id,

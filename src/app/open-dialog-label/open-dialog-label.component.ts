@@ -55,8 +55,8 @@ export class OpenDialogLabelComponent implements OnInit {
       {
         title: data.title
       }
-     console.log(data1);
-     this.commonService.updateData('updateLabel/' + data._id, data1)
+      console.log(data1);
+      this.commonService.updateData('updateLabel/' + data._id, data1)
      .subscribe(model => {
       console.log(model);
       // this.toastr.success( 'Success!');

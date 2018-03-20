@@ -19,7 +19,10 @@ background-color:rgba(0,0,0,.2);
 
 h1.example-app-name {
   margin-left: 8px;
+}
 
+mat-card.writeNotes1:hover .img-responsive{
+  visibility:visible;
 }
 
 .example-sidenav-container {

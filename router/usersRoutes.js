@@ -16,9 +16,6 @@ router.post('/reset_password/:token',userController.reset_password);
 router.get('/readActiveUser',userController.readActiveUser);
 router.put('/activeUser/:id',userController.activeUser);
 
-
-
-
 ///////todo controller
 router.post('/create',todoController.createNote);
 router.get('/readTodos',todoController.readTodos);
@@ -34,6 +31,7 @@ router.get('/readLabel',labelController.readLabel);
 router.put('/updateLabel/:id',labelController.updateLabel);
 // // router.put('/uploader/:id',todoController.uploader);
 router.delete('/deleteLabel/:id',labelController.deleteLabel);
+router.post('/label/:id',labelController.label);
 
 
 

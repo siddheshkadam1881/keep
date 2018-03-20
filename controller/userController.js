@@ -34,8 +34,9 @@ var jwt = require('jsonwebtoken');
  });
  var upload = multer({storage : storage}).single('image');
 
-// registration user here
-
+/***************************
+ registration user api here
+***************************/
 
 exports.signUp = function(req, res) {
   var user = new User(req.body);
@@ -51,6 +52,9 @@ exports.signUp = function(req, res) {
     }
   });
 };
+/***************************
+ signin  user api here
+***************************/
 
 exports.signIn= function(req, res) {
   User.findOne({
@@ -69,8 +73,9 @@ exports.signIn= function(req, res) {
   });
 };
 
-
-//Read activeUser here...
+/****************************
+  Read activeUser here...
+*****************************/
 exports.readActiveUser = function(req, res) {
    User.find({
    // find by id and email
@@ -86,7 +91,10 @@ exports.readActiveUser = function(req, res) {
 
 
 
-// activeUser function to update a current user
+/*********************************************
+ activeUser function to update a current user
+ ******************************************/
+
 exports.activeUser = function(req, res) {
 
   upload(req,res,function(err){
@@ -108,18 +116,9 @@ exports.activeUser = function(req, res) {
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////////////
+/*********************************
+ loginRequired api
+*********************************/
  exports.loginRequired = function(req, res, next) {
    console.log(req.body);
  if (req.user) {
@@ -130,7 +129,10 @@ exports.activeUser = function(req, res) {
   }
  };
 
-////////////////////////////////////////////////////////////////////////////
+
+/*****************************************
+  forget password user api here
+*****************************************/
  exports.forgot_password = function(req, res) {
   async.waterfall([
     function(done) {
@@ -206,19 +208,10 @@ exports.activeUser = function(req, res) {
     });
   });
 };
-///////////////////////////////////////////////////////////////////////////////////////////
-// exports.reset = function(req, res) {
-//   User.findOne({ reset_password_token: req.params.token, reset_password_expires: { $gt: Date.now() } }, function(err, user) {
-//     if (!user) {
-//       res.send('Password reset token is invalid or has expired.');
-//       //return res.redirect('/forgot');
-//     }
-//     res.json( {
-//       user: req.user
-//     });
-//   });
-// };
 
+/*****************************************
+  reset password user api here
+*****************************************/
 
 exports.reset_password = function(req, res, next) {
   console.log(req.params.token);
@@ -277,9 +270,9 @@ exports.reset_password = function(req, res, next) {
   });
 };
 
-///////////////////////////////////////////////////
-          // facebook login//
-//////////////////////////////////////////////////
+/*************************************************
+           facebook login
+**************************************************/
 exports.passport = function(passport) {
    // used to serialize the user for the session
    passport.serializeUser(function(user, done) {
@@ -300,27 +293,20 @@ exports.passport = function(passport) {
       //asynchronous
        process.nextTick(function(res) {
          console.log("hii")
-
-        // //find the user in the database based on their facebook id
+         //find the user in the database based on their facebook id
            User1.findOne({ 'fb.id' : profile.id }, function(err, user) {
              console.log(user);
-       //   	// if there is an error, stop everything and return that
-       //   	//ie an error connecting to the database
-        console.log("hii")
               if (err)
              return done(err);
-       //    //  if the user is found, then log them in
               if (user) {
-                  return done(null, user); // user found, return that user
+                  return done(null, user);
              } else {
-       //           // if there is no user found with that facebook id, create them
                   var newUser = new User1();
-       // 	        // set all of the facebook information in our user model
-                  newUser.fb.id    = profile.id; // set the users facebook id
-                  newUser.fb.access_token = access_token; // we will save the token that facebook provides to the user
+                  newUser.fb.id    = profile.id;
+                  newUser.fb.access_token = access_token;
                   newUser.fb.firstName  = profile.name.givenName;
-                  newUser.fb.lastName = profile.name.familyName; // look at the passport user profile to see how names are returned
-                  newUser.fb.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
+                  newUser.fb.lastName = profile.name.familyName;
+                  newUser.fb.email = profile.emails[0].value;
         	         // save our user to the database
                  newUser.save(function(err) {
                       if (err)
@@ -329,7 +315,7 @@ exports.passport = function(passport) {
                       return done(null, newUser);
                   });
               }
-       //
+
           }
         );
        });
