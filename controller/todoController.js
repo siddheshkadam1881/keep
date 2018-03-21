@@ -1,3 +1,8 @@
+/****************************
+@author siddheshwar kadam
+@version 1.0
+*****************************/
+
 var express = require("express");
 var Todo = require("../model/Todomodel");
 var User = require("../model/User");
@@ -23,11 +28,10 @@ exports.createNote = function(req, res) {
 
   todoService.createUserTodo(req.body,function(err, user) {
     if (err)
-      res.send(err);
-      // {
-      // status:boolean,message:"Successfully Todo Created"
-      // }
-      res.json(user);
+      res.status(500).send('something goes wrong')
+      res.json({success:true,
+        message: 'Note successfully create'
+      });
   });
 }
 
@@ -35,13 +39,9 @@ exports.createNote = function(req, res) {
 Read Todo notes here
 ************************/
 exports.readTodos = function(req, res) {
-   Todo.find({
-   // find by id and email
-   //user_id:req.user.id
-
-   }, function(err, note) {
-     if (err)
-     res.send(500, { err: 'something blew up' });
+  todoService.readUserTodo(req.body,function(err, note) {
+   if (err)
+   res.status(500).send( err);
      //res.send(err);
      res.json(note);
    });

@@ -5,7 +5,7 @@ var NoteSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  user_id: {
+   user_id: {
     type : mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
@@ -63,13 +63,16 @@ var NoteSchema = new mongoose.Schema({
   new_note.title = todoObj.title;
   new_note.note = todoObj.note;
   //new_note.email = req.body.email;
-  //new_note.user_id =req.body.user_id;
+  // new_note.user_id =todoObj.user_id;
   new_note.save(cb);
 }
 
 NoteSchema.statics.readUserTodo = function (userId,cb) {
-  this.find({ user_id:userId ,is_deleted :false}).exec(cb);
+  this.find({ user_id:userId, is_deleted :false}).exec(cb);
 }
+
+
+
 var Todomodel  = mongoose.model('todo', NoteSchema);
 module.exports = Todomodel;
 
