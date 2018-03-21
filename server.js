@@ -21,8 +21,6 @@ var expressJwt = require('express-jwt');
 //   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 // }))
 //passport Strategy
-app.use(cors());
-app.use(userRoutes);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,7 +28,7 @@ app.use(bodyParser.json());
 // var userRoutes=require('./router/usersRoutes.js');
 app.use("/uploads" , express.static("uploads"));
 app.use(cors());
-// app.use(userRoutes);
+app.use(userRoutes);
 var mongoose = require('mongoose');
 var config = require("./config");
 mongoose.connect('mongodb://localhost/Todo');
