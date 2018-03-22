@@ -47,7 +47,6 @@ import { OpenDialogProfileComponent } from './open-dialog-profile/open-dialog-pr
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { OpenDialogLabelComponent } from './open-dialog-label/open-dialog-label.component';
 import { LabeldashboardComponent } from './labeldashboard/labeldashboard.component';
-import { SiddComponent } from './sidd/sidd.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -102,7 +101,6 @@ export function provideConfig() {
     OpenDialogProfileComponent,
     OpenDialogLabelComponent,
     LabeldashboardComponent,
-    SiddComponent,
     PagenotfoundComponent
   ],
   imports: [

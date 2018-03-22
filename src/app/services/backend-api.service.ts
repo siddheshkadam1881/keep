@@ -21,9 +21,17 @@ public urlpath;
 /* post service */
   postServiceData(path,model) {
   //console.log(model,path);
+  let token = localStorage.getItem("token");
+  console.log("token", token);
+
+  //set the token to header
+  const headers = new Headers();
+  headers.append('x-access-token', token);
+
   this.urlpath= this.base_url.concat(path);
-  return this.http.post(this.urlpath,model)
+  return this.http.post(this.urlpath,model,{ headers: headers })
   .map(res=>res.json());
+
   //this.toastr.success('You are awesome!', 'Success!', 'timeout: 3000');
   }
 

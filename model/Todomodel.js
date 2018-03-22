@@ -63,7 +63,7 @@ var NoteSchema = new mongoose.Schema({
   new_note.title = todoObj.title;
   new_note.note = todoObj.note;
   //new_note.email = req.body.email;
-  // new_note.user_id =todoObj.user_id;
+  new_note.user_id =todoObj.user_id;
   new_note.save(cb);
 }
 

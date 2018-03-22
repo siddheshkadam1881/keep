@@ -25,10 +25,13 @@ var upload = multer({storage : storage}).single('image');
 create todo notes api here...
 *****************************/
 exports.createNote = function(req, res) {
-
+ //console.log(req.body);
+ // console.log("in middleware",req.originalUrl);
   todoService.createUserTodo(req.body,function(err, user) {
     if (err)
-      res.status(500).send('something goes wrong')
+    res.json({success:false,
+      message: 'Note cannot create'
+    })
       res.json({success:true,
         message: 'Note successfully create'
       });
@@ -39,11 +42,16 @@ exports.createNote = function(req, res) {
 Read Todo notes here
 ************************/
 exports.readTodos = function(req, res) {
+     //console.log(req.body);
   todoService.readUserTodo(req.body,function(err, note) {
    if (err)
-   res.status(500).send( err);
+   res.json({success:false,
+     message: 'Note cannot read'
+   })
      //res.send(err);
-     res.json(note);
+     res.json({success:true,
+       message: 'Note successfully read'
+     });
    });
 }
 
