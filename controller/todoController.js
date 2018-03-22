@@ -45,7 +45,7 @@ exports.readTodos = function(req, res) {
      //console.log(req.body);
   todoService.readUserTodo(req.body,function(err, note) {
    if (err)
-   res.json({success:false,
+   return res.json({success:false,
      message: 'Note cannot read'
    })
      //res.send(err);

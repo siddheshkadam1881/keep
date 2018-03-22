@@ -7,7 +7,7 @@ var express = require("express");
 var User = require("../model/User");
 var User1 = require("../model/User1");
 //var tokenid = require("../model/uid");
-var key="ghfdhdhweyeyrer"
+var key="ghfdhdhweyeyrer";
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 //const myPlaintextPassword = 's0/\/\P4$$w0rD';
@@ -27,6 +27,7 @@ var jwt = require('jsonwebtoken');
  var fbConfig = require('../config/auth');
  var  passport = require('passport');
  var multer  = require('multer');
+ var userService = require("../service/user.service");
  var storage =multer.diskStorage({
  destination :function(req,file,callback)
  {
@@ -72,7 +73,7 @@ exports.signIn= function(req, res) {
       if (!user.comparePassword(req.body.userpass)) {
         res.status(401).json({ message: 'Authentication failed. Wrong password.' });
       } else {
-        return res.json({token: jwt.sign({ email: user.email, fullName: user.username, _id: user.usermobile}, 'RESTFULAPIs')});
+        return res.json({token: userService.generateJwt({ email: user.email, fullName: user.username, mobile: user.usermobile,_id: user._id})});
       }
     }
   });

@@ -46,6 +46,7 @@ h1.example-app-name {
   width:520px;
   font-size: 18px;
   word-wrap: break-word;
+  outline: none;
 }
 .writeNotes
 {

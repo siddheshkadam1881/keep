@@ -9,6 +9,8 @@ var router = require('express').Router();
 var userController=require('../controller/userController.js');
 var todoController=require('../controller/todoController.js');
 var labelController=require('../controller/labelController.js');
+var userService = require("../service/user.service");
+
 //var passport = require('passport');
 var passport = userController.passport;
 router.post('/signup',userController.signUp);
@@ -32,7 +34,7 @@ router.use(function(req, res, next) {
   // decode token
   if (token) {
     // verifies secret and checks exp
-    jwt.verify(token,'RESTFULAPIs' , function(err, decoded) {
+  userService.verifyJwt(token, function(err, decoded) {
       if (err) {
         return res.json({ success: false, message: 'Failed to authenticate token.' });
       } else {

@@ -34,8 +34,28 @@
  }
 
 });
-User.methods.comparePassword=function(userpass){
+
+ User.methods.comparePassword=function(userpass){
  return bcrypt.compareSync(userpass,this.userpass);
 };
+
+  User.statics.sign = function sign (userObj,callback) {
+  var user_jwt = new this();
+  user_jwt.email = userObj.email,
+  user_jwt.username = userObj.username,
+  user_jwt.usermobile = userObj.usermobile,
+  user_jwt._id = userObj._id
+  user_jwt.save(callback);
+
+};
+
+// email: user.email, fullName: user.username, mobile: user.usermobile,_id: user._id}, 'RESTFULAPIs'
+
+
+
+
+
+
+
   var User = mongoose.model('User', User);
   module.exports = User;
