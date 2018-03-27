@@ -25,9 +25,9 @@ var upload = multer({storage : storage}).single('image');
 create todo notes api here...
 *****************************/
 exports.createNote = function(req, res) {
- //console.log(req.body);
- // console.log("in middleware",req.originalUrl);
-  todoService.createUserTodo(req.body,function(err, user) {
+
+    console.log(req.decoded);
+  todoService.createUserTodo(req.body,req.decoded,function(err, user) {
     if (err)
     res.json({success:false,
       message: 'Note cannot create'
@@ -42,24 +42,22 @@ exports.createNote = function(req, res) {
 Read Todo notes here
 ************************/
 exports.readTodos = function(req, res) {
-     //console.log(req.body);
-  todoService.readUserTodo(req.body,function(err, note) {
-   if (err)
-   return res.json({success:false,
-     message: 'Note cannot read'
-   })
+   console.log(req.decoded);
+   Todo.find({
+     user_id : req.decoded._id
+   }, function(err, note) {
+     if (err)
+     res.send(500, { err:'something blew up' });
      //res.send(err);
-     res.json({success:true,
-       message: 'Note successfully read'
-     });
+     res.json(note);
    });
-}
 
+}
 /*************************
 read specific TodobyId
 ************************/
 exports.readTodoById = function(req, res) {
- console.log(req.params.id);
+
    Todo.findById(req.params.id, function(err, note) {
      if (err)
      res.send(err);
@@ -71,16 +69,18 @@ exports.readTodoById = function(req, res) {
 /**************************************
 update function to update a current note
 *************************************/
-exports.update = function(req, res) {
 
-  upload(req,res,function(err){
+exports.update = function(req, res) {
+    console.log(req.decoded);
+    upload(req,res,function(err){
     var todoObj = req.body || {};
     if(req.file && req.file.path){
       todoObj.image = req.file.path;
     }
     Todo.findOneAndUpdate({
-     _id : req.params.id
- },todoObj , {
+     _id : req.params.id,
+  user_id : req.decoded._id
+     },todoObj , {
    new: true
  },
  function(err, note) {
@@ -94,9 +94,11 @@ exports.update = function(req, res) {
 /******************************************
 delete function to delete a current notes
 *****************************************/
+  console.log(req.decoded);
 exports.delete = function(req, res) {
  Todo.remove({
    _id: req.params.id,
+   user_id : req.decoded._id
  }, function(err, note) {
    if (err)
      res.send(err);

@@ -58,18 +58,19 @@ var NoteSchema = new mongoose.Schema({
   }
 });
 
-  NoteSchema.statics.createUserTodo = function createUserTodo (todoObj,cb) {
+  NoteSchema.statics.createUserTodo = function createUserTodo (todoObj,userObj,cb) {
+  //  console.log(todoObj)
   var new_note = new this();
   new_note.title = todoObj.title;
   new_note.note = todoObj.note;
   //new_note.email = req.body.email;
-  new_note.user_id =todoObj.user_id;
+  new_note.user_id =userObj._id;
   new_note.save(cb);
 }
 
-NoteSchema.statics.readUserTodo = function (userId,cb) {
-  this.find({ user_id:userId, is_deleted :false}).exec(cb);
-}
+// NoteSchema.statics.readUserTodo = function (userId,cb) {
+//   this.find({ user_id:userId, is_deleted :false}).exec(cb);
+// }
 
 
 

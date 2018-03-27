@@ -10,6 +10,8 @@ import { GridService } from '../services/grid.service';
 import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
 import { OpenDialogProfileComponent } from '../open-dialog-profile/open-dialog-profile.component';
 import { OpenDialogLabelComponent } from '../open-dialog-label/open-dialog-label.component';
+import { OpenDialogAddLabelComponent } from '../open-dialog-add-label/open-dialog-add-label.component';
+
 import { Location } from '@angular/common';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 //import {HttpModule} from '@angular/http';

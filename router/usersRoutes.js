@@ -22,11 +22,11 @@ router.get('/readActiveUser',userController.readActiveUser);
 router.put('/activeUser/:id',userController.activeUser);
 
 
-// router.use(function (req,res,next) {
-//   console.log("in middleware",req.originalUrl);
-//   next();
-// })
-// route middleware to verify a token
+
+/*******************************
+  middleware create here...
+*******************************/
+
 router.use(function(req, res, next) {
 // check header or url parameters or post parameters for token
  var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -40,6 +40,7 @@ router.use(function(req, res, next) {
       } else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
+
         next();
       }
     });
@@ -56,8 +57,7 @@ router.use(function(req, res, next) {
   }
 });
 
-
-router.post('/create',todoController.createNote);
+router.post('/create/Note',todoController.createNote);
 router.get('/readTodos',todoController.readTodos);
 router.get('/readTodos/:id',todoController.readTodoById);
 router.put('/update/:id',todoController.update);

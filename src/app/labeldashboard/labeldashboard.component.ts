@@ -217,7 +217,7 @@ export class LabeldashboardComponent implements OnInit {
 
            // console.log("submit Post click happend " + this.model.name)
 
-            this.commonService.postServiceData('create',this.model)
+            this.commonService.postServiceData('create/Note',this.model)
             .subscribe(model => {
                console.log(model);
 
@@ -244,7 +244,7 @@ export class LabeldashboardComponent implements OnInit {
 
      console.log(model);
      //let notes=new myData();
-     this.commonService.postServiceData('create',model)
+     this.commonService.postServiceData('create/Note',model)
      .subscribe(model => {
         console.log(model);
 

@@ -82,9 +82,10 @@ exports.signIn= function(req, res) {
 /****************************
   Read activeUser here...
 *****************************/
+
 exports.readActiveUser = function(req, res) {
    User.find({
-   // find by id and email
+
    //user_id:req.user.id
 
    }, function(err, note) {

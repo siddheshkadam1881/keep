@@ -14,6 +14,8 @@ import {BrowserModule} from '@angular/platform-browser'
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {Observable} from 'rxjs/Rx';
 import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
+import { OpenDialogAddLabelComponent } from '../open-dialog-add-label/open-dialog-add-label.component';
+
 
 // import * as $ from "jquery";
 
@@ -47,6 +49,7 @@ export class DashboardComponent implements OnInit {
   showFiller = false;
   isClassVisible: false;
   public dashDataFirst;
+  public Labels;
   public myData=[];
   note:string;
 
@@ -84,6 +87,15 @@ export class DashboardComponent implements OnInit {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+//read label
+    this.commonService.getData('readLabel').subscribe(response => {
+      if (response) {
+        console.log(response);
+        // items.slice().reverse();
+         this.Labels = response;
+      }
+    },
+    error => console.log("Error while retrieving"));
 
   }
 
@@ -216,7 +228,7 @@ export class DashboardComponent implements OnInit {
 
          // console.log("submit Post click happend " + this.model.name)
 
-          this.commonService.postServiceData('create',this.model)
+          this.commonService.postServiceData('create/Note',this.model)
           .subscribe(model => {
              console.log(model);
 
@@ -243,7 +255,7 @@ export class DashboardComponent implements OnInit {
 
    console.log(model);
    //let notes=new myData();
-   this.commonService.postServiceData('create',model)
+   this.commonService.postServiceData('create/Note',model)
    .subscribe(model => {
       console.log(model);
 
@@ -674,6 +686,23 @@ this.refreshNotes();
      console.log('The dialog was closed');
     });
     }
+
+
+    /*********** label dialog use for add label  **********/
+     openDialogAddLabel(data): void
+     {
+     console.log(data);
+     let dialogRef = this.dialog.open( OpenDialogAddLabelComponent, {
+      width: '300px',
+      height:'300px',
+      data: data
+     });
+
+     dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+     });
+     }
+
 
 
   }

@@ -48,6 +48,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { OpenDialogLabelComponent } from './open-dialog-label/open-dialog-label.component';
 import { LabeldashboardComponent } from './labeldashboard/labeldashboard.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { OpenDialogAddLabelComponent } from './open-dialog-add-label/open-dialog-add-label.component';
+import {MatRadioModule} from '@angular/material/radio';
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
@@ -101,9 +103,11 @@ export function provideConfig() {
     OpenDialogProfileComponent,
     OpenDialogLabelComponent,
     LabeldashboardComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    OpenDialogAddLabelComponent
   ],
   imports: [
+    MatRadioModule,
     ImageCropperModule,
     MatChipsModule,
     OwlDateTimeModule,
@@ -140,7 +144,8 @@ export function provideConfig() {
      CommonComponent,
      OpenDialogImageComponent,
      OpenDialogProfileComponent,
-     OpenDialogLabelComponent
+     OpenDialogLabelComponent,
+     OpenDialogAddLabelComponent
    ],
 
   providers: [BackendApiService, { provide: AuthServiceConfig, useFactory: provideConfig }, {

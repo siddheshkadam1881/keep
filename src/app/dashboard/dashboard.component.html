@@ -117,6 +117,36 @@
               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
               <mat-menu #menu="matMenu">
                      <button mat-menu-item type="submit" (click)="trashNotes(data)" style="font-size: 13px;">Delete note</button>
+                     <button mat-menu-item type="submit"  style="font-size: 13px;" [matMenuTriggerFor]="menu2">Add label</button>
+                     <mat-menu #menu2="matMenu">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                           Label note
+                         </div>
+                         <div fxLayout="row" fxLayoutAlign="start center">
+                       <input matInput placeholder="Enter Label name">
+                     </div>
+
+
+
+                   <mat-radio-group class="example-radio-group" [(ngModel)]="data.label">
+                        <mat-radio-button class="example-radio-button" *ngFor="let label of Labels" [value]="label">
+                             {{label.title}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+
+                            <!-- <mat-radio-group [(ngModel)]="labeldata">
+                               <mat-radio-button *ngFor="let label of Labels" value="label">
+                                 <div fxLayout="row" fxLayoutAlign="center center">
+                                   <div fxFlex="">
+                                      {{label.title}}
+                                   </div>
+                               </div>
+                               </mat-radio-button>
+                            </mat-radio-group> -->
+
+
+                     </mat-menu>
+
                      <button mat-menu-item type="submit" (click)="copyNote(data)" style="font-size: 13px;">copy note</button>
               </mat-menu>
         </div>
@@ -195,6 +225,7 @@
               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
               <mat-menu #menu="matMenu" >
                      <button mat-menu-item type="submit" (click)="trashNotes(data)" style="font-size: 13px;">Delete note</button>
+                      <button mat-menu-item type="submit" (click)="trashNotes(data)" style="font-size: 13px;">Add label</button>
                      <button mat-menu-item type="submit" (click)="copyNote(data)" style="font-size: 13px;">copy note</button>
               </mat-menu>
         </div>
