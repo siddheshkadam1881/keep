@@ -18,4 +18,7 @@ jwt.verify(token,secret ,callback);
 }
 
 
+
+
+
 module.exports = new User();

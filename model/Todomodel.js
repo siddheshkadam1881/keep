@@ -68,10 +68,15 @@ var NoteSchema = new mongoose.Schema({
   new_note.save(cb);
 }
 
-// NoteSchema.statics.readUserTodo = function (userId,cb) {
-//   this.find({ user_id:userId, is_deleted :false}).exec(cb);
-// }
-
+NoteSchema.statics.readUserTodo = function (userId,cb) {
+  this.find({ user_id:userId, is_deleted :false}).exec(cb);
+}
+//
+NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
+  console.log(userId);
+  console.log(paramId);
+  this.remove({ user_id: userId,_id: paramId.id}).exec(cb);
+}
 
 
 var Todomodel  = mongoose.model('todo', NoteSchema);

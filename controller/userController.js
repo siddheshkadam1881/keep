@@ -85,9 +85,7 @@ exports.signIn= function(req, res) {
 
 exports.readActiveUser = function(req, res) {
    User.find({
-
-   //user_id:req.user.id
-
+     // _id:req.encoded._id
    }, function(err, note) {
      if (err)
      res.send(500, { err: 'something blew up' });

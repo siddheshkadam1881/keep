@@ -32,6 +32,7 @@ import {LayoutModule} from '@angular/cdk/layout';
 import { SocialLoginModule } from 'angularx-social-login';
 import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { CommonComponent } from './common/common.component';
+import { AuthGuard,LoggedInAuthGuard } from './auth/index';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCardModule} from '@angular/material/card';
@@ -52,9 +53,10 @@ import { OpenDialogAddLabelComponent } from './open-dialog-add-label/open-dialog
 import {MatRadioModule} from '@angular/material/radio';
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
-  { path: 'signin', component: SigninComponent },
+  { path: 'signin', component: SigninComponent,canActivate : [LoggedInAuthGuard] },
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent,
+   canActivate: [ AuthGuard ],
    children: [
        { path: '', redirectTo: 'Dashboard', pathMatch: 'full' },
        { path: 'Dashboard', component: DashboardComponent },
@@ -148,7 +150,7 @@ export function provideConfig() {
      OpenDialogAddLabelComponent
    ],
 
-  providers: [BackendApiService, { provide: AuthServiceConfig, useFactory: provideConfig }, {
+  providers: [BackendApiService, AuthGuard, LoggedInAuthGuard ,{ provide: AuthServiceConfig, useFactory: provideConfig }, {
       provide: LOCALE_ID,
       useValue: "de-DE"
     },

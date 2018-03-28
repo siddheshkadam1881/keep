@@ -29,7 +29,7 @@ router.put('/activeUser/:id',userController.activeUser);
 
 router.use(function(req, res, next) {
 // check header or url parameters or post parameters for token
- var token = req.body.token || req.query.token || req.headers['x-access-token'];
+ var token = req.body.token || req.query.token || req.headers['token'];
    console.log(token);
   // decode token
   if (token) {
@@ -57,22 +57,21 @@ router.use(function(req, res, next) {
   }
 });
 
-router.post('/create/Note',todoController.createNote);
-router.get('/readTodos',todoController.readTodos);
-router.get('/readTodos/:id',todoController.readTodoById);
-router.put('/update/:id',todoController.update);
-// router.put('/uploader/:id',todoController.uploader);
-router.delete('/delete/:id',todoController.delete);
-
-///////label controller
+ router.post('/create/Note',todoController.createNote);
+ router.get('/readTodos',todoController.readTodos);
+ // router.get('/readTodos/:id',todoController.readTodoById);
+ router.put('/update/:id',todoController.update);
+ router.delete('/delete/:id',todoController.delete);
+//
+// ///////label controller
 router.post('/createLabel',labelController.createLabel);
 router.get('/readLabel',labelController.readLabel);
-// router.get('/readLabel/:id',labelController.readLabelById);
+// // router.get('/readLabel/:id',labelController.readLabelById);
 router.put('/updateLabel/:id',labelController.updateLabel);
-// // router.put('/uploader/:id',todoController.uploader);
-router.delete('/deleteLabel/:id',labelController.deleteLabel);
-router.post('/label/:id',labelController.label);
-
+// // // router.put('/uploader/:id',todoController.uploader);
+// router.delete('/deleteLabel/:id',labelController.deleteLabel);
+// router.post('/label/:id',labelController.label);
+//
 
 
 

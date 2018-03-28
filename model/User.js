@@ -49,6 +49,9 @@
 
 };
 
+
+
+
 // email: user.email, fullName: user.username, mobile: user.usermobile,_id: user._id}, 'RESTFULAPIs'
   var User = mongoose.model('User', User);
   module.exports = User;
