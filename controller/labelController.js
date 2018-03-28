@@ -39,6 +39,8 @@ var User = require("../model/User");
     });
  }
 
+
+
 /********************************
  read particular Labels here...
  *****************************/
@@ -71,13 +73,13 @@ exports.updateLabel = function(req, res) {
  });
 };
 
+
+
 /******************************************
  delete function to delete a current labels
  ***************************************/
  exports.deleteLabel = function(req, res) {
-  Label.remove({
-    _id: req.params.id,
-  }, function(err, label) {
+  labelService.deleteUserlabel(req.decoded,req.params,function(err, label) {
     if (err)
       res.send(err);
     res.json({

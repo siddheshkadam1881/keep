@@ -291,6 +291,8 @@ export class DashboardComponent implements OnInit {
    console.log('The dialog was closed');
   });
   }
+
+
   deleteNote(id){
   console.log(id);
   this.commonService.deleteData('delete/'+id).subscribe(
@@ -327,6 +329,8 @@ export class DashboardComponent implements OnInit {
 
    trashNotes(data)
    {
+
+      console.log(data);
      var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
         console.log(data1);
      this.commonService.updateData('update/'+data._id,data1)
@@ -701,6 +705,32 @@ this.refreshNotes();
      dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
      });
+     }
+
+     labelSubmit(data):void
+     {
+       var labeldata =
+     {
+       label : this.model.label
+     }
+       console.log(data,labeldata);
+   // this.chipData=data;
+   //console.log(this.chipData);
+       this.commonService.updateData('update/' + data._id, labeldata)
+      .subscribe(model => {
+       console.log(model);
+       // this.toastr.success( 'Success!');
+       //console.log(this.responseStatus = data),
+       err => {
+       console.log(err);
+       //this.toastr.error(err);
+       this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+       () => console.log('Request Completed')
+         //  this.toastr.error(err);
+       };
+       this.refreshNotes();
+     });
+
      }
 
 

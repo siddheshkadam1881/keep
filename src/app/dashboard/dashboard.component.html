@@ -52,11 +52,13 @@
               <p>{{data.title}}</p>
               <p [innerHTML]="data.note"></p>
 
-            <div  *ngIf="data.note_chip || data.reminder">
+            <div  *ngIf="data.note_chip || data.reminder || data.label ">
                <mat-form-field class="demo-chip-list">
                  <mat-chip-list>
                 <mat-chip  [removable]="removable" (remove)="remove(data)">
                   <p>{{data.note_chip}}</p>
+                  <p>{{data.label}}</p>
+
                    <!-- <p>{{data.reminder}}</p> -->
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
@@ -117,8 +119,8 @@
               <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
               <mat-menu #menu="matMenu">
                      <button mat-menu-item type="submit" (click)="trashNotes(data)" style="font-size: 13px;">Delete note</button>
-                     <button mat-menu-item type="submit"  style="font-size: 13px;" [matMenuTriggerFor]="menu2">Add label</button>
-                     <mat-menu #menu2="matMenu">
+                     <button mat-menu-item type="submit"  style="font-size: 13px;" [matMenuTriggerFor]="menu4">Add label</button>
+                     <mat-menu #menu4="matMenu">
                         <div fxLayout="row" fxLayoutAlign="start center">
                            Label note
                          </div>
@@ -128,22 +130,21 @@
 
 
 
-                   <mat-radio-group class="example-radio-group" [(ngModel)]="data.label">
+                   <!-- <mat-radio-group class="example-radio-group" [(ngModel)]="model.label" (click)="labelSubmit(data)"  required>
                         <mat-radio-button class="example-radio-button" *ngFor="let label of Labels" [value]="label">
                              {{label.title}}
-                        </mat-radio-button>
-                    </mat-radio-group>
+                         </mat-radio-button>
+                       </mat-radio-group> -->
 
-                            <!-- <mat-radio-group [(ngModel)]="labeldata">
-                               <mat-radio-button *ngFor="let label of Labels" value="label">
-                                 <div fxLayout="row" fxLayoutAlign="center center">
-                                   <div fxFlex="">
-                                      {{label.title}}
-                                   </div>
-                               </div>
-                               </mat-radio-button>
-                            </mat-radio-group> -->
+                        <div *ngFor="let label of Labels" [(ngModel)]="model.label" >
+                         <mat-checkbox class="example-margin" [value]="label">
+                                    {{label.title}}
+                          </mat-checkbox>
+                         </div>
 
+                         <!-- <mat-select placeholder="Click To add Label"   [(ngModel)]="labelsSelected">
+                       <mat-option (click)="changeCheckBox($event,note,labelsSelected)" *ngFor="let labels of labelsList" [value]="labels">{{labels.name}}</mat-option>
+                      </mat-select> -->
 
                      </mat-menu>
 

@@ -27,8 +27,8 @@ var upload = multer({storage : storage}).single('image');
 create todo notes api here...
 *****************************/
 exports.createNote = function(req, res) {
-
-  console.log(req.decoded);
+          console.log(req.body);
+          console.log(req.decoded);
   todoService.createUserTodo(req.body,req.decoded,function(err, user) {
     if (err)
     res.json({success:false,
@@ -47,12 +47,8 @@ Read Todo notes here
 ************************/
 
 exports.readTodos = function(req, res) {
-   console.log(req.decoded);
-   // Todo.find({
-   //   user_id : req.decoded._id
-   // },
 
-  todoService.readUserlabel(req.decoded,function(err, note) {
+  todoService.readUserTodo(req.decoded,function(err, note) {
      if (err)
      res.send(500, { err:'something blew up' });
      //res.send(err);

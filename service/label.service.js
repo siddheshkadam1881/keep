@@ -14,4 +14,8 @@ var User = require("../model/User");
    labelModel.readUserlabel(userId,callback);
  };
 
+ Label.prototype.deleteUserlabel = function (userId,paramId,callback) {
+   labelModel.deleteUserlabel(userId,paramId,callback);
+ };
+
  module.exports = new Label();

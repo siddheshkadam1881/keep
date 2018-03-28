@@ -62,7 +62,14 @@ export class HomeComponent  implements OnInit {
    constructor(private location: Location,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
      this.mobileQuery = media.matchMedia('(max-width: 600px)',);
      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-     this.mobileQuery.addListener(this._mobileQueryListener);
+     this.mobileQuery.addListener(this._mobileQueryListener);,
+     this.commonService.getData('readLabel').subscribe(response => {
+       if (response) {
+         //console.log(response);
+         // items.slice().reverse();
+          this.Labels = response;
+       }
+     }
 
 
 
@@ -71,9 +78,15 @@ export class HomeComponent  implements OnInit {
 ////////////////////////////////read the data by calling service method//////////////////////////////////////////////
 
    ngOnInit():void {
-
-       // var currentlabel= localStorage.getItem('label');
-       //  console.log(currentlabel);
+     this.commonService.getData('readTodos').subscribe(response => {
+       if (response) {
+         //console.log(response.data);
+         // items.slice().reverse();
+          this.dashDataFirst = response;
+           //console.log(this.dashDataFirst.reverse());
+       }
+     },
+       error => console.log("Error while retrieving"));
 
      this.commonService.getData('readLabel').subscribe(response => {
        if (response) {

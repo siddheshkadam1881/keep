@@ -66,7 +66,7 @@ export class TrashComponent implements OnInit {
            if (response) {
              //console.log(response.data);
              // items.slice().reverse();
-              this.dashDataFirst = response.reverse();
+              this.dashDataFirst = response;
                console.log(this.dashDataFirst.reverse());
            }
          },

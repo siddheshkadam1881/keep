@@ -34,13 +34,12 @@ router.use(function(req, res, next) {
   // decode token
   if (token) {
     // verifies secret and checks exp
-  userService.verifyJwt(token, function(err, decoded) {
+   userService.verifyJwt(token, function(err, decoded) {
       if (err) {
         return res.json({ success: false, message: 'Failed to authenticate token.' });
       } else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
-
         next();
       }
     });
@@ -57,6 +56,7 @@ router.use(function(req, res, next) {
   }
 });
 
+
  router.post('/create/Note',todoController.createNote);
  router.get('/readTodos',todoController.readTodos);
  // router.get('/readTodos/:id',todoController.readTodoById);
@@ -69,7 +69,7 @@ router.get('/readLabel',labelController.readLabel);
 // // router.get('/readLabel/:id',labelController.readLabelById);
 router.put('/updateLabel/:id',labelController.updateLabel);
 // // // router.put('/uploader/:id',todoController.uploader);
-// router.delete('/deleteLabel/:id',labelController.deleteLabel);
+router.delete('/deleteLabel/:id',labelController.deleteLabel);
 // router.post('/label/:id',labelController.label);
 //
 

@@ -15,9 +15,9 @@ Todo.prototype.readUserTodo = function (userId,callback) {
   TodoModel.readUserTodo(userId,callback);
 };
 
-Todo.prototype.deleteUserTodo = function (userId,paramId,callback) {
+Todo.prototype.deleteUserlabel = function (userId,paramId,callback) {
 
-  TodoModel.deleteUserTodo(userId,paramId,callback);
+  TodoModel.deleteUserlabel(userId,paramId,callback);
 };
 
 module.exports = new Todo();

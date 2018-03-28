@@ -26,7 +26,7 @@ public urlpath;
 
   //set the token to header
   const headers = new Headers();
-  headers.append('x-access-token', token);
+  headers.append('token', token);
 
   this.urlpath= this.base_url.concat(path);
   return this.http.post(this.urlpath,model,{ headers: headers })
@@ -51,7 +51,7 @@ public urlpath;
 
     //set the token to header
     const headers = new Headers();
-    headers.append('x-access-token', token);
+    headers.append('token', token);
 
     //http get call to the server
     return this.http.get(urlpath, { headers: headers })
@@ -62,9 +62,9 @@ public urlpath;
       )
   }
 
-  ////////////////////////////////////////
-  /* update service  */
-  /////////////////////////
+  /***********************************
+   *** update service
+  **********************************/
   updateData(path,data) {
     console.log(data);
     //var headers = this.getTokenLocalStorage();
@@ -72,17 +72,22 @@ public urlpath;
      console.log("path", path);
      let token = localStorage.getItem("token");
      const headers = new Headers();
+     headers.append('token', token);
      this.urlpath= this.base_url.concat(path);
-     return this.http.put(this.urlpath,data)
+     return this.http.put(this.urlpath,data,{ headers: headers })
      .map(res=>res.json());
   }
+  /***********************************
+   *** delete service
+  **********************************/
   deleteData(path)
   {
     console.log("path", path);
     let token = localStorage.getItem("token");
     const headers = new Headers();
+    headers.append('token', token);
     this.urlpath= this.base_url.concat(path);
-    return this.http.delete(this.urlpath)
+    return this.http.delete(this.urlpath,{ headers: headers })
     .map(res=>res.json());
   }
 

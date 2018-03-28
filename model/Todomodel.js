@@ -13,6 +13,9 @@ var NoteSchema = new mongoose.Schema({
     type : mongoose.Schema.Types.ObjectId,
     ref: 'Label'
   }],
+  label: {
+    type: String
+  },
   reminder: {
     type: Date,
   },
@@ -60,6 +63,9 @@ var NoteSchema = new mongoose.Schema({
 
   NoteSchema.statics.createUserTodo = function createUserTodo (todoObj,userObj,cb) {
   //  console.log(todoObj)
+   // req.checkBody("title", "Enter title.").notEmpty();
+   // req.checkBody("note", "Enter title.").notEmpty();
+
   var new_note = new this();
   new_note.title = todoObj.title;
   new_note.note = todoObj.note;
@@ -69,7 +75,7 @@ var NoteSchema = new mongoose.Schema({
 }
 
 NoteSchema.statics.readUserTodo = function (userId,cb) {
-  this.find({ user_id:userId, is_deleted :false}).exec(cb);
+  this.find({ user_id:userId}).exec(cb);
 }
 //
 NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {

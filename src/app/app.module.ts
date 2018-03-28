@@ -50,7 +50,8 @@ import { OpenDialogLabelComponent } from './open-dialog-label/open-dialog-label.
 import { LabeldashboardComponent } from './labeldashboard/labeldashboard.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { OpenDialogAddLabelComponent } from './open-dialog-add-label/open-dialog-add-label.component';
-import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent,canActivate : [LoggedInAuthGuard] },
@@ -109,7 +110,7 @@ export function provideConfig() {
     OpenDialogAddLabelComponent
   ],
   imports: [
-    MatRadioModule,
+    MatCheckboxModule,
     ImageCropperModule,
     MatChipsModule,
     OwlDateTimeModule,
