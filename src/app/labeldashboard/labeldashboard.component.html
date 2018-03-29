@@ -53,10 +53,11 @@
                <p>{{data.title}}</p>
                <p [innerHTML]="data.note"></p>
 
+
                   <mat-form-field class="demo-chip-list">
                     <mat-chip-list>
                    <mat-chip  [removable]="removable" (remove)="remove1(data)">
-                     <p>{{currentlabel}}</p>
+                    <p>{{data.label}}<p>
                      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                    </mat-chip>
                    </mat-chip-list>

@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit {
   removable: boolean = true;
   addOnBlur: boolean = true;
   separatorKeysCodes = [ENTER, COMMA];
+  checked = false;
   fruits = [
     // { name: 'Lemon' },
     // { name: 'Lime' },
@@ -707,16 +708,22 @@ this.refreshNotes();
      });
      }
 
-     labelSubmit(data):void
+     labelSubmit(label,data):void
      {
+           console.log(label.title);
+           console.log(data);
+           this.checked = !this.checked;
        var labeldata =
      {
-       label : this.model.label
+       label : label.title
      }
-       console.log(data,labeldata);
-   // this.chipData=data;
-   //console.log(this.chipData);
-       this.commonService.updateData('update/' + data._id, labeldata)
+
+       // var current;
+       // current=current+labeldata;
+       // console.log(current);
+
+
+       this.commonService.updateData('update/' + data._id,labeldata)
       .subscribe(model => {
        console.log(model);
        // this.toastr.success( 'Success!');
@@ -732,6 +739,31 @@ this.refreshNotes();
      });
 
      }
+
+     //remove label
+     remove1(data)
+     {
+       var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
+          console.log(data1);
+       this.commonService.updateData('update/'+data._id,data1)
+       .subscribe(model => {
+          console.log(model);
+
+         // this.toastr.success( 'Success!');
+         // this.router.navigate(['/home']);
+       //console.log(this.responseStatus = data),
+       err =>{
+                console.log(err);
+               //this.toastr.error(err);
+               this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+               () => console.log('Request Completed')
+
+            //  this.toastr.error(err);
+
+     };
+     this.refreshNotes();
+    });
+  }
 
 
 

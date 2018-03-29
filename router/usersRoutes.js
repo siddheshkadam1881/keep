@@ -70,7 +70,7 @@ router.get('/readLabel',labelController.readLabel);
 router.put('/updateLabel/:id',labelController.updateLabel);
 // // // router.put('/uploader/:id',todoController.uploader);
 router.delete('/deleteLabel/:id',labelController.deleteLabel);
-// router.post('/label/:id',labelController.label);
+router.post('/label/:id',labelController.label);
 //
 
 

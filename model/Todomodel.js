@@ -13,9 +13,10 @@ var NoteSchema = new mongoose.Schema({
     type : mongoose.Schema.Types.ObjectId,
     ref: 'Label'
   }],
-  label: {
-    type: String
-  },
+  label: [{
+    type : Array ,
+     default : []
+     }],
   reminder: {
     type: Date,
   },

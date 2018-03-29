@@ -27,6 +27,7 @@ export class HomeComponent  implements OnInit {
   public Users;
   public Labels;
   public currentlabel;
+  public dashDataFirst;
   // public currentlabel1;
   public myData=[];
   note:string;
@@ -62,18 +63,9 @@ export class HomeComponent  implements OnInit {
    constructor(private location: Location,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
      this.mobileQuery = media.matchMedia('(max-width: 600px)',);
      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-     this.mobileQuery.addListener(this._mobileQueryListener);,
-     this.commonService.getData('readLabel').subscribe(response => {
-       if (response) {
-         //console.log(response);
-         // items.slice().reverse();
-          this.Labels = response;
-       }
-     }
+     this.mobileQuery.addListener(this._mobileQueryListener);
 
-
-
-   }
+    }
 
 ////////////////////////////////read the data by calling service method//////////////////////////////////////////////
 
