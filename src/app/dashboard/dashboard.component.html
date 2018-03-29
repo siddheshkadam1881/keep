@@ -151,13 +151,30 @@
                          </mat-radio-button>
                        </mat-radio-group> -->
 
-                         <div *ngFor="let label of Labels;let i=index">
+                         <!-- <div *ngFor="let label of Labels;let i=index">
                          <mat-checkbox class="example-margin" [(ngModel)]="checked"  (click)="labelSubmit(label,data)">
 
                                     {{label.title}}
 
                           </mat-checkbox>
-                         </div>
+                         </div> -->
+                         <form #f="ngForm" novalidate>
+                               <div class="modal_line"></div>
+                                       <div class="checkbox " *ngFor="let label of Labels;let i=index;">
+                                        <input type="checkbox" name="label[{{i}}]"  [checked]="label.selected" value="label.selected" id="{{label.name}}" (change)="label.selected = !(label.selected)"/>
+                                                  <label for="{{label.title}}">{{label.title}}</label>
+                                        </div>
+                                       <input type="button" (click)="ApplyFilters(f.valid,data)"  class="btn btn-primary filters_btn" value="Apply Filters">
+                          </form>
+                         <!-- <form #f="ngForm" novalidate>
+                               <div class="modal_line"></div>
+                                       <div class="checkbox " *ngFor="let neighbourhood of neighbourhoods;let i=index;">
+                                        <input type="checkbox" name="neighbourhoodname[{{i}}]"  [checked]="neighbourhood.selected" value="neighbourhood.selected" id="{{neighbourhood.name}}" (change)="neighbourhood.selected = !(neighbourhood.selected)"/>
+                                                  <label for="{{neighbourhood.name}}">{{neighbourhood.name}}</label>
+                                        </div>
+                                       <input type="button" (click)="ApplyFilters(f.valid)"  class="btn btn-primary filters_btn" value="Apply Filters">
+                          </form> -->
+
 
                          <!-- <div *ngFor="let label of Labels; let i = index;">
 

@@ -765,6 +765,35 @@ this.refreshNotes();
     });
   }
 
+  ApplyFilters(isValid: boolean,data) {
+   var datas  = this.Labels.filter(function (data1) { return data1.selected == true });
+   console.log(datas);
+   console.log(data);
+
+   if (!isValid) return;
+
+  
+  console.log(map1);
+   this.commonService.updateData('update/' + data._id,labeldata)
+  .subscribe(model => {
+   console.log(model);
+   // this.toastr.success( 'Success!');
+   //console.log(this.responseStatus = data),
+   err => {
+   console.log(err);
+   //this.toastr.error(err);
+   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+   () => console.log('Request Completed')
+     //  this.toastr.error(err);
+   };
+   this.refreshNotes();
+ });
+
+
+
+
+
+}
 
 
   }
