@@ -1,3 +1,10 @@
+/****************************
+@file   : TodoModel.js
+@author siddheshwar kadam
+@version 1.0
+*****************************/
+
+
 var mongoose = require('mongoose');
 
 var NoteSchema = new mongoose.Schema({
@@ -13,9 +20,9 @@ var NoteSchema = new mongoose.Schema({
     type : mongoose.Schema.Types.ObjectId,
     ref: 'Label'
   }],
-  label: [{
-    type : Array 
-     }],
+  // label: [{
+  //   type : Array
+  //    }],
   reminder: {
     type: Date,
   },
@@ -69,6 +76,7 @@ var NoteSchema = new mongoose.Schema({
   var new_note = new this();
   new_note.title = todoObj.title;
   new_note.note = todoObj.note;
+  new_note.label_ids= todoObj.label_ids;
   //new_note.email = req.body.email;
   new_note.user_id =userObj._id;
   new_note.save(cb);

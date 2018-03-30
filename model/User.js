@@ -1,3 +1,8 @@
+/****************************
+@file   : User.js
+@author siddheshwar kadam
+@version 1.0
+*****************************/
  var mongoose = require('mongoose');
  var bcrypt = require('bcrypt');
 

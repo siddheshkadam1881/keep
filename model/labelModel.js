@@ -1,3 +1,10 @@
+/****************************
+@file   : labelModel.js
+@author siddheshwar kadam
+@version 1.0
+*****************************/
+
+
 var mongoose = require('mongoose');
 var labelSchema = new mongoose.Schema({
   title: {

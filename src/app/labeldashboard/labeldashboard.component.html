@@ -3,8 +3,9 @@
  <!-- <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="margin-left: 872px;width:40px;" src="assets/icon/List View.svg"> -->
   <!-- <app-home>  </app-home>  -->
  <mat-sidenav-content>
+
    <div>
-   <p *ngFor="let content of fillerContent">{{content}}</p>
+   <!-- <p *ngFor="let content of fillerContent">{{content}}</p> -->
   <!-- take note here -->
    <div  class="notes"  (click)="toggle1()" id="bt" *ngIf="!show">
        <div  fxLayoutWrap fxLayoutAlign="space-around center"> Take a note...</div>
@@ -54,15 +55,6 @@
                <p [innerHTML]="data.note"></p>
 
 
-                  <mat-form-field class="demo-chip-list">
-                    <mat-chip-list>
-                   <mat-chip  [removable]="removable" (remove)="remove1(data)">
-                    <p>{{data.label}}<p>
-                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                   </mat-chip>
-                   </mat-chip-list>
-                 </mat-form-field>
-
 
 
              <div  *ngIf="data.note_chip || data.reminder">
@@ -79,6 +71,28 @@
                  </mat-chip-list>
                </mat-form-field>
              </div>
+
+
+             <div *ngIf="data.label.length > 0">
+              <mat-form-field class="demo-chip-list">
+                <div *ngFor="let labelchip of data.label">
+                  <div *ngFor="let chip of labelchip">
+                     <div *ngIf="chip.title==currentlabel">
+                       <mat-chip-list class="chip">
+                          <mat-chip  [removable]="removable" (remove)="remove1(data,labelchip,chip_id)">
+                           <p>{{chip.title}}</p>
+                              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                         </mat-chip-list>
+                     </div>
+                   </div>
+                  </div>
+              </mat-form-field>
+             </div>
+
+
+
+
            </div>
            <div class="imageNotes" [style.background]="data.note_color">
                <img class="img-responsive" y-position="below" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg"  [matMenuTriggerFor]="menu2" />
@@ -162,6 +176,25 @@
                    </mat-chip-list>
                  </mat-form-field>
                </div>
+
+               <div *ngIf="data.label.length > 0">
+                <mat-form-field class="demo-chip-list">
+
+                  <div *ngFor="let labelchip of data.label">
+                    <div *ngFor="let chip of labelchip;let i = index">
+
+                  <mat-chip-list class="chip">
+                 <mat-chip  [removable]="removable" (remove)="remove1(data,labelchip,chip_id)">
+                   <p>{{chip.title}}</p>
+                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                 </mat-chip>
+                 </mat-chip-list>
+
+                 </div>
+                 </div>
+               </mat-form-field>
+
+             </div>
            </div>
            <div class="imageNotes" [style.background]="data.note_color">
                <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg"  [matMenuTriggerFor]="menu2">

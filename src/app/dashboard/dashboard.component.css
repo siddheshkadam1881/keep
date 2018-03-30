@@ -129,3 +129,10 @@ fxLayoutAlign:space-around center;
 .demo-chip-list {
   width: 100%;
 }
+.chip
+{
+  height: 10px;
+  width: 10px;
+  font-size: 18px;
+
+}

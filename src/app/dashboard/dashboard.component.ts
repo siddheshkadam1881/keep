@@ -13,6 +13,7 @@ import {NgModule, forwardRef, ViewChild, ElementRef} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {Observable} from 'rxjs/Rx';
+import { Location } from '@angular/common';
 import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
 import { OpenDialogAddLabelComponent } from '../open-dialog-add-label/open-dialog-add-label.component';
 
@@ -51,7 +52,8 @@ export class DashboardComponent implements OnInit {
   isClassVisible: false;
   public dashDataFirst;
   public Labels;
-  public myData=[];
+  public labelchip;
+    public myData=[];
   note:string;
 
    title:string;
@@ -84,7 +86,7 @@ export class DashboardComponent implements OnInit {
 
   private _mobileQueryListener: () => void;
 
-  constructor(private rd: Renderer2,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
+  constructor(private location: Location,private rd: Renderer2,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -122,7 +124,17 @@ export class DashboardComponent implements OnInit {
               //console.log(this.dashDataFirst.reverse());
           }
         },
-          error => console.log("Error while retrieving"))
+          error => console.log("Error while retrieving"));
+      //
+
+      this.commonService.getData('readLabel').subscribe(response => {
+        if (response) {
+          //console.log(response);
+          // items.slice().reverse();
+           this.Labels = response;
+        }
+      },
+        error => console.log("Error while retrieving"));
   }
 
 
@@ -741,14 +753,18 @@ this.refreshNotes();
      }
 
      //remove label
-     remove1(data,labelchip,chip)
+     remove1(data,labelchip,chip_id): void
      {
-           console.log(data);
-          console.log(chip);
-          this.labelchip.splice(chip, 1);
-       this.commonService.updateData('update/'+data._id,data.label)
-       .subscribe(model => {
-          console.log(model);
+
+
+
+          console.log(chip_id);
+
+
+       //this.orders = this.orders.filter(order => order.food_id !== food.id);
+         this.commonService.updateData('update/'+data._id,data.label)
+           .subscribe(model => {
+           console.log(model);
 
          // this.toastr.success( 'Success!');
          // this.router.navigate(['/home']);
@@ -778,7 +794,7 @@ this.refreshNotes();
     //  console.log(a);
      var labeldata =
    {
-     label :datas
+     label_ids :datas._id
    }
 
   // console.log(a);
@@ -796,12 +812,43 @@ this.refreshNotes();
    };
    this.refreshNotes();
  });
-
-
-
-
-
 }
+
+createNewlabel(data)
+{
+   console.log(this.model);
+    this.commonService.postServiceData('createLabel',this.model)
+      .subscribe(model => {
+         console.log(model);
+
+        // this.toastr.success( 'Success!');
+        // this.router.navigate(['/home']);
+
+      //console.log(this.responseStatus = data),
+      err =>{
+               console.log(err);
+              //this.toastr.error(err);
+              this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+              () => console.log('Request Completed')
+           //  this.toastr.error(err);
+        };
+        this.refreshNotes();
+ });
+}
+
+refreshLabel()
+{
+this.commonService.getData('readLabel').subscribe(response => {
+ if (response) {
+ console.log(response);
+// items.slice().reverse();
+ this.Labels = response;
+ location.reload();
+ }
+},
+error => console.log("Error while retrieving"))
+}
+
 
 
   }

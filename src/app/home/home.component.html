@@ -50,6 +50,7 @@
 
          <div *ngFor="let label of Labels">
            <div fxFlex="20" fxLayoutAlign="center center" >
+               <img class="img-responsive" matTooltip="Delete label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/label.svg"/>
            </div>
            <div fxFlex="75" fxLayoutAlign="center center"  (click)="openLabel(label)">
              <p>{{label.title}}</p>
