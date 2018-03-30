@@ -741,11 +741,12 @@ this.refreshNotes();
      }
 
      //remove label
-     remove1(data)
+     remove1(data,labelchip,chip)
      {
-       var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
-          console.log(data1);
-       this.commonService.updateData('update/'+data._id,data1)
+           console.log(data);
+          console.log(chip);
+          this.labelchip.splice(chip, 1);
+       this.commonService.updateData('update/'+data._id,data.label)
        .subscribe(model => {
           console.log(model);
 
@@ -770,10 +771,17 @@ this.refreshNotes();
    console.log(datas);
    console.log(data);
 
-   if (!isValid) return;
+ if (!isValid) return;
 
-  
-  console.log(map1);
+    // var a= datas.filter(datas => datas.title);
+    //
+    //  console.log(a);
+     var labeldata =
+   {
+     label :datas
+   }
+
+  // console.log(a);
    this.commonService.updateData('update/' + data._id,labeldata)
   .subscribe(model => {
    console.log(model);

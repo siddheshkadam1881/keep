@@ -14,8 +14,7 @@ var NoteSchema = new mongoose.Schema({
     ref: 'Label'
   }],
   label: [{
-    type : Array ,
-     default : []
+    type : Array 
      }],
   reminder: {
     type: Date,

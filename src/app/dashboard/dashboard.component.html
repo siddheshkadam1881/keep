@@ -66,12 +66,19 @@
 
               <div *ngIf="data.label.length > 0">
                <mat-form-field class="demo-chip-list">
-                 <mat-chip-list>
-                <mat-chip  [removable]="removable" (remove)="remove1(data)">
-                  <p>{{data.label}}<p>
+
+                 <div *ngFor="let labelchip of data.label">
+                   <div *ngFor="let chip of labelchip">
+
+                 <mat-chip-list class="chip">
+                <mat-chip  [removable]="removable" (remove)="remove1(data,labelchip,chip)">
+                  <p>{{chip.title}}</p>
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
                 </mat-chip-list>
+
+                </div>
+                </div>
               </mat-form-field>
 
             </div>
