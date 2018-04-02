@@ -1,0 +1,40 @@
+<div class="form1">
+<mat-toolbar color="primary" >
+<div class="title-center">
+
+<h1><strong>TODO</strong></h1>
+</div>
+  <!-- This fills the remaining space of the current row -->
+</mat-toolbar>
+</div>
+
+ <form class="form"  fxLayout="column" fxFlexAlign="auto" #signInForm="ngForm" (ngSubmit)="signInForm.form.valid && signInUser(signInForm.value)">
+   <div>
+     <mat-form-field class="full_width">
+       <input matInput placeholder="Enter your email" type="email"  name="email"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"  ngModel required />
+       <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+     </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="full_width">
+       <input matInput placeholder="Enter your password"  type="password" name="userpass" [type]="hide ? 'password' : 'text'" ngModel required />
+       <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+     </mat-form-field>
+    </div>
+       <div class="Signbutton">
+        <button mat-button mat-raised-button color="primary" >Sign In</button>
+      </div>
+       <div class="Signbutton">
+   <button  [routerLink]="'/auth/facebook'" class="btn btn-primary">Facebook</button>
+     <!-- <button mat-button mat-raised-button color="primary" (click)="signInWithFB()">Login with facebook</button> -->
+     </div>
+     <!-- <div class="Signbutton">
+      <button mat-button mat-raised-button color="primary" >Sign In</button>
+    </div> -->
+      <div>
+        <a [routerLink]="['/signup']" style=" padding-left: 330px;">if u dont have account?</a>
+      </div>
+      <div >
+        <a [routerLink]="['/forget']" style=" padding-left: 330px;">forget password?</a>
+      </div>
+      </form>
