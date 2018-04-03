@@ -11,9 +11,11 @@ import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image
 import { OpenDialogProfileComponent } from '../open-dialog-profile/open-dialog-profile.component';
 import { OpenDialogLabelComponent } from '../open-dialog-label/open-dialog-label.component';
 import { OpenDialogAddLabelComponent } from '../open-dialog-add-label/open-dialog-add-label.component';
-
+import { FilterPipe} from '../services/filter.pipe';
 import { Location } from '@angular/common';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 //import {HttpModule} from '@angular/http';
 @Component({
   selector: 'app-home',

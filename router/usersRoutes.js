@@ -3,14 +3,18 @@
 @version 1.0
 *****************************/
 
-
 var jwt = require('jsonwebtoken');
 var router = require('express').Router();
 var userController=require('../controller/userController.js');
 var todoController=require('../controller/todoController.js');
 var labelController=require('../controller/labelController.js');
 var userService = require("../service/user.service");
-
+var User1 = require("../model/User1");
+// const tokgen = new TokenGenerator(); // Default is a 128-bit token encoded in base58
+const TokenGenerator = require('uuid-token-generator'); var ids = require('short-id');
+const tokgen = new TokenGenerator(); // Default is a 128-bit token encoded in base58
+ var token=tokgen.generate();
+ console.log(token)
 //var passport = require('passport');
 var passport = userController.passport;
 router.post('/signup',userController.signUp);
@@ -37,12 +41,31 @@ router.put('/activeUser/:id',userController.activeUser);
   // access was granted, the user will be logged in.  Otherwise,
   // authentication has failed.
 
-	router.get('/auth/facebook/callback',
-	  passport.authenticate('facebook', {
-			successRedirect : '/home',
-			failureRedirect : '/signin'
-		})
-	);
+	// router.get('/auth/facebook/callback',
+	//   passport.authenticate('facebook', {
+	// 		successRedirect : '/dummy/'+token,
+	// 		failureRedirect : '/signin'
+	// 	})
+	// );
+
+  router.get('/facebook/callback',facebookSignInCallback);
+   function facebookSignInCallback(req, res, next) {
+    passport = req._passport.instance;
+    passport.authenticate('facebook',function(err, user, info) {
+			console.log("in indes file :users::",user);
+        if(err) {
+            return next(err);
+        }
+        if(!user) {
+            return res.redirect('signin');
+        }
+            res.writeHead(302, {
+                'Location': '/#!/authProvider?token=' + user.fb.access_token + '&id='+user._id+ '&fb_id='+user.fb.id+ '&email='+user.fb.email+ '&photo='+user.fb.profile+ '&provider='+'fb'
+            });
+            res.end();
+        // });
+    })(req,res,next);
+}
 
 
 /*******************************

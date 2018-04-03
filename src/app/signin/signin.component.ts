@@ -75,7 +75,8 @@ signInWithFB(): void {
 
 
 
-// signInWithGoogle(): void {
-//    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-//  }
+signInWithGoogle(): void {
+   // this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+     this.router.navigate(["'http://localhost:3000/auth/facebook'"]);
+ }
 }

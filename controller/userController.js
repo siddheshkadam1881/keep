@@ -303,15 +303,9 @@ exports.reset_password = function(req, res, next) {
 };
 
 
-
-
-
-
-
-
-// /*************************************************
-//            facebook login
-// **************************************************/
+ /**
+  *  facebook login
+  **/
 exports.passport = function(passport) {
    // used to serialize the user for the session
    passport.serializeUser(function(user, done) {
@@ -331,7 +325,7 @@ exports.passport = function(passport) {
    console.log(profile);
       //asynchronous
        process.nextTick(function(res) {
-         console.log("hii")
+         // console.log("hii")
          //find the user in the database based on their facebook id
            User1.findOne({ 'fb.id' : profile.id }, function(err, user) {
              console.log(user);

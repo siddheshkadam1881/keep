@@ -52,9 +52,11 @@ import { LabeldashboardComponent } from './labeldashboard/labeldashboard.compone
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { OpenDialogAddLabelComponent } from './open-dialog-add-label/open-dialog-add-label.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { DummyComponent } from './dummy/dummy.component';
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent,canActivate : [LoggedInAuthGuard] },
+  { path: 'dummy', component: DummyComponent,canActivate :  [LoggedInAuthGuard] } ,
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent,
    canActivate: [ AuthGuard ],
@@ -108,7 +110,8 @@ export function provideConfig() {
     OpenDialogLabelComponent,
     LabeldashboardComponent,
     PagenotfoundComponent,
-    OpenDialogAddLabelComponent
+    OpenDialogAddLabelComponent,
+    DummyComponent
   ],
   imports: [
     MatCheckboxModule,
