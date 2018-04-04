@@ -48,7 +48,7 @@ router.put('/activeUser/:id',userController.activeUser);
 	// 	})
 	// );
 
-  router.get('/facebook/callback',facebookSignInCallback);
+  router.get('/auth/facebook/callback',facebookSignInCallback);
    function facebookSignInCallback(req, res, next) {
     passport = req._passport.instance;
     passport.authenticate('facebook',function(err, user, info) {
@@ -59,13 +59,15 @@ router.put('/activeUser/:id',userController.activeUser);
         if(!user) {
             return res.redirect('signin');
         }
+            // successRedirect : '/dummy/'+user.fb.access_token
             res.writeHead(302, {
-                'Location': '/#!/authProvider?token=' + user.fb.access_token + '&id='+user._id+ '&fb_id='+user.fb.id+ '&email='+user.fb.email+ '&photo='+user.fb.profile+ '&provider='+'fb'
+                 'Location': '/#!/authProvider?token=' + user.fb.access_token + '&id='+user._id+ '&fb_id='+user.fb.id+ '&email='+user.fb.email+ '&photo='+user.fb.profile+ '&provider='+'fb'
             });
             res.end();
-        // });
+       });
     })(req,res,next);
 }
+
 
 
 /*******************************

@@ -14,13 +14,28 @@ export class DummyComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router ,private commonService:BackendApiService,public toastr: ToastsManager, vcr: ViewContainerRef)
   {
-    this.token = route.snapshot.params['token']
+    // this.token = route.snapshot.params['token']
    }
 
   ngOnInit() {
-    console.log(this.tokens);
-    localStorage.setItem('token',this.token);
-    this.router.navigate(['/home']);
+    // console.log(this.tokens);
+    // localStorage.setItem('token',this.token);
+    // this.router.navigate(['/home']);
+    this.commonService.postServiceData('generateToken',this.model)
+      .subscribe(model => {
+         console.log(model);
+
+        // this.toastr.success( 'Success!');
+        // this.router.navigate(['/home']);
+      //console.log(this.responseStatus = data),
+      err =>{
+               console.log(err);
+               //this.toastr.error(err);
+               this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+              () => console.log('Request Completed')
+              //  this.toastr.error(err);
+        };
+   });
   }
 
 }
