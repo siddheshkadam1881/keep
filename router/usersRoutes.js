@@ -1,29 +1,29 @@
-/****************************
-@author siddheshwar kadam
-@version 1.0
-*****************************/
-
+/**
+* @author siddheshwar kadam
+* @version 1.0
+**/
+var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 var router = require('express').Router();
 var userController=require('../controller/userController.js');
 var todoController=require('../controller/todoController.js');
 var labelController=require('../controller/labelController.js');
 var userService = require("../service/user.service");
-var User1 = require("../model/User1");
-// const tokgen = new TokenGenerator(); // Default is a 128-bit token encoded in base58
-const TokenGenerator = require('uuid-token-generator'); var ids = require('short-id');
+var User = require("../model/User");
+var FacebookTokenStrategy = require('passport-facebook-token');
+const TokenGenerator = require('uuid-token-generator');
+var ids = require('short-id');
 const tokgen = new TokenGenerator(); // Default is a 128-bit token encoded in base58
  var token=tokgen.generate();
- console.log(token)
-//var passport = require('passport');
+var passport = require('passport');
 var passport = userController.passport;
 router.post('/signup',userController.signUp);
 router.post('/signin',userController.signIn);
 router.post('/loginRequired',userController.loginRequired);
 router.post('/forgot_password',userController.forgot_password);
 router.post('/reset_password/:token',userController.reset_password);
-router.get('/readActiveUser',userController.readActiveUser);
 router.put('/activeUser/:id',userController.activeUser);
+
 /*
  *  Redirect the user to Facebook for authentication.  When complete,
  *   Facebook will redirect the user back to the application at
@@ -32,42 +32,67 @@ router.put('/activeUser/:id',userController.activeUser);
  *  route for facebook authentication and login
  *   different scopes while logging in
 */
-	router.get('/auth/facebook',
-	 passport.authenticate('facebook', { scope : 'email' }
-	));
+var createToken = function(auth) {
+  return jwt.sign({
+    id: auth.id
+  }, 'my-secret',
+  {
+    expiresIn: 60 * 120
+  });
+};
+
+var generateToken = function (req, res, next) {
+  req.token = createToken(req.auth);
+  next();
+};
+
+var sendToken = function (req, res) {
+  res.setHeader('x-auth-token', req.token);
+  res.status(200).send(req.auth);
+};
+//
+
+// router.get('/auth/facebook',
+//   passport.authenticate('facebook'));
+//
+// router.get('/auth/facebook/callback',
+//   passport.authenticate('facebook', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     console.log('facebook login', req)
+//     // Successful authentication, redirect home.
+//     res.redirect('/');
+//   });
+
+router.post('/auth/facebook',passport.authenticate('facebook-token', {session: false}), function(req, res, next) {
+
+     if (!req.user) {
+      return res.send(401, 'User Not Authenticated');
+    }
+    // prepare token for API
+      req.auth = {
+        id: req.user.id
+      };
+
+      next();
+    }, generateToken, sendToken);
+
+
+  //token handling middleware
+  var authenticate = expressJwt({
+    secret: 'my-secret',
+    requestProperty: 'auth',
+    getToken: function(req) {
+      if (req.headers['x-auth-token']) {
+        return req.headers['x-auth-token'];
+      }
+      return null;
+    }
+  });
 
   // Facebook will redirect the user to this URL after approval.  Finish the
   // authentication process by attempting to obtain an access token.  If
   // access was granted, the user will be logged in.  Otherwise,
   // authentication has failed.
-
-	// router.get('/auth/facebook/callback',
-	//   passport.authenticate('facebook', {
-	// 		successRedirect : '/dummy/'+token,
-	// 		failureRedirect : '/signin'
-	// 	})
-	// );
-
-  router.get('/auth/facebook/callback',facebookSignInCallback);
-   function facebookSignInCallback(req, res, next) {
-    passport = req._passport.instance;
-    passport.authenticate('facebook',function(err, user, info) {
-			console.log("in indes file :users::",user);
-        if(err) {
-            return next(err);
-        }
-        if(!user) {
-            return res.redirect('signin');
-        }
-            // successRedirect : '/dummy/'+user.fb.access_token
-            res.writeHead(302, {
-                 'Location': '/#!/authProvider?token=' + user.fb.access_token + '&id='+user._id+ '&fb_id='+user.fb.id+ '&email='+user.fb.email+ '&photo='+user.fb.profile+ '&provider='+'fb'
-            });
-            res.end();
-       });
-    })(req,res,next);
-}
-
 
 
 /*******************************
@@ -99,7 +124,6 @@ router.use(function(req, res, next) {
         success: false,
         message: 'No token provided.'
     });
-
   }
 });
 
@@ -109,7 +133,8 @@ router.use(function(req, res, next) {
  // router.get('/readTodos/:id',todoController.readTodoById);
  router.put('/update/:id',todoController.update);
  router.delete('/delete/:id',todoController.delete);
-//
+ router.get('/readActiveUser',userController.readActiveUser);
+
 // ///////label controller
 router.post('/createLabel',labelController.createLabel);
 router.get('/readLabel',labelController.readLabel);
@@ -119,145 +144,6 @@ router.put('/updateLabel/:id',labelController.updateLabel);
 router.delete('/deleteLabel/:id',labelController.deleteLabel);
 router.post('/label/:id',labelController.label);
 //
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
- *  Redirect the user to Facebook for authentication.  When complete,
- *   Facebook will redirect the user back to the application at
- *    /auth/facebook/callback
- *
- *  route for facebook authentication and login
- *   different scopes while logging in
-*/
-	router.get('/auth/facebook',
-	 passport.authenticate('facebook', { scope : 'email' }
-	));
-
-  // Facebook will redirect the user to this URL after approval.  Finish the
-  // authentication process by attempting to obtain an access token.  If
-  // access was granted, the user will be logged in.  Otherwise,
-  // authentication has failed.
-
-	router.get('/auth/facebook/callback',
-	  passport.authenticate('facebook', {
-			successRedirect : '/',
-			failureRedirect : '/'
-		})
-	);
-
-  // router.get('/auth/google',
-	//  passport.authenticate('google', { scope : 'email' }
-	// ));
-
-  // Facebook will redirect the user to this URL after approval.  Finish the
-  // authentication process by attempting to obtain an access token.  If
-  // access was granted, the user will be logged in.  Otherwise,
-  // authentication has failed.
-
-	// router.get('/auth/google/callback',
-	//   passport.authenticate('google', {
-	// 		successRedirect : '/',
-	// 		failureRedirect : '/'
-	// 	})
-	// );
-
-
-
-
 
 
 

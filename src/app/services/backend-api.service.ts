@@ -22,7 +22,7 @@ public urlpath;
   postServiceData(path,model) {
   //console.log(model,path);
   let token = localStorage.getItem("token");
-  console.log("token", token);
+  //console.log("token", token);
 
   //set the token to header
   const headers = new Headers();

@@ -30,10 +30,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {LayoutModule} from '@angular/cdk/layout';
-import { SocialLoginModule } from 'angularx-social-login';
-import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { CommonComponent } from './common/common.component';
-import { AuthGuard,LoggedInAuthGuard } from './auth/index';
+import { AuthGuard,LoggedInAuthGuard} from './auth/index';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCardModule} from '@angular/material/card';
@@ -53,6 +51,35 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { OpenDialogAddLabelComponent } from './open-dialog-add-label/open-dialog-add-label.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DummyComponent } from './dummy/dummy.component';
+import { SocialLoginModule } from 'angularx-social-login';
+import { UserService } from './services/user.service';
+import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider  } from 'angularx-social-login';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
+
+
+export function getAuthHttp(http: Http) {
+  return new AuthHttp(new AuthConfig({
+    headerName: 'x-auth-token',
+    noTokenScheme: true,
+    noJwtError: true,
+    globalHeaders: [{'Accept': 'application/json'}],
+    tokenGetter: (() => localStorage.getItem('id_token')),
+  }), http);
+}
+
+const config = new AuthServiceConfig([
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('209419629801960')
+  }
+]);
+
+
+  export function provideConfig() {
+  return config;
+}
+
+
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent,canActivate : [LoggedInAuthGuard] },
@@ -75,20 +102,6 @@ const routes: Routes = [
 
 ];
 
-const config = new AuthServiceConfig([
-  // {
-  //   id: GoogleLoginProvider.PROVIDER_ID,
-  //   provider: new GoogleLoginProvider('624796833023-clhjgupm0pu6vgga7k5i5bsfp6qp6egh.apps.googleusercontent.com')
-  // },
-  {
-    id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider('209419629801960')
-  }
-]);
-
-export function provideConfig() {
-  return config;
-}
 
 
 @NgModule({
@@ -114,11 +127,13 @@ export function provideConfig() {
     DummyComponent
   ],
   imports: [
+    SocialLoginModule,
     MatCheckboxModule,
     ImageCropperModule,
     MatChipsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+
     //MatNativeDatetimeModule,
     //MatDatepickerModule,
     MatCardModule,
@@ -147,7 +162,6 @@ export function provideConfig() {
     SocialLoginModule.initialize(config)
   ],
   entryComponents: [
-
      CommonComponent,
      OpenDialogImageComponent,
      OpenDialogProfileComponent,
@@ -155,7 +169,7 @@ export function provideConfig() {
      OpenDialogAddLabelComponent
    ],
 
-  providers: [BackendApiService, AuthGuard, LoggedInAuthGuard ,{ provide: AuthServiceConfig, useFactory: provideConfig }, {
+  providers: [UserService, { provide: AuthHttp, useFactory: getAuthHttp, deps: [Http] },BackendApiService, AuthGuard, LoggedInAuthGuard ,{ provide: AuthServiceConfig, useFactory: provideConfig }, {
       provide: LOCALE_ID,
       useValue: "de-DE"
     },

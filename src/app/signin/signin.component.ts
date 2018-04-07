@@ -12,7 +12,9 @@ import { ViewContainerRef} from '@angular/core';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { AuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
-import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login'
+import { UserService } from '../services/user.service';
+
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -23,10 +25,9 @@ export class SigninComponent implements OnInit{
  status:boolean ;
  loading = false;
  returnUrl: string;
-//facebook login
- user: SocialUser;
-invalidCredentialMsg: string;
-  constructor(private route: ActivatedRoute, private router: Router , private commonService:BackendApiService, public toastr: ToastsManager, vcr: ViewContainerRef,private authService: AuthService)
+  user: SocialUser;
+  invalidCredentialMsg: string;
+  constructor(private userService: UserService,private authService: AuthService,private route: ActivatedRoute, private router: Router , private commonService:BackendApiService, public toastr: ToastsManager, vcr: ViewContainerRef)
   { this.toastr.setRootViewContainerRef(vcr); }
   //password validation
   hide = true;
@@ -64,19 +65,27 @@ invalidCredentialMsg: string;
          });
 }
 
-signInWithFB(): void {
-   this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+
+ngOnInit() {
  }
- ngOnInit() {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-    });
+
+
+ fbLogin() {
+   this.userService.fbLogin().then(() => {
+     console.log('User has been logged in');
+     this.router.navigate(['/home']);
+   });  }
+
+
+signOut(): void {
+    this.authService.signOut();
   }
 
 
 
-signInWithGoogle(): void {
-   // this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-     this.router.navigate(["'http://localhost:3000/auth/facebook'"]);
- }
 }
+
+// signInWithGoogle(): void {
+//    // this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+//      this.router.navigate(["'http://localhost:3000/auth/facebook'"]);
+//  }

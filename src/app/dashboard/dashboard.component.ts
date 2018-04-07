@@ -138,14 +138,6 @@ export class DashboardComponent implements OnInit {
   }
 
 
-//  getData(data):void
-//  {
-//
-// console.log(data);
-//
-//
-//  }
-
   add(event: MatChipInputEvent): void {
      let input = event.input;
      let value = event.value;
@@ -784,20 +776,21 @@ this.refreshNotes();
 
   ApplyFilters(isValid: boolean,data) {
    var datas  = this.Labels.filter(function (data1) { return data1.selected == true });
-   console.log(datas);
-   console.log(data);
+    if (!isValid) return;
+   for(var a=0;a<datas.length;a++)
+    {
+       console.log(datas[a]._id)
 
- if (!isValid) return;
 
     // var a= datas.filter(datas => datas.title);
     //
     //  console.log(a);
      var labeldata =
    {
-     label_ids :datas._id
+     label_ids :datas[a]._id
    }
 
-  // console.log(a);
+   console.log(labeldata);
    this.commonService.updateData('update/' + data._id,labeldata)
   .subscribe(model => {
    console.log(model);
@@ -812,6 +805,7 @@ this.refreshNotes();
    };
    this.refreshNotes();
  });
+}
 }
 
 createNewlabel(data)

@@ -25,9 +25,16 @@
         <button mat-button mat-raised-button color="primary" >Sign In</button>
       </div>
        <div class="Signbutton">
+         <button class="loginBtn loginBtn--facebook"  (click)="fbLogin()">
+    Login with Facebook
+  </button>
 
-         <a href="'localhost:3000/auth/facebook'"><button class="btn btn-success pull-right" > facebook</button></a>
-
+  <button class="loginBtn loginBtn--google">
+    Login with Google
+  </button>
+         <!-- <a class="btn btn-social btn-facebook" (click)="fbLogin()">
+            <span class="fa fa-facebook"></span>  Facebook
+          </a> -->
    <!-- <button  [routerLink]="'http://localhost:3000/auth/facebook'" class="btn btn-primary">Facebook</button> -->
      <!-- <button mat-button mat-raised-button color="primary" (click)="signInWithFB()">Login with facebook</button> -->
      </div>

@@ -28,9 +28,10 @@ var jwt = require('jsonwebtoken');
  var smtpTransport = require("nodemailer-smtp-transport");
  const TokenGenerator = require('uuid-token-generator'); var ids = require('short-id');
  const tokgen = new TokenGenerator(); // Default is a 128-bit token encoded in base58
- tokgen.generate();
+ // tokgen.generate();
  //passport Strategy purpose
  var FacebookStrategy = require('passport-facebook').Strategy;
+ var FacebookTokenStrategy = require('passport-facebook-token');
  var fbConfig = require('../config/auth');
  var  passport = require('passport');
  var multer  = require('multer');
@@ -101,15 +102,15 @@ exports.signIn= function(req, res) {
 *****************************/
 
 exports.readActiveUser = function(req, res) {
+
    User.find({
-
-   //user_id:req.user.id
-
+        email:req.decoded.email
    }, function(err, note) {
      if (err)
      res.send(500, { err: 'something blew up' });
      //res.send(err);
      res.json(note);
+     console.log(note);
    });
 }
 
@@ -315,46 +316,69 @@ exports.passport = function(passport) {
 
    // used to deserialize the user
   passport.deserializeUser(function(id, done) {
-       User1.findById(id, function(err, user) {
+       User.findById(id, function(err, user) {
            done(err, user);
        });
    });
 
-   //pull in our app id and secret from our auth.js file
-  passport.use('facebook', new FacebookStrategy(fbConfig.facebookAuth, function(access_token, refresh_token ,profile, done) {
-   console.log(profile);
-      //asynchronous
-       process.nextTick(function(res) {
-         // console.log("hii")
-         //find the user in the database based on their facebook id
-           User1.findOne({ 'fb.id' : profile.id }, function(err, user) {
-             console.log(user);
-              if (err)
-             return done(err);
-              if (user) {
-                  return done(null, user);
-             } else {
-                  var newUser = new User1();
-                  newUser.fb.id    = profile.id;
-                  newUser.fb.access_token = access_token;
-                  newUser.fb.firstName  = profile.name.givenName;
-                  newUser.fb.lastName = profile.name.familyName;
-                  newUser.fb.email = profile.emails[0].value;
-        	         // save our user to the database
-                 newUser.save(function(err) {
-                      if (err)
-                         throw err;
-                      // if successful, return the new user
-                      return done(null, newUser);
-                  });
-              }
 
-          }
-        );
-       });
+// console.log(fbConfig.facebookAuth);
+   //pull in our app id and secret from our auth.js file
+  passport.use('facebook-token', new FacebookTokenStrategy(fbConfig.facebookAuth, function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+     User.upsertFbUser(accessToken, refreshToken, profile, function(err, user) {
+          return done(err, user);
+        });
 }));
 return passport;
 }(passport);
+
+
+
+
+//
+//  /**
+//   *  facebook login
+//   **/
+// exports.passport = function(passport) {
+//    // used to serialize the user for the session
+//    passport.serializeUser(function(user, done) {
+//      console.log(user);
+//        done(null, user.id);
+//    });
+//
+//    // used to deserialize the user
+//   passport.deserializeUser(function(id, done) {
+//        User.findById(id, function(err, user) {
+//            done(err, user);
+//        });
+//    });
+//
+//  console.log(fbConfig.facebookAuth);
+//
+//    //pull in our app id and secret from our auth.js file
+// //   passport.use( new FacebookStrategy(fbConfig.facebookAuth, function(accessToken, refreshToken, profile, done) {
+// //     console.log("test",accessToken, refreshToken, profile);
+// //      User.upsertFbUser(accessToken, refreshToken, profile, function(err, user) {
+// //           return done(err, user);
+// //         });
+// // }));
+//   passport.use("facebook",new FacebookStrategy(
+//     fbConfig.facebookAuth,
+//   // {  clientID: FACEBOOK_APP_ID,
+//   //   clientSecret: FACEBOOK_APP_SECRET,
+//   //   callbackURL: "http://localhost:3000/auth/facebook/callback"
+//   // },
+//   function(accessToken, refreshToken, profile, cb) {
+//     console.log("accesstoken", accessToken, refreshToken, profile)
+//     // User.upsertFbUser({ facebookId: profile.id }, function (err, user) {
+//     //   return cb(err, user);
+//     // });
+//   }
+//   ));
+// return passport;
+// }(passport);
+//
 
 
 /////////////////////////////////////////////////////////////////////////////

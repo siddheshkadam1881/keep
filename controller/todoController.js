@@ -17,7 +17,6 @@ var multer = require('multer');
 var todoService = require("../service/todo.service");
 const redis = require('redis');
 var cache = new redis.createClient( process.env.PORT);
-console.log(cache);
 var storage = multer.diskStorage({
   destination: function(req, file, callback) {
     callback(null, './uploads');
@@ -101,7 +100,6 @@ exports.readTodos = function(req, res) {
   */
 
 exports.update = function(req, res) {
-  console.log(req.body);
   upload(req, res, function(err) {
     var todoObj = req.body || {};
     if (req.file && req.file.path) {
