@@ -32,30 +32,6 @@ router.put('/activeUser/:id',userController.activeUser);
  *  route for facebook authentication and login
  *   different scopes while logging in
 */
-var createToken = function(auth) {
-
-  return jwt.sign({
-    token: auth.token
-  }, 'my-secret',
-  {
-    expiresIn: 60 * 120
-  });
-};
-
-var generateToken = function (req, res, next) {
-
-  req.token = createToken(req.auth);
-   //console.log(req.token)
-  next();
-};
-
-var sendToken = function (req, res) {
-  // console.log(req.token)
-  res.setHeader('x-auth-token', req.token);
-  res.status(200).send(req.auth);
-};
-
-
 
 // router.get('/auth/facebook',
 //   passport.authenticate('facebook'));
@@ -68,26 +44,7 @@ var sendToken = function (req, res) {
 //     res.redirect('/');
 //   });
 
-router.post('/auth/facebook',passport.authenticate('facebook-token', {session: false}), function(req, res, next) {
-
-
-     if (!req.user) {
-      return res.send(401, 'User Not Authenticated');
-    }
-    // prepare token for API
-      // console.log(req.user.facebookProvider)
-
-      req.auth = {
-      id: req.user.id
-    };
-      //
-      // req.auth = {
-      //   token: req.user.facebookProvider.token
-      // };
-    // console.log(req.auth)
-
-      next();
-    }, generateToken, sendToken);
+router.post('/auth/facebook',passport.authenticate('facebook-token', {session: false}),userController.signInWithFacebook);
 
 
   //token handling middleware
@@ -125,7 +82,7 @@ router.use(function(req, res, next) {
       } else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
-        // console.log(req.decoded);
+         console.log("decode ",decoded);
         next();
       }
     });

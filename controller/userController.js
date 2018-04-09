@@ -33,7 +33,7 @@ var jwt = require('jsonwebtoken');
  var FacebookStrategy = require('passport-facebook').Strategy;
  var FacebookTokenStrategy = require('passport-facebook-token');
  var fbConfig = require('../config/auth');
- 
+
  var  passport = require('passport');
  var multer  = require('multer');
  var userService = require("../service/user.service");
@@ -80,7 +80,7 @@ exports.signUp = function(req, res) {
 * @extends {req, res}
 **/
 
-exports.signIn= function(req, res) {
+exports.signIn = function(req, res) {
   User.findOne({
     email: req.body.email
    }, function(err, user) {
@@ -97,6 +97,16 @@ exports.signIn= function(req, res) {
   });
 };
 
+exports.signInWithFacebook = function (req,res) {
+  var user = req.user;
+  if (user) {
+      var token = userService.generateJwt({ email: user.email, fullName: user.username, mobile: user.usermobile,_id: user._id});
+      res.setHeader('x-auth-token', token);
+      res.json({ token : token });
+  }else {
+    res.json({ err : "No valid user" });
+  }
+}
 /****************************
 * @description Class readActiveUser use for read user
 * @class readActiveUser

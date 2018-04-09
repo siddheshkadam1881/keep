@@ -91,7 +91,7 @@ exports.readTodos = function(req, res) {
 
   todoService.readUserTodo(req.decoded, function(err, note) {
     if (err)
-      res.send(500, {
+      res.status(500).send( {
         err: 'something blew up'
       });
     //res.send(err);

@@ -46,7 +46,7 @@ var User = require("../model/User");
 
    labelService.readUserlabel(req.decoded,function(err, note) {
       if (err)
-      res.send(500, { err:'something blew up' });
+      res.status(500).send({ err:'something blew up' });
       //res.send(err);
       res.json(note);
     });
