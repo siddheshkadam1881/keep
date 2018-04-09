@@ -32,7 +32,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // var userRoutes=require('./router/usersRoutes.js');
 app.use("/uploads" , express.static("uploads"));
-app.use(cors());
+app.use(cors({
+   exposedHeaders : ['x-auth-token']
+}));
 app.use(userRoutes);
 var mongoose = require('mongoose');
 var config = require("./config");

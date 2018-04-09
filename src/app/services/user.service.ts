@@ -21,15 +21,18 @@ export class UserService {
   fbLogin() {
     return new Promise((resolve, reject) => {
       FB.login(result => {
-          console.log(result)
+
         if (result.authResponse) {
             return this.http.post(`http://localhost:3000/auth/facebook`, {access_token: result.authResponse.accessToken})
             // , {access_token: result.authResponse.accessToken})
             .toPromise()
               .then(response => {
-                var token = response.headers.get('x-auth-token');
-                if (token) {
-                  localStorage.setItem('id_token', token);
+                 //console.log(response)
+
+                 var token = response.headers.get('x-auth-token');
+                  console.log(token)
+                  if (token) {
+                  localStorage.setItem('token', token);
                 }
                 resolve(response.json());
               })
@@ -38,11 +41,12 @@ export class UserService {
           reject();
         }
       }, {scope: 'public_profile,email'})
+
     });
   }
 
   logout() {
-    localStorage.removeItem('id_token');
+    localStorage.removeItem('token');
   }
 
   isLoggedIn() {
@@ -53,7 +57,8 @@ export class UserService {
 
   getCurrentUser() {
     return new Promise((resolve, reject) => {
-      return this.http.get(`http://localhost:3000/api/v1/auth/me`).toPromise().then(response => {
+      return this.http.get(`http://localhost:3000/auth/me`).toPromise().then(response => {
+        console.log(response)
         resolve(response.json());
       }).catch(() => reject());
     });

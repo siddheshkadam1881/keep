@@ -777,20 +777,13 @@ this.refreshNotes();
   ApplyFilters(isValid: boolean,data) {
    var datas  = this.Labels.filter(function (data1) { return data1.selected == true });
     if (!isValid) return;
-   for(var a=0;a<datas.length;a++)
+   for(var a=0; a<datas.length;a++)
     {
-       console.log(datas[a]._id)
 
-
-    // var a= datas.filter(datas => datas.title);
-    //
-    //  console.log(a);
-     var labeldata =
-   {
+     var labeldata ={
      label_ids :datas[a]._id
    }
 
-   console.log(labeldata);
    this.commonService.updateData('update/' + data._id,labeldata)
   .subscribe(model => {
    console.log(model);

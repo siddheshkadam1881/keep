@@ -16,13 +16,20 @@ var User = require("../model/User");
 var multer = require('multer');
 var todoService = require("../service/todo.service");
 const redis = require('redis');
+const TokenGenerator = require('uuid-token-generator');
+var ids = require('short-id');
+const tokgen = new TokenGenerator(); // Default is a 128-bit token encoded in base58
+ var random=tokgen.generate();
 var cache = new redis.createClient( process.env.PORT);
 var storage = multer.diskStorage({
   destination: function(req, file, callback) {
     callback(null, './uploads');
   },
+
   filename: function(req, file, callback) {
-    callback(null, file.originalname);
+  file.originalname = Date.now() +random+"_"+ file.originalname;
+  callback(null,file.originalname);
+
   },
 });
 var upload = multer({

@@ -43,6 +43,7 @@ var jwt = require('jsonwebtoken');
  },
  filename:function(req,file,callback)
  {
+  file.originalname = Date.now() +"_"+ file.originalname;
    callback(null,file.originalname);
  },
  });
@@ -310,7 +311,7 @@ exports.reset_password = function(req, res, next) {
 exports.passport = function(passport) {
    // used to serialize the user for the session
    passport.serializeUser(function(user, done) {
-     console.log(user);
+     // console.log(user);
        done(null, user.id);
    });
 
@@ -322,10 +323,12 @@ exports.passport = function(passport) {
    });
 
 
-// console.log(fbConfig.facebookAuth);
+//
    //pull in our app id and secret from our auth.js file
   passport.use('facebook-token', new FacebookTokenStrategy(fbConfig.facebookAuth, function(accessToken, refreshToken, profile, done) {
-    console.log(profile);
+
+      // console.log(accessToken, refreshToken, profile);
+
      User.upsertFbUser(accessToken, refreshToken, profile, function(err, user) {
           return done(err, user);
         });
@@ -380,35 +383,6 @@ return passport;
 // }(passport);
 //
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// exports.activateUser = function(req,res) {
-//      console.log(res);
-//     var email = req.params.email;
-//     var userToken = req.params.token;
-//
-//     // cache.get(email,function(err,token) {
-//     //
-//     //   if(err) return res.json({message:'No valid token'})
-//     //   if(!token) return       res.redirect('/signup');
-//     //
-//     //   //res.json({message:'No token provided'})
-//     //    var data = {
-//     //      'local.is_activated':true
-//     //    }
-//     //    cache.del(email);
-//
-//         User.findOneAndUpdate({'email':email},data,{new:true},function(err,user) {
-//         console.log(user);
-//          res.redirect('/');
-//         //  res.json({token:token,Message:'User is Activated'})
-//
-//       })
-//
-//     //})
-//       //res.redirect('/#!/register');
-//   }
 
 
 

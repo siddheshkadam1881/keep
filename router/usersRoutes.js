@@ -33,8 +33,9 @@ router.put('/activeUser/:id',userController.activeUser);
  *   different scopes while logging in
 */
 var createToken = function(auth) {
+
   return jwt.sign({
-    id: auth.id
+    token: auth.token
   }, 'my-secret',
   {
     expiresIn: 60 * 120
@@ -42,15 +43,19 @@ var createToken = function(auth) {
 };
 
 var generateToken = function (req, res, next) {
+
   req.token = createToken(req.auth);
+   //console.log(req.token)
   next();
 };
 
 var sendToken = function (req, res) {
+  console.log(req.token)
   res.setHeader('x-auth-token', req.token);
   res.status(200).send(req.auth);
 };
-//
+
+
 
 // router.get('/auth/facebook',
 //   passport.authenticate('facebook'));
@@ -65,13 +70,16 @@ var sendToken = function (req, res) {
 
 router.post('/auth/facebook',passport.authenticate('facebook-token', {session: false}), function(req, res, next) {
 
+
      if (!req.user) {
       return res.send(401, 'User Not Authenticated');
     }
     // prepare token for API
+      //console.log(req.user.facebookProvider)
       req.auth = {
-        id: req.user.id
+        token: req.user.facebookProvider.token
       };
+  //  console.log(req.auth)
 
       next();
     }, generateToken, sendToken);

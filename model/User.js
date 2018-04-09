@@ -7,32 +7,27 @@
  var bcrypt = require('bcrypt');
 
   var User = new mongoose.Schema({
-   //  fb:{
-   //   id: String,
-   //   access_token: String,
-   //   firstName: String,
-   //   lastName: String,
-   //   email: String
-   // },
+
    username: {
     type: String,
-    unique: true,
-    // required: true,
+    // unique: true,
+    default: "",
     trim: true
   },
   email: {
     type: String,
-    unique: true,
-    // required: true,
+    // unique: true,
+     default: "",
     trim: true
   },
   userpass: {
     type: String,
-    // required: true,
+     required: true,
+     default: "hello"
   },
   usermobile: {
     type: Number,
-    // required: true,
+    default: ""
   },
   reset_password_token: {
    type: String
@@ -70,7 +65,7 @@
 User.statics.upsertFbUser = function(accessToken, refreshToken, profile, cb) {
     var that = this;
     return this.findOne({
-      'facebookProvider.id': profile.id
+      'facebookProvider.token': profile.accessToken
     }, function(err, user) {
       // no user was found, lets create a new one
       if (!user) {
