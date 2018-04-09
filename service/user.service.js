@@ -3,6 +3,7 @@
 */
 //var secret = require('../config/config');
 var secret = 'my-secret'; //Read from config
+var UserModel = require("../model/User");
 
 
 
@@ -20,6 +21,17 @@ User.prototype.generateJwt = function (userObj) {
 User.prototype.verifyJwt = function (token,callback) {
 jwt.verify(token,secret ,callback);
 }
+
+User.prototype.showProfile = function (paramId,callback) {
+  UserModel.showProfile(paramId,callback);
+};
+User.prototype.signIn = function (userObj,callback) {
+  UserModel.signIn(userObj,callback);
+};
+// User.prototype.signUp = function (userObj,callback) {
+//   UserModel.signUp(userObj,callback);
+// };
+
 
 
 

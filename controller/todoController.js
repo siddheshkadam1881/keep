@@ -39,7 +39,7 @@ var upload = multer({
 
 /**
 * @description  Redis SET use for while CREATE Notes..
-* @extends {req, res}
+* @extends {user_id,user}
 */
 var redisSet =  function(user_id,user) {
 

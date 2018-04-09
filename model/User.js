@@ -6,6 +6,10 @@
  var mongoose = require('mongoose');
  var bcrypt = require('bcrypt');
 
+ const saltRounds = 10;
+ //const myPlaintextPassword = 's0/\/\P4$$w0rD';
+ var jwt = require('jsonwebtoken');
+
   var User = new mongoose.Schema({
 
    username: {
@@ -61,11 +65,35 @@
   user_jwt.save(callback);
 
 };
+// NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
+//   console.log(userId);
+//   console.log(paramId);
+//   this.remove({ user_id: userId,_id: paramId.id}).exec(cb);
+// }
+
+User.statics.showProfile = function(paramId,cb)
+{
+  this.find({ email: paramId.email }).exec(cb);
+}
+
+User.statics.signIn = function(userObj,cb)
+{
+   this.findOne({email: userObj.email}).exec(cb);
+}
+
+// User.prototype.signUp = function (userObj,callback) {
+//   // UserModel.signUp(userObj,callback);
+//    var user = new User(userObj);
+//    user.userpass = bcrypt.hashSync(userObj.userpass, 10);
+//    user.save(callback);
+// };
+
+
 
 User.statics.upsertFbUser = function(accessToken, refreshToken, profile, cb) {
     var that = this;
     return this.findOne({
-      // 'facebookProvider.token': profile.accessToken
+      //'facebookProvider.token': profile.accessToken
       'facebookProvider.id': profile.id
     }, function(err, user) {
       // no user was found, lets create a new one
@@ -79,7 +107,6 @@ User.statics.upsertFbUser = function(accessToken, refreshToken, profile, cb) {
             // token: accessToken
           }
         });
-
         newUser.save(function(error, savedUser) {
           if (error) {
             console.log(error);

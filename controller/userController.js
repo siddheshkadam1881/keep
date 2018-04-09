@@ -81,9 +81,11 @@ exports.signUp = function(req, res) {
 **/
 
 exports.signIn = function(req, res) {
-  User.findOne({
-    email: req.body.email
-   }, function(err, user) {
+  // User.findOne({
+  //   email: req.body.email
+  // }
+
+   userService.signIn(req.body, function(err, user) {
     if (err) throw err;
     if (!user) {
       res.status(401).json({ message: 'Authentication failed. User not found.' });
@@ -115,9 +117,12 @@ exports.signInWithFacebook = function (req,res) {
 
 exports.readActiveUser = function(req, res) {
 
-   User.find({
-        email:req.decoded.email
-   }, function(err, note) {
+// todoService.readUserTodo(req.decoded
+   // User.find({
+   //      email:req.decoded.email
+   // }
+
+    userService.showProfile(req.decoded,function(err, note) {
      if (err)
      res.send(500, { err: 'something blew up' });
      //res.send(err);
@@ -346,126 +351,3 @@ exports.passport = function(passport) {
 }));
 return passport;
 }(passport);
-
-
-
-
-//
-//  /**
-//   *  facebook login
-//   **/
-// exports.passport = function(passport) {
-//    // used to serialize the user for the session
-//    passport.serializeUser(function(user, done) {
-//      console.log(user);
-//        done(null, user.id);
-//    });
-//
-//    // used to deserialize the user
-//   passport.deserializeUser(function(id, done) {
-//        User.findById(id, function(err, user) {
-//            done(err, user);
-//        });
-//    });
-//
-//  console.log(fbConfig.facebookAuth);
-//
-//    //pull in our app id and secret from our auth.js file
-// //   passport.use( new FacebookStrategy(fbConfig.facebookAuth, function(accessToken, refreshToken, profile, done) {
-// //     console.log("test",accessToken, refreshToken, profile);
-// //      User.upsertFbUser(accessToken, refreshToken, profile, function(err, user) {
-// //           return done(err, user);
-// //         });
-// // }));
-//   passport.use("facebook",new FacebookStrategy(
-//     fbConfig.facebookAuth,
-//   // {  clientID: FACEBOOK_APP_ID,
-//   //   clientSecret: FACEBOOK_APP_SECRET,
-//   //   callbackURL: "http://localhost:3000/auth/facebook/callback"
-//   // },
-//   function(accessToken, refreshToken, profile, cb) {
-//     console.log("accesstoken", accessToken, refreshToken, profile)
-//     // User.upsertFbUser({ facebookId: profile.id }, function (err, user) {
-//     //   return cb(err, user);
-//     // });
-//   }
-//   ));
-// return passport;
-// }(passport);
-//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- // exports.passport = function(passport) {
- //    // used to serialize the user for the session
- //    passport.serializeUser(function(user, done) {
- //        console.log("user..", user);
- //        done(null, user.id);
- //    });
- //
- //    // used to deserialize the user
- //    passport.deserializeUser(function(id, done) {
- //        console.log("id..", id);
- //        User.findById(id, function(err, user) {
- //            done(err, user);
- //        });
- //    });
-
-    // pull in our app id and secret from our auth.js file
-//     passport.use('google',new GoogleStrategy(googleConfig.googleAuth, function(access_token, tokenSecret, profile, done) {
-//         // asynchronous
-//         process.nextTick(function() {
-//             console.log(profile);
-//             // find the user in the database based on their google id
-//             User.findOne({
-//                 'google.id': profile.id
-//             }, function(err, user) {
-//                 console.log("google profile:", profile.photos);
-//
-//                 console.log(typeof profile.photos);
-//                 // if there is an error, stop everything and return that
-//                 // ie an error connecting to the database
-//                 if (err)
-//                     return done(err);
-//                 // if the user is found, then log them in
-//                 if (user) {
-//                     return done(null, user); // user found, return that user
-//                 } else {
-//                     // if there is no user found with that google id, create them
-//                     var newUser = new User();
-//                     // set all of the google information in our user model
-//                     newUser.google.id = profile.id; // set the users google id
-//                     newUser.google.access_token = access_token; // we will save the token that google provides to the user
-//                     newUser.google.firstName = profile.displayName;
-//                     newUser.google.email = profile.emails[0].value; // google can return multiple emails so we'll take the first
-//                     newUser.google.profile = JSON.stringify(profile.photos);
-//                     newUser.google.gender = profile.gender;
-//                     // newUser.google.profile = profile.picture;
-//                     // save our user to the database
-//                     newUser.save(function(err) {
-//                         if (err)
-//                             throw err;
-//                         // if successful, return the new user
-//                         return done(null, newUser);
-//                     });
-//                 }
-//
-//             });
-//         });
-//
-//     }));
-//     return passport;
-// };(passport);
