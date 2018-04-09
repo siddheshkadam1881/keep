@@ -1,7 +1,8 @@
 /***
 *
 */
-var secret = "RESTFULAPIs"; //Read from config
+//var secret = require('../config/config');
+var secret = 'my-secret'; //Read from config
 var jwt = require('jsonwebtoken');
 
 function User(){

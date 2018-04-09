@@ -33,6 +33,7 @@ var jwt = require('jsonwebtoken');
  var FacebookStrategy = require('passport-facebook').Strategy;
  var FacebookTokenStrategy = require('passport-facebook-token');
  var fbConfig = require('../config/auth');
+ 
  var  passport = require('passport');
  var multer  = require('multer');
  var userService = require("../service/user.service");

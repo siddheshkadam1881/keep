@@ -115,8 +115,8 @@ router.post('/auth/facebook',passport.authenticate('facebook-token', {session: f
 router.use(function(req, res, next) {
 // check header or url parameters or post parameters for token
  var token = req.body.token || req.query.token || req.headers['token'];
-   // console.log(token);
-  // decode token
+
+  console.log("heloo",token);
   if (token) {
     // verifies secret and checks exp
    userService.verifyJwt(token, function(err, decoded) {
@@ -125,6 +125,7 @@ router.use(function(req, res, next) {
       } else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
+        // console.log(req.decoded);
         next();
       }
     });

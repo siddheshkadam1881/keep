@@ -27,7 +27,7 @@ export class UserService {
             // , {access_token: result.authResponse.accessToken})
             .toPromise()
               .then(response => {
-                 //console.log(response)
+                 console.log(response)
 
                  var token = response.headers.get('x-auth-token');
                   console.log(token)
