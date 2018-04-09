@@ -50,7 +50,7 @@ var generateToken = function (req, res, next) {
 };
 
 var sendToken = function (req, res) {
-  console.log(req.token)
+  // console.log(req.token)
   res.setHeader('x-auth-token', req.token);
   res.status(200).send(req.auth);
 };
@@ -75,11 +75,16 @@ router.post('/auth/facebook',passport.authenticate('facebook-token', {session: f
       return res.send(401, 'User Not Authenticated');
     }
     // prepare token for API
-      //console.log(req.user.facebookProvider)
+      // console.log(req.user.facebookProvider)
+
       req.auth = {
-        token: req.user.facebookProvider.token
-      };
-  //  console.log(req.auth)
+      id: req.user.id
+    };
+      //
+      // req.auth = {
+      //   token: req.user.facebookProvider.token
+      // };
+    // console.log(req.auth)
 
       next();
     }, generateToken, sendToken);
@@ -110,7 +115,7 @@ router.post('/auth/facebook',passport.authenticate('facebook-token', {session: f
 router.use(function(req, res, next) {
 // check header or url parameters or post parameters for token
  var token = req.body.token || req.query.token || req.headers['token'];
-   console.log(token);
+   // console.log(token);
   // decode token
   if (token) {
     // verifies secret and checks exp
