@@ -18,7 +18,7 @@ const tokgen = new TokenGenerator(); // Default is a 128-bit token encoded in ba
 var passport = require('passport');
 var passport = userController.passport;
 var secretConfig = require('../config/config');
-// console.log(secretConfig.secret);
+
 router.post('/signup',userController.signUp);
 router.post('/signin',userController.signIn);
 router.post('/loginRequired',userController.loginRequired);
@@ -96,6 +96,9 @@ router.use(function(req, res, next) {
  router.put('/update/:id',todoController.update);
  router.delete('/delete/:id',todoController.delete);
  router.get('/readActiveUser',userController.readActiveUser);
+
+ router.post('/labelToNoteHandler/:labelId/:id',todoController.labelToNoteHandler);
+ // router.post('/removeLabelToNote/:labelIdToAddNote/:id',todoController.removeLabelToNote);
 
 /*
 *label controller

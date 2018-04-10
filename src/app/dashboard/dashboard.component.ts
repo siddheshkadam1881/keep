@@ -786,15 +786,9 @@ this.refreshNotes();
 
    this.commonService.updateData('update/' + data._id,labeldata)
   .subscribe(model => {
-   console.log(model);
-   // this.toastr.success( 'Success!');
-   //console.log(this.responseStatus = data),
    err => {
-   console.log(err);
-   //this.toastr.error(err);
    this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
    () => console.log('Request Completed')
-     //  this.toastr.error(err);
    };
    this.refreshNotes();
  });
@@ -806,18 +800,12 @@ createNewlabel(data)
    console.log(this.model);
     this.commonService.postServiceData('createLabel',this.model)
       .subscribe(model => {
-         console.log(model);
-
-        // this.toastr.success( 'Success!');
-        // this.router.navigate(['/home']);
-
-      //console.log(this.responseStatus = data),
-      err =>{
-               console.log(err);
-              //this.toastr.error(err);
-              this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-              () => console.log('Request Completed')
-           //  this.toastr.error(err);
+       err =>{
+        console.log(err);
+        //this.toastr.error(err);
+        this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+        () => console.log('Request Completed')
+        // this.toastr.error(err);
         };
         this.refreshNotes();
  });
@@ -827,8 +815,6 @@ refreshLabel()
 {
 this.commonService.getData('readLabel').subscribe(response => {
  if (response) {
- console.log(response);
-// items.slice().reverse();
  this.Labels = response;
  location.reload();
  }
@@ -836,6 +822,4 @@ this.commonService.getData('readLabel').subscribe(response => {
 error => console.log("Error while retrieving"))
 }
 
-
-
-  }
+}

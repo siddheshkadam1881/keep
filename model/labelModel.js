@@ -30,8 +30,7 @@ labelSchema.statics.readUserlabel = function (userId,cb) {
 //
 
 labelSchema.statics.deleteUserlabel = function (userId,paramId,cb) {
-  console.log(userId);
-  console.log(paramId);
+  
   this.remove({ user_id: userId,_id: paramId.id}).exec(cb);
 }
 

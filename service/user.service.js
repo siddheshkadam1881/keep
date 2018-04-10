@@ -2,7 +2,7 @@
 *
 */
 var secretConfig = require('../config/config');
-console.log(secretConfig.secret);
+
 // var secret = 'my-secret'; //Read from config
 var UserModel = require("../model/User");
 

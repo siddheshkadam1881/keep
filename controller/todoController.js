@@ -127,6 +127,84 @@ exports.update = function(req, res) {
 };
 
 /**
+*   @description addNoteToLabel function to add Label to note
+*   @class addLabelToNote
+*  @extends {req, res}
+*/
+
+exports.labelToNoteHandler = function(req, res) {
+  var operation = req.query.operation;
+  if (operation == "add") {
+    Todo.update({
+        _id: req.params.id,
+    user_id: req.decoded._id
+      }, {
+        $push: {
+          label_ids: req.param.labelId
+        }
+      },
+      function(err, updatedNoteData) {
+        if (err) throw err;
+        else {
+          res.send({
+            'message': 'label has added for note'
+          });
+        }
+      })
+  }else if (operation == "remove") {
+      Todo.update({
+          _id: req.params.id,
+      user_id: req.decoded._id
+        }, {
+          $pull: {
+            label_ids:req.param.labelIdToAddNote
+          }
+        },
+        function(err, updatedNoteData) {
+          if (err) throw err;
+          else {
+            res.send({
+              'message': 'label has removed for note'
+            });
+          }
+        })
+  }else {
+
+      res.send({
+        status :false,
+        'message': 'Invalid Opertion'
+      });
+  }
+
+}
+
+// /**
+//  * @description Remove  a label from a note
+//  *  @class removeLabelToNote
+//  *  @extends {req, res}
+//  */
+// exports.removeLabelToNote = function(req, res) {
+//   Todo.update({
+//       _id: req.params.id,
+//   user_id: req.decoded._id
+//     }, {
+//       $pull: {
+//         label_ids:req.param.labelIdToAddNote
+//       }
+//     },
+//     function(err, updatedNoteData) {
+//       if (err) throw err;
+//       else {
+//         res.send({
+//           'status': 'label has removed for note'
+//         });
+//       }
+//     })
+// }
+//
+
+
+/**
 *   @description delete function to delete a current note
 *  @class delete
 *  @extends {req, res}

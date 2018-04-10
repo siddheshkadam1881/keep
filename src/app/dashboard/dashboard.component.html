@@ -41,7 +41,7 @@
 
 <div class="note" fxLayout="row" fxLayoutAlign="none"><h3>Pinned</h3></div>
   <!-- <input type="text"  [(ngModel)]="term"> -->
-  <div class="allnotes" *ngFor="let data of dashDataFirst"  fxLayoutWrap fxLayoutAlign="center center">
+  <div class="allnotes" *ngFor="let data of dashDataFirst "  fxLayoutWrap fxLayoutAlign="center center">
 
   <div *ngIf= "!data.is_deleted && !data.is_archieved && data.is_pinned">
 
@@ -155,6 +155,7 @@
                          <form #f="ngForm" novalidate>
                                <div class="modal_line"></div>
                                        <div class="checkbox " *ngFor="let label of Labels;let i=index;">
+
                                         <input type="checkbox" name="label[{{i}}]"  [checked]="label.selected" value="label.selected" id="{{label.name}}" (change)="label.selected = !(label.selected)"/>
                                                   <label for="{{label.title}}">{{label.title}}</label>
                                         </div>

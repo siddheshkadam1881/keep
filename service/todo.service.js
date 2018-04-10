@@ -20,4 +20,10 @@ Todo.prototype.deleteUserlabel = function (userId,paramId,callback) {
   TodoModel.deleteUserlabel(userId,paramId,callback);
 };
 
+// Todo.prototype.updateUserTodo = function (paramId,userId,todoObj,callback) {
+// 
+//   TodoModel.updateUserTodo(paramId,userId,todoObj,callback);
+// };
+
+
 module.exports = new Todo();

@@ -102,6 +102,7 @@ exports.signIn = function(req, res) {
 **/
 
 exports.signInWithFacebook = function (req,res) {
+  console.log(req.user);
   var user = req.user;
   if (user) {
       var token = userService.generateJwt({ email: user.email, fullName: user.username, mobile: user.usermobile,_id: user._id});
@@ -163,7 +164,7 @@ exports.activeUser = function(req, res) {
 * @extends {req, res,next}
 *********************************/
  exports.loginRequired = function(req, res, next) {
-   
+
  if (req.user) {
     next();
    } else

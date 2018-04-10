@@ -92,6 +92,10 @@ NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
   this.remove({ user_id: userId,_id: paramId.id}).exec(cb);
 }
 
+// NoteSchema.updateUserTodo(paramId,userId,todoObj,callback)
+// {
+//    this.findOneAndUpdate({ _id:paramId.id, user_id: userId._id,todoObj}).exec(cb);
+// }
 
 var Todomodel  = mongoose.model('todo', NoteSchema);
 module.exports = Todomodel;
