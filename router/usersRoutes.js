@@ -35,21 +35,11 @@ router.put('/activeUser/:id',userController.activeUser);
  *   different scopes while logging in
 */
 
-// router.get('/auth/facebook',
-//   passport.authenticate('facebook'));
-//
-// router.get('/auth/facebook/callback',
-//   passport.authenticate('facebook', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     console.log('facebook login', req)
-//     // Successful authentication, redirect home.
-//     res.redirect('/');
-//   });
-
 router.post('/auth/facebook',passport.authenticate('facebook-token', {session: false}),userController.signInWithFacebook);
 
-
-  //token handling middleware
+  /*
+  * token handling middleware
+  */
   var authenticate = expressJwt({
     secret: secretConfig.secret,
     requestProperty: 'auth',
@@ -61,15 +51,12 @@ router.post('/auth/facebook',passport.authenticate('facebook-token', {session: f
     }
   });
 
-  // Facebook will redirect the user to this URL after approval.  Finish the
-  // authentication process by attempting to obtain an access token.  If
-  // access was granted, the user will be logged in.  Otherwise,
-  // authentication has failed.
 
-
-/*******************************
-  middleware create here...
-*******************************/
+/*
+*  middleware create here use to verify
+*  user who have jwt token
+*  or not..
+*/
 
 router.use(function(req, res, next) {
 // check header or url parameters or post parameters for token
@@ -84,7 +71,6 @@ router.use(function(req, res, next) {
       } else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
-         console.log("decode ",decoded);
         next();
       }
     });
@@ -100,6 +86,9 @@ router.use(function(req, res, next) {
   }
 });
 
+/*
+* note todoController
+*/
 
  router.post('/create/Note',todoController.createNote);
  router.get('/readTodos',todoController.readTodos);
@@ -108,7 +97,9 @@ router.use(function(req, res, next) {
  router.delete('/delete/:id',todoController.delete);
  router.get('/readActiveUser',userController.readActiveUser);
 
-// ///////label controller
+/*
+*label controller
+*/
 router.post('/createLabel',labelController.createLabel);
 router.get('/readLabel',labelController.readLabel);
 // // router.get('/readLabel/:id',labelController.readLabelById);

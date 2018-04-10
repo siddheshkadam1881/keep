@@ -101,7 +101,6 @@ exports.signIn = function(req, res) {
 * @extends {req, res}
 **/
 
-
 exports.signInWithFacebook = function (req,res) {
   var user = req.user;
   if (user) {
@@ -164,7 +163,7 @@ exports.activeUser = function(req, res) {
 * @extends {req, res,next}
 *********************************/
  exports.loginRequired = function(req, res, next) {
-   console.log(req.body);
+   
  if (req.user) {
     next();
    } else
