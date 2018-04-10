@@ -53,24 +53,22 @@ var jwt = require('jsonwebtoken');
 
 /**
   * @description Class signUp use for registeration
-  *
   * @class signUp
   * @extends {req, res}
   */
 
-
 exports.signUp = function(req, res) {
-  var user = new User(req.body);
-  user.userpass = bcrypt.hashSync(req.body.userpass, 10);
-  user.save(function(err, user) {
-    if (err) {
-      return res.status(400).send({
-        message: err
+
+    userService.signUp(req.body,function(err, user) {
+      if (err)
+        res.json({
+          success: false,
+          message: 'user not register'
+        })
+      res.json({
+        success: true,
+        message: 'user successfully register'
       });
-    } else {
-      user.userpass = undefined;
-      return res.json(user);
-    }
   });
 };
 
@@ -81,9 +79,6 @@ exports.signUp = function(req, res) {
 **/
 
 exports.signIn = function(req, res) {
-  // User.findOne({
-  //   email: req.body.email
-  // }
 
    userService.signIn(req.body, function(err, user) {
     if (err) throw err;
@@ -98,6 +93,14 @@ exports.signIn = function(req, res) {
     }
   });
 };
+
+
+/***
+* @description Class signInWithFacebook use for login fb user
+* @class signInWithFacebook
+* @extends {req, res}
+**/
+
 
 exports.signInWithFacebook = function (req,res) {
   var user = req.user;
@@ -116,11 +119,6 @@ exports.signInWithFacebook = function (req,res) {
 *****************************/
 
 exports.readActiveUser = function(req, res) {
-
-// todoService.readUserTodo(req.decoded
-   // User.find({
-   //      email:req.decoded.email
-   // }
 
     userService.showProfile(req.decoded,function(err, note) {
      if (err)
@@ -321,8 +319,10 @@ exports.reset_password = function(req, res, next) {
 };
 
 
- /**
-  *  facebook login
+  /***
+  * @description Class passport use for user
+  * @class passport
+  * @extends {passport}
   **/
 exports.passport = function(passport) {
    // used to serialize the user for the session

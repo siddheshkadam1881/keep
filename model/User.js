@@ -65,11 +65,6 @@
   user_jwt.save(callback);
 
 };
-// NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
-//   console.log(userId);
-//   console.log(paramId);
-//   this.remove({ user_id: userId,_id: paramId.id}).exec(cb);
-// }
 
 User.statics.showProfile = function(paramId,cb)
 {
@@ -81,12 +76,15 @@ User.statics.signIn = function(userObj,cb)
    this.findOne({email: userObj.email}).exec(cb);
 }
 
-// User.prototype.signUp = function (userObj,callback) {
-//   // UserModel.signUp(userObj,callback);
-//    var user = new User(userObj);
-//    user.userpass = bcrypt.hashSync(userObj.userpass, 10);
-//    user.save(callback);
-// };
+User.statics.signUp = function (userObj,callback) {
+  console.log(userObj.email);
+   var user = new this();
+   user.email = userObj.email,
+   user.username = userObj.username,
+   user.usermobile = userObj.usermobile,
+   user.userpass = bcrypt.hashSync(userObj.userpass, 10);
+   user.save(callback);
+};
 
 
 

@@ -17,6 +17,8 @@ const tokgen = new TokenGenerator(); // Default is a 128-bit token encoded in ba
  var token=tokgen.generate();
 var passport = require('passport');
 var passport = userController.passport;
+var secretConfig = require('../config/config');
+// console.log(secretConfig.secret);
 router.post('/signup',userController.signUp);
 router.post('/signin',userController.signIn);
 router.post('/loginRequired',userController.loginRequired);
@@ -49,7 +51,7 @@ router.post('/auth/facebook',passport.authenticate('facebook-token', {session: f
 
   //token handling middleware
   var authenticate = expressJwt({
-    secret: 'my-secret',
+    secret: secretConfig.secret,
     requestProperty: 'auth',
     getToken: function(req) {
       if (req.headers['x-auth-token']) {
@@ -73,7 +75,7 @@ router.use(function(req, res, next) {
 // check header or url parameters or post parameters for token
  var token = req.body.token || req.query.token || req.headers['token'];
 
-  console.log("heloo",token);
+  // console.log("heloo",token);
   if (token) {
     // verifies secret and checks exp
    userService.verifyJwt(token, function(err, decoded) {

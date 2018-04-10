@@ -1,8 +1,9 @@
 /***
 *
 */
-//var secret = require('../config/config');
-var secret = 'my-secret'; //Read from config
+var secretConfig = require('../config/config');
+console.log(secretConfig.secret);
+// var secret = 'my-secret'; //Read from config
 var UserModel = require("../model/User");
 
 
@@ -14,12 +15,12 @@ function User(){
 }
 
 User.prototype.generateJwt = function (userObj) {
-  return jwt.sign(userObj,secret);
+  return jwt.sign(userObj,secretConfig.secret);
 };
 
 
 User.prototype.verifyJwt = function (token,callback) {
-jwt.verify(token,secret ,callback);
+jwt.verify(token,secretConfig.secret ,callback);
 }
 
 User.prototype.showProfile = function (paramId,callback) {
@@ -28,9 +29,11 @@ User.prototype.showProfile = function (paramId,callback) {
 User.prototype.signIn = function (userObj,callback) {
   UserModel.signIn(userObj,callback);
 };
-// User.prototype.signUp = function (userObj,callback) {
-//   UserModel.signUp(userObj,callback);
-// };
+
+User.prototype.signUp = function (userObj,callback) {
+  console.log(userObj);
+  UserModel.signUp(userObj,callback);
+};
 
 
 

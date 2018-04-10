@@ -87,8 +87,8 @@ NoteSchema.statics.readUserTodo = function (userId,cb) {
 }
 //
 NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
-  console.log(userId);
-  console.log(paramId);
+  // console.log(userId);
+  // console.log(paramId);
   this.remove({ user_id: userId,_id: paramId.id}).exec(cb);
 }
 
