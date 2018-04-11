@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
+
+
 import {HttpModule} from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
@@ -17,7 +19,7 @@ result:any;
 public urlpath;
   constructor(private http: Http ) {  }
 
-
+private subject = new Subject<any>();
 /* post service */
   postServiceData(path,model) {
   //console.log(model,path);
@@ -61,6 +63,49 @@ public urlpath;
       }
       )
   }
+
+//read notes here
+  loadAllNotes():void{
+     let path = "readTodos";
+     let urlpath = this.base_url.concat(path);
+     let token = localStorage.getItem("token");
+     //set the token to header
+     const headers = new Headers();
+     headers.append('token', token);
+     this.http.get(urlpath, { headers: headers })
+                 .toPromise().then((response: Response)=>{
+                   // debugger;
+                    this.subject.next(response.json());
+                  });
+   }
+
+
+   getAllNotes(): Observable<any>{
+      this.loadAllNotes();
+      return this.subject.asObservable();
+     }
+
+
+
+     loadAllLabels():void{
+        let path = "readLabel";
+        let urlpath = this.base_url.concat(path);
+        let token = localStorage.getItem("token");
+        //set the token to header
+        const headers = new Headers();
+        headers.append('token', token);
+        this.http.get(urlpath, { headers: headers })
+                    .toPromise().then((response: Response)=>{
+                     this.subject.next(response.json());
+                     });
+      }
+
+      getAllLabels(): Observable<any>{
+         this.loadAllLabels();
+         return this.subject.asObservable();
+        }
+
+
 
   /***********************************
    *** update service

@@ -31,7 +31,7 @@ export class OpenDialogImageComponent implements OnInit {
       this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
       () => console.log('Request Completed')
       };
-      location.reload();
+
       this.refreshNotes();
     });
    }
@@ -55,17 +55,15 @@ export class OpenDialogImageComponent implements OnInit {
     return bb;
 }
 
- refreshNotes()
- {
-   this.commonService.getData('readTodos').subscribe(response => {
-     if (response) {
-       //console.log(response.data);
-       // items.slice().reverse();
-        this.dashDataFirst = response.reverse();
-         console.log(this.dashDataFirst.reverse());
-     }
-   },
-     error => console.log("Error while retrieving"))
+refreshNotes()
+{
+this.commonService.getAllNotes().subscribe(response => {
+ if (response) {
+    this.dashDataFirst = response;
+     // console.log(this.dashDataFirst.reverse());
  }
+},
+ error => console.log("Error while retrieving"))
+}
 
 }

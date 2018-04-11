@@ -72,25 +72,8 @@ export class HomeComponent  implements OnInit {
 ////////////////////////////////read the data by calling service method//////////////////////////////////////////////
 
    ngOnInit():void {
-     this.commonService.getData('readTodos').subscribe(response => {
-       if (response) {
-         //console.log(response.data);
-         // items.slice().reverse();
-          this.dashDataFirst = response;
-           //console.log(this.dashDataFirst.reverse());
-       }
-     },
-       error => console.log("Error while retrieving"));
-
-     this.commonService.getData('readLabel').subscribe(response => {
-       if (response) {
-         console.log(response);
-         // items.slice().reverse();
-          this.Labels = response;
-       }
-     },
-     error => console.log("Error while retrieving"));
-
+      this.refreshNotes();
+      // this.refreshlabels();
 
       //
       this.commonService.getData('readActiveUser').subscribe(response => {
@@ -156,6 +139,29 @@ logout() {
 localStorage.removeItem("token");
 this.router.navigate(['/signin']);
 }
+
+refreshNotes()
+{
+this.commonService.getAllNotes().subscribe(response => {
+ if (response) {
+    this.dashDataFirst = response;
+     // console.log(this.dashDataFirst.reverse());
+ }
+},
+ error => console.log("Error while retrieving"))
+}
+
+
+// refreshlabels()
+// {
+// this.subscription=this.commonService.getAllabels().subscribe(response => {
+//  if (response) {
+//     this.dashDataFirst = response;
+//      // console.log(this.dashDataFirst.reverse());
+//    }
+// },
+//  error => console.log("Error while retrieving"))
+// }
  openLabel(data)
  {
     localStorage.setItem('label',data.title);

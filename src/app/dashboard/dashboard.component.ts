@@ -16,7 +16,8 @@ import {Observable} from 'rxjs/Rx';
 import { Location } from '@angular/common';
 import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
 import { OpenDialogAddLabelComponent } from '../open-dialog-add-label/open-dialog-add-label.component';
-
+import { OnDestroy } from "@angular/core";
+import { ISubscription } from "rxjs/Subscription";
 
 // import * as $ from "jquery";
 
@@ -66,7 +67,7 @@ export class DashboardComponent implements OnInit {
   public show:boolean = false;
   public show1:boolean = false;
   responseStatus:Object= [];
-
+  private subscription: ISubscription;
   status:boolean ;
   //hide and show grid
   showHide:boolean;
@@ -93,9 +94,6 @@ export class DashboardComponent implements OnInit {
 //read label
     this.commonService.getData('readLabel').subscribe(response => {
       if (response) {
-        console.log(response);
-        // items.slice().reverse();
-         this.Labels = response;
       }
     },
     error => console.log("Error while retrieving"));
@@ -116,25 +114,8 @@ export class DashboardComponent implements OnInit {
      this.timerMondayExecuted();
    });
      //
-        this.commonService.getData('readTodos').subscribe(response => {
-          if (response) {
-            //console.log(response.data);
-            // items.slice().reverse();
-             this.dashDataFirst = response;
-              //console.log(this.dashDataFirst.reverse());
-          }
-        },
-          error => console.log("Error while retrieving"));
-      //
-
-      this.commonService.getData('readLabel').subscribe(response => {
-        if (response) {
-          //console.log(response);
-          // items.slice().reverse();
-           this.Labels = response;
-        }
-      },
-        error => console.log("Error while retrieving"));
+    this.refreshNotes();
+    this.refreshLabel();
   }
 
 
@@ -160,61 +141,48 @@ export class DashboardComponent implements OnInit {
   {
     note_chip: null
   }
-           console.log(chip);
-  // this.chipData=data;
-  //console.log(this.chipData);
-  this.commonService.updateData('update/' + data._id, chip)
-    .subscribe(model => {
-      console.log(model);
 
-      // this.toastr.success( 'Success!');
-      // this.router.navigate(['/home']);
-      //console.log(this.responseStatus = data),
+  this.subscription=this.commonService.updateData('update/' + data._id, chip)
+    .subscribe(
+     model =>
+      {
+        this.model=model;
+      },
       err => {
-        console.log(err);
-        //this.toastr.error(err);
         this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
         () => console.log('Request Completed')
+      }
+    );
+     this.refreshNotes();
 
-        //  this.toastr.error(err);
-      };
-      this.refreshNotes();
-    });
-
-
-    var chip1=
+     var chip1=
     {
       reminder: null
     }
-             console.log(chip1);
-    // this.chipData=data;
-    //console.log(this.chipData);
-    this.commonService.updateData('update/' + data._id, chip1)
-      .subscribe(model => {
-        console.log(model);
 
-        // this.toastr.success( 'Success!');
-        // this.router.navigate(['/home']);
-        //console.log(this.responseStatus = data),
+
+       this.subscription=this.commonService.updateData('update/' + data._id, chip1)
+       .subscribe(
+       model =>
+        {
+        this.model = model;
+        },
         err => {
-          console.log(err);
-          //this.toastr.error(err);
           this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
           () => console.log('Request Completed')
-
-          //  this.toastr.error(err);
-        };
+        }
+        );
         this.refreshNotes();
-      });
 }
 
 
-//////////////////////////////////////////////////////////////////////////////
+
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
     //unsubscribe the subscription in ngDestroy
     if (this.timerSubscription != null)
         this.timerSubscription.unsubscribe();
+        this.subscription.unsubscribe();
   }
 
   toggle1() {
@@ -229,55 +197,34 @@ export class DashboardComponent implements OnInit {
 
   submitNote() {
 
-  console.log(this.model);
-
-         // console.log("submit Post click happend " + this.model.name)
-
-          this.commonService.postServiceData('create/Note',this.model)
-          .subscribe(model => {
-             console.log(model);
-
-            // this.toastr.success( 'Success!');
-            // this.router.navigate(['/home']);
-
-          //console.log(this.responseStatus = data),
+          this.subscription=this.commonService.postServiceData('create/Note',this.model)
+          .subscribe(
+           model =>
+            {
+            this.model = model;
+            },
           err =>{
-                   console.log(err);
-                  //this.toastr.error(err);
-                  this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-                  () => console.log('Request Completed')
-
-               //  this.toastr.error(err);
-
-        };
+            this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+            () => console.log('Request Completed')
+            }
+        );
         this.refreshNotes();
-   });
   }
-
 
   copyNote(model)
   {
 
-   console.log(model);
-   //let notes=new myData();
-   this.commonService.postServiceData('create/Note',model)
-   .subscribe(model => {
-      console.log(model);
-
-     // this.toastr.success( 'Success!');
-     // this.router.navigate(['/home']);
-
-   //console.log(this.responseStatus = data),
-   err =>{
-            console.log(err);
-           //this.toastr.error(err);
-           this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-           () => console.log('Request Completed')
-        //  this.toastr.error(err);
-
-                 };
-                 this.refreshNotes();
-            });
+     this.subscription=this.commonService.postServiceData('create/Note',model)
+     .subscribe(
+      model => {
+      this.model = model;
+      },
+      err =>{
+      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+      () => console.log('Request Completed')
+      }
+      );
+    this.refreshNotes();
   }
 
   logout() {
@@ -297,168 +244,114 @@ export class DashboardComponent implements OnInit {
   });
   }
 
-
   deleteNote(id){
   console.log(id);
-  this.commonService.deleteData('delete/'+id).subscribe(
-  data => {
-  console.log("note delete");
-  //console.log(data);
-  //this.toastr.success( 'Success!', 'timeout: 6000');
-
-  //console.log(this.responseStatus = data),
+  this.subscription= this.commonService.deleteData('delete/'+id).subscribe(
+  model => {
+  this.model = model;
+  },
   err =>{
-  console.log(err);
-  //this.toastr.error(err);
   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
   () => console.log("Note updated !!!")
-  //this.toastr.error(err);
-  //this.ngOnDestroy()
-  };
+  }
+  );
   this.refreshNotes();
-  });
   }
   //refresh notes here
   refreshNotes()
   {
-  this.commonService.getData('readTodos').subscribe(response => {
+  this.subscription=this.commonService.getAllNotes().subscribe(
+  response => {
    if (response) {
-     //console.log(response.data);
-     // items.slice().reverse();
-      this.dashDataFirst = response.reverse();
-       console.log(this.dashDataFirst.reverse());
+      this.dashDataFirst = response;
    }
   },
    error => console.log("Error while retrieving"))
   }
 
+
+
    trashNotes(data)
    {
-
-      console.log(data);
-     var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
-        console.log(data1);
-     this.commonService.updateData('update/'+data._id,data1)
-     .subscribe(model => {
-        console.log(model);
-
-       // this.toastr.success( 'Success!');
-       // this.router.navigate(['/home']);
-     //console.log(this.responseStatus = data),
-     err =>{
-              console.log(err);
-             //this.toastr.error(err);
-             this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-             () => console.log('Request Completed')
-
-          //  this.toastr.error(err);
-
-   };
-   this.refreshNotes();
-});
-
-   }
+       var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
+       this.subscription=this.commonService.updateData('update/'+data._id,data1)
+       .subscribe(
+       model => {
+       this.model = model;
+       },
+       err =>{
+       this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+       () => console.log('Request Completed')
+       }
+     );
+    this.refreshNotes();
+ }
 
 
    archiveNotes(data)
    {
      var data1 = { is_archieved: data.is_archieved ? 'false' : 'true'}
-        console.log(data1);
-     this.commonService.updateData('update/'+data._id,data1)
-     .subscribe(model => {
-        console.log(model);
 
-       // this.toastr.success( 'Success!');
-       // this.router.navigate(['/home']);
-     //console.log(this.responseStatus = data),
+    this.subscription=this.commonService.updateData('update/'+data._id,data1)
+     .subscribe(model =>  {
+     this.model = model;
+     },
      err =>{
-              console.log(err);
-             //this.toastr.error(err);
-             this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-             () => console.log('Request Completed')
-
-          //  this.toastr.error(err);
-
-   };
+     this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+     () => console.log('Request Completed')
+   }
+ );
    this.refreshNotes();
-});
 }
 
 
 
    pinNotes(data)
    {
-     var data1 = { is_pinned: data.is_pinned ? 'false' : 'true'}
-        console.log(data1);
-     this.commonService.updateData('update/'+data._id,data1)
-     .subscribe(model => {
-        console.log(model);
+     var data1 = { is_pinned : data.is_pinned ? 'false' : 'true'}
 
-       // this.toastr.success( 'Success!');
-       // this.router.navigate(['/home']);
-     //console.log(this.responseStatus = data),
+     this.subscription=this.commonService.updateData('update/'+data._id,data1)
+     .subscribe(model =>  {
+     this.model = model;
+     },
      err =>{
-              console.log(err);
-             //this.toastr.error(err);
-             this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-             () => console.log('Request Completed')
-
-          //  this.toastr.error(err);
-
-   };
-   this.refreshNotes();
-});
-
+     this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+     () => console.log('Request Completed')
+     }
+    );
+     this.refreshNotes();
    }
 
    unpinNotes(data)
    {
-     var data1 = { is_pinned: data.is_pinned ? 'false' : 'true'}
-        console.log(data1);
-     this.commonService.updateData('update/'+data._id,data1)
-     .subscribe(model => {
-        console.log(model);
+        var data1 = { is_pinned: data.is_pinned ? 'false' : 'true'}
+        this.subscription=this.commonService.updateData('update/'+data._id,data1)
+        .subscribe(model =>  {
+        this.model = model;
+        },
+        err =>{
+        this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+        () => console.log('Request Completed')
+        }
+        );
+        this.refreshNotes();
+    }
 
-       // this.toastr.success( 'Success!');
-       // this.router.navigate(['/home']);
-     //console.log(this.responseStatus = data),
-     err =>{
-              console.log(err);
-             //this.toastr.error(err);
-             this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-             () => console.log('Request Completed')
-
-          //  this.toastr.error(err);
-
-   };
-   this.refreshNotes();
-});
-
-   }
 
    changeColor(data,color)
-      {     var data1 =
-
-          {   note_color: color }
-           console.log(data1);
-        this.commonService.updateData('update/'+data._id,data1)
-        .subscribe(model => {
-           console.log(model);
-
-          // this.toastr.success( 'Success!');
-          // this.router.navigate(['/home']);
-        //console.log(this.responseStatus = data),
-        err =>{
-                 console.log(err);
-                //this.toastr.error(err);
-                this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-                () => console.log('Request Completed')
-
-             //  this.toastr.error(err);
-      };
+    {
+      var data1 = { note_color: color }
+      this.subscription=this.commonService.updateData('update/'+data._id,data1)
+      .subscribe(model =>
+       {
+        this.model = model;
+       },
+      err =>{
+      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+      () => console.log('Request Completed')
+      }
+      );
       this.refreshNotes();
-      });
-
       }
 
     chipShowtoday(data, chip1)
@@ -468,104 +361,74 @@ export class DashboardComponent implements OnInit {
       note_chip: chip1
     }
 
-
-
-    // var currentDate = new Date();
-    // currentDate.setHours(currentDate.getHours() + 16);  //addition 24 hours  from current date
-    // this.lastActivityTime = currentDate;
-
-      this.commonService.updateData('update/' + data._id, chip)
-     .subscribe(model => {
-      console.log(model);
-      // this.toastr.success( 'Success!');
-      // this.router.navigate(['/home']);
-      //console.log(this.responseStatus = data),
+      this.subscription=this.commonService.updateData('update/' + data._id, chip)
+     .subscribe(model =>
+       {
+        this.model = model;
+       },
       err => {
-      console.log(err);
-      //this.toastr.error(err);
       this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
       () => console.log('Request Completed')
-        //  this.toastr.error(err);
-      };
+      }
+    );
       this.refreshNotes();
-    });
+    var reminder1 =
+   {
+    reminder: this.lastActivityTime
+   }
 
+  this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
+ .subscribe(model =>
+   {
+    this.model = model;
+   },
 
-  //
- var reminder1 =
-{
-  reminder: this.lastActivityTime
-}
-  console.log(data,reminder1);
-// this.chipData=data;
-//console.log(this.chipData);
-  this.commonService.updateData('update/' + data._id, reminder1)
- .subscribe(model => {
-  console.log(model);
-  // this.toastr.success( 'Success!');
-  // this.router.navigate(['/home']);
-  //console.log(this.responseStatus = data),
   err => {
-  console.log(err);
-  //this.toastr.error(err);
   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
   () => console.log('Request Completed')
-    //  this.toastr.error(err);
-  };
-  this.refreshNotes();
-});
-
   }
+);
+  this.refreshNotes();
+}
 
   chipShowTommarrow(data, chip1)
-{
+  {
     var chip =
   {
     note_chip: chip1
   }
-  // var currentDate = new Date();
-  // currentDate.setHours(currentDate.getHours() + 16);  //addition 24 hours  from current date
-  // this.lastActivityTime = currentDate;
 
-    this.commonService.updateData('update/' + data._id, chip)
-   .subscribe(model => {
-    console.log(model);
-    // this.toastr.success( 'Success!');
-    // this.router.navigate(['/home']);
-    //console.log(this.responseStatus = data),
-    err => {
-    console.log(err);
-    //this.toastr.error(err);
+    this.subscription=this.commonService.updateData('update/' + data._id, chip)
+   .subscribe(model =>
+     {
+      this.model = model;
+     },
+    err =>
+    {
     this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
     () => console.log('Request Completed')
-      //  this.toastr.error(err);
-    };
-    this.refreshNotes();
-  });
-//
+    }
+  );
+  this.refreshNotes();
+
 var reminder1 =
 {
 reminder: this.lastActivityTime1
 }
-console.log(data,reminder1);
-// this.chipData=data;
-//console.log(this.chipData);
-this.commonService.updateData('update/' + data._id, reminder1)
-.subscribe(model => {
-console.log(model);
-// this.toastr.success( 'Success!');
-// this.router.navigate(['/home']);
-//console.log(this.responseStatus = data),
+
+this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
+.subscribe(model =>
+  {
+   this.model = model;
+  },
+
 err => {
 console.log(err);
-//this.toastr.error(err);
 this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
 () => console.log('Request Completed')
-  //  this.toastr.error(err);
-};
+}
+);
 this.refreshNotes();
-});
-
 }
 
 
@@ -575,45 +438,25 @@ chipShowMonday(data, chip1)
 {
   note_chip: chip1
 }
-// var currentDate = new Date();
-// currentDate.setHours(currentDate.getHours() + 16);  //addition 24 hours  from current date
-// this.lastActivityTime = currentDate;
-
-  this.commonService.updateData('update/' + data._id, chip)
+  this.subscription=this.commonService.updateData('update/' + data._id, chip)
  .subscribe(model => {
-  console.log(model);
-  // this.toastr.success( 'Success!');
-  // this.router.navigate(['/home']);
-  //console.log(this.responseStatus = data),
   err => {
-  console.log(err);
-  //this.toastr.error(err);
   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
   () => console.log('Request Completed')
-    //  this.toastr.error(err);
   };
   this.refreshNotes();
 });
-//
+
 var reminder2 =
 {
 reminder: this.lastActivityTime2
 }
-console.log(data,reminder2);
-// this.chipData=data;
-//console.log(this.chipData);
-this.commonService.updateData('update/' + data._id, reminder2)
+
+this.subscription=this.commonService.updateData('update/' + data._id, reminder2)
 .subscribe(model => {
-console.log(model);
-// this.toastr.success( 'Success!');
-// this.router.navigate(['/home']);
-//console.log(this.responseStatus = data),
 err => {
-console.log(err);
-//this.toastr.error(err);
 this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
 () => console.log('Request Completed')
-//  this.toastr.error(err);
 };
 this.refreshNotes();
 });
@@ -626,26 +469,16 @@ this.refreshNotes();
    {
      reminder: this.model.reminder
    }
-     console.log(data,reminder1);
- // this.chipData=data;
- //console.log(this.chipData);
-     this.commonService.updateData('update/' + data._id, reminder1)
+
+     this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
     .subscribe(model => {
-     console.log(model);
-     // this.toastr.success( 'Success!');
-     // this.router.navigate(['/home']);
-     //console.log(this.responseStatus = data),
      err => {
-     console.log(err);
-     //this.toastr.error(err);
      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
      () => console.log('Request Completed')
-       //  this.toastr.error(err);
      };
      this.refreshNotes();
    });
-
-   }
+ }
 
 
    private timerTommarrowExecuted(): void
@@ -656,35 +489,29 @@ this.refreshNotes();
      tomorrow.setHours(8);//set setHours
      tomorrow.setMinutes(0);
      tomorrow.setMilliseconds(0);
-     // currentDate.setHours(currentDate.getHours() - 2);  //subtract 2 hours or 120 minutes from current date
      this.lastActivityTime1 = tomorrow;
   }
   private timerTodayExecuted(): void
   {
     var currentDate = new Date();
-    //tomorrow.setDate(currentDate.getDate()+1);
     currentDate.setHours(20);//set setHours
     currentDate.setMinutes(0);
     currentDate.setMilliseconds(0);
-    // currentDate.setHours(currentDate.getHours() - 2);  //subtract 2 hours or 120 minutes from current date
     this.lastActivityTime = currentDate;
  }
  private timerMondayExecuted(): void
- {
+   {
    var currentDate = new Date();
-    var Monday = new Date();
+   var Monday = new Date();
    Monday.setDate(currentDate.getDate()+6);
    Monday.setHours(20);//set setHours
    Monday.setMinutes(0);
    Monday.setMilliseconds(0);
-   // currentDate.setHours(currentDate.getHours() - 2);  //subtract 2 hours or 120 minutes from current date
    this.lastActivityTime2 = Monday;
-}
-
+   }
 
     openDialogImage(data): void
     {
-
     let dialogRef = this.dialog.open(OpenDialogImageComponent, {
      width: '300px',
      height:'300px',
@@ -692,7 +519,6 @@ this.refreshNotes();
     });
 
     dialogRef.afterClosed().subscribe(result => {
-     console.log('The dialog was closed');
     });
     }
 
@@ -700,7 +526,7 @@ this.refreshNotes();
     /*********** label dialog use for add label  **********/
      openDialogAddLabel(data): void
      {
-     console.log(data);
+
      let dialogRef = this.dialog.open( OpenDialogAddLabelComponent, {
       width: '300px',
       height:'300px',
@@ -708,70 +534,44 @@ this.refreshNotes();
      });
 
      dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
      });
      }
 
      labelSubmit(label,data):void
      {
-           console.log(label.title);
-           console.log(data);
-           this.checked = !this.checked;
+       this.checked = !this.checked;
        var labeldata =
      {
        label : label.title
      }
 
-       // var current;
-       // current=current+labeldata;
-       // console.log(current);
-
-
-       this.commonService.updateData('update/' + data._id,labeldata)
-      .subscribe(model => {
-       console.log(model);
-       // this.toastr.success( 'Success!');
-       //console.log(this.responseStatus = data),
+     this.subscription=this.commonService.updateData('update/' + data._id,labeldata)
+     .subscribe(
+      model => {
+      this.model=model;
+      },
        err => {
-       console.log(err);
-       //this.toastr.error(err);
        this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
        () => console.log('Request Completed')
-         //  this.toastr.error(err);
-       };
-       this.refreshNotes();
-     });
-
+       }
+     );
+     this.refreshNotes();
      }
 
      //remove label
      remove1(data,labelchip,chip_id): void
      {
-
-
-
-          console.log(chip_id);
-
-
-       //this.orders = this.orders.filter(order => order.food_id !== food.id);
-         this.commonService.updateData('update/'+data._id,data.label)
-           .subscribe(model => {
-           console.log(model);
-
-         // this.toastr.success( 'Success!');
-         // this.router.navigate(['/home']);
-       //console.log(this.responseStatus = data),
-       err =>{
-                console.log(err);
-               //this.toastr.error(err);
-               this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-               () => console.log('Request Completed')
-
-            //  this.toastr.error(err);
-
-     };
-     this.refreshNotes();
-    });
+     this.commonService.updateData('update/'+data._id,data.label)
+     .subscribe(
+      model => {
+       this.model=model;
+     },
+      err => {
+      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+      () => console.log('Request Completed')
+     }
+    );
+    this.refreshNotes();
   }
 
   ApplyFilters(isValid: boolean,data) {
@@ -784,42 +584,50 @@ this.refreshNotes();
      label_ids :datas[a]._id
    }
 
-   this.commonService.updateData('update/' + data._id,labeldata)
-  .subscribe(model => {
+   this.subscription=this.commonService.updateData('update/' + data._id,labeldata)
+   .subscribe(
+   model => {
+   this.model=model;
+   },
    err => {
    this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
    () => console.log('Request Completed')
-   };
+   }
+ );
    this.refreshNotes();
- });
+
 }
 }
 
 createNewlabel(data)
 {
-   console.log(this.model);
-    this.commonService.postServiceData('createLabel',this.model)
-      .subscribe(model => {
-       err =>{
-        console.log(err);
-        //this.toastr.error(err);
-        this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-        () => console.log('Request Completed')
-        // this.toastr.error(err);
-        };
-        this.refreshNotes();
- });
-}
+    this.subscription=this.commonService.postServiceData('createLabel',this.model)
+    .subscribe(
+    model =>
+    {
+    console.log(model)
+    this.model=model;
+    },
+    err =>
+    {
+      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+      () => console.log('Request Completed')
+    }
+ );
+    this.refreshNotes();
+ }
 
 refreshLabel()
 {
-this.commonService.getData('readLabel').subscribe(response => {
- if (response) {
- this.Labels = response;
- location.reload();
+this.subscription=  this.commonService.getAllLabels().subscribe(response => {
+  if (response) {
+  this.Labels = response;
+  // location.reload();
  }
 },
 error => console.log("Error while retrieving"))
 }
+
+
 
 }
