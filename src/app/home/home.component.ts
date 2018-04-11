@@ -73,7 +73,7 @@ export class HomeComponent  implements OnInit {
 
    ngOnInit():void {
       this.refreshNotes();
-      // this.refreshlabels();
+     this.refreshlabels();
 
       //
       this.commonService.getData('readActiveUser').subscribe(response => {
@@ -152,31 +152,32 @@ this.commonService.getAllNotes().subscribe(response => {
 }
 
 
-// refreshlabels()
-// {
-// this.subscription=this.commonService.getAllabels().subscribe(response => {
-//  if (response) {
-//     this.dashDataFirst = response;
-//      // console.log(this.dashDataFirst.reverse());
-//    }
-// },
-//  error => console.log("Error while retrieving"))
-// }
+refreshlabels()
+{
+  this.commonService.getAllLabels().subscribe(response => {
+     if (response) {
+       // console.log(response);
+
+        this.Labels = response;
+     }
+   },
+   error => console.log("Error while retrieving"));
+}
  openLabel(data)
  {
     localStorage.setItem('label',data.title);
     var currentlabels=localStorage.getItem("label");
     this.currentlabel=currentlabels;
     console.log(this.currentlabel);
-    this.commonService.postServiceData('label/'+ data._id,data).subscribe(
-    data =>{
-    this.router.navigate(['/home/Label/'+data._id]);
-    err =>{
-    this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-    () => console.log('get label')
-    };
-    location.reload();
-   });
+    this.commonService.postServiceData('label/'+ data._id,data)
+                          .subscribe(data =>{
+                                this.router.navigate(['/home/Label/'+data._id]);
+                                err =>{
+                                this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+                                () => console.log('get label')
+                                };
+                                location.reload();
+                         });
    var data1 =
     {
       currentlabel: data.title
@@ -190,6 +191,19 @@ this.commonService.getAllNotes().subscribe(response => {
     () => console.log('Request Completed')
     };
   });
+}
+
+refreshLabel()
+{
+  this.commonService.getAllLabels().subscribe(response => {
+  if (response) {
+    // /console.log(response);
+
+  this.Labels = response;
+  // location.reload();
+ }
+},
+error => console.log("Error while retrieving"))
 }
 
 }

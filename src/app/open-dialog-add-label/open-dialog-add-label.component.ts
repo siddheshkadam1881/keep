@@ -18,8 +18,6 @@ export class OpenDialogAddLabelComponent implements OnInit {
   ngOnInit() {
     this.commonService.getData('readLabel').subscribe(response => {
       if (response) {
-        //console.log(response);
-        // items.slice().reverse();
          this.Labels = response;
       }
     },

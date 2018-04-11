@@ -23,15 +23,7 @@ export class OpenDialogLabelComponent implements OnInit {
   { }
 
   ngOnInit() {
-
-    this.commonService.getData('readLabel').subscribe(response => {
-      if (response) {
-        //console.log(response);
-        // items.slice().reverse();
-         this.Labels = response;
-      }
-    },
-      error => console.log("Error while retrieving"))
+   this.refreshLabel();
   }
 
    onMouseOut()
@@ -55,13 +47,9 @@ export class OpenDialogLabelComponent implements OnInit {
       {
         title: data.title
       }
-      console.log(data1);
+      // console.log(data1);
       this.commonService.updateData('updateLabel/' + data._id, data1)
      .subscribe(model => {
-      console.log(model);
-      // this.toastr.success( 'Success!');
-      // this.router.navigate(['/home']);
-      //console.log(this.responseStatus = data),
       err => {
       console.log(err);
       //this.toastr.error(err);
@@ -76,26 +64,11 @@ export class OpenDialogLabelComponent implements OnInit {
   deleteLabel(id)
 {
    console.log(id);
-      // var data1 =
-      // {
-      //   title:null
-      // }
-  // console.log(data1);
      this.commonService.deleteData('deleteLabel/'+id)
      .subscribe(model => {
-      console.log(model);
-       // this.toastr.success( 'Success!');
-       // this.router.navigate(['/home']);
-       //console.log(this.responseStatus = data),
-       err => {
-       console.log(err);
-      //this.toastr.error(err);
-      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-      () => console.log('Request Completed')
-     //  this.toastr.error(err);
-     };
        this.refreshLabel();
-   });
+     }
+   );
 }
 
    createLabel(data)
@@ -103,39 +76,32 @@ export class OpenDialogLabelComponent implements OnInit {
 
      console.log(this.model);
 
-     // console.log("submit Post click happend " + this.model.name)
+
           this.commonService.postServiceData('createLabel',this.model)
              .subscribe(model => {
-                console.log(model);
+                                  console.log(model);
 
-               // this.toastr.success( 'Success!');
-               // this.router.navigate(['/home']);
 
-             //console.log(this.responseStatus = data),
-             err =>{
-                      console.log(err);
-                     //this.toastr.error(err);
-                     this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-                     () => console.log('Request Completed')
+                             this.refreshLabel();
+                        },
+                        err =>{
+                                 console.log(err);
+                                //this.toastr.error(err);
+                                this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
+                                () => console.log('Request Completed')
 
-                  //  this.toastr.error(err);
-
-           };
-           this.refreshLabel();
-      });
+                      });
    }
 
-        refreshLabel()
-      {
-        this.commonService.getData('readLabel').subscribe(response => {
-         if (response) {
-         console.log(response);
-        // items.slice().reverse();
-         this.Labels = response;
-         location.reload();
-         }
-      },
-      error => console.log("Error while retrieving"))
+   refreshLabel()
+   {
+    this.commonService.getAllLabels().subscribe(response => {
+     if (response) {
+     this.Labels = response;
+      // location.reload();
     }
+   },
+   error => console.log("Error while retrieving"))
+   }
 
 }

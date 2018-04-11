@@ -13,127 +13,148 @@ import { Response} from '@angular/http';
 //import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 @Injectable()
 export class BackendApiService {
-private Todo = new Subject<any>();
-base_url="http://localhost:3000/";
-result:any;
-public urlpath;
-  constructor(private http: Http ) {  }
 
-private subject = new Subject<any>();
-/* post service */
-  postServiceData(path,model) {
-  //console.log(model,path);
-  let token = localStorage.getItem("token");
-  //console.log("token", token);
+    private labelSubjectObj = new Subject<any>();
+    private noteSubjectObj = new Subject<any>();
+    private profileSubjectObj = new Subject<any>();
+    base_url="http://localhost:3000/";
+    result:any;
+    public urlpath;
 
-  //set the token to header
-  const headers = new Headers();
-  headers.append('token', token);
+    constructor(private http: Http ) {  }
 
-  this.urlpath= this.base_url.concat(path);
-  return this.http.post(this.urlpath,model,{ headers: headers })
-  .map(res=>res.json());
+    /* post service */
+      postServiceData(path,model) {
+          //console.log(model,path);
+          let token = localStorage.getItem("token");
+          //console.log("token", token);
 
-  //this.toastr.success('You are awesome!', 'Success!', 'timeout: 3000');
-  }
+          //set the token to header
+          const headers = new Headers();
+          headers.append('token', token);
 
-  ////////////////////////////////////////
-  /* get service  */
-  /////////////////////////
+          this.urlpath= this.base_url.concat(path);
+          return this.http.post(this.urlpath,model,{ headers: headers })
+          .map(res=>res.json());
 
-  getData(path) {
-    //get url from the ts and concate it.
-    console.log("path", path);
-    let urlpath = this.base_url.concat(path);
-    //get token from the local storage
-    let email=localStorage.getItem("email");
-    //get token from the local storage
-    let token = localStorage.getItem("token");
-    console.log("token", token);
-
-    //set the token to header
-    const headers = new Headers();
-    headers.append('token', token);
-
-    //http get call to the server
-    return this.http.get(urlpath, { headers: headers })
-      .map((response: Response) => {
-        let resData = response.json();
-        return resData;
+          //this.toastr.success('You are awesome!', 'Success!', 'timeout: 3000');
       }
-      )
-  }
 
-//read notes here
-  loadAllNotes():void{
-     let path = "readTodos";
-     let urlpath = this.base_url.concat(path);
-     let token = localStorage.getItem("token");
-     //set the token to header
-     const headers = new Headers();
-     headers.append('token', token);
-     this.http.get(urlpath, { headers: headers })
-                 .toPromise().then((response: Response)=>{
-                   // debugger;
-                    this.subject.next(response.json());
-                  });
-   }
+      ////////////////////////////////////////
+      /* get service  */
+      /////////////////////////
 
-
-   getAllNotes(): Observable<any>{
-      this.loadAllNotes();
-      return this.subject.asObservable();
-     }
-
-
-
-     loadAllLabels():void{
-        let path = "readLabel";
+      getData(path) {
+        //get url from the ts and concate it.
         let urlpath = this.base_url.concat(path);
+        //get token from the local storage
+        let email=localStorage.getItem("email");
+        //get token from the local storage
         let token = localStorage.getItem("token");
+        console.log("token", token);
+
         //set the token to header
         const headers = new Headers();
         headers.append('token', token);
-        this.http.get(urlpath, { headers: headers })
-                    .toPromise().then((response: Response)=>{
-                     this.subject.next(response.json());
-                     });
+
+        //http get call to the server
+        return this.http.get(urlpath, { headers: headers })
+                          .map((response: Response) => {
+                                let resData = response.json();
+                                return resData;
+                              })
       }
 
-      getAllLabels(): Observable<any>{
-         this.loadAllLabels();
-         return this.subject.asObservable();
-        }
+    //read notes here
+      loadAllNotes():void{
+         let path = "readTodos";
+         let urlpath = this.base_url.concat(path);
+         let token = localStorage.getItem("token");
+         //set the token to header
+         const headers = new Headers();
+         headers.append('token', token);
+         this.http.get(urlpath, { headers: headers })
+                     .toPromise()
+                       .then((response: Response)=>{
+                          this.noteSubjectObj.next(response.json());
+                        });
+       }
+
+
+       getAllNotes(): Observable<any>{
+          this.loadAllNotes();
+          return this.noteSubjectObj.asObservable();
+         }
 
 
 
-  /***********************************
-   *** update service
-  **********************************/
-  updateData(path,data) {
-    console.log(data);
-    //var headers = this.getTokenLocalStorage();
-    //return this.http.post(this.updateNotesUrl, note, { headers: headers });
-     console.log("path", path);
-     let token = localStorage.getItem("token");
-     const headers = new Headers();
-     headers.append('token', token);
-     this.urlpath= this.base_url.concat(path);
-     return this.http.put(this.urlpath,data,{ headers: headers })
-     .map(res=>res.json());
-  }
-  /***********************************
-   *** delete service
-  **********************************/
-  deleteData(path)
-  {
-    console.log("path", path);
-    let token = localStorage.getItem("token");
-    const headers = new Headers();
-    headers.append('token', token);
-    this.urlpath= this.base_url.concat(path);
-    return this.http.delete(this.urlpath,{ headers: headers })
-    .map(res=>res.json());
-  }
+         loadAllLabels():void{
+            let path = "readLabel";
+            let urlpath = this.base_url.concat(path);
+            let token = localStorage.getItem("token");
+            //set the token to header
+            const headers = new Headers();
+            headers.append('token', token);
+            this.http.get(urlpath, { headers: headers })
+                        .toPromise()
+                          .then((response: Response)=>{
+                              this.labelSubjectObj.next(response.json());
+                           });
+          }
+
+          getAllLabels(): Observable<any>{
+             this.loadAllLabels();
+             return this.labelSubjectObj.asObservable();
+            }
+
+          loadProfile() : void {
+             let path = "readActiveUser";
+             let urlpath = this.base_url.concat(path);
+             let token = localStorage.getItem("token");
+             //set the token to header
+             const headers = new Headers();
+             headers.append('token', token);
+             this.http.get(urlpath, { headers: headers })
+                         .toPromise().then((response: Response)=>{
+                          this.profileSubjectObj.next(response.json());
+                          });
+           }
+
+             getprofile(): Observable<any>{
+                this.loadProfile();
+                return this.profileSubjectObj.asObservable();
+               }
+
+
+
+
+      /***********************************
+       *** update service
+      **********************************/
+      updateData(path,data) {
+        console.log(data);
+        //var headers = this.getTokenLocalStorage();
+        //return this.http.post(this.updateNotesUrl, note, { headers: headers });
+         console.log("path", path);
+         let token = localStorage.getItem("token");
+         const headers = new Headers();
+         headers.append('token', token);
+         this.urlpath= this.base_url.concat(path);
+         return this.http.put(this.urlpath,data,{ headers: headers })
+         .map(res=>res.json());
+      }
+      /***********************************
+       *** delete service
+      **********************************/
+      deleteData(path)
+      {
+        console.log("path", path);
+        let token = localStorage.getItem("token");
+        const headers = new Headers();
+        headers.append('token', token);
+        this.urlpath= this.base_url.concat(path);
+        return this.http.delete(this.urlpath,{ headers: headers })
+        .map(res=>res.json());
+      }
 
 }

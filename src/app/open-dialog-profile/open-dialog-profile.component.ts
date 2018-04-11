@@ -24,15 +24,8 @@ export class OpenDialogProfileComponent implements OnInit {
 
 ngOnInit()
 {
-  this.commonService.getData('readActiveUser').subscribe(response => {
-    if (response) {
-      //console.log(response.data);
-      // items.slice().reverse();
-      this.dashDataFirst = response;
-      //  console.log(this.dashDataFirst.reverse());
-    }
-  },
-    error => console.log("Error while retrieving"))
+  this.refreshProfile();
+
 }
 
 //change event function use for move rectangular crop
@@ -71,7 +64,7 @@ saveImage(image, data)
         () => console.log('Request Completed')
         //  this.toastr.error(err);
       };
-    location.reload();
+    // location.reload();
       this.refreshProfile();
       this.imageChangedEvent = event;
     });
@@ -87,10 +80,8 @@ handleFileInput(event, data) {
   formObj.append("image", image)
   this.commonService.updateData('activeUser/' + data._id, formObj)
     .subscribe(model => {
-      console.log(model);
-      // this.toastr.success( 'Success!');
-      // this.router.navigate(['/home']);
-      //console.log(this.responseStatus = data),
+      //console.log(model);
+
       err => {
         console.log(err);
         //this.toastr.error(err);
@@ -127,13 +118,9 @@ dataURItoBlob(dataURI) {
 //refresh profile here...
 refreshProfile()
 {
-  this.commonService.getData('readActiveUser').subscribe(response => {
+  this.commonService.getprofile().subscribe(response => {
     if (response) {
-      //console.log(response.data);
-      // items.slice().reverse();
       this.dashDataFirst = response;
-
-
     }
   },
     error => console.log("Error while retrieving"))

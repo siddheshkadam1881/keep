@@ -113,8 +113,8 @@ export class DashboardComponent implements OnInit {
      this.timerTodayExecuted();
      this.timerMondayExecuted();
    });
-     //
-    this.refreshNotes();
+
+    this.readNotes();
     this.refreshLabel();
   }
 
@@ -147,10 +147,6 @@ export class DashboardComponent implements OnInit {
      model =>
       {
         this.model=model;
-      },
-      err => {
-        this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-        () => console.log('Request Completed')
       }
     );
      this.refreshNotes();
@@ -166,10 +162,6 @@ export class DashboardComponent implements OnInit {
        model =>
         {
         this.model = model;
-        },
-        err => {
-          this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-          () => console.log('Request Completed')
         }
         );
         this.refreshNotes();
@@ -202,10 +194,6 @@ export class DashboardComponent implements OnInit {
            model =>
             {
             this.model = model;
-            },
-          err =>{
-            this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-            () => console.log('Request Completed')
             }
         );
         this.refreshNotes();
@@ -218,10 +206,6 @@ export class DashboardComponent implements OnInit {
      .subscribe(
       model => {
       this.model = model;
-      },
-      err =>{
-      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-      () => console.log('Request Completed')
       }
       );
     this.refreshNotes();
@@ -249,24 +233,29 @@ export class DashboardComponent implements OnInit {
   this.subscription= this.commonService.deleteData('delete/'+id).subscribe(
   model => {
   this.model = model;
-  },
-  err =>{
-  this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-  () => console.log("Note updated !!!")
   }
   );
   this.refreshNotes();
   }
   //refresh notes here
+  readNotes():void {
+      this.subscription = this.commonService.getAllNotes()
+                                            .subscribe(response => {
+                                             if (response) {
+                                             this.dashDataFirst = response;
+                                              }
+                                              },
+                                               error => console.log("Error while retrieving"))
+  }
   refreshNotes()
   {
-  this.subscription=this.commonService.getAllNotes().subscribe(
-  response => {
-   if (response) {
-      this.dashDataFirst = response;
-   }
-  },
-   error => console.log("Error while retrieving"))
+    this.commonService.loadAllLabels();
+    this.commonService.getAllNotes().subscribe(response => {
+                                             if (response) {
+                                             this.dashDataFirst = response;
+                                            }
+                                        })
+
   }
 
 
@@ -275,17 +264,12 @@ export class DashboardComponent implements OnInit {
    {
        var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
        this.subscription=this.commonService.updateData('update/'+data._id,data1)
-       .subscribe(
-       model => {
-       this.model = model;
-       },
-       err =>{
-       this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-       () => console.log('Request Completed')
-       }
-     );
-    this.refreshNotes();
- }
+                                            .subscribe(
+                                             model => {
+                                             this.model = model;
+                                             });
+        this.refreshNotes();
+   }
 
 
    archiveNotes(data)
@@ -293,14 +277,11 @@ export class DashboardComponent implements OnInit {
      var data1 = { is_archieved: data.is_archieved ? 'false' : 'true'}
 
     this.subscription=this.commonService.updateData('update/'+data._id,data1)
-     .subscribe(model =>  {
-     this.model = model;
-     },
-     err =>{
-     this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-     () => console.log('Request Completed')
-   }
- );
+                                         .subscribe(model =>  {
+                                                   this.model = model;
+                                              }
+
+                                     );
    this.refreshNotes();
 }
 
@@ -546,32 +527,23 @@ this.refreshNotes();
      }
 
      this.subscription=this.commonService.updateData('update/' + data._id,labeldata)
-     .subscribe(
-      model => {
-      this.model=model;
-      },
-       err => {
-       this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-       () => console.log('Request Completed')
-       }
-     );
+                                         .subscribe(
+                                          model => {
+                                          this.model=model;
+                                          });
      this.refreshNotes();
      }
 
      //remove label
      remove1(data,labelchip,chip_id): void
      {
-     this.commonService.updateData('update/'+data._id,data.label)
-     .subscribe(
-      model => {
-       this.model=model;
-     },
-      err => {
-      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-      () => console.log('Request Completed')
-     }
-    );
-    this.refreshNotes();
+      this.commonService.updateData('update/'+data._id,data.label)
+                       .subscribe(
+                        model => {
+                                 this.model=model;
+                                }
+                      );
+     this.refreshNotes();
   }
 
   ApplyFilters(isValid: boolean,data) {
@@ -585,37 +557,26 @@ this.refreshNotes();
    }
 
    this.subscription=this.commonService.updateData('update/' + data._id,labeldata)
-   .subscribe(
-   model => {
-   this.model=model;
-   },
-   err => {
-   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-   () => console.log('Request Completed')
-   }
- );
-   this.refreshNotes();
-
+                                       .subscribe(
+                                         model => {
+                                         this.model=model;
+                                         });
+                                        this.refreshNotes();
 }
 }
 
 createNewlabel(data)
 {
     this.subscription=this.commonService.postServiceData('createLabel',this.model)
-    .subscribe(
-    model =>
-    {
-    console.log(model)
-    this.model=model;
-    },
-    err =>
-    {
-      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-      () => console.log('Request Completed')
-    }
- );
-    this.refreshNotes();
- }
+                                        .subscribe(
+                                        model =>
+                                        {
+                                        console.log(model)
+                                        this.model=model;
+                                        }
+                                        );
+                                        this.refreshNotes();
+  }
 
 refreshLabel()
 {
@@ -624,8 +585,7 @@ this.subscription=  this.commonService.getAllLabels().subscribe(response => {
   this.Labels = response;
   // location.reload();
  }
-},
-error => console.log("Error while retrieving"))
+})
 }
 
 
