@@ -18,7 +18,7 @@ export class OpenDialogLabelComponent implements OnInit {
   imgSrc1: string = "assets/icon/done.svg";
   showHide1:Boolean;
   invalidCredentialMsg: string;
-  public Labels;
+  public labels;
   private subscription: ISubscription;
   constructor(private route: ActivatedRoute, private router: Router,public dialogRef: MatDialogRef<OpenDialogLabelComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any,private commonService:BackendApiService)
@@ -56,7 +56,8 @@ export class OpenDialogLabelComponent implements OnInit {
       // console.log(data1);
     this.subscription = this.commonService.updateData('updateLabel/' + data._id, data1)
                                            .subscribe(model => {
-                                           this.refreshLabel();
+                                           // this.refreshLabel();
+                                           // this.commonService.loadAllLabels();
                                           });
  }
 
@@ -65,9 +66,10 @@ export class OpenDialogLabelComponent implements OnInit {
 
     this.subscription = this.commonService.deleteData('deleteLabel/'+id)
                                            .subscribe(model => {
-                                             this.refreshLabel();
-                                           }
-                                         );
+                                           this.commonService.loadAllLabels();
+                                           });
+      this.refreshLabel();
+     // this.commonService.loadAllLabels();
 }
 
    createLabel(data)
@@ -75,19 +77,21 @@ export class OpenDialogLabelComponent implements OnInit {
 
         this.subscription = this.commonService.postServiceData('createLabel',this.model)
                                               .subscribe(model => {
-                                                           this.refreshLabel();
-                                                          });
+                                              this.commonService.loadAllLabels();
+                                          });
+
+       this.refreshLabel();
    }
 
    refreshLabel()
    {
-      this.subscription =   this.commonService.getAllLabels()
+      this.subscription =  this.commonService.getAllLabels()
                                               .subscribe(response => {
                                                if (response) {
-                                               this.Labels = response;
-                                                // location.reload();
+                                               this.labels = response;
                                               }
                                              })
-                                             }
 
-   }
+    }
+
+ }
