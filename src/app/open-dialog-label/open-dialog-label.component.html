@@ -18,7 +18,7 @@
   </div>
 
 
-  <div fxLayout="row" fxLayoutAlign="center center" *ngFor="let index of data">
+  <div fxLayout="row" fxLayoutAlign="center center" *ngFor="let index of labels">
     <div fxFlex="15" >
        <img class="img-responsive" matTooltip="Delete label" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" [src]="imgSrc" (mouseover)="onMouseOver()" (mouseout)="onMouseOut()" (click)="deleteLabel(index._id)" />
     </div>

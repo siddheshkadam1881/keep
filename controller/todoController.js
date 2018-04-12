@@ -178,30 +178,7 @@ exports.labelToNoteHandler = function(req, res) {
 
 }
 
-// /**
-//  * @description Remove  a label from a note
-//  *  @class removeLabelToNote
-//  *  @extends {req, res}
-//  */
-// exports.removeLabelToNote = function(req, res) {
-//   Todo.update({
-//       _id: req.params.id,
-//   user_id: req.decoded._id
-//     }, {
-//       $pull: {
-//         label_ids:req.param.labelIdToAddNote
-//       }
-//     },
-//     function(err, updatedNoteData) {
-//       if (err) throw err;
-//       else {
-//         res.send({
-//           'status': 'label has removed for note'
-//         });
-//       }
-//     })
-// }
-//
+
 
 
 /**

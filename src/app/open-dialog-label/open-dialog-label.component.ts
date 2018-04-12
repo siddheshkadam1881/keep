@@ -28,8 +28,7 @@ export class OpenDialogLabelComponent implements OnInit {
    this.refreshLabel();
   }
   ngOnDestroy(): void {
-
-     this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
    onMouseOut()

@@ -141,6 +141,7 @@ export class DashboardComponent implements OnInit {
                                       .subscribe(model =>
                                         {
                                           this.model=model;
+                                          this.readNotes();
                                         }
                                       );
       this.refreshNotes();
@@ -155,6 +156,7 @@ export class DashboardComponent implements OnInit {
                                            .subscribe(model =>
                                             {
                                             this.model = model;
+                                            this.readNotes();
                                             }
                                             );
         this.refreshNotes();
@@ -184,6 +186,7 @@ export class DashboardComponent implements OnInit {
                                                model =>
                                                 {
                                                 this.model = model;
+                                                this.readNotes();
                                                 }
                                             );
                this.refreshNotes();
@@ -195,6 +198,7 @@ export class DashboardComponent implements OnInit {
      this.subscription=this.commonService.postServiceData('create/Note',model)
                                          .subscribe(model => {
                                           this.model = model;
+                                          this.readNotes();
                                           }
                                           );
                                           this.refreshNotes();
@@ -223,6 +227,7 @@ export class DashboardComponent implements OnInit {
                                          .subscribe(
                                           model => {
                                           this.model = model;
+                                          this.readNotes();
                                       });
      this.refreshNotes();
   }
@@ -255,6 +260,7 @@ export class DashboardComponent implements OnInit {
                                             .subscribe(
                                              model => {
                                              this.model = model;
+                                             this.readNotes();
                                              });
         this.refreshNotes();
    }
@@ -267,6 +273,7 @@ export class DashboardComponent implements OnInit {
     this.subscription=this.commonService.updateData('update/'+data._id,data1)
                                          .subscribe(model =>  {
                                                    this.model = model;
+                                                  this.readNotes();
                                               }
                                      );
     this.refreshNotes();
@@ -281,6 +288,7 @@ export class DashboardComponent implements OnInit {
      this.subscription=this.commonService.updateData('update/'+data._id,data1)
                                           .subscribe(model =>  {
                                            this.model = model;
+                                           this.readNotes();
                                            });
      this.refreshNotes();
    }
@@ -291,6 +299,7 @@ export class DashboardComponent implements OnInit {
         this.subscription=this.commonService.updateData('update/'+data._id,data1)
                                             .subscribe(model =>  {
                                             this.model = model;
+                                            this.readNotes();
                                             }
                                             );
         this.refreshNotes();
@@ -304,6 +313,7 @@ export class DashboardComponent implements OnInit {
                                           .subscribe(model =>
                                            {
                                             this.model = model;
+                                            this.readNotes();
                                            }
                                           );
       this.refreshNotes();
@@ -320,6 +330,7 @@ export class DashboardComponent implements OnInit {
                                          .subscribe(model =>
                                            {
                                             this.model = model;
+                                            this.readNotes();
                                            }
                                         );
 
@@ -332,6 +343,7 @@ export class DashboardComponent implements OnInit {
                                        .subscribe(model =>
                                          {
                                           this.model = model;
+                                          this.readNotes();
                                          }
                                       );
   this.refreshNotes();
@@ -348,6 +360,7 @@ export class DashboardComponent implements OnInit {
                                          .subscribe(model =>
                                            {
                                             this.model = model;
+                                            this.readNotes();
                                            }
                                         );
 
@@ -361,6 +374,7 @@ export class DashboardComponent implements OnInit {
                                         .subscribe(model =>
                                           {
                                            this.model = model;
+                                           this.readNotes();
                                           }
                                         );
     this.refreshNotes();
@@ -376,6 +390,7 @@ chipShowMonday(data, chip1)
       this.subscription=this.commonService.updateData('update/' + data._id, chip)
                                          .subscribe(model => {
                                                    this.model = model;
+                                                   this.readNotes();
                                                 }
                                             );
 
@@ -388,6 +403,7 @@ chipShowMonday(data, chip1)
      this.subscription=this.commonService.updateData('update/' + data._id, reminder2)
                                     .subscribe(model => {
                                     this.model = model;
+                                    this.readNotes();
                                     }
                                     );
             this.refreshNotes();
@@ -403,6 +419,7 @@ chipShowMonday(data, chip1)
      this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
                                           .subscribe(model => {
                                           this.model = model;
+                                          this.readNotes();
                                           }
                                          );
      this.refreshNotes();
