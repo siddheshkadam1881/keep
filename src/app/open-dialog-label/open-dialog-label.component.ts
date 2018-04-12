@@ -4,6 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { BackendApiService } from '../services/backend-api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import { ISubscription } from "rxjs/Subscription";
 @Component({
   selector: 'app-open-dialog-label',
   templateUrl: './open-dialog-label.component.html',
@@ -18,12 +19,17 @@ export class OpenDialogLabelComponent implements OnInit {
   showHide1:Boolean;
   invalidCredentialMsg: string;
   public Labels;
+  private subscription: ISubscription;
   constructor(private route: ActivatedRoute, private router: Router,public dialogRef: MatDialogRef<OpenDialogLabelComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any,private commonService:BackendApiService)
   { }
 
   ngOnInit() {
    this.refreshLabel();
+  }
+  ngOnDestroy(): void {
+
+     this.subscription.unsubscribe();
   }
 
    onMouseOut()
@@ -48,60 +54,40 @@ export class OpenDialogLabelComponent implements OnInit {
         title: data.title
       }
       // console.log(data1);
-      this.commonService.updateData('updateLabel/' + data._id, data1)
-     .subscribe(model => {
-      err => {
-      console.log(err);
-      //this.toastr.error(err);
-      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-      () => console.log('Request Completed')
-      //  this.toastr.error(err);
-      };
-     this.refreshLabel();
-    });
+    this.subscription = this.commonService.updateData('updateLabel/' + data._id, data1)
+                                           .subscribe(model => {
+                                           this.refreshLabel();
+                                          });
  }
 
   deleteLabel(id)
 {
-   console.log(id);
-     this.commonService.deleteData('deleteLabel/'+id)
-     .subscribe(model => {
-       this.refreshLabel();
-     }
-   );
+
+    this.subscription = this.commonService.deleteData('deleteLabel/'+id)
+                                           .subscribe(model => {
+                                             this.refreshLabel();
+                                           }
+                                         );
 }
 
    createLabel(data)
    {
 
-     console.log(this.model);
-
-
-          this.commonService.postServiceData('createLabel',this.model)
-             .subscribe(model => {
-                                  console.log(model);
-
-
-                             this.refreshLabel();
-                        },
-                        err =>{
-                                 console.log(err);
-                                //this.toastr.error(err);
-                                this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-                                () => console.log('Request Completed')
-
-                      });
+        this.subscription = this.commonService.postServiceData('createLabel',this.model)
+                                              .subscribe(model => {
+                                                           this.refreshLabel();
+                                                          });
    }
 
    refreshLabel()
    {
-    this.commonService.getAllLabels().subscribe(response => {
-     if (response) {
-     this.Labels = response;
-      // location.reload();
-    }
-   },
-   error => console.log("Error while retrieving"))
-   }
+      this.subscription =   this.commonService.getAllLabels()
+                                              .subscribe(response => {
+                                               if (response) {
+                                               this.Labels = response;
+                                                // location.reload();
+                                              }
+                                             })
+                                             }
 
-}
+   }

@@ -3,6 +3,7 @@ import { Inject} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { BackendApiService } from '../services/backend-api.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ISubscription } from "rxjs/Subscription";
 @Component({
   selector: 'app-open-dialog-add-label',
   templateUrl: './open-dialog-add-label.component.html',
@@ -10,18 +11,22 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class OpenDialogAddLabelComponent implements OnInit {
   public Labels;
+  private subscription: ISubscription;
   constructor(private route: ActivatedRoute, private router: Router,public dialogRef: MatDialogRef<OpenDialogAddLabelComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,private commonService:BackendApiService)
     { }
+    ngOnDestroy(): void {
 
+       this.subscription.unsubscribe();
+    }
 
   ngOnInit() {
-    this.commonService.getData('readLabel').subscribe(response => {
-      if (response) {
-         this.Labels = response;
-      }
-    },
-      error => console.log("Error while retrieving"))
+            this.subscription = this.commonService.getData('readLabel')
+                                .subscribe(response => {
+                                if (response) {
+                                   this.Labels = response;
+                                }
+                          })
   }
 
 

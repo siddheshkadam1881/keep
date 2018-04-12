@@ -4,7 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { BackendApiService } from '../services/backend-api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
-
+import { ISubscription } from "rxjs/Subscription";
 @Component({
   selector: 'app-open-dialog-profile',
   templateUrl: './open-dialog-profile.component.html',
@@ -17,6 +17,7 @@ export class OpenDialogProfileComponent implements OnInit {
   invalidCredentialMsg: string;
     callback:any='';
     public dashDataFirst;
+    private subscription: ISubscription;
     constructor(private route: ActivatedRoute, private router: Router,public dialogRef: MatDialogRef<OpenDialogProfileComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,private commonService:BackendApiService)
     { }
@@ -27,6 +28,10 @@ ngOnInit()
   this.refreshProfile();
 
 }
+ngOnDestroy(): void {
+   this.subscription.unsubscribe();
+}
+
 
 //change event function use for move rectangular crop
 fileChangeEvent(event: any): void {
@@ -44,65 +49,38 @@ imageLoaded() {
 //this function use for save crop image to backend...
 saveImage(image, data)
 {
-  //console.log(image);
+
   var image = this.croppedImage;
-  // this.chipData=data;
-  //  console.log(this.chipData);
   var image1 = this.dataURItoBlob(image);
   let formObj = new FormData();
   formObj.append("image", image1)
-  this.commonService.updateData('activeUser/' + data._id, formObj)
-    .subscribe(model => {
-      console.log(model);
-      // this.toastr.success( 'Success!');
-      // this.router.navigate(['/home']);
-      //console.log(this.responseStatus = data),
-      err => {
-        console.log(err);
-        //this.toastr.error(err);
-        this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-        () => console.log('Request Completed')
-        //  this.toastr.error(err);
-      };
-    // location.reload();
-      this.refreshProfile();
-      this.imageChangedEvent = event;
-    });
+  this.subscription=this.commonService.updateData('activeUser/' + data._id, formObj)
+                                        .subscribe(model => {
+
+                                            // location.reload();
+                                          this.refreshProfile();
+                                          this.imageChangedEvent = event;
+                                        });
 }
 //choose image from file here...
 handleFileInput(event, data) {
   console.log(data)
   var image = event.target.files[0];
-  // this.chipData=data;
-  //  console.log(this.chipData);
-
   let formObj = new FormData();
   formObj.append("image", image)
-  this.commonService.updateData('activeUser/' + data._id, formObj)
-    .subscribe(model => {
-      //console.log(model);
-
-      err => {
-        console.log(err);
-        //this.toastr.error(err);
-        this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-        () => console.log('Request Completed')
-        //  this.toastr.error(err);
-      };
-      this.refreshProfile();
-      this.imageChangedEvent = event;
-    });
+  this.subscription=this.commonService.updateData('activeUser/' + data._id, formObj)
+                                                        .subscribe(model => {
+                                                          this.refreshProfile();
+                                                          this.imageChangedEvent = event;
+                                                        });
 }
 
 //predefine function use for base 64 to image file
 dataURItoBlob(dataURI) {
-  // convert base64 to raw binary data held in a string
-  // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-  var byteString = atob(dataURI.split(',')[1]);
 
+  var byteString = atob(dataURI.split(',')[1]);
   // separate out the mime component
   var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-
   // write the bytes of the string to an ArrayBuffer
   var ab = new ArrayBuffer(byteString.length);
   var ia = new Uint8Array(ab);
@@ -118,11 +96,11 @@ dataURItoBlob(dataURI) {
 //refresh profile here...
 refreshProfile()
 {
-  this.commonService.getprofile().subscribe(response => {
-    if (response) {
-      this.dashDataFirst = response;
-    }
-  },
-    error => console.log("Error while retrieving"))
-}
+  this.subscription=this.commonService.getprofile()
+                    .subscribe(response => {
+                    if (response) {
+                    this.dashDataFirst = response;
+                    }
+                  })
+                }
 }

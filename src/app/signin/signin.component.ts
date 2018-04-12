@@ -14,6 +14,7 @@ import { AuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login'
 import { UserService } from '../services/user.service';
+import { ISubscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'app-signin',
@@ -27,6 +28,7 @@ export class SigninComponent implements OnInit{
  returnUrl: string;
   user: SocialUser;
   invalidCredentialMsg: string;
+  private subscription: ISubscription;
   constructor(private userService: UserService,private authService: AuthService,private route: ActivatedRoute, private router: Router , private commonService:BackendApiService, public toastr: ToastsManager, vcr: ViewContainerRef)
   { this.toastr.setRootViewContainerRef(vcr); }
   //password validation
@@ -40,30 +42,15 @@ export class SigninComponent implements OnInit{
            '';
   }
 
-      signInUser(data) {
-         console.log(data.email);
-
-                localStorage.setItem('email',data.email);
-
-                this.commonService.postServiceData('signin',data)
-                .subscribe(data => {
-                   console.log(data);
-                   localStorage.setItem('token',data.token);
-                   this.router.navigate(['/home']);
-                  // this.toastr.success( 'Success!');
-                  // this.router.navigate(['/home']);
-
-                //console.log(this.responseStatus = data),
-                err =>{
-                         console.log(err);
-                        //this.toastr.error(err);
-                        this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-                () => console.log('Request Completed')
-                       this.toastr.error(err);
-
-              };
-         });
-}
+      signInUser(data)
+      {
+        localStorage.setItem('email',data.email);
+        this.commonService.postServiceData('signin',data)
+                                             .subscribe(data => {
+                                                   localStorage.setItem('token',data.token);
+                                                   this.router.navigate(['/home']);
+                                                   });
+     }
 
 
 ngOnInit() {
@@ -72,7 +59,6 @@ ngOnInit() {
 
  fbLogin() {
    this.userService.fbLogin().then(() => {
-     console.log('User has been logged in');
      this.router.navigate(['/home']);
    });  }
 
@@ -85,10 +71,4 @@ signOut(): void {
 
 
 
-
 }
-
-// signInWithGoogle(): void {
-//    // this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-//      this.router.navigate(["'http://localhost:3000/auth/facebook'"]);
-//  }

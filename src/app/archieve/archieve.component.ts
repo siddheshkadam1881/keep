@@ -9,6 +9,7 @@ import { CommonComponent } from '../common/common.component';
 import { GridService } from '../services/grid.service';
 import {MatChipInputEvent} from '@angular/material';
 import {ENTER, COMMA} from '@angular/cdk/keycodes';
+import { ISubscription } from "rxjs/Subscription";
 @Component({
   selector: 'app-archieve',
   templateUrl: './archieve.component.html',
@@ -24,7 +25,7 @@ export class ArchieveComponent implements OnInit {
     separatorKeysCodes = [ENTER, COMMA];
     chipData: Array<Object>[];
     fruits = [];
-
+    private subscription: ISubscription;
   showFiller = false;
 
    isClassVisible: false;
@@ -51,11 +52,6 @@ export class ArchieveComponent implements OnInit {
    fillerNav = Array(1).fill(0).map((_, i) => `Nav Item ${i + 1}`);
 
    fillerContent = Array(1).fill(1).map(() =>'');
-       // `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-       //  labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       //  laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-       //  voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-       //  cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`);
 
    private _mobileQueryListener: () => void;
 
@@ -63,105 +59,62 @@ export class ArchieveComponent implements OnInit {
      this.mobileQuery = media.matchMedia('(max-width: 600px)');
      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
      this.mobileQuery.addListener(this._mobileQueryListener);
-
-
-
    }
 
 
 
-   //////////////////////////////////////////////////////////
+   ngOnInit():void {
 
-   add(event: MatChipInputEvent): void {
-      let input = event.input;
-      let value = event.value;
+       this.refreshNotes();
+   }
 
-      // Add our fruit
-      if ((value || '').trim()) {
-        this.fruits.push({ name: value.trim() });
+   ngOnDestroy(): void {
+     this.mobileQuery.removeListener(this._mobileQueryListener);
+      this.subscription.unsubscribe();
+   }
+
+
+      add(event: MatChipInputEvent): void {
+         let input = event.input;
+         let value = event.value;
+
+
+         if ((value || '').trim()) {
+           this.fruits.push({ name: value.trim() });
+         }
+
+         if (input) {
+           this.chipData=[];
+
+         }
+       }
+
+
+     remove(data): void {
+      var chip=
+      {
+        note_chip: null
       }
 
-      // Reset the input value
-      if (input) {
-        this.chipData=[];
 
-      }
+      this.subscription=this.commonService.updateData('update/' + data._id, chip)
+        .subscribe(model => {
+          this.refreshNotes();
+        });
+
+
+        var chip1=
+        {
+          reminder: null
+        }
+
+      this.subscription=  this.commonService.updateData('update/' + data._id, chip1)
+          .subscribe(model => {
+            this.refreshNotes();
+          });
     }
 
 
-  remove(data): void {
-   var chip=
-   {
-     note_chip: null
-   }
-            console.log(chip);
-   // this.chipData=data;
-   //console.log(this.chipData);
-   this.commonService.updateData('update/' + data._id, chip)
-     .subscribe(model => {
-       console.log(model);
-
-       // this.toastr.success( 'Success!');
-       // this.router.navigate(['/home']);
-       //console.log(this.responseStatus = data),
-       err => {
-         console.log(err);
-         //this.toastr.error(err);
-         this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-         () => console.log('Request Completed')
-
-         //  this.toastr.error(err);
-       };
-       this.refreshNotes();
-     });
-
-
-     var chip1=
-     {
-       reminder: null
-     }
-              console.log(chip1);
-     // this.chipData=data;
-     //console.log(this.chipData);
-     this.commonService.updateData('update/' + data._id, chip1)
-       .subscribe(model => {
-         console.log(model);
-
-         // this.toastr.success( 'Success!');
-         // this.router.navigate(['/home']);
-         //console.log(this.responseStatus = data),
-         err => {
-           console.log(err);
-           //this.toastr.error(err);
-           this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-           () => console.log('Request Completed')
-
-           //  this.toastr.error(err);
-         };
-         this.refreshNotes();
-       });
- }
-
-
-  ////////////////////////////////read the data by calling service method//////////////////////////////////////////////
-
-   ngOnInit():void {
-      //
-         this.commonService.getData('readTodos').subscribe(response => {
-           if (response) {
-             //console.log(response.data);
-             // items.slice().reverse();
-              this.dashDataFirst = response.reverse();
-               console.log(this.dashDataFirst.reverse());
-           }
-         },
-           error => console.log("Error while retrieving"))
-   }
-
-  //////////////////////////////////////////////////////////
-   ngOnDestroy(): void {
-     this.mobileQuery.removeListener(this._mobileQueryListener);
-   }
 
 
 
@@ -183,63 +136,28 @@ export class ArchieveComponent implements OnInit {
   //refresh notes here
   refreshNotes()
   {
-  this.commonService.getData('readTodos').subscribe(response => {
+  this.subscription=this.commonService.getData('readTodos').subscribe(response => {
     if (response) {
-      //console.log(response.data);
-      // items.slice().reverse();
-       this.dashDataFirst = response.reverse();
-        console.log(this.dashDataFirst.reverse());
+       this.dashDataFirst = response;
     }
-  },
-    error => console.log("Error while retrieving"))
+  })
   }
 
   //delete note forever
-  deleteNote(id){
-  console.log(id);
-  //this.commonService.deleteData('delete/'+id).subscribe(
-  this.commonService.deleteData('delete/'+id).subscribe(
-
-  data => {
-   console.log("note delete");
-   //console.log(data);
-   //this.toastr.success( 'Success!', 'timeout: 6000');
-
-   //console.log(this.responseStatus = data),
-   err =>{
-   console.log(err);
-   //this.toastr.error(err);
-   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-   () => console.log("Note updated !!!")
-   //this.toastr.error(err);
-  //this.ngOnDestroy()
-  };
-  this.refreshNotes();
-  });
-  }
-//color notes
-  changeColor(data,color)
-     {     var data1 =
-
+      deleteNote(id)
+    {
+    this.subscription= this.commonService.deleteData('delete/'+id)
+                         .subscribe( data => {
+                          this.refreshNotes();
+                           });
+   }
+       changeColor(data,color)
+     {   var data1 =
          {   note_color: color }
-          console.log(data1);
-       this.commonService.updateData('update/'+data._id,data1)
-       .subscribe(model => {
-          console.log(model);
-
-         // this.toastr.success( 'Success!');
-         // this.router.navigate(['/home']);
-       //console.log(this.responseStatus = data),
-       err =>{
-                console.log(err);
-               //this.toastr.error(err);
-               this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-               () => console.log('Request Completed')
-
-            //  this.toastr.error(err);
-     };
-     this.refreshNotes();
-     });
+          this.subscription=this.commonService.updateData('update/'+data._id,data1)
+                         .subscribe(model => {
+          this.refreshNotes();
+      });
 
      }
 
@@ -247,27 +165,13 @@ export class ArchieveComponent implements OnInit {
   archiveNotes(data)
   {
     var data1 = { is_archieved: data.is_archieved ?  'false' : 'true'}
-       console.log(data1);
-    this.commonService.updateData('update/'+data._id,data1)
-    .subscribe(model => {
-       console.log(model);
 
-      // this.toastr.success( 'Success!');
-      // this.router.navigate(['/home']);
-    //console.log(this.responseStatus = data),
-    err =>{
-             console.log(err);
-            //this.toastr.error(err);
-            this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-            () => console.log('Request Completed')
+     this.subscription=this.commonService.updateData('update/'+data._id,data1)
+                       .subscribe(model => {
+                 });
+                 this.refreshNotes();
 
-         //  this.toastr.error(err);
-
-  };
-  this.refreshNotes();
- });
-
-}
+  }
 
 chipShow(data, chip1)
 {
@@ -275,49 +179,22 @@ chipShow(data, chip1)
 {
   note_chip: chip1
 }
-  console.log(chip);
-// this.chipData=data;
-//console.log(this.chipData);
-  this.commonService.updateData('update/' + data._id, chip)
- .subscribe(model => {
-  console.log(model);
-  // this.toastr.success( 'Success!');
-  // this.router.navigate(['/home']);
-  //console.log(this.responseStatus = data),
-  err => {
-  console.log(err);
-  //this.toastr.error(err);
-  this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-  () => console.log('Request Completed')
-    //  this.toastr.error(err);
-  };
-  this.refreshNotes();
-});
-}
-submitReminder(data)
-{
- var reminder1 =
-{
- reminder: this.model.reminder
-}
- console.log(data,reminder1);
-// this.chipData=data;
-//console.log(this.chipData);
- this.commonService.updateData('update/' + data._id, reminder1)
-.subscribe(model => {
- console.log(model);
- // this.toastr.success( 'Success!');
- // this.router.navigate(['/home']);
- //console.log(this.responseStatus = data),
- err => {
- console.log(err);
- //this.toastr.error(err);
- this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
- () => console.log('Request Completed')
-   //  this.toastr.error(err);
- };
- this.refreshNotes();
-});
 
-}
+this.subscription= this.commonService.updateData('update/' + data._id, chip)
+                    .subscribe(model => {
+                     this.refreshNotes();
+                    });
+  }
+    submitReminder(data)
+  {
+      var reminder1 =
+     {
+      reminder: this.model.reminder
+     }
+      this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
+                        .subscribe(model => {
+                        this.refreshNotes();
+                });
+
+   }
 }

@@ -13,6 +13,7 @@ import { Http ,HttpModule} from '@angular/http'
 import { BackendApiService } from '../services/backend-api.service';
 import { ViewContainerRef} from '@angular/core';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ISubscription } from "rxjs/Subscription";
 //import {SignupService}from './signup.component.spec';
 @Component({
   selector: 'app-signup',
@@ -25,7 +26,7 @@ export class SignupComponent
     //  @Input() message:Message;
     responseStatus:Object= [];
     status:boolean ;
-    //password validation
+    private subscription: ISubscription;
     hide = true;
     //declare object of FormControl for email validator
     email = new FormControl('', [Validators.required, Validators.email]);
@@ -47,18 +48,15 @@ export class SignupComponent
      });
 
    }
-   //using button store
-   registerUser(data) {
-     console.log(data);
+   ngOnDestroy(): void {
+      this.subscription.unsubscribe();
+   }
 
-            // console.log("submit Post click happend " + this.model.name)
-             this.commonService.postServiceData('signup',data).subscribe(
-             data =>  this.toastr.success(data),
-             //console.log(this.responseStatus = data),
-             err => this.toastr.error(err),
-             // console.log(err),
-             () =>this.toastr.success('Request Completed')
-             //console.log('Request Completed')
-      );
-    }
+   registerUser(data) {
+            this.subscription=this.commonService.postServiceData('signup',data)
+                                                .subscribe(
+                                                  data =>  this.toastr.success(data),
+                                                  err => this.toastr.error(err)
+                                                 );
+                                                }
 }

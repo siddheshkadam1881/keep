@@ -79,11 +79,6 @@ export class DashboardComponent implements OnInit {
   fillerNav = Array(1).fill(0).map((_, i) => `Nav Item ${i + 1}`);
 
   fillerContent = Array(1).fill(1).map(() =>'');
-      // `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      //  labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-      //  laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-      //  voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      //  cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`);
 
   private _mobileQueryListener: () => void;
 
@@ -113,7 +108,7 @@ export class DashboardComponent implements OnInit {
      this.timerTodayExecuted();
      this.timerMondayExecuted();
    });
-
+   this.refreshNotes();
     this.readNotes();
     this.refreshLabel();
   }
@@ -143,29 +138,27 @@ export class DashboardComponent implements OnInit {
   }
 
   this.subscription=this.commonService.updateData('update/' + data._id, chip)
-    .subscribe(
-     model =>
-      {
-        this.model=model;
-      }
-    );
-     this.refreshNotes();
+                                      .subscribe(model =>
+                                        {
+                                          this.model=model;
+                                        }
+                                      );
+      this.refreshNotes();
 
-     var chip1=
-    {
+       var chip1=
+     {
       reminder: null
-    }
+     }
 
 
        this.subscription=this.commonService.updateData('update/' + data._id, chip1)
-       .subscribe(
-       model =>
-        {
-        this.model = model;
-        }
-        );
+                                           .subscribe(model =>
+                                            {
+                                            this.model = model;
+                                            }
+                                            );
         this.refreshNotes();
-}
+  }
 
 
 
@@ -181,34 +174,30 @@ export class DashboardComponent implements OnInit {
    this.show = !this.show;
 
   }
-  // toggle1() {
-  //  this.showtoggle1= !this.showtoggle1;
-  //
-  // }
+
 
 
   submitNote() {
 
           this.subscription=this.commonService.postServiceData('create/Note',this.model)
-          .subscribe(
-           model =>
-            {
-            this.model = model;
-            }
-        );
-        this.refreshNotes();
-  }
+                                              .subscribe(
+                                               model =>
+                                                {
+                                                this.model = model;
+                                                }
+                                            );
+               this.refreshNotes();
+      }
 
   copyNote(model)
   {
 
      this.subscription=this.commonService.postServiceData('create/Note',model)
-     .subscribe(
-      model => {
-      this.model = model;
-      }
-      );
-    this.refreshNotes();
+                                         .subscribe(model => {
+                                          this.model = model;
+                                          }
+                                          );
+                                          this.refreshNotes();
   }
 
   logout() {
@@ -228,16 +217,15 @@ export class DashboardComponent implements OnInit {
   });
   }
 
-  deleteNote(id){
-  console.log(id);
-  this.subscription= this.commonService.deleteData('delete/'+id).subscribe(
-  model => {
-  this.model = model;
+  deleteNote(id)
+  {
+    this.subscription= this.commonService.deleteData('delete/'+id)
+                                         .subscribe(
+                                          model => {
+                                          this.model = model;
+                                      });
+     this.refreshNotes();
   }
-  );
-  this.refreshNotes();
-  }
-  //refresh notes here
   readNotes():void {
       this.subscription = this.commonService.getAllNotes()
                                             .subscribe(response => {
@@ -250,12 +238,12 @@ export class DashboardComponent implements OnInit {
   refreshNotes()
   {
     this.commonService.loadAllLabels();
-    this.commonService.getAllNotes().subscribe(response => {
-                                             if (response) {
-                                             this.dashDataFirst = response;
-                                            }
-                                        })
-
+    // this.refreshImage();
+    this.subscription=  this.commonService.getAllNotes().subscribe(response => {
+                                               if (response) {
+                                               this.dashDataFirst = response;
+                                              }
+                                          })
   }
 
 
@@ -280,10 +268,9 @@ export class DashboardComponent implements OnInit {
                                          .subscribe(model =>  {
                                                    this.model = model;
                                               }
-
                                      );
-   this.refreshNotes();
-}
+    this.refreshNotes();
+  }
 
 
 
@@ -292,14 +279,9 @@ export class DashboardComponent implements OnInit {
      var data1 = { is_pinned : data.is_pinned ? 'false' : 'true'}
 
      this.subscription=this.commonService.updateData('update/'+data._id,data1)
-     .subscribe(model =>  {
-     this.model = model;
-     },
-     err =>{
-     this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-     () => console.log('Request Completed')
-     }
-    );
+                                          .subscribe(model =>  {
+                                           this.model = model;
+                                           });
      this.refreshNotes();
    }
 
@@ -307,14 +289,10 @@ export class DashboardComponent implements OnInit {
    {
         var data1 = { is_pinned: data.is_pinned ? 'false' : 'true'}
         this.subscription=this.commonService.updateData('update/'+data._id,data1)
-        .subscribe(model =>  {
-        this.model = model;
-        },
-        err =>{
-        this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-        () => console.log('Request Completed')
-        }
-        );
+                                            .subscribe(model =>  {
+                                            this.model = model;
+                                            }
+                                            );
         this.refreshNotes();
     }
 
@@ -323,15 +301,11 @@ export class DashboardComponent implements OnInit {
     {
       var data1 = { note_color: color }
       this.subscription=this.commonService.updateData('update/'+data._id,data1)
-      .subscribe(model =>
-       {
-        this.model = model;
-       },
-      err =>{
-      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-      () => console.log('Request Completed')
-      }
-      );
+                                          .subscribe(model =>
+                                           {
+                                            this.model = model;
+                                           }
+                                          );
       this.refreshNotes();
       }
 
@@ -343,32 +317,23 @@ export class DashboardComponent implements OnInit {
     }
 
       this.subscription=this.commonService.updateData('update/' + data._id, chip)
-     .subscribe(model =>
-       {
-        this.model = model;
-       },
-      err => {
-      this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-      () => console.log('Request Completed')
-      }
-    );
-      this.refreshNotes();
+                                         .subscribe(model =>
+                                           {
+                                            this.model = model;
+                                           }
+                                        );
+
     var reminder1 =
    {
     reminder: this.lastActivityTime
    }
 
   this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
- .subscribe(model =>
-   {
-    this.model = model;
-   },
-
-  err => {
-  this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-  () => console.log('Request Completed')
-  }
-);
+                                       .subscribe(model =>
+                                         {
+                                          this.model = model;
+                                         }
+                                      );
   this.refreshNotes();
 }
 
@@ -380,68 +345,52 @@ export class DashboardComponent implements OnInit {
   }
 
     this.subscription=this.commonService.updateData('update/' + data._id, chip)
-   .subscribe(model =>
-     {
-      this.model = model;
-     },
-    err =>
-    {
-    this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-    () => console.log('Request Completed')
-    }
-  );
-  this.refreshNotes();
+                                         .subscribe(model =>
+                                           {
+                                            this.model = model;
+                                           }
+                                        );
 
-var reminder1 =
-{
-reminder: this.lastActivityTime1
-}
 
-this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
-.subscribe(model =>
-  {
-   this.model = model;
-  },
+      var reminder1 =
+      {
+      reminder: this.lastActivityTime1
+      }
 
-err => {
-console.log(err);
-this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-() => console.log('Request Completed')
-}
-);
-this.refreshNotes();
+   this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
+                                        .subscribe(model =>
+                                          {
+                                           this.model = model;
+                                          }
+                                        );
+    this.refreshNotes();
 }
 
 
 chipShowMonday(data, chip1)
 {
-  var chip =
-{
-  note_chip: chip1
-}
-  this.subscription=this.commonService.updateData('update/' + data._id, chip)
- .subscribe(model => {
-  err => {
-  this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-  () => console.log('Request Completed')
-  };
-  this.refreshNotes();
-});
+       var chip =
+        {
+          note_chip: chip1
+        }
+      this.subscription=this.commonService.updateData('update/' + data._id, chip)
+                                         .subscribe(model => {
+                                                   this.model = model;
+                                                }
+                                            );
 
-var reminder2 =
-{
-reminder: this.lastActivityTime2
-}
 
-this.subscription=this.commonService.updateData('update/' + data._id, reminder2)
-.subscribe(model => {
-err => {
-this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-() => console.log('Request Completed')
-};
-this.refreshNotes();
-});
+      var reminder2 =
+      {
+      reminder: this.lastActivityTime2
+      }
 
+     this.subscription=this.commonService.updateData('update/' + data._id, reminder2)
+                                    .subscribe(model => {
+                                    this.model = model;
+                                    }
+                                    );
+            this.refreshNotes();
 }
 
    submitReminder(data)
@@ -452,13 +401,11 @@ this.refreshNotes();
    }
 
      this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
-    .subscribe(model => {
-     err => {
-     this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-     () => console.log('Request Completed')
-     };
+                                          .subscribe(model => {
+                                          this.model = model;
+                                          }
+                                         );
      this.refreshNotes();
-   });
  }
 
 

@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { CommonComponent } from '../common/common.component';
 import { GridService } from '../services/grid.service';
-
+import { ISubscription } from "rxjs/Subscription";
 @Component({
   selector: 'app-trash',
   templateUrl: './trash.component.html',
@@ -21,7 +21,7 @@ export class TrashComponent implements OnInit {
   public dashDataFirst;
   public myData=[];
   note:string;
-
+private subscription: ISubscription;
    title:string;
    values:any={};
    model:any={};
@@ -54,31 +54,25 @@ export class TrashComponent implements OnInit {
      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
      this.mobileQuery.addListener(this._mobileQueryListener);
 
-
-
    }
 
   ////////////////////////////////read the data by calling service method//////////////////////////////////////////////
 
    ngOnInit():void {
-      //
-         this.commonService.getData('readTodos').subscribe(response => {
-           if (response) {
-             //console.log(response.data);
-             // items.slice().reverse();
-              this.dashDataFirst = response;
-               console.log(this.dashDataFirst.reverse());
-           }
-         },
-           error => console.log("Error while retrieving"))
+
+    this.subscription=this.commonService.getData('readTodos')
+                                        .subscribe(response => {
+                                         if (response) {
+                                            this.dashDataFirst = response;
+                                         }
+                                        })
    }
 
-  //////////////////////////////////////////////////////////
    ngOnDestroy(): void {
      this.mobileQuery.removeListener(this._mobileQueryListener);
+     this.subscription.unsubscribe();
+
    }
-
-
 
   openDialog(data): void {
     let dialogRef = this.dialog.open(CommonComponent, {
@@ -100,98 +94,29 @@ export class TrashComponent implements OnInit {
   {
   this.commonService.getData('readTodos').subscribe(response => {
     if (response) {
-      //console.log(response.data);
-      // items.slice().reverse();
-       this.dashDataFirst = response.reverse();
-        console.log(this.dashDataFirst.reverse());
+     this.dashDataFirst = response.reverse();
     }
-  },
-    error => console.log("Error while retrieving"))
+  })
   }
 
   //delete note forever
-  deleteNote(id){
-  console.log(id);
-  //this.commonService.deleteData('delete/'+id).subscribe(
-  this.commonService.deleteData('delete/'+id).subscribe(
-
-  data => {
-   console.log("note delete");
-   //console.log(data);
-   //this.toastr.success( 'Success!', 'timeout: 6000');
-
-   //console.log(this.responseStatus = data),
-   err =>{
-   console.log(err);
-   //this.toastr.error(err);
-   this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-   () => console.log("Note updated !!!")
-   //this.toastr.error(err);
-  //this.ngOnDestroy()
-  };
-  this.refreshNotes();
-  });
+  deleteNote(id)
+  {
+         this.commonService.deleteData('delete/'+id)
+                           .subscribe(
+                             data => {
+                             });
+          this.refreshNotes();
   }
 
   trashNotes(data)
   {
     var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
-       console.log(data1);
-    this.commonService.updateData('update/'+data._id,data1)
-    .subscribe(model => {
-       console.log(model);
+     this.commonService.updateData('update/'+data._id,data1)
+                       .subscribe(model => {
+                        });
+                        this.refreshNotes();
 
-      // this.toastr.success( 'Success!');
-      // this.router.navigate(['/home']);
-    //console.log(this.responseStatus = data),
-    err =>{
-             console.log(err);
-            //this.toastr.error(err);
-            this.invalidCredentialMsg = 'Invalid Credentials. Try again.';
-            () => console.log('Request Completed')
-
-         //  this.toastr.error(err);
-
-  };
-  this.refreshNotes();
- });
 
   }
-
-
-
-
-//
-//   trashUntrash(data,value){
-//   data.trash=value;
-//   this.updateNote(data);
-// }
-
-//
-// updateNote(note){
-// console.log("in update note!!!");
-// console.log(note);
-// this.commonService.updateData(note)
-// .subscribe(
-//     data => {
-//       console.log("note updated ");
-//       //console.log(data);
-//       this.getAllNotes();
-//     },
-//     error => {
-//         console.log(error);
-//         this.alertService.error(error);
-//         this.getAllNotes();
-//     });
-// }
-
-  //toggle nav
-  // toggleNav() {
-  //   this.sideService.sidenav.toggle();
-  // }
-
-  //  changeClass(class) {
-  //        this.gridService.changeClass(this.class);
-  //     }
-  //
 }
