@@ -76,7 +76,7 @@ exports.createNote = function(req, res) {
       message: 'Note successfully create'
     });
   // (req.decoded._id,user);
-   redisSet(req.decoded._id,user);
+   //redisSet(req.decoded._id,user);
   });
 }
 
