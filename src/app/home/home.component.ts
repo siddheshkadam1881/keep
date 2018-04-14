@@ -119,20 +119,22 @@ export class HomeComponent  implements OnInit {
 
     refreshNotes()
    {
-      this.subscription=this.commonService.getAllNotes().subscribe(response => {
-                                 if (response) {
-                                 this.dashDataFirst = response;
-                              }
+      this.subscription=this.commonService.getAllNotes()
+                                          .subscribe(response => {
+                                           if (response) {
+                                           this.dashDataFirst = response;
+                                        }
                           })
    }
 
 
    refreshlabels()
    {
-  this.subscription=  this.commonService.getAllLabels().subscribe(response => {
-                                  if (response) {
-                                  this.Labels = response;
-                                 }
+  this.subscription=  this.commonService.getAllLabels()
+                                         .subscribe(response => {
+                                            if (response) {
+                                            this.Labels = response;
+                                           }
                               });
    }
     openLabel(data)
@@ -140,30 +142,30 @@ export class HomeComponent  implements OnInit {
     localStorage.setItem('label',data.title);
     var currentlabels=localStorage.getItem("label");
     this.currentlabel=currentlabels;
-  this.subscription =   this.commonService.postServiceData('label/'+ data._id,data)
-                      .subscribe(data =>{
-                       this.router.navigate(['/home/Label/'+data._id]);
-                            //    location.reload();
-                         });
+    this.subscription =   this.commonService.postServiceData('label/'+ data._id,data)
+                                            .subscribe(data =>{
+                                             this.router.navigate(['/home/Label/'+data._id]);
+                                                  //    location.reload();
+                                               });
        var data1 =
       {
        currentlabel: data.title
       }
 
-  this.subscription = this.commonService.updateData('updateLabel/' + data._id, data1)
-                        .subscribe(model => {
-                                  this.model = model;
-                                });
-  }
+    this.subscription = this.commonService.updateData('updateLabel/' + data._id, data1)
+                                          .subscribe(model => {
+                                         this.model = model;
+                                      });
+                              }
 
       refreshLabel()
      {
        this.subscription=  this.commonService.getAllLabels()
-                                          .subscribe(response => {
-                         if (response) {
-                         this.Labels = response;
-                         }
-                      });
+                                             .subscribe(response => {
+                                               if (response) {
+                                               this.Labels = response;
+                                               }
+                                            });
     }
 
 }

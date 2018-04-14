@@ -262,7 +262,7 @@ exports.activeUser = function(req, res) {
 *****************************************/
 
 exports.reset_password = function(req, res, next) {
-  console.log(req.params.token);
+  
   User.findOne({
     reset_password_token: req.params.token,
     reset_password_expires: {

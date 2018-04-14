@@ -7,10 +7,11 @@
       <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="margin-left: 820px;width:40px;" src="assets/icon/List View.svg">
     <img [src]='"http://localhost:3000/"+user.image' class="cropcircle" fxLayout="row"  fxLayoutAlign="start" [matMenuTriggerFor]="menu"  fxLayoutAlign="end"/>
      <mat-menu #menu="matMenu">
+
     <div class="profile"  fxLayoutAlign="center center" mat-menu-item>
     <img [src]='"http://localhost:3000/"+user.image' class="cropcircle1" style="width: 100px; height:100px ;border-radius: 100%; margin-top: 65px; background: #eee no-repeat center; background-size: cover;" (click)="openDialogImage(user)" />
     </div>
-  <hr>
+    <hr>
     <div>
     <p><b>{{user.username}}</b></p>
     <p><b>{{user.email}}</b></p>

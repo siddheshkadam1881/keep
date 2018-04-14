@@ -97,6 +97,7 @@ User.statics.upsertFbUser = function(accessToken, refreshToken, profile, cb) {
     }, function(err, user) {
 
       if (!user) {
+        console.log(profile.picture)
         var newUser = new that({
           username: profile.displayName,
           email: profile.emails[0].value,

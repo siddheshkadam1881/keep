@@ -21,11 +21,8 @@ export class CommonComponent implements OnInit {
 
     }
     ngOnInit():void {
-                this.commonService.getData('readTodos').subscribe(response => {
-                if (response) {
-                   this.dashDataFirst = response.reverse();
-                }
-              })
+
+              this.refreshNotes();
         }
 
    ngOnDestroy(): void {
@@ -66,9 +63,9 @@ export class CommonComponent implements OnInit {
 
   changeColor(data,color)
    {
-       var data1 =
+       var note_color =
             {   note_color: color }
-            this.subscription = this.commonService.updateData('update/'+data._id,data1)
+            this.subscription = this.commonService.updateData('update/'+data._id,note_color)
                                                   .subscribe(model => {
                          });
            this.refreshNotes();

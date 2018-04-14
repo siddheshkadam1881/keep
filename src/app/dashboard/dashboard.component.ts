@@ -18,6 +18,7 @@ import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image
 import { OpenDialogAddLabelComponent } from '../open-dialog-add-label/open-dialog-add-label.component';
 import { OnDestroy } from "@angular/core";
 import { ISubscription } from "rxjs/Subscription";
+import { RequestOptions } from '@angular/http';
 
 // import * as $ from "jquery";
 
@@ -114,6 +115,7 @@ export class DashboardComponent implements OnInit {
   }
 
 
+
   add(event: MatChipInputEvent): void {
      let input = event.input;
      let value = event.value;
@@ -177,7 +179,15 @@ export class DashboardComponent implements OnInit {
 
   }
 
-
+  readNotes():void {
+      this.subscription = this.commonService.getAllNotes()
+                                            .subscribe(response => {
+                                             if (response) {
+                                             this.dashDataFirst = response;
+                                              }
+                                              },
+                                               error => console.log("Error while retrieving"))
+  }
 
   submitNote() {
 
@@ -231,20 +241,13 @@ export class DashboardComponent implements OnInit {
                                       });
      this.refreshNotes();
   }
-  readNotes():void {
-      this.subscription = this.commonService.getAllNotes()
-                                            .subscribe(response => {
-                                             if (response) {
-                                             this.dashDataFirst = response;
-                                              }
-                                              },
-                                               error => console.log("Error while retrieving"))
-  }
+
   refreshNotes()
   {
     this.commonService.loadAllLabels();
     // this.refreshImage();
-    this.subscription=  this.commonService.getAllNotes().subscribe(response => {
+    this.subscription=  this.commonService.getAllNotes()
+                                          .subscribe(response => {
                                                if (response) {
                                                this.dashDataFirst = response;
                                               }
@@ -272,9 +275,9 @@ export class DashboardComponent implements OnInit {
 
     this.subscription=this.commonService.updateData('update/'+data._id,data1)
                                          .subscribe(model =>  {
-                                                   this.model = model;
-                                                  this.readNotes();
-                                              }
+                                           this.model = model;
+                                                      this.readNotes();
+                                                  }
                                      );
     this.refreshNotes();
   }
@@ -482,36 +485,11 @@ chipShowMonday(data, chip1)
      });
      }
 
-     labelSubmit(label,data):void
-     {
-       this.checked = !this.checked;
-       var labeldata =
-     {
-       label : label.title
-     }
-
-     this.subscription=this.commonService.updateData('update/' + data._id,labeldata)
-                                         .subscribe(
-                                          model => {
-                                          this.model=model;
-                                          });
-     this.refreshNotes();
-     }
-
-     //remove label
-     remove1(data,labelchip,chip_id): void
-     {
-      this.commonService.updateData('update/'+data._id,data.label)
-                       .subscribe(
-                        model => {
-                                 this.model=model;
-                                }
-                      );
-     this.refreshNotes();
-  }
 
   ApplyFilters(isValid: boolean,data) {
+
    var datas  = this.Labels.filter(function (data1) { return data1.selected == true });
+
     if (!isValid) return;
    for(var a=0; a<datas.length;a++)
     {
@@ -535,7 +513,7 @@ createNewlabel(data)
                                         .subscribe(
                                         model =>
                                         {
-                                        console.log(model)
+
                                         this.model=model;
                                         }
                                         );

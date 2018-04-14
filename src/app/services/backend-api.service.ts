@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
-
-
 import {HttpModule} from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
@@ -20,29 +18,50 @@ export class BackendApiService {
     base_url="http://localhost:3000/";
     result:any;
     public urlpath;
+    options: RequestOptions;
+
+    //  const requestOptions = {
+    //     params: new HttpParams()
+    //  };
+    // requestOptions.params.set('pull', 'push');
+
+//this.http.get(environment.api+ '.feed.json', requestOptions );
 
     constructor(private http: Http ) {  }
 
     /* post service */
-      postServiceData(path,model) {
-          //console.log(model,path);
-          let token = localStorage.getItem("token");
-          //console.log("token", token);
+      postServiceData(path,model,params?) {
+        // const params = new Http();
+        // params.set('pull', pull);
+        // params.set('push',push);
+        //console.log(model,path);
+        let token = localStorage.getItem("token");
+        //console.log("token", token);
 
-          //set the token to header
-          const headers = new Headers();
-          headers.append('token', token);
+        //set the token to header
+        const headers = new Headers();
+         headers.append('Content-Type', 'application/json');
+        headers.append('token', token);
+
+        let options = new RequestOptions({ headers: headers });
+
+          if(params){
+            // options.params = options;
+          }
+          // debugger;
 
           this.urlpath= this.base_url.concat(path);
-          return this.http.post(this.urlpath,model,{ headers: headers })
+          return this.http.post(this.urlpath,model,options)
           .map(res=>res.json());
 
           //this.toastr.success('You are awesome!', 'Success!', 'timeout: 3000');
       }
 
-      ////////////////////////////////////////
-      /* get service  */
-      /////////////////////////
+
+      /**
+      * get service
+      */
+
 
       getData(path) {
         //get url from the ts and concate it.

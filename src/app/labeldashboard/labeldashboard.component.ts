@@ -186,29 +186,29 @@ export class LabeldashboardComponent implements OnInit {
     }
     deleteNote(id){
     this.subscription=  this.commonService.deleteData('delete/'+id)
-                         .subscribe(
-                          data => {
-                           this.refreshNotes();
-                          });
+                                           .subscribe(
+                                            data => {
+                                             this.refreshNotes();
+                                            });
     }
     //refresh notes here
     refreshNotes()
     {
      this.subscription=this.commonService.getData('readTodos')
-                                       .subscribe(response => {
-                      if (response) {
-                          this.dashDataFirst = response.reverse();
-                       }
-         })
+                                         .subscribe(response => {
+                                            if (response) {
+                                             this.dashDataFirst = response.reverse();
+                                          }
+                                         });
     }
 
      trashNotes(data)
      {
        var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
        this.subscription=this.commonService.updateData('update/'+data._id,data1)
-                         .subscribe(model => {
-                          this.refreshNotes();
-     });
+                                           .subscribe(model => {
+                                            this.refreshNotes();
+                                           });
 
      }
 
@@ -218,8 +218,8 @@ export class LabeldashboardComponent implements OnInit {
        var data1 = { is_archieved: data.is_archieved ? 'false' : 'true'}
       this.subscription= this.commonService.updateData('update/'+data._id,data1)
                                            .subscribe(model => {
-        this.refreshNotes();
-       });
+                                           this.refreshNotes();
+                                             });
   }
 
 
@@ -239,9 +239,9 @@ export class LabeldashboardComponent implements OnInit {
        var data1 = { is_pinned: data.is_pinned ? 'false' : 'true'}
 
       this.subscription= this.commonService.updateData('update/'+data._id,data1)
-       .subscribe(model => {
-        this.refreshNotes();
-        });
+                                           .subscribe(model => {
+                                            this.refreshNotes();
+                                            });
 
      }
 
@@ -251,9 +251,9 @@ export class LabeldashboardComponent implements OnInit {
             {   note_color: color }
 
      this.subscription=this.commonService.updateData('update/'+data._id,data1)
-                                              .subscribe(model => {
-          this.refreshNotes();
-        });
+                                         .subscribe(model => {
+                                          this.refreshNotes();
+                                          });
     }
 
    chipShowtoday(data, chip1)
@@ -264,9 +264,9 @@ export class LabeldashboardComponent implements OnInit {
       }
 
       this.subscription=  this.commonService.updateData('update/' + data._id, chip)
-       .subscribe(model => {
-        this.refreshNotes();
-      });
+                                             .subscribe(model => {
+                                              this.refreshNotes();
+                                            });
 
 
     //
@@ -291,8 +291,8 @@ export class LabeldashboardComponent implements OnInit {
 
       this.subscription=this.commonService.updateData('update/' + data._id, chip)
                                           .subscribe(model => {
-      this.refreshNotes();
-    });
+                                          this.refreshNotes();
+                                        });
   //
   var reminder1 =
   {
@@ -314,19 +314,19 @@ export class LabeldashboardComponent implements OnInit {
           note_chip: chip1
       }
 
-    this.commonService.updateData('update/' + data._id, chip)
-                      .subscribe(model => {
-                      this.refreshNotes();
-                    });
+    this.subscription= this.commonService.updateData('update/' + data._id, chip)
+                                          .subscribe(model => {
+                                          this.refreshNotes();
+                                        });
 
   var reminder2 =
   {
   reminder: this.lastActivityTime2
   }
   this.subscription=    this.commonService.updateData('update/' + data._id, reminder2)
-                        .subscribe(model => {
-                         this.refreshNotes();
-                        });
+                                            .subscribe(model => {
+                                             this.refreshNotes();
+                                            });
 
    }
 
@@ -337,9 +337,9 @@ export class LabeldashboardComponent implements OnInit {
        reminder: this.model.reminder
      }
 this.subscription=  this.commonService.updateData('update/' + data._id, reminder1)
-                         .subscribe(model => {
-                         this.refreshNotes();
-                         });
+                                         .subscribe(model => {
+                                         this.refreshNotes();
+                                         });
 
   }
 
