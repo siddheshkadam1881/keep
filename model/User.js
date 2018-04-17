@@ -89,7 +89,7 @@ User.statics.signUp = function (userObj,callback) {
 
 
 User.statics.upsertFbUser = function(accessToken, refreshToken, profile, cb) {
-  console.log(profile);
+  // console.log("hello",profile.photos);
     var that = this;
     return this.findOne({
       //'facebookProvider.token': profile.accessToken
@@ -101,7 +101,7 @@ User.statics.upsertFbUser = function(accessToken, refreshToken, profile, cb) {
         var newUser = new that({
           username: profile.displayName,
           email: profile.emails[0].value,
-          image: profile.picture,
+          image:profile.photos,
           facebookProvider: {
             id: profile.id
             // token: accessToken

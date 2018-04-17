@@ -15,13 +15,13 @@ Todo.prototype.readUserTodo = function (userId,callback) {
   TodoModel.readUserTodo(userId,callback);
 };
 
-Todo.prototype.deleteUserlabel = function (userId,paramId,callback) {
+Todo.prototype.deleteUserTodo = function (userId,paramId,callback) {
 
-  TodoModel.deleteUserlabel(userId,paramId,callback);
+  TodoModel.deleteUserTodo(userId,paramId,callback);
 };
 
 // Todo.prototype.updateUserTodo = function (paramId,userId,todoObj,callback) {
-// 
+//
 //   TodoModel.updateUserTodo(paramId,userId,todoObj,callback);
 // };
 

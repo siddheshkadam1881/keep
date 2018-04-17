@@ -38,7 +38,9 @@ export class CommonComponent implements OnInit {
     {
       this.subscription = this.commonService.updateData('update/'+id,data)
                                             .subscribe(
-                                              data => {
+                                              model => {
+                                                this.model=model;
+                                                this.refreshNotes();
                                               });
      this.refreshNotes();
     }
@@ -46,20 +48,24 @@ export class CommonComponent implements OnInit {
      deleteNote(id)
      {
           this.subscription=this.commonService.deleteData('delete/'+id)
-                           .subscribe(data => {
+                           .subscribe(model => {
+                             this.model=model;
+                             this.refreshNotes();
                            });
           this.refreshNotes();
     }
 //refresh purpose
-   refreshNotes()
-  {
-    this.subscription=this.commonService.getData('readTodos')
-                          .subscribe(response => {
-          if (response) {
-          this.dashDataFirst = response.reverse();
-          }
-      })
-  }
+refreshNotes()
+{
+  this.commonService.loadAllLabels();
+  // this.refreshImage();
+  this.subscription=  this.commonService.getAllNotes()
+                                        .subscribe(response => {
+                                             if (response) {
+                                             this.dashDataFirst = response;
+                                            }
+                                        })
+}
 
   changeColor(data,color)
    {
@@ -67,6 +73,8 @@ export class CommonComponent implements OnInit {
             {   note_color: color }
             this.subscription = this.commonService.updateData('update/'+data._id,note_color)
                                                   .subscribe(model => {
+                                                    this.model=model;
+                                                    this.refreshNotes();
                          });
            this.refreshNotes();
    }
@@ -78,6 +86,8 @@ export class CommonComponent implements OnInit {
          }
       this.subscription=this.commonService.updateData('update/' + data._id, chip)
                                           .subscribe(model => {
+                                            this.model=model;
+                                            this.refreshNotes();
                     });
       this.refreshNotes();
     }
@@ -92,6 +102,8 @@ export class CommonComponent implements OnInit {
 
        this.subscription = this.commonService.updateData('update/' + data._id, reminder1)
                                             .subscribe(model => {
+                                              this.model=model;
+                                              this.refreshNotes();
                                             });
       this.refreshNotes();
 

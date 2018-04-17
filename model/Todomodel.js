@@ -20,9 +20,12 @@ var NoteSchema = new mongoose.Schema({
     type : mongoose.Schema.Types.ObjectId,
     ref: 'Label'
   }],
-  // label: [{
-  //   type : Array
-  //    }],
+   label:
+   {
+     type: String,
+      default: ""
+     //required: 'enter note'
+   },
   reminder: {
     type: Date,
   },
@@ -79,6 +82,8 @@ var NoteSchema = new mongoose.Schema({
   new_note.label_ids= todoObj.label_ids;
   //new_note.email = req.body.email;
   new_note.user_id =userObj._id;
+  new_note.label =userObj.label;
+
   new_note.save(cb);
 }
 
@@ -87,8 +92,7 @@ NoteSchema.statics.readUserTodo = function (userId,cb) {
 }
 //
 NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
-  // console.log(userId);
-  // console.log(paramId);
+
   this.remove({ user_id: userId,_id: paramId.id}).exec(cb);
 }
 

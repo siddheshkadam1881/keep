@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { HttpHeaders, HttpParams} from "@angular/common/http";
 import {HttpModule} from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
@@ -24,37 +25,41 @@ export class BackendApiService {
     //     params: new HttpParams()
     //  };
     // requestOptions.params.set('pull', 'push');
-
+//const params = new HttpParams().set('page', '1');
 //this.http.get(environment.api+ '.feed.json', requestOptions );
 
     constructor(private http: Http ) {  }
 
     /* post service */
       postServiceData(path,model,params?) {
-        // const params = new Http();
-        // params.set('pull', pull);
-        // params.set('push',push);
-        //console.log(model,path);
-        let token = localStorage.getItem("token");
-        //console.log("token", token);
+
+        let httpParams = new HttpParams();
+        if(params)
+            Object.keys(params).forEach(function (key) {
+            httpParams.append(key, params[key]);
+           });
+
+
+
+      let token = localStorage.getItem("token");
+
+      // this.map = new Map<string, string[]>();
+      // Object.keys(options.model).forEach(key => {
+      // const value = (options.model as any)[key];
+      // this.map !.set(key, Array.isArray(value) ? value : [value]);
+      // });
 
         //set the token to header
         const headers = new Headers();
          headers.append('Content-Type', 'application/json');
-        headers.append('token', token);
-
-        let options = new RequestOptions({ headers: headers });
-
-          if(params){
-            // options.params = options;
-          }
-          // debugger;
+         headers.append('token', token);
+        // let myParams = HttpParams().set("params", params);
+         let options = new RequestOptions({ headers: headers});
 
           this.urlpath= this.base_url.concat(path);
           return this.http.post(this.urlpath,model,options)
           .map(res=>res.json());
 
-          //this.toastr.success('You are awesome!', 'Success!', 'timeout: 3000');
       }
 
 
@@ -151,10 +156,9 @@ export class BackendApiService {
        *** update service
       **********************************/
       updateData(path,data) {
-        console.log(data);
         //var headers = this.getTokenLocalStorage();
         //return this.http.post(this.updateNotesUrl, note, { headers: headers });
-         console.log("path", path);
+
          let token = localStorage.getItem("token");
          const headers = new Headers();
          headers.append('token', token);

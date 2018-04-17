@@ -31,7 +31,6 @@ User.prototype.signIn = function (userObj,callback) {
 };
 
 User.prototype.signUp = function (userObj,callback) {
-  console.log(userObj);
   UserModel.signUp(userObj,callback);
 };
 

@@ -10,7 +10,7 @@
       <div  fxLayoutWrap fxLayoutAlign="space-around center"> Take a note...</div>
   </div>
 
-     <!-- create note here -->
+
     <div class="writeNotes" id="bt" *ngIf="show">
     <div  class="example-full-width1" style="width=100%">
 
@@ -21,12 +21,8 @@
 
     <div class="example-full-width1" style="width=100%">
 
-       <!-- <input matInput placeholder="Take a note" type="text" value="Take a note" name="note" [(ngModel)]= "model.note"> -->
          <label>Take a note</label>
         <div contenteditable="true"  style="outline:none;" type="text"  name="note" (input)="model.note=$event.target.innerHTML"></div>
-
-       <!-- <div  type="text" contenteditable="true" [textContent]="model" (input)="model=$event.target.innerHtml" [(contenteditableModel)]= "model.note">some text</div> -->
-      <!-- <div class="textarea" contentEditable="true" data-placeholder="placeholder" type="text"  value="Take a note" name="note"  [(contenteditableModel)]= "model.note">placeholder</div> -->
 
     </div>
     <div fxLayout="row" fxLayoutAlign="end end" >
@@ -42,7 +38,7 @@
   <h3>Pinned</h3></div>
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center center">
   <!-- <input type="text"  [(ngModel)]="term"> -->
-  <div class="allnotes" *ngFor="let data of dashDataFirst " fxLayoutWrap fxLayoutAlign="center center">
+  <div class="allnotes" *ngFor="let data of dashDataFirst | filter : searchText" fxLayoutWrap fxLayoutAlign="center center">
 
     <div *ngIf="!data.is_deleted && !data.is_archieved && data.is_pinned">
 
@@ -71,21 +67,22 @@
               </mat-form-field>
             </div>
 
-            <div *ngIf="data.label">
+             <div *ngIf="data.label">
+
               <mat-form-field class="demo-chip-list">
 
-                <div *ngFor="let labelchip of data.label">
-                  <div *ngFor="let chip of labelchip;let i = index">
+                <!-- <div *ngFor="let labelchip of data.label"> -->
+
 
                     <mat-chip-list class="chip">
-                      <mat-chip [removable]="removable" (remove)="remove1(data,labelchip,chip_id)">
-                        <p>{{chip.title}}</p>
+                      <mat-chip [removable]="removable" (remove)="removelabel(data)">
+                        <p>{{data.label}}</p>
                         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                       </mat-chip>
                     </mat-chip-list>
 
-                  </div>
-                </div>
+
+                <!-- </div> -->
               </mat-form-field>
 
             </div>
@@ -153,12 +150,20 @@
 
                 <form #f="ngForm" novalidate>
                   <div class="modal_line"></div>
-                  <div class="checkbox " *ngFor="let label of Labels;let i=index;">
+                  <!-- <div class="checkbox " *ngFor="let label of Labels;let i=index;">
 
                     <input type="checkbox" name="label[{{i}}]" [checked]="label.selected" value="label.selected" id="{{label.name}}" (change)="label.selected = !(label.selected)" />
                     <label for="{{label.title}}">{{label.title}}</label>
-                  </div>
-                  <input type="button" (click)="ApplyFilters(f.valid,data)" class="btn btn-primary filters_btn" value="submit">
+                  </div> -->
+                  <!-- <input type="button" (click)="ApplyFilters(f.valid,data)" class="btn btn-primary filters_btn" value="submit"> -->
+
+
+                  <div *ngFor="let label of Labels;let i=index;">
+                     <label>
+                       <input type="checkbox" name="labels" value="{{label.title}}" [(ngModel)]="label.checked" (change)="checkSelectlabel(label.checked,label,data);submitlabel(label.checked,label,data)"/>
+                                {{label.title}}
+                     </label>
+                   </div>
                 </form>
               </mat-menu>
 

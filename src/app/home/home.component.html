@@ -1,11 +1,29 @@
 <div class="example-container" style="background-color: Gray;" [class.example-is-mobile]="mobileQuery.matches" >
+
+
   <mat-toolbar color="primary" class="example-toolbar" *ngFor="let user of Users">
-    <!-- <p><button mat-button (click)="sidenav.toggle()">sidenav.toggle()</button></p> -->
-    <button mat-button matTooltip="main menu" matTooltipShowDelay="100" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 matTooltip="Google keep" matTooltipShowDelay="100" class="example-app-name">Google keep</h1>
-        <input  placeholder="search text goes here" style="width: 370px; height:30px;" [(ngModel)]="searchText" >
-      <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="margin-left: 820px;width:40px;" src="assets/icon/List View.svg">
-    <img [src]='"http://localhost:3000/"+user.image' class="cropcircle" fxLayout="row"  fxLayoutAlign="start" [matMenuTriggerFor]="menu"  fxLayoutAlign="end"/>
+   <div fxFlex="100"  fxLayout="row" fxLayoutAlign="center center">
+     <div  fxLayout="row" fxFlex.lg="" fxFlex.md="" fxFlex.sm="" fxFlex.xs="">
+       <div>
+         <button mat-button matTooltip="main menu" matTooltipShowDelay="100" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+       </div>
+        <div>
+           <h1 matTooltip="Google keep" matTooltipShowDelay="100" class="example-app-name">Google keep</h1>
+        </div>
+       </div>
+
+      <div fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="50">
+        <input  placeholder="search text goes here" style="height:30px;" [(ngModel)]="searchText" >
+      </div>
+
+         <!-- <div fxFlex.lg="30" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="20">
+         </div> -->
+    <div fxFlex.lg="10" fxFlex.md="10" fxFlex.sm="10" fxFlex.xs="10" fxLayout="row">
+      <div>
+      <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="width:40px;" src="assets/icon/List View.svg">
+     </div>
+     <div>
+     <img [src]='"http://localhost:3000/"+user.image' class="cropcircle" fxLayout="row"  fxLayoutAlign="start" [matMenuTriggerFor]="menu"  fxLayoutAlign="end"/>
      <mat-menu #menu="matMenu">
 
     <div class="profile"  fxLayoutAlign="center center" mat-menu-item>
@@ -21,11 +39,11 @@
      <button  matTooltip="logout" matTooltipShowDelay="100"   mat-button mat-raised-button color="primary" (click)="logout()" >Logout</button>
    </div>
      </mat-menu>
+   </div>
     <!-- <button matTooltip="logout" fxFlex fxLayout="row" fxLayoutAlign="end" matTooltipShowDelay="100" mat-icon-button (click)="logout()">Logout</button> -->
-
-    <div>
-    </div>
-  </mat-toolbar>
+ </div>
+</div>
+    </mat-toolbar>
     <mat-sidenav-container class="example-sidenav-container" fxLayout="column" >
 
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" style="width:180px;background-color:#E6E6FA;">

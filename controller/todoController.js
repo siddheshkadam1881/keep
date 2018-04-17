@@ -50,7 +50,7 @@ var redisSet =  function(user_id,user) {
   console.log("user cache \n"+ user);
   cache.set(user_id,JSON.stringify(noteCache.concat(user)), redis.print);
   // console.log("hydsbvvv");
-  console.log(cache);
+
 
   })
 }
@@ -126,6 +126,11 @@ exports.update = function(req, res) {
   });
 };
 
+
+
+
+
+
 /**
 *   @description addNoteToLabel function to add Label to note
 *   @class addLabelToNote
@@ -157,7 +162,7 @@ exports.labelToNoteHandler = function(req, res) {
       user_id: req.decoded._id
         }, {
           $pull: {
-            label_ids:req.param.labelIdToAddNote
+            label_ids:req.param.labelId
           }
         },
         function(err, updatedNoteData) {

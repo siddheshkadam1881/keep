@@ -19,7 +19,7 @@ import { OpenDialogAddLabelComponent } from '../open-dialog-add-label/open-dialo
 import { OnDestroy } from "@angular/core";
 import { ISubscription } from "rxjs/Subscription";
 import { RequestOptions } from '@angular/http';
-
+import { FilterPipe} from '../services/filter.pipe';
 // import * as $ from "jquery";
 
 @Component({
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
   removable: boolean = true;
   addOnBlur: boolean = true;
   separatorKeysCodes = [ENTER, COMMA];
-  checked = false;
+  check = false;
   fruits = [
     // { name: 'Lemon' },
     // { name: 'Lime' },
@@ -55,9 +55,10 @@ export class DashboardComponent implements OnInit {
   public dashDataFirst;
   public Labels;
   public labelchip;
+  reqLabelDto:any={};
     public myData=[];
   note:string;
-
+  checked : false;
    title:string;
    values:any={};
    model:any={};
@@ -157,10 +158,9 @@ export class DashboardComponent implements OnInit {
        this.subscription=this.commonService.updateData('update/' + data._id, chip1)
                                            .subscribe(model =>
                                             {
-                                            this.model = model;
-                                            this.readNotes();
-                                            }
-                                            );
+                                              this.model = model;
+                                              this.readNotes();
+                                            });
         this.refreshNotes();
   }
 
@@ -171,7 +171,7 @@ export class DashboardComponent implements OnInit {
     //unsubscribe the subscription in ngDestroy
     if (this.timerSubscription != null)
         this.timerSubscription.unsubscribe();
-        this.subscription.unsubscribe();
+      this.subscription.unsubscribe();
   }
 
   toggle1() {
@@ -182,9 +182,9 @@ export class DashboardComponent implements OnInit {
   readNotes():void {
       this.subscription = this.commonService.getAllNotes()
                                             .subscribe(response => {
-                                             if (response) {
-                                             this.dashDataFirst = response;
-                                              }
+                                               if (response) {
+                                                 this.dashDataFirst = response;
+                                                }
                                               },
                                                error => console.log("Error while retrieving"))
   }
@@ -428,6 +428,20 @@ chipShowMonday(data, chip1)
      this.refreshNotes();
  }
 
+removelabel(data)
+
+  {
+    this.reqLabelDto.check=false;
+    var labeldata ={
+      label :null
+      }
+    this.commonService.updateData('update/'+ data._id,labeldata)
+                     .subscribe(res => {
+                       this.readNotes();
+    });
+     this.refreshNotes();
+  }
+
 
    private timerTommarrowExecuted(): void
    {
@@ -485,51 +499,116 @@ chipShowMonday(data, chip1)
      });
      }
 
+     checkSelectlabel(check,label,data)
+     {
 
-  ApplyFilters(isValid: boolean,data) {
+       console.log(label);
 
-   var datas  = this.Labels.filter(function (data1) { return data1.selected == true });
+           if(check){
+             this.reqLabelDto.check=true;
 
-    if (!isValid) return;
-   for(var a=0; a<datas.length;a++)
-    {
+             var labeldata ={
+               label_ids :label
+               }
+             this.commonService.updateData('update/'+ data._id,labeldata)
+                               .subscribe(res => {
 
-     var labeldata ={
-     label_ids :datas[a]._id
-   }
+                               });
+           }
+           else
+           {
+             this.reqLabelDto.check=false;
+             var labeldata ={
+               label_ids :null
+               }
+             this.commonService.updateData('update/'+ data._id,labeldata)
+                              .subscribe(res => {
+             });
+           }
+           // this.reqLabelDto.labelId=labelId;
+           // this.reqLabelDto.noteId=noteId;
 
-   this.subscription=this.commonService.updateData('update/' + data._id,labeldata)
-                                       .subscribe(
-                                         model => {
-                                         this.model=model;
-                                         });
-                                        this.refreshNotes();
-}
-}
+     }
+
+
+//   ApplyFilters(isValid: boolean,data) {
+//
+//    var selectedLables  = this.Labels.filter(function (data1) { return data1.selected == true });
+//    var mapped = selectedLables.map((labelObj)=> labelObj._id);
+//
+//     // console.log(mapped.join(","));
+//     // console.log(mapped.join(",").split(","));
+//     var labeldata ={
+//    label_ids :mapped
+//   }
+//
+//     if (!isValid) return;
+//
+//    // this.subscription=this.commonService.postServiceData('labelToNoteHandler/' + data._id + '/' + mapped + "/", {},{operation:"add"})
+//
+//    this.subscription=this.commonService.updateData('update/' + data._id,labeldata)
+//                                        .subscribe(
+//                                          model =>{
+//                                             this.model=model;
+//                                          });
+//                                         this.refreshNotes();
+// }
+
 
 createNewlabel(data)
 {
     this.subscription=this.commonService.postServiceData('createLabel',this.model)
-                                        .subscribe(
-                                        model =>
-                                        {
-
-                                        this.model=model;
-                                        }
+                                         .subscribe(
+                                          model =>
+                                           {
+                                             this.model=model;
+                                             this.readNotes();
+                                           }
                                         );
-                                        this.refreshNotes();
+     this.refreshNotes();
   }
 
 refreshLabel()
 {
-this.subscription=  this.commonService.getAllLabels().subscribe(response => {
-  if (response) {
-  this.Labels = response;
-  // location.reload();
- }
-})
+  this.subscription=  this.commonService.getAllLabels()
+                                        .subscribe(response => {
+                                        if (response)
+                                        {
+                                           this.Labels = response;
+                                        }
+                                  })
 }
 
+submitlabel(check,label,data)
+{
+   console.log(label.title);
+    if(check){
+      this.reqLabelDto.check=true;
+      var labeldata = {
+                        label :label.title
+                       }
+      this.commonService.updateData('update/'+ data._id,labeldata)
+                        .subscribe(res =>
+                          {
+                              this.readNotes();
+                          });
+       this.refreshNotes();
+  }
+  else
+   {
+          this.reqLabelDto.check=false;
+          var labeldata ={
+              label :null
+          }
+          this.commonService.updateData('update/'+ data._id,labeldata)
+                            .subscribe(res =>
+                                      {
+                                        this.readNotes();
+                                      });
+  }
+
+
+}
 
 
 }

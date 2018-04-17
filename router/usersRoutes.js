@@ -92,12 +92,10 @@ router.use(function(req, res, next) {
 
  router.post('/create/Note',todoController.createNote);
  router.get('/readTodos',todoController.readTodos);
- // router.get('/readTodos/:id',todoController.readTodoById);
  router.put('/update/:id',todoController.update);
  router.delete('/delete/:id',todoController.delete);
  router.get('/readActiveUser',userController.readActiveUser);
-
- router.post('/labelToNoteHandler/:labelId/:id',todoController.labelToNoteHandler);
+ router.post('/labelToNoteHandler/:id/:labelId',todoController.labelToNoteHandler);
  // router.post('/removeLabelToNote/:labelIdToAddNote/:id',todoController.removeLabelToNote);
 
 /*
@@ -110,7 +108,7 @@ router.put('/updateLabel/:id',labelController.updateLabel);
 // // // router.put('/uploader/:id',todoController.uploader);
 router.delete('/deleteLabel/:id',labelController.deleteLabel);
 router.post('/label/:id',labelController.label);
-//
+
 
 
 

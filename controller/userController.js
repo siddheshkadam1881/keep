@@ -102,7 +102,6 @@ exports.signIn = function(req, res) {
 **/
 
 exports.signInWithFacebook = function (req,res) {
-  console.log(req.user);
   var user = req.user;
   if (user) {
       var token = userService.generateJwt({ email: user.email, fullName: user.username, mobile: user.usermobile,_id: user._id});
@@ -262,7 +261,7 @@ exports.activeUser = function(req, res) {
 *****************************************/
 
 exports.reset_password = function(req, res, next) {
-  
+
   User.findOne({
     reset_password_token: req.params.token,
     reset_password_expires: {
@@ -339,7 +338,7 @@ exports.passport = function(passport) {
    });
 
 
-//
+
    //pull in our app id and secret from our auth.js file
   passport.use('facebook-token', new FacebookTokenStrategy(fbConfig.facebookAuth, function(accessToken, refreshToken, profile, done) {
 
