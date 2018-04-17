@@ -5,31 +5,48 @@
   <!-- <p *ngFor="let content of fillerContent">{{content}}</p> -->
  <!-- take note here -->
  <!-- <input  placeholder="search text goes here" style="width: 370px; height:30px;" [(ngModel)]="searchText" > -->
+  <div fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="25">
 
-  <div  class="notes"  (click)="toggle1()" id="bt" *ngIf="!show">
+  </div>
+<div fxFlex="">
+   <div  class="notes"  (click)="toggle1()" id="bt" *ngIf="!show">
       <div  fxLayoutWrap fxLayoutAlign="space-around center"> Take a note...</div>
   </div>
+</div>
+  <div fxFlex="25" >
 
+  </div>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="25">
+  </div>
+  <div fxFlex="">
 
     <div class="writeNotes" id="bt" *ngIf="show">
-    <div  class="example-full-width1" style="width=100%">
+      <div class="example-full-width1" style="width=100%">
 
-       <label>Title</label>
-     <div  contenteditable="true" style="outline:none;" type="text" value="Title" type="text" name="title"  (input)="model.title=$event.target.innerHTML" ></div>
+        <label>Title</label>
+        <div contenteditable="true" style="outline:none;" type="text" value="Title" type="text" name="title" (input)="model.title=$event.target.innerHTML"></div>
 
+      </div>
+
+      <div class="example-full-width1" style="width=100%">
+
+        <label>Take a note</label>
+        <div contenteditable="true" style="outline:none;" type="text" name="note" (input)="model.note=$event.target.innerHTML"></div>
+
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end end">
+        <button matTooltip="Done" matTooltipShowDelay="100" mat-button mat-raised-button type="submit" (click)="!toggle1();submitNote()">Done</button>
+      </div>
     </div>
+  </div>
+  <div fxFlex="25">
 
-    <div class="example-full-width1" style="width=100%">
-
-         <label>Take a note</label>
-        <div contenteditable="true"  style="outline:none;" type="text"  name="note" (input)="model.note=$event.target.innerHTML"></div>
-
-    </div>
-    <div fxLayout="row" fxLayoutAlign="end end" >
-    <button matTooltip="Done" matTooltipShowDelay="100"  mat-button mat-raised-button type="submit" (click)="!toggle1();submitNote()"  >Done</button>
-    </div>
-    </div>
-
+  </div>
+  </div>
 <!-- note create here -->
 
 
@@ -75,7 +92,7 @@
 
 
                     <mat-chip-list class="chip">
-                      <mat-chip [removable]="removable" (remove)="removelabel(data)">
+                      <mat-chip [removable]="removable" (remove)="removelabel(data,labelchip,chip_id)">
                         <p>{{data.label}}</p>
                         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                       </mat-chip>

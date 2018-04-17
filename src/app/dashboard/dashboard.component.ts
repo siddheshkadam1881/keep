@@ -500,59 +500,33 @@ removelabel(data)
      }
 
      checkSelectlabel(check,label,data)
-     {
+   {
 
-       console.log(label);
+             console.log(label);
 
-           if(check){
-             this.reqLabelDto.check=true;
+             if(check){
+                         this.reqLabelDto.check=true;
+                         var labeldata = {
+                                           label_ids :label
+                                          }
+                         this.commonService.updateData('update/'+ data._id,labeldata)
+                                            .subscribe(res => {
+                                             });
+                     }
+             else
+                   {
+                         this.reqLabelDto.check=false;
+                          var labeldata = {
+                                            label_ids :null
+                                          }
+                          this.commonService.updateData('update/'+ data._id,labeldata)
+                                           .subscribe(res => {
+                                            });
+                    }
 
-             var labeldata ={
-               label_ids :label
-               }
-             this.commonService.updateData('update/'+ data._id,labeldata)
-                               .subscribe(res => {
-
-                               });
-           }
-           else
-           {
-             this.reqLabelDto.check=false;
-             var labeldata ={
-               label_ids :null
-               }
-             this.commonService.updateData('update/'+ data._id,labeldata)
-                              .subscribe(res => {
-             });
-           }
-           // this.reqLabelDto.labelId=labelId;
-           // this.reqLabelDto.noteId=noteId;
 
      }
 
-
-//   ApplyFilters(isValid: boolean,data) {
-//
-//    var selectedLables  = this.Labels.filter(function (data1) { return data1.selected == true });
-//    var mapped = selectedLables.map((labelObj)=> labelObj._id);
-//
-//     // console.log(mapped.join(","));
-//     // console.log(mapped.join(",").split(","));
-//     var labeldata ={
-//    label_ids :mapped
-//   }
-//
-//     if (!isValid) return;
-//
-//    // this.subscription=this.commonService.postServiceData('labelToNoteHandler/' + data._id + '/' + mapped + "/", {},{operation:"add"})
-//
-//    this.subscription=this.commonService.updateData('update/' + data._id,labeldata)
-//                                        .subscribe(
-//                                          model =>{
-//                                             this.model=model;
-//                                          });
-//                                         this.refreshNotes();
-// }
 
 
 createNewlabel(data)
@@ -592,7 +566,7 @@ submitlabel(check,label,data)
                           {
                               this.readNotes();
                           });
-       this.refreshNotes();
+      // this.refreshNotes();
   }
   else
    {
@@ -605,6 +579,7 @@ submitlabel(check,label,data)
                                       {
                                         this.readNotes();
                                       });
+        //    this.refreshNotes();
   }
 
 

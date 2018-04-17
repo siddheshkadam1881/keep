@@ -6,6 +6,7 @@
 
 
 var mongoose = require('mongoose');
+var labelModel = require("../model/labelModel");
 
 var NoteSchema = new mongoose.Schema({
   created_date: {
@@ -70,6 +71,13 @@ var NoteSchema = new mongoose.Schema({
      data: Buffer
   }
 });
+
+
+// Todomodel.findOne().populate('label_ids').exec(function(err, labes) {
+//   if (err) { return console.log(err); }
+//
+//   console.log(labes.label_ids.title);
+// });
 
   NoteSchema.statics.createUserTodo = function createUserTodo (todoObj,userObj,cb) {
   //  console.log(todoObj)

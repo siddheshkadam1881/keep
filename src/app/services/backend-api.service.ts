@@ -75,7 +75,7 @@ export class BackendApiService {
         let email=localStorage.getItem("email");
         //get token from the local storage
         let token = localStorage.getItem("token");
-        console.log("token", token);
+
 
         //set the token to header
         const headers = new Headers();
@@ -84,24 +84,24 @@ export class BackendApiService {
         //http get call to the server
         return this.http.get(urlpath, { headers: headers })
                           .map((response: Response) => {
-                                let resData = response.json();
-                                return resData;
+                                   let resData = response.json();
+                                    return resData;
                               })
       }
 
     //read notes here
       loadAllNotes():void{
-         let path = "readTodos";
-         let urlpath = this.base_url.concat(path);
-         let token = localStorage.getItem("token");
-         //set the token to header
-         const headers = new Headers();
-         headers.append('token', token);
-         this.http.get(urlpath, { headers: headers })
-                     .toPromise()
-                       .then((response: Response)=>{
-                          this.noteSubjectObj.next(response.json());
-                        });
+             let path = "readTodos";
+             let urlpath = this.base_url.concat(path);
+             let token = localStorage.getItem("token");
+             //set the token to header
+             const headers = new Headers();
+             headers.append('token', token);
+             this.http.get(urlpath, { headers: headers })
+                         .toPromise()
+                           .then((response: Response)=>{
+                              this.noteSubjectObj.next(response.json());
+                            });
        }
 
 
