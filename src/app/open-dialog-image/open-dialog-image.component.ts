@@ -31,7 +31,7 @@ export class OpenDialogImageComponent implements OnInit {
       var image = event.target.files[0];
       let formObj = new FormData();
       formObj.append("image",image)
-      this.subscription=this.commonService.updateData('update/' + data._id, formObj)
+      this.subscription=this.commonService.updateData('updateNote/' + data._id, formObj)
                         .subscribe(model => {
                          this.commonService.loadAllNotes();
                          }

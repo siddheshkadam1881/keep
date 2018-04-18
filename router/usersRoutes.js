@@ -92,8 +92,8 @@ router.use(function(req, res, next) {
 
  router.post('/create/Note',todoController.createNote);
  router.get('/readTodos',todoController.readTodos);
- router.put('/update/:id',todoController.update);
- router.delete('/delete/:id',todoController.delete);
+ router.put('/updateNote/:id',todoController.update);
+ router.delete('/deletenote/:id',todoController.delete);
  router.get('/readActiveUser',userController.readActiveUser);
  router.post('/labelToNoteHandler/:id/:labelId',todoController.labelToNoteHandler);
  // router.post('/removeLabelToNote/:labelIdToAddNote/:id',todoController.removeLabelToNote);

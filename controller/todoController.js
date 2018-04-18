@@ -46,8 +46,7 @@ var redisSet =  function(user_id,user) {
   cache.get(user_id,function(err,note) {
   var noteCache = [];
   noteCache =JSON.parse(note);
-  console.log("note cache \n"+ note);
-  console.log("user cache \n"+ user);
+
   cache.set(user_id,JSON.stringify(noteCache.concat(user)), redis.print);
   // console.log("hydsbvvv");
 

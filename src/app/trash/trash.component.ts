@@ -97,10 +97,11 @@ private subscription: ISubscription;
   //delete note forever
   deleteNote(id)
   {
-         this.commonService.deleteData('delete/'+id)
+         this.commonService.deleteData('deletenote/'+id)
                            .subscribe(
-                             data => {
-                             });
+                             data =>  {
+                                      }
+                                  );
           this.refreshNotes();
   }
 
@@ -109,8 +110,8 @@ private subscription: ISubscription;
     var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
      this.commonService.updateData('update/'+data._id,data1)
                        .subscribe(model => {
-                           this.readNotes();
-                          });
+                                             this.readNotes();
+                                          });
                         this.refreshNotes();
 
 

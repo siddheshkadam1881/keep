@@ -36,7 +36,7 @@ export class CommonComponent implements OnInit {
 
       updateNote(data,id)
     {
-      this.subscription = this.commonService.updateData('#update/'+id,data)
+      this.subscription = this.commonService.updateData('updateNote/'+id,data)
                                             .subscribe(
                                               model => {
                                                 this.model=model;
@@ -47,7 +47,7 @@ export class CommonComponent implements OnInit {
 
      deleteNote(id)
      {
-          this.subscription=this.commonService.deleteData('#delete/'+id)
+          this.subscription=this.commonService.deleteData('delete/'+id)
                            .subscribe(model => {
                              this.model=model;
                              this.refreshNotes();
@@ -71,7 +71,7 @@ refreshNotes()
    {
        var note_color =
             {   note_color: color }
-            this.subscription = this.commonService.updateData('#update/'+data._id,note_color)
+            this.subscription = this.commonService.updateData('updateNote/'+data._id,note_color)
                                                   .subscribe(model => {
                                                     this.model=model;
                                                     this.refreshNotes();
@@ -84,7 +84,7 @@ refreshNotes()
          {
           note_chip: chip1
          }
-      this.subscription=this.commonService.updateData('#update/' + data._id, chip)
+      this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
                                           .subscribe(model => {
                                             this.model=model;
                                             this.refreshNotes();
@@ -100,7 +100,7 @@ refreshNotes()
      reminder: this.model.reminder
     }
 
-       this.subscription = this.commonService.updateData('#update/' + data._id, reminder1)
+       this.subscription = this.commonService.updateData('updateNote/' + data._id, reminder1)
                                             .subscribe(model => {
                                               this.model=model;
                                               this.refreshNotes();

@@ -141,7 +141,7 @@ export class DashboardComponent implements OnInit {
     note_chip: null
   }
 
-  this.subscription=this.commonService.updateData('update/' + data._id, chip)
+  this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
                                       .subscribe(model =>
                                         {
                                           this.model=model;
@@ -156,7 +156,7 @@ export class DashboardComponent implements OnInit {
      }
 
 
-       this.subscription=this.commonService.updateData('update/' + data._id, chip1)
+       this.subscription=this.commonService.updateData('updateNote/' + data._id, chip1)
                                            .subscribe(model =>
                                             {
                                               this.model = model;
@@ -260,7 +260,7 @@ export class DashboardComponent implements OnInit {
    trashNotes(data)
    {
        var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
-       this.subscription=this.commonService.updateData('update/'+data._id,data1)
+       this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                             .subscribe(
                                              model => {
                                              this.model = model;
@@ -274,7 +274,7 @@ export class DashboardComponent implements OnInit {
    {
      var data1 = { is_archieved: data.is_archieved ? 'false' : 'true'}
 
-    this.subscription=this.commonService.updateData('update/'+data._id,data1)
+    this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                          .subscribe(model =>  {
                                            this.model = model;
                                                       this.readNotes();
@@ -289,7 +289,7 @@ export class DashboardComponent implements OnInit {
    {
      var data1 = { is_pinned : data.is_pinned ? 'false' : 'true'}
 
-     this.subscription=this.commonService.updateData('update/'+data._id,data1)
+     this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                           .subscribe(model =>  {
                                            this.model = model;
                                            this.readNotes();
@@ -300,7 +300,7 @@ export class DashboardComponent implements OnInit {
    unpinNotes(data)
    {
         var data1 = { is_pinned: data.is_pinned ? 'false' : 'true'}
-        this.subscription=this.commonService.updateData('update/'+data._id,data1)
+        this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                             .subscribe(model =>  {
                                             this.model = model;
                                             this.readNotes();
@@ -313,7 +313,7 @@ export class DashboardComponent implements OnInit {
    changeColor(data,color)
     {
       var data1 = { note_color: color }
-      this.subscription=this.commonService.updateData('update/'+data._id,data1)
+      this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                           .subscribe(model =>
                                            {
                                             this.model = model;
@@ -330,7 +330,7 @@ export class DashboardComponent implements OnInit {
       note_chip: chip1
     }
 
-      this.subscription=this.commonService.updateData('update/' + data._id, chip)
+      this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
                                          .subscribe(model =>
                                            {
                                             this.model = model;
@@ -343,7 +343,7 @@ export class DashboardComponent implements OnInit {
     reminder: this.lastActivityTime
    }
 
-  this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
+  this.subscription=this.commonService.updateData('updateNote/' + data._id, reminder1)
                                        .subscribe(model =>
                                          {
                                           this.model = model;
@@ -360,7 +360,7 @@ export class DashboardComponent implements OnInit {
     note_chip: chip1
   }
 
-    this.subscription=this.commonService.updateData('update/' + data._id, chip)
+    this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
                                          .subscribe(model =>
                                            {
                                             this.model = model;
@@ -374,7 +374,7 @@ export class DashboardComponent implements OnInit {
       reminder: this.lastActivityTime1
       }
 
-   this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
+   this.subscription=this.commonService.updateData('updateNote/' + data._id, reminder1)
                                         .subscribe(model =>
                                           {
                                            this.model = model;
@@ -391,7 +391,7 @@ chipShowMonday(data, chip1)
         {
           note_chip: chip1
         }
-      this.subscription=this.commonService.updateData('update/' + data._id, chip)
+      this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
                                          .subscribe(model => {
                                                    this.model = model;
                                                    this.readNotes();
@@ -404,7 +404,7 @@ chipShowMonday(data, chip1)
       reminder: this.lastActivityTime2
       }
 
-     this.subscription=this.commonService.updateData('update/' + data._id, reminder2)
+     this.subscription=this.commonService.updateData('updateNote/' + data._id, reminder2)
                                     .subscribe(model => {
                                     this.model = model;
                                     this.readNotes();
@@ -420,7 +420,7 @@ chipShowMonday(data, chip1)
      reminder: this.model.reminder
    }
 
-     this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
+     this.subscription=this.commonService.updateData('updateNote/' + data._id, reminder1)
                                           .subscribe(model => {
                                           this.model = model;
                                           this.readNotes();
@@ -436,7 +436,7 @@ removelabel(data)
     var labeldata ={
       label :null
       }
-    this.commonService.updateData('update/'+ data._id,labeldata)
+    this.commonService.updateData('updateNote/'+ data._id,labeldata)
                      .subscribe(res => {
                        this.readNotes();
     });
@@ -511,7 +511,7 @@ removelabel(data)
                          var labeldata = {
                                            label_ids :label
                                           }
-                         this.commonService.updateData('update/'+ data._id,labeldata)
+                         this.commonService.updateData('updateNote/'+ data._id,labeldata)
                                             .subscribe(res => {
                                              });
                      }
@@ -523,7 +523,7 @@ removelabel(data)
                           var labeldata = {
                                             label_ids :null
                                           }
-                          this.commonService.updateData('update/'+ data._id,labeldata)
+                          this.commonService.updateData('updateNote/'+ data._id,labeldata)
                                            .subscribe(res => {
                                             });
                     }
@@ -567,7 +567,7 @@ submitlabel(check,label,data)
       var labeldata = {
                         label :label.title
                        }
-      this.commonService.updateData('update/'+ data._id,labeldata)
+      this.commonService.updateData('updateNote/'+ data._id,labeldata)
                         .subscribe(res =>
                           {
                               this.readNotes();
@@ -582,7 +582,7 @@ submitlabel(check,label,data)
           var labeldata ={
               label :null
           }
-          this.commonService.updateData('update/'+ data._id,labeldata)
+          this.commonService.updateData('updateNote/'+ data._id,labeldata)
                             .subscribe(res =>
                                       {
                                         this.readNotes();
@@ -608,7 +608,7 @@ submitlabel(check,label,data)
 
    // this.subscription=this.commonService.postServiceData('labelToNoteHandler/' + data._id + '/' + mapped + "/", {},{operation:"add"})
 
-   this.subscription=this.commonService.updateData('update/' + data._id,labeldata)
+   this.subscription=this.commonService.updateData('updateNote/' + data._id,labeldata)
                                        .subscribe(
                                          model =>{
                                             this.model=model;
