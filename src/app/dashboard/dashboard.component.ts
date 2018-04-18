@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
   private lastActivityTime1: Date;
   private lastActivityTime2: Date;
 //CHIP EVENT
+  //var storageId;
   visible: boolean = true;
   selectable: boolean = true;
   removable: boolean = true;
@@ -236,9 +237,9 @@ export class DashboardComponent implements OnInit {
     this.subscription= this.commonService.deleteData('delete/'+id)
                                          .subscribe(
                                           model => {
-                                          this.model = model;
-                                          this.readNotes();
-                                      });
+                                                     this.model = model;
+                                                     this.readNotes();
+                                           });
      this.refreshNotes();
   }
 
@@ -248,9 +249,9 @@ export class DashboardComponent implements OnInit {
     // this.refreshImage();
     this.subscription=  this.commonService.getAllNotes()
                                           .subscribe(response => {
-                                               if (response) {
-                                               this.dashDataFirst = response;
-                                              }
+                                                  if (response) {
+                                                                  this.dashDataFirst = response;
+                                                                }
                                           })
   }
 
@@ -506,6 +507,7 @@ removelabel(data)
 
              if(check){
                          this.reqLabelDto.check=true;
+                         //localStorage.setItem('storageId', this.reqLabelDto.check);
                          var labeldata = {
                                            label_ids :label
                                           }
@@ -516,6 +518,8 @@ removelabel(data)
              else
                    {
                          this.reqLabelDto.check=false;
+                         //localStorage.setItem('storageId', this.reqLabelDto.check);
+
                           var labeldata = {
                                             label_ids :null
                                           }
@@ -558,6 +562,8 @@ submitlabel(check,label,data)
    console.log(label.title);
     if(check){
       this.reqLabelDto.check=true;
+      //localStorage.setItem('storageId', this.reqLabelDto.check);
+
       var labeldata = {
                         label :label.title
                        }
@@ -571,6 +577,8 @@ submitlabel(check,label,data)
   else
    {
           this.reqLabelDto.check=false;
+        //  localStorage.setItem('storageId, this.reqLabelDto.check);
+
           var labeldata ={
               label :null
           }
@@ -585,5 +593,26 @@ submitlabel(check,label,data)
 
 }
 
+  ApplyFilters(isValid: boolean,data) {
 
+   var selectedLables  = this.Labels.filter(function (data1) { return data1.selected == true });
+   var mapped = selectedLables.map((labelObj)=> labelObj._id);
+
+    // console.log(mapped.join(","));
+    // console.log(mapped.join(",").split(","));
+    var labeldata ={
+   label_ids :mapped
+  }
+
+    if (!isValid) return;
+
+   // this.subscription=this.commonService.postServiceData('labelToNoteHandler/' + data._id + '/' + mapped + "/", {},{operation:"add"})
+
+   this.subscription=this.commonService.updateData('update/' + data._id,labeldata)
+                                       .subscribe(
+                                         model =>{
+                                            this.model=model;
+                                         });
+                                        this.refreshNotes();
+}
 }

@@ -55,9 +55,11 @@
   <h3>Pinned</h3></div>
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center center">
   <!-- <input type="text"  [(ngModel)]="term"> -->
-  <div class="allnotes" *ngFor="let data of dashDataFirst | filter : searchText" fxLayoutWrap fxLayoutAlign="center center">
+  <div class="allnotes" *ngFor="let data of dashDataFirst | noteFilter : { is_pinned : true } " fxLayoutWrap fxLayoutAlign="center center">
 
-    <div *ngIf="!data.is_deleted && !data.is_archieved && data.is_pinned">
+    <!-- <div *ngIf="!data.is_deleted && !data.is_archieved && data.is_pinned"> -->
+
+      <!-- component create here  and pipe filter -->
 
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" fxLayoutWrap>
         <mat-card class="writeNotes1" [ngClass]="{'writeNotes2':isClassVisible}" [style.background]="data.note_color">
@@ -177,7 +179,7 @@
 
                   <div *ngFor="let label of Labels;let i=index;">
                      <label>
-                       <input type="checkbox" name="labels" value="{{label.title}}" [(ngModel)]="label.checked" (change)="checkSelectlabel(label.checked,label,data);submitlabel(label.checked,label,data)"/>
+                       <input type="checkbox" name="labels" autocomplete="off" value="{{label.title}}" [(ngModel)]="label.checked" (change)="checkSelectlabel(label.checked,label,data);submitlabel(label.checked,label,data)"/>
                                 {{label.title}}
                      </label>
                    </div>
@@ -189,15 +191,15 @@
           </div>
         </mat-card>
       </div>
-    </div>
+    <!-- </div> -->
   </div>
 </div>
 
   <div class="other" fxLayout="row" fxLayoutAlign=" none"><h3>Other</h3></div>
   <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
   <!-- <div class="other"><b>other</b></div> | noteFilter:{is_pinned:false,is_archieved:false,is_deleted:false}"-->
-  <div class="allnotes" *ngFor="let data of dashDataFirst" >
-  <div *ngIf= "!data.is_deleted && !data.is_archieved && !data.is_pinned">
+  <div class="allnotes" *ngFor="let data of dashDataFirst  | noteFilter : { is_pinned : false} " >
+  <!-- <div *ngIf= "!data.is_deleted && !data.is_archieved && !data.is_pinned"> -->
    <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}"  [style.background]="data.note_color">
      <div fxLayout="row" fxLayoutAlign="end end" >
      <img class="img-responsive" matTooltip="Pin note" (click)="pinNotes(data)"  matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/pin.svg">
@@ -270,7 +272,7 @@
               </mat-menu>
         </div>
     </mat-card>
-</div>
+<!-- </div> -->
   </div>
 </div>
 </div>

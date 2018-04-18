@@ -23,7 +23,7 @@ export class UserService {
       FB.login(result => {
 
         if (result.authResponse) {
-            return this.http.post(`http://localhost:3000/auth/facebook`, {access_token: result.authResponse.accessToken})
+            return this.http.post(`http://localhost:3000/api/auth/facebook`, {access_token: result.authResponse.accessToken})
             // , {access_token: result.authResponse.accessToken})
             .toPromise()
               .then(response => {

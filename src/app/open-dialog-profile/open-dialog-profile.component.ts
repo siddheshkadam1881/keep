@@ -83,7 +83,9 @@ dataURItoBlob(dataURI) {
   var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
   // write the bytes of the string to an ArrayBuffer
   var ab = new ArrayBuffer(byteString.length);
+
   var ia = new Uint8Array(ab);
+
   for (var i = 0; i < byteString.length; i++) {
     ia[i] = byteString.charCodeAt(i);
   }
@@ -97,10 +99,10 @@ dataURItoBlob(dataURI) {
 refreshProfile()
 {
   this.subscription=this.commonService.getprofile()
-                    .subscribe(response => {
-                    if (response) {
-                    this.dashDataFirst = response;
-                    }
+                                      .subscribe(response => {
+                                      if (response) {
+                                      this.dashDataFirst = response;
+                                      }
                   })
                 }
 }

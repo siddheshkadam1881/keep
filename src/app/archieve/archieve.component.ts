@@ -64,7 +64,7 @@ export class ArchieveComponent implements OnInit {
 
 
    ngOnInit():void {
-
+        this.readNotes();
        this.refreshNotes();
    }
 
@@ -136,65 +136,82 @@ export class ArchieveComponent implements OnInit {
   //refresh notes here
   refreshNotes()
   {
-  this.subscription=this.commonService.getData('readTodos').subscribe(response => {
-    if (response) {
-       this.dashDataFirst = response;
-    }
-  })
+  this.subscription=this.commonService.getData('readTodos')
+                                      .subscribe(response => {
+                                                                    if(response)
+                                                                    {
+                                                                      this.dashDataFirst = response;
+                                                                    }
+                                                            })
   }
 
   //delete note forever
       deleteNote(id)
     {
     this.subscription= this.commonService.deleteData('delete/'+id)
-                         .subscribe( data => {
-                          this.refreshNotes();
-                           });
+                                         .subscribe( data => {
+                                           this.readNotes();
+                                          this.refreshNotes();
+                                         });
    }
        changeColor(data,color)
-     {   var data1 =
+       {
+         var data1 =
          {   note_color: color }
           this.subscription=this.commonService.updateData('update/'+data._id,data1)
-                         .subscribe(model => {
+                                              .subscribe(model => {
+                                                                    this.refreshNotes();
+                                                                    this.readNotes();
+                                                                  });
           this.refreshNotes();
-      });
-
-     }
+      }
 
 
-  archiveNotes(data)
+    archiveNotes(data)
   {
     var data1 = { is_archieved: data.is_archieved ?  'false' : 'true'}
 
      this.subscription=this.commonService.updateData('update/'+data._id,data1)
-                       .subscribe(model => {
-                 });
-                 this.refreshNotes();
-
+                                          .subscribe(model => {
+                                                                this.readNotes()
+                                                             });
+       this.refreshNotes();
+  }
+  readNotes():void {
+      this.subscription = this.commonService.getAllNotes()
+                                            .subscribe(response => {
+                                               if (response) {
+                                                 this.dashDataFirst = response;
+                                                }
+                                              },
+                                               error => console.log("Error while retrieving"))
   }
 
 chipShow(data, chip1)
 {
-  var chip =
-{
-  note_chip: chip1
-}
+          var chip =
+       {
+              note_chip: chip1
+       }
 
-this.subscription= this.commonService.updateData('update/' + data._id, chip)
-                    .subscribe(model => {
-                     this.refreshNotes();
-                    });
+         this.subscription= this.commonService.updateData('update/' + data._id, chip)
+                                              .subscribe(model => {
+                                                this.readNotes();
+                                               this.refreshNotes();
+                                              });
+          this.refreshNotes();
   }
     submitReminder(data)
   {
-      var reminder1 =
-     {
-      reminder: this.model.reminder
-     }
-      this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
-                        .subscribe(model => {
-                        this.refreshNotes();
-                });
+                var reminder1 =
+              {
+                reminder: this.model.reminder
+              }
+                this.subscription=this.commonService.updateData('update/' + data._id, reminder1)
+                                                        .subscribe(model => {
+                                                        this.readNotes();
+                                                });
+                this.refreshNotes();
 
    }
 }

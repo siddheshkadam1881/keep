@@ -35,7 +35,7 @@ app.use("/uploads" , express.static("uploads"));
 app.use(cors({
    exposedHeaders : ['x-auth-token']
 }));
-app.use(userRoutes);
+app.use('/api',userRoutes);
 var mongoose = require('mongoose');
 var config = require("./config");
 

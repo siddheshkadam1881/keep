@@ -59,13 +59,8 @@ private subscription: ISubscription;
   ////////////////////////////////read the data by calling service method//////////////////////////////////////////////
 
    ngOnInit():void {
-
-    this.subscription=this.commonService.getData('readTodos')
-                                        .subscribe(response => {
-                                         if (response) {
-                                            this.dashDataFirst = response;
-                                         }
-                                        })
+     this.readNotes();
+      this.refreshNotes();
    }
 
    ngOnDestroy(): void {
@@ -114,9 +109,19 @@ private subscription: ISubscription;
     var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
      this.commonService.updateData('update/'+data._id,data1)
                        .subscribe(model => {
-                        });
+                           this.readNotes();
+                          });
                         this.refreshNotes();
 
 
+  }
+  readNotes():void {
+      this.subscription = this.commonService.getAllNotes()
+                                            .subscribe(response => {
+                                               if (response) {
+                                                 this.dashDataFirst = response;
+                                                }
+                                              },
+                                               error => console.log("Error while retrieving"))
   }
 }

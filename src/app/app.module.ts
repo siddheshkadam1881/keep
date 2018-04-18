@@ -55,6 +55,8 @@ import { SocialLoginModule } from 'angularx-social-login';
 import { UserService } from './services/user.service';
 import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider  } from 'angularx-social-login';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { NoteFilterPipe } from './note-filter.pipe';
+
 
 
 export function getAuthHttp(http: Http) {
@@ -124,7 +126,8 @@ const routes: Routes = [
     LabeldashboardComponent,
     PagenotfoundComponent,
     OpenDialogAddLabelComponent,
-    DummyComponent
+    DummyComponent,
+    NoteFilterPipe
   ],
   imports: [
     SocialLoginModule,

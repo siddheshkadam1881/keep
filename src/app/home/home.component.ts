@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit,ViewChild } from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef} from '@angular/core';
 import { BackendApiService } from '../services/backend-api.service';
@@ -16,6 +16,7 @@ import { Location } from '@angular/common';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ISubscription } from "rxjs/Subscription";
+
 //import {HttpModule} from '@angular/http';
 @Component({
   selector: 'app-home',
@@ -24,6 +25,12 @@ import { ISubscription } from "rxjs/Subscription";
 })
 export class HomeComponent  implements OnInit {
   showFiller = false;
+   @ViewChild(DashboardComponent)
+   private Dashboard: DashboardComponent;
+
+
+
+
 
    isClassVisible: false;
   public Users;
@@ -69,8 +76,13 @@ export class HomeComponent  implements OnInit {
    ngOnInit():void {
       this.refreshNotes();
       this.refreshlabels();
-    this.refreshProfile();
+      this.refreshProfile();
    }
+      // increase() {
+      //     this.Dashboard.increaseByOne();
+      //     console.log(this.Dashboard);
+     //
+     //  }
 
 
    ngOnDestroy(): void {

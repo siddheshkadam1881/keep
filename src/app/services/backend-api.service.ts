@@ -16,7 +16,7 @@ export class BackendApiService {
     private labelSubjectObj = new Subject<any>();
     private noteSubjectObj = new Subject<any>();
     private profileSubjectObj = new Subject<any>();
-    base_url="http://localhost:3000/";
+    base_url="http://localhost:3000/api/";
     result:any;
     public urlpath;
     options: RequestOptions;

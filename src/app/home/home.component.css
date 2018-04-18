@@ -97,10 +97,20 @@ word-wrap: break-word;
     word-wrap: break-word;
 
   }*/
+
+
+  a:hover
+  {
+  color:red;
+  }
+  
+  /*.btn{
+       background-color:blue;
+  }
   .imageNotes
   {
    background-color:rgb(255 , 255, 255);
-  }*/
+  }*/*/
 /*.card-container
 {
   display: flex;

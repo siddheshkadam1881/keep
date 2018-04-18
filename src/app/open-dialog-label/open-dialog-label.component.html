@@ -9,7 +9,7 @@
     </div>
     <div fxFlex="70">
              <mat-form-field>
-               <input contenteditable="true" matInput placeholder="create new label" type="text" name="title"  [(ngModel)]="model.title" (click)="changeShowStatus()">
+               <input contenteditable="true" matInput placeholder="create new label" onfocus="this.value=''" type="text" name="title"  [(ngModel)]="model.title" (click)="changeShowStatus()">
             </mat-form-field>
     </div>
     <div fxFlex="15" *ngIf="showHide1">
@@ -25,7 +25,7 @@
 
     <div fxFlex="70">
              <mat-form-field>
-                 <input contenteditable="true" matInput [(ngModel)]="index.title">
+                 <input contenteditable="true"  matInput [(ngModel)]="index.title" >
             </mat-form-field>
     </div>
     <div fxFlex="15">

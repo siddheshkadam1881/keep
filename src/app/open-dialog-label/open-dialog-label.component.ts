@@ -26,7 +26,10 @@ export class OpenDialogLabelComponent implements OnInit {
 
   ngOnInit() {
    this.refreshLabel();
+
+
   }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
@@ -76,10 +79,11 @@ export class OpenDialogLabelComponent implements OnInit {
 
         this.subscription = this.commonService.postServiceData('createLabel',this.model)
                                               .subscribe(model => {
-                                              this.commonService.loadAllLabels();
+                                                  this.commonService.loadAllLabels();
+                                               //this.commonService.loadAllLabels();
+
                                           });
 
-       this.refreshLabel();
    }
 
    refreshLabel()
@@ -87,8 +91,8 @@ export class OpenDialogLabelComponent implements OnInit {
       this.subscription =  this.commonService.getAllLabels()
                                               .subscribe(response => {
                                                if (response) {
-                                               this.labels = response;
-                                              }
+                                                               this.labels = response;
+                                                            }
                                              })
 
     }
