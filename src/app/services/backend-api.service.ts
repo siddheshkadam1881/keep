@@ -7,15 +7,16 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import * as io from 'socket.io-client';
 import { ViewContainerRef} from '@angular/core';
-//import { Todo } from("../model/Todomodel");
 import { Response} from '@angular/http';
-//import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 @Injectable()
 export class BackendApiService {
 
     private labelSubjectObj = new Subject<any>();
     private noteSubjectObj = new Subject<any>();
     private profileSubjectObj = new Subject<any>();
+    status:boolean = true;
+    private viewSubject = new Subject<any>();
+
     base_url="http://localhost:3000/api/";
     result:any;
     public urlpath;
@@ -29,6 +30,20 @@ export class BackendApiService {
 //this.http.get(environment.api+ '.feed.json', requestOptions );
 
     constructor(private http: Http ) {  }
+
+
+
+
+       toggleView(){
+                 this.status = !this.status;
+                 this.viewSubject.next(this.status);
+         }
+
+        getStatus()
+        {
+         setTimeout(this.toggleView);
+         return this.viewSubject.asObservable();
+       }
 
     /* post service */
       postServiceData(path,model,params?) {
@@ -179,5 +194,8 @@ export class BackendApiService {
         return this.http.delete(this.urlpath,{ headers: headers })
         .map(res=>res.json());
       }
+
+
+
 
 }

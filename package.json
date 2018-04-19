@@ -26,6 +26,7 @@
     "@angular/router": "^5.2.9",
     "@mat-datetimepicker/core": "^1.0.2",
     "@types/jquery": "^1.10.34",
+    "angular-2-dropdown-multiselect": "^1.7.1",
     "angular-localstorage": "^1.1.5",
     "angular-module-core": "^1.2.19",
     "angular2-jwt": "^0.2.3",

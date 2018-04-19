@@ -61,7 +61,7 @@ var User = require("../model/User");
 * @extends {req, res}
  */
  exports.label= function(req, res) {
-     //console.log(req)
+     
       Label.findOne({
        _id : req.params.id
   }, function(err, label) {
@@ -80,7 +80,7 @@ var User = require("../model/User");
  */
 
 exports.updateLabel = function(req, res) {
-  console.log(req.decoded);
+
  Label.findOneAndUpdate({
    _id: req.params.id,
   user_id:req.decoded._id

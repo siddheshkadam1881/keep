@@ -20,7 +20,8 @@
          </div> -->
     <div fxFlex.lg="10" fxFlex.md="10" fxFlex.sm="10" fxFlex.xs="10" fxLayout="row">
       <div>
-      <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="width:40px;" src="assets/icon/List View.svg">
+      <!-- <img class="Gridlayout" (click)="isClassVisible = !isClassVisible;" matTooltip="List View" matTooltipShowDelay="100" style="width:40px;" src="assets/icon/List View.svg"> -->
+      <img class="Gridlayout" (click)="changeCSS()" matTooltip="List View" matTooltipShowDelay="100" style="width:40px;" src="assets/icon/List View.svg">
      </div>
      <div>
      <img [src]='"http://localhost:3000/"+user.image' class="cropcircle" fxLayout="row"  fxLayoutAlign="start" [matMenuTriggerFor]="menu"  fxLayoutAlign="end"/>

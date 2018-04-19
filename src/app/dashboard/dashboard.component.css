@@ -47,6 +47,7 @@ h1.example-app-name {
   word-wrap: break-word;
   outline: none;
 }
+
 .writeNotes
 {
 background-color:rgb(255 , 255, 255);
@@ -61,10 +62,16 @@ word-wrap: break-word;
  margin-top:5px;
  width: 150%;
 }
-/*.allnotes
-{
-  flex-flow: row-reverse wrap-reverse;
-}*/
+
+.list-view{
+  width: 69%;
+  margin-top: 15px;
+}
+.grid-view{
+  margin-top: 15px;
+}
+
+
   .writeNotes1
   {
     background-color:rgb(255 , 255, 255);
@@ -95,7 +102,6 @@ word-wrap: break-word;
     visibility:visible;
   }
 
-
   .dot {
      height: 25px;
      width: 25px;
@@ -125,8 +131,7 @@ margin-top:50px;
 width:500px;
 font-size: 18px;
 word-wrap: break-word;
-fxLayoutAlign:space-around center;
- /*visibility: hidden;*/
+fxLayoutAlign :space-around center;
 }
 .demo-chip-list {
   width: 100%;

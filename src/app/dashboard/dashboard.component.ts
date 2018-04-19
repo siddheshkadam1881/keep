@@ -57,21 +57,23 @@ export class DashboardComponent implements OnInit {
   public Labels;
   public labelchip;
   reqLabelDto:any={};
-    public myData=[];
+  public myData=[];
   note:string;
   checked : false;
    title:string;
    values:any={};
    model:any={};
    item:any={};
-//notes array
+   status:any={};
+   statusClass : string="grid-view";
+   //notes array
    notes: Array<any>;
   //hide and see logic
   public show:boolean = false;
   public show1:boolean = false;
   responseStatus:Object= [];
   private subscription: ISubscription;
-  status:boolean ;
+  //status:boolean ;
   //hide and show grid
   showHide:boolean;
   showtoggle1:boolean;
@@ -114,8 +116,21 @@ export class DashboardComponent implements OnInit {
    this.refreshNotes();
     this.readNotes();
     this.refreshLabel();
+    this.gridView();
   }
 
+   gridView()
+   {
+
+       this.commonService.getStatus().subscribe((status)=>{
+         console.log(status);
+         this.statusClass = status? "grid-view":"list-view";
+         console.log(this.statusClass);
+        this.readNotes();
+      });
+
+    this.refreshNotes();
+  }
 
 
   add(event: MatChipInputEvent): void {
@@ -135,7 +150,7 @@ export class DashboardComponent implements OnInit {
    }
 
 
- remove(data): void {
+   remove(data): void {
   var chip=
   {
     note_chip: null

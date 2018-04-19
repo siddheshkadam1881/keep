@@ -56,6 +56,7 @@ import { UserService } from './services/user.service';
 import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider  } from 'angularx-social-login';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { NoteFilterPipe } from './note-filter.pipe';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 
 
@@ -136,6 +137,7 @@ const routes: Routes = [
     MatChipsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+     MultiselectDropdownModule,
 
     //MatNativeDatetimeModule,
     //MatDatepickerModule,

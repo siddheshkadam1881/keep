@@ -124,7 +124,7 @@ exports.readActiveUser = function(req, res) {
      res.send(500, { err: 'something blew up' });
      //res.send(err);
      res.json(note);
-     console.log(note);
+
    });
 }
 
@@ -187,7 +187,7 @@ exports.activeUser = function(req, res) {
         if (user) {
           done(err, user);
         } else {
-          console.log(req.body.email)
+
           done('User not found.');
         }
       });
@@ -326,7 +326,7 @@ exports.reset_password = function(req, res, next) {
 exports.passport = function(passport) {
    // used to serialize the user for the session
    passport.serializeUser(function(user, done) {
-     // console.log(user);
+
        done(null, user.id);
    });
 
@@ -342,7 +342,7 @@ exports.passport = function(passport) {
    //pull in our app id and secret from our auth.js file
   passport.use('facebook-token', new FacebookTokenStrategy(fbConfig.facebookAuth, function(accessToken, refreshToken, profile, done) {
 
-      // console.log(accessToken, refreshToken, profile);
+  
 
      User.upsertFbUser(accessToken, refreshToken, profile, function(err, user) {
           return done(err, user);

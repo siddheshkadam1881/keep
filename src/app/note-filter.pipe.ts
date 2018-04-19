@@ -9,7 +9,7 @@ export class NoteFilterPipe implements PipeTransform {
 
   transform(noteArray: Array<any>, args?: any): any {
     if(!noteArray) return [];
-      //  debugger;
+  
     return noteArray.filter((noteObj)=>{
       if(args){
         var flag = true;

@@ -78,12 +78,15 @@ export class HomeComponent  implements OnInit {
       this.refreshlabels();
       this.refreshProfile();
    }
-      // increase() {
-      //     this.Dashboard.increaseByOne();
-      //     console.log(this.Dashboard);
-     //
-     //  }
 
+
+
+
+   changeCSS(){
+     console.log("hii");
+     
+     this.commonService.toggleView();
+   }
 
    ngOnDestroy(): void {
      this.mobileQuery.removeListener(this._mobileQueryListener);
@@ -179,5 +182,10 @@ export class HomeComponent  implements OnInit {
                                                }
                                             });
     }
+
+    // changeClass(class)
+    // {
+    //   this.subscription=this.commonService.changeClass(class);
+    // }
 
 }
