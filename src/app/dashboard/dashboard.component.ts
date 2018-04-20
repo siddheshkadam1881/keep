@@ -118,14 +118,26 @@ export class DashboardComponent implements OnInit {
     this.refreshLabel();
     this.gridView();
   }
+  labelClick(labelObj , noteObj):void{
 
+    if(labelObj.checked === null || labelObj.checked === undefined)
+      labelObj.checked = this.isLabelChecked(labelObj , noteObj);
+      labelObj.checked = labelObj.checked ? false : true;
+
+  }
+
+  isLabelChecked( labelObj , noteObj ):boolean{
+    let flag = false;
+    if(noteObj.label_ids && noteObj.label_ids.length >0 && noteObj.label_ids.indexOf(labelObj._id) >= 0 ){
+      flag = true;
+    }
+    // labelObj.checked = flag;
+    return flag;
+  }
    gridView()
    {
-
        this.commonService.getStatus().subscribe((status)=>{
-         console.log(status);
          this.statusClass = status? "grid-view":"list-view";
-         console.log(this.statusClass);
         this.readNotes();
       });
 
@@ -516,9 +528,10 @@ removelabel(data)
      }
 
      checkSelectlabel(check,label,data)
-   {
+     {
 
-             console.log(label);
+             // label.checked = label.checked ? false : true;
+
 
              if(check){
                          this.reqLabelDto.check=true;
@@ -542,6 +555,8 @@ removelabel(data)
                                            .subscribe(res => {
                                             });
                     }
+
+         // this.labelClick(label,data)              
 
 
      }

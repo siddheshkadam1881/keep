@@ -54,7 +54,7 @@
 <div class="note" fxLayout="row" fxLayoutAlign="none">
   <h3>Pinned</h3></div>
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center center">
-  <!-- <input type="text"  [(ngModel)]="term"> --> {{statusClass}}
+  <!-- <input type="text"  [(ngModel)]="term"> -->
   <div  *ngFor="let data of dashDataFirst | noteFilter : { is_pinned : true }" class={{statusClass}}>
 
 
@@ -76,7 +76,6 @@
             </div>
             <p>{{data.title}}</p>
             <p [innerHTML]="data.note"></p>
-
             <div *ngIf="data.note_chip || data.reminder">
               <mat-form-field class="demo-chip-list">
                 <mat-chip-list>
@@ -178,12 +177,12 @@
                     <label for="{{label.title}}">{{label.title}}</label>
                   </div> -->
                   <!-- <input type="button" (click)="ApplyFilters(f.valid,data)" class="btn btn-primary filters_btn" value="submit"> -->
-
-
+<!-- | labelCheckedMapFilter : data.label_ids  -->
+<!-- [(ngModel)]="label.checked" -->
+<!-- [checked]="isLabelChecked(label,data)" -->
                   <div *ngFor="let label of Labels;let i=index;">
                      <label>
-                       <input type="checkbox" name="labels" autocomplete="off" value="{{label.title}}" [(ngModel)]="label.checked" (change)="checkSelectlabel(label.checked,label,data);submitlabel(label.checked,label,data)"/>
-                                {{label.title}}
+                       <input type="checkbox" name="labels" [checked]="isLabelChecked(label,data)" (click)="labelClick(label,data)"  (change)="checkSelectlabel(label.checked,label,data);submitlabel(label.checked,label,data)"/>{{label.title}}
                      </label>
                    </div>
                 </form>
@@ -322,7 +321,7 @@
 
             <div *ngFor="let label of Labels;let i=index;">
                <label>
-                 <input type="checkbox" name="labels" autocomplete="off" value="{{label.title}}" [(ngModel)]="label.checked" (change)="checkSelectlabel(label.checked,label,data);submitlabel(label.checked,label,data)"/>
+                 <input type="checkbox" name="labels" autocomplete="off" [(ngModel)]="label.checked" (change)="checkSelectlabel(label.checked,label,data);submitlabel(label.checked,label,data)"/>
                           {{label.title}}
                </label>
              </div>

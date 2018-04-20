@@ -57,6 +57,7 @@ import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, LinkedIn
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { NoteFilterPipe } from './note-filter.pipe';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { LabelCheckedMapFilterPipe } from './label-checked-map-filter.pipe';
 
 
 
@@ -128,7 +129,8 @@ const routes: Routes = [
     PagenotfoundComponent,
     OpenDialogAddLabelComponent,
     DummyComponent,
-    NoteFilterPipe
+    NoteFilterPipe,
+    LabelCheckedMapFilterPipe
   ],
   imports: [
     SocialLoginModule,
