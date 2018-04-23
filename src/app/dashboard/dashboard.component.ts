@@ -56,6 +56,7 @@ export class DashboardComponent implements OnInit {
   public dashDataFirst;
   public Labels;
   public labelchip;
+  public searchNotes;
   reqLabelDto:any={};
   public myData=[];
   note:string;
@@ -74,6 +75,7 @@ export class DashboardComponent implements OnInit {
   responseStatus:Object= [];
   private subscription: ISubscription;
   //status:boolean ;
+  searchData= '';
   //hide and show grid
   showHide:boolean;
   showtoggle1:boolean;
@@ -97,6 +99,13 @@ export class DashboardComponent implements OnInit {
       }
     },
     error => console.log("Error while retrieving"));
+    this.commonService.myMethod$.subscribe((model) =>
+                                 {
+                                    this.model = model; // And he have data here too!
+                                    console.log(this.model);
+                                 });
+
+
 
   }
 
@@ -112,17 +121,46 @@ export class DashboardComponent implements OnInit {
      this.timerTommarrowExecuted();
      this.timerTodayExecuted();
      this.timerMondayExecuted();
+    // labelClick(labelObj , noteObj);
    });
    this.refreshNotes();
     this.readNotes();
     this.refreshLabel();
     this.gridView();
+    this.dataTake();
+
   }
+
+
+  dataTake(){
+            this.searchData = localStorage.getItem("searchData");
+
+
+             // this.subscription = this.commonService.getData('searchTodos/'+ this.searchData)
+             //                                        .subscribe(data =>{
+             //                                        // this.ngOnInit();
+             //                                          console.log(data);
+             //                                          this.readNotes();
+             //                                      });
+
+            // this.subscription = this.commonService.getData('searchTodos/'+ this.searchData)
+            //                                        .subscribe(searchNotes =>{
+            //                                        this.searchNotes=searchNotes;
+            //                                         console.log("siddheshwar " ,searchNotes);
+            //                                      });
+
+
+       }
+
+
+
+
   labelClick(labelObj , noteObj):void{
 
     if(labelObj.checked === null || labelObj.checked === undefined)
       labelObj.checked = this.isLabelChecked(labelObj , noteObj);
       labelObj.checked = labelObj.checked ? false : true;
+
 
   }
 
@@ -134,14 +172,15 @@ export class DashboardComponent implements OnInit {
     // labelObj.checked = flag;
     return flag;
   }
-   gridView()
-   {
-       this.commonService.getStatus().subscribe((status)=>{
-         this.statusClass = status? "grid-view":"list-view";
-        this.readNotes();
-      });
 
-    this.refreshNotes();
+     gridView()
+   {
+      this.commonService.getStatus().subscribe((status)=>{
+       this.statusClass = status? "grid-view":"list-view";
+        this.readNotes();
+        });
+
+      this.refreshNotes();
   }
 
 
@@ -255,7 +294,6 @@ export class DashboardComponent implements OnInit {
   });
 
   dialogRef.afterClosed().subscribe(result => {
-   console.log('The dialog was closed');
   });
   }
 
@@ -456,18 +494,19 @@ chipShowMonday(data, chip1)
      this.refreshNotes();
  }
 
-removelabel(data)
-
+  removelabel(data,label)
   {
+
     this.reqLabelDto.check=false;
-    var labeldata ={
-      label :null
-      }
+     var labeldata = {
+                       label :null
+                    }
     this.commonService.updateData('updateNote/'+ data._id,labeldata)
-                     .subscribe(res => {
-                       this.readNotes();
-    });
+                        .subscribe(res => {
+                                            this.readNotes();
+                                          });
      this.refreshNotes();
+     //this.labelClick(label , data);
   }
 
 
@@ -556,7 +595,7 @@ removelabel(data)
                                             });
                     }
 
-         // this.labelClick(label,data)              
+         // this.labelClick(label,data)
 
 
      }
@@ -589,7 +628,7 @@ refreshLabel()
 
 submitlabel(check,label,data)
 {
-   console.log(label.title);
+
     if(check){
       this.reqLabelDto.check=true;
       //localStorage.setItem('storageId', this.reqLabelDto.check);
@@ -602,7 +641,7 @@ submitlabel(check,label,data)
                           {
                               this.readNotes();
                           });
-      // this.refreshNotes();
+
   }
   else
    {
@@ -615,9 +654,13 @@ submitlabel(check,label,data)
           this.commonService.updateData('updateNote/'+ data._id,labeldata)
                             .subscribe(res =>
                                       {
+
                                         this.readNotes();
                                       });
-        //    this.refreshNotes();
+
+
+                                    //  label.checked = label.checked ? false : true;
+          this.refreshNotes();
   }
 
 
@@ -628,8 +671,6 @@ submitlabel(check,label,data)
    var selectedLables  = this.Labels.filter(function (data1) { return data1.selected == true });
    var mapped = selectedLables.map((labelObj)=> labelObj._id);
 
-    // console.log(mapped.join(","));
-    // console.log(mapped.join(",").split(","));
     var labeldata ={
    label_ids :mapped
   }

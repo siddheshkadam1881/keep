@@ -20,6 +20,15 @@ Todo.prototype.deleteUserTodo = function (userId,paramId,callback) {
   TodoModel.deleteUserTodo(userId,paramId,callback);
 };
 
+
+//todoService.serachResult(req.decoded, req.params,
+
+  Todo.prototype.searchTodos = function (userId,paramId,callback) {
+
+    TodoModel.searchTodos(userId,paramId,callback);
+  };
+
+
 // Todo.prototype.updateUserTodo = function (paramId,userId,todoObj,callback) {
 //
 //   TodoModel.updateUserTodo(paramId,userId,todoObj,callback);

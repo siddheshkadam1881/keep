@@ -13,7 +13,8 @@
        </div>
 
       <div fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="50">
-        <input  placeholder="search text goes here" style="height:30px;" [(ngModel)]="searchText" >
+        <input  placeholder="search text goes here" style="height:30px;" (keyup)="onKey($event)"   value="{{ searchText }}" [(ngModel)]="searchText" >
+        <!-- <p>{{values}}</p> -->
       </div>
 
          <!-- <div fxFlex.lg="30" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="20">
@@ -86,6 +87,7 @@
 
       </mat-nav-list>
     </mat-sidenav>
+   <!-- <DashboardComponent [values]= values></DashboardComponent> -->
    <router-outlet></router-outlet>
    </mat-sidenav-container>
 

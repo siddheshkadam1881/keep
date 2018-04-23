@@ -58,6 +58,7 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { NoteFilterPipe } from './note-filter.pipe';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { LabelCheckedMapFilterPipe } from './label-checked-map-filter.pipe';
+import { SearchfilterPipe } from './searchfilter.pipe';
 
 
 
@@ -130,7 +131,8 @@ const routes: Routes = [
     OpenDialogAddLabelComponent,
     DummyComponent,
     NoteFilterPipe,
-    LabelCheckedMapFilterPipe
+    LabelCheckedMapFilterPipe,
+    SearchfilterPipe
   ],
   imports: [
     SocialLoginModule,

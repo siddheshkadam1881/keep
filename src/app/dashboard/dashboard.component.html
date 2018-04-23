@@ -50,12 +50,14 @@
 <!-- note create here -->
 
 
-
 <div class="note" fxLayout="row" fxLayoutAlign="none">
   <h3>Pinned</h3></div>
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center center">
   <!-- <input type="text"  [(ngModel)]="term"> -->
-  <div  *ngFor="let data of dashDataFirst | noteFilter : { is_pinned : true }" class={{statusClass}}>
+  <!-- <div>
+    <input  placeholder="search text goes here" style="height:30px;" [(ngModel)]="searchText" >
+  </div> -->
+  <div  *ngFor="let data of dashDataFirst | noteFilter : { is_pinned : true } | searchfilter: searchText" class={{statusClass}}>
 
 
       <div class="allnotes" fxLayoutWrap fxLayoutAlign="center center">
@@ -180,7 +182,7 @@
 <!-- | labelCheckedMapFilter : data.label_ids  -->
 <!-- [(ngModel)]="label.checked" -->
 <!-- [checked]="isLabelChecked(label,data)" -->
-                  <div *ngFor="let label of Labels;let i=index;">
+                <div *ngFor="let label of Labels;let i=index;">
                      <label>
                        <input type="checkbox" name="labels" [checked]="isLabelChecked(label,data)" (click)="labelClick(label,data)"  (change)="checkSelectlabel(label.checked,label,data);submitlabel(label.checked,label,data)"/>{{label.title}}
                      </label>
@@ -200,7 +202,10 @@
   <div class="other" fxLayout="row" fxLayoutAlign=" none"><h3>Other</h3></div>
   <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
   <!-- <div class="other"><b>other</b></div> | noteFilter:{is_pinned:false,is_archieved:false,is_deleted:false}"-->
-  <div class="allnotes" *ngFor="let data of dashDataFirst  | noteFilter : { is_pinned : false} " >
+<!-- <div>
+  <input  placeholder="search text goes here" style="height:30px;" [(ngModel)]="searchText" >
+</div> -->
+  <div class="allnotes" *ngFor="let data of dashDataFirst  | noteFilter : { is_pinned : false} | searchfilter: searchText " class={{statusClass}} >
 
   <!-- <div *ngIf= "!data.is_deleted && !data.is_archieved && !data.is_pinned"> -->
 
@@ -237,6 +242,7 @@
 
               <mat-chip-list class="chip">
                 <mat-chip [removable]="removable" (remove)="removelabel(data,labelchip,chip_id)">
+
                   <p>{{data.label}}</p>
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
@@ -320,9 +326,17 @@
 
 
             <div *ngFor="let label of Labels;let i=index;">
-               <label>
+               <!-- <label>
                  <input type="checkbox" name="labels" autocomplete="off" [(ngModel)]="label.checked" (change)="checkSelectlabel(label.checked,label,data);submitlabel(label.checked,label,data)"/>
                           {{label.title}}
+               </label> -->
+
+
+               <label>
+                 <input type="checkbox" name="labels" [checked]="isLabelChecked(label,data)" (click)="labelClick(label,data)"  (change)="checkSelectlabel(label.checked,label,data);submitlabel(label.checked,label,data)"/>
+                 {{label.title}}
+                 <!-- {{this.visible}} -->
+
                </label>
              </div>
           </form>

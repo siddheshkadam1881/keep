@@ -96,7 +96,6 @@ exports.readTodos = function(req, res) {
     //res.send(err);
     res.json(note);
   });
-
 }
 
 /**
@@ -124,6 +123,20 @@ exports.update = function(req, res) {
       });
   });
 };
+
+
+
+exports.searchTodos = function(req, res) {
+   console.log(req.params);
+  todoService.searchTodos(req.decoded,req.params, function(err, note) {
+    if (err)
+      res.status(500).send( {
+        err: 'something blew up'
+      });
+    //res.send(err);
+    res.json(note);
+  });
+}
 
 
 

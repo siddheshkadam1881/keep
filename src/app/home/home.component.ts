@@ -1,4 +1,4 @@
-import { Component,OnInit,ViewChild } from '@angular/core';
+import { Component,OnInit,ViewChild,Input} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef} from '@angular/core';
 import { BackendApiService } from '../services/backend-api.service';
@@ -16,6 +16,7 @@ import { Location } from '@angular/common';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ISubscription } from "rxjs/Subscription";
+import { Pipe, PipeTransform } from '@angular/core';
 
 //import {HttpModule} from '@angular/http';
 @Component({
@@ -23,14 +24,12 @@ import { ISubscription } from "rxjs/Subscription";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
+
 export class HomeComponent  implements OnInit {
   showFiller = false;
    @ViewChild(DashboardComponent)
    private Dashboard: DashboardComponent;
-
-
-
-
 
    isClassVisible: false;
   public Users;
@@ -40,8 +39,10 @@ export class HomeComponent  implements OnInit {
   private subscription: ISubscription;
   public myData=[];
   note:string;
+  searchText:string;
+  public searchNote;
    title:string;
-   values:any={};
+  // values:any={};
    model:any={};
 //notes array
    notes: Array<any>;
@@ -57,7 +58,7 @@ export class HomeComponent  implements OnInit {
   returnUrl: string;
   invalidCredentialMsg: string;
   mobileQuery: MediaQueryList;
-
+    values = '';
    fillerNav = Array(1).fill(0).map((_, i) => `Nav Item ${i + 1}`);
 
    fillerContent = Array(1).fill(1).map(() =>'');
@@ -70,6 +71,8 @@ export class HomeComponent  implements OnInit {
      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
      this.mobileQuery.addListener(this._mobileQueryListener);
 
+      this.commonService.myMethod(this.searchNote);
+
     }
 
 
@@ -77,14 +80,27 @@ export class HomeComponent  implements OnInit {
       this.refreshNotes();
       this.refreshlabels();
       this.refreshProfile();
+      //this.onKey(event);
    }
+
+
+    onKey(event: any) { // without type info
+
+      this.searchNote = event.target.value;
+       //this.commonService.myMethod(this.values);
+       localStorage.setItem('searchData',this.searchNote);
+       // this.subscription = this.commonService.getData('searchTodos/'+ this.values)
+       //                                        .subscribe(data =>{
+       //                                          console.log(data);
+       //                                      });
+    }
 
 
 
 
    changeCSS(){
-     console.log("hii");
-     
+    // console.log("hii");
+
      this.commonService.toggleView();
    }
 
@@ -183,9 +199,5 @@ export class HomeComponent  implements OnInit {
                                             });
     }
 
-    // changeClass(class)
-    // {
-    //   this.subscription=this.commonService.changeClass(class);
-    // }
 
 }

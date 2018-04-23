@@ -64,7 +64,7 @@ export class ArchieveComponent implements OnInit {
 
 
    ngOnInit():void {
-        this.readNotes();
+       this.readNotes();
        this.refreshNotes();
    }
 
@@ -196,7 +196,7 @@ chipShow(data, chip1)
 
          this.subscription= this.commonService.updateData('updateNote/' + data._id, chip)
                                               .subscribe(model => {
-                                                this.readNotes();
+                                              this.readNotes();
                                                this.refreshNotes();
                                               });
           this.refreshNotes();

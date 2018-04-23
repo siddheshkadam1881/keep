@@ -98,11 +98,20 @@ var NoteSchema = new mongoose.Schema({
 NoteSchema.statics.readUserTodo = function (userId,cb) {
   this.find({ user_id:userId}).exec(cb);
 }
-//
+
 NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
 
   this.remove({ user_id: userId,_id: paramId.id}).exec(cb);
 }
+
+//todoService.serachResult(req.decoded, req.params,
+
+
+NoteSchema.statics.searchTodos = function (userId,paramId,cb) {
+  this.find({ user_id:userId,title: paramId.id}).exec(cb);
+  //this.findOne({ note:paramId,title:paramId,note_chip:paramId,note_color:paramId,label:paramId}).exec(cb);
+}
+
 
 // NoteSchema.updateUserTodo(paramId,userId,todoObj,callback)
 // {

@@ -99,23 +99,25 @@ private subscription: ISubscription;
   {
          this.commonService.deleteData('deletenote/'+id)
                            .subscribe(
-                             data =>  {
+                             model =>  {
+                                        this.readNotes();
+                                        this.model=model;
                                       }
                                   );
           this.refreshNotes();
   }
 
-  trashNotes(data)
-  {
-    var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
-     this.commonService.updateData('update/'+data._id,data1)
-                       .subscribe(model => {
-                                             this.readNotes();
-                                          });
-                        this.refreshNotes();
-
-
-  }
+  // trashNotes(data)
+  // {
+  //   var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
+  //    this.commonService.updateData('update/'+data._id,data1)
+  //                      .subscribe(model => {
+  //                                            this.readNotes();
+  //                                         });
+  //                       this.refreshNotes();
+  //
+  //
+  // }
   readNotes():void {
       this.subscription = this.commonService.getAllNotes()
                                             .subscribe(response => {

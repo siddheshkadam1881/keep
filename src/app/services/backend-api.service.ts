@@ -16,6 +16,8 @@ export class BackendApiService {
     private profileSubjectObj = new Subject<any>();
     status:boolean = true;
     private viewSubject = new Subject<any>();
+    myMethod$: Observable<any>;
+    private myMethodSubject = new Subject<any>();
 
     base_url="http://localhost:3000/api/";
     result:any;
@@ -29,8 +31,15 @@ export class BackendApiService {
 //const params = new HttpParams().set('page', '1');
 //this.http.get(environment.api+ '.feed.json', requestOptions );
 
-    constructor(private http: Http ) {  }
+    constructor(private http: Http ) {
+      this.myMethod$ = this.myMethodSubject.asObservable();
+      }
 
+      myMethod(data) {
+       console.log("use observale",data); // I have data! Let's return it so subscribers can use it!
+       // we can do stuff with data if we want
+       this.myMethodSubject.next(data);
+   }
 
 
 
@@ -45,35 +54,39 @@ export class BackendApiService {
          return this.viewSubject.asObservable();
        }
 
+
+    
+
+
     /* post service */
-      postServiceData(path,model,params?) {
+         postServiceData(path,model,params?)
+       {
 
-        let httpParams = new HttpParams();
-        if(params)
-            Object.keys(params).forEach(function (key) {
-            httpParams.append(key, params[key]);
-           });
+          let httpParams = new HttpParams();
+          if (params)
+           Object.keys(params).forEach(function(key)
+          {
+              httpParams.append(key, params[key]);
+          });
 
+            let token = localStorage.getItem("token");
 
+              // this.map = new Map<string, string[]>();
+              // Object.keys(options.model).forEach(key => {
+              // const value = (options.model as any)[key];
+              // this.map !.set(key, Array.isArray(value) ? value : [value]);
+              // });
 
-      let token = localStorage.getItem("token");
+            //set the token to header
+            const headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('token', token);
+            // let myParams = HttpParams().set("params", params);
+            let options = new RequestOptions({ headers: headers });
 
-      // this.map = new Map<string, string[]>();
-      // Object.keys(options.model).forEach(key => {
-      // const value = (options.model as any)[key];
-      // this.map !.set(key, Array.isArray(value) ? value : [value]);
-      // });
-
-        //set the token to header
-        const headers = new Headers();
-         headers.append('Content-Type', 'application/json');
-         headers.append('token', token);
-        // let myParams = HttpParams().set("params", params);
-         let options = new RequestOptions({ headers: headers});
-
-          this.urlpath= this.base_url.concat(path);
-          return this.http.post(this.urlpath,model,options)
-          .map(res=>res.json());
+            this.urlpath = this.base_url.concat(path);
+            return this.http.post(this.urlpath, model, options)
+                             .map(res => res.json());
 
       }
 
@@ -90,6 +103,8 @@ export class BackendApiService {
         let email=localStorage.getItem("email");
         //get token from the local storage
         let token = localStorage.getItem("token");
+
+        console.log( localStorage.getItem("token"));
 
 
         //set the token to header
