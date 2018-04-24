@@ -13,7 +13,9 @@
        </div>
 
       <div fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="50">
-        <input  placeholder="search text goes here" style="height:30px;" (keyup)="onKey($event)"   value="{{ searchText }}" [(ngModel)]="searchText" >
+        <form [formGroup]="brotherForm">
+        <input  placeholder="search text goes here" style="height:30px;"   [formControl]="inputFormControl" (keyup)="onKey($event)"   value="{{ searchText }}" [(ngModel)]="searchText" >
+      </form>
         <!-- <p>{{values}}</p> -->
       </div>
 

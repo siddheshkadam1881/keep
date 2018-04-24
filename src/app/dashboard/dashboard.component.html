@@ -57,7 +57,8 @@
   <!-- <div>
     <input  placeholder="search text goes here" style="height:30px;" [(ngModel)]="searchText" >
   </div> -->
-  <div  *ngFor="let data of dashDataFirst | noteFilter : { is_pinned : true } | searchfilter: searchText" class={{statusClass}}>
+  <!-- <div  *ngFor="let data of dashDataFirst | noteFilter : { is_pinned : true } | searchfilter: searchText" class={{statusClass}}> -->
+  <div  *ngFor="let data of searchNotes " class={{statusClass}}>
 
 
       <div class="allnotes" fxLayoutWrap fxLayoutAlign="center center">
@@ -200,7 +201,7 @@
 </div>
 
   <div class="other" fxLayout="row" fxLayoutAlign=" none"><h3>Other</h3></div>
-  <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
+  <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center center">
   <!-- <div class="other"><b>other</b></div> | noteFilter:{is_pinned:false,is_archieved:false,is_deleted:false}"-->
 <!-- <div>
   <input  placeholder="search text goes here" style="height:30px;" [(ngModel)]="searchText" >

@@ -8,9 +8,16 @@ var logger = new( winston.Logger )( {
       handleExceptions:true,
       json:false,
       colorize:true
-		}),
+		  }),
+		//   new winston.transports.Loggly({
+		// 	level: 'error',
+		// 	filename: './log1/error-log',
+    //   handleExceptions:true,
+    //   json:false,
+    //   colorize:true
+		// }),
 		new winston.transports.File( {
-    level: 'info',
+    level: 'error',
     filename: './log1/all-log',
     handleExceptions:true,
     json:false,

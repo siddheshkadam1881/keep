@@ -26,9 +26,7 @@ var User = require("../model/User");
 
    labelService.createUserlabel(req.body,req.decoded,function(err, user) {
      if (err)
-     res.json({success:false,
-       message: 'label cannot create'
-     })
+     return next(err);
        res.json({success:true,
          message: 'label successfully create'
        });
@@ -46,7 +44,7 @@ var User = require("../model/User");
 
    labelService.readUserlabel(req.decoded,function(err, note) {
       if (err)
-      res.status(500).send({ err:'something blew up' });
+      return next(err);
       //res.send(err);
       res.json(note);
     });
@@ -60,16 +58,16 @@ var User = require("../model/User");
 * @class  Label
 * @extends {req, res}
  */
- exports.label= function(req, res) {
-     
-      Label.findOne({
-       _id : req.params.id
-  }, function(err, label) {
-        if (err)
-        res.send(err);
-        res.json(label);
-     });
-  };
+ // exports.label= function(req, res) {
+ //
+ //      Label.findOne({
+ //       _id : req.params.id
+ //  }, function(err, label) {
+ //        if (err)
+ //        return next(err);
+ //        res.json(label);
+ //     });
+ //  };
 
 
 
@@ -88,7 +86,7 @@ exports.updateLabel = function(req, res) {
    new: true
  }, function(err, label) {
    if (err)
-     res.send(err);
+     return next(err);
      res.json(label);
  });
 };
@@ -103,7 +101,8 @@ exports.updateLabel = function(req, res) {
  exports.deleteLabel = function(req, res) {
   labelService.deleteUserlabel(req.decoded,req.params,function(err, label) {
     if (err)
-      res.send(err);
+    return next(err);
+
     res.json({
       message: 'labels successfully deleted'
     });

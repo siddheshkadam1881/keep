@@ -15,6 +15,9 @@ export class BackendApiService {
     private noteSubjectObj = new Subject<any>();
     private profileSubjectObj = new Subject<any>();
     status:boolean = true;
+    private brotherSource = new Subject<string>();
+    brotherObservable$ = this.brotherSource.asObservable();
+
     private viewSubject = new Subject<any>();
     myMethod$: Observable<any>;
     private myMethodSubject = new Subject<any>();
@@ -33,6 +36,11 @@ export class BackendApiService {
 
     constructor(private http: Http ) {
       this.myMethod$ = this.myMethodSubject.asObservable();
+      }
+
+
+      onDataChangeInBrother(data: any) {
+      this.brotherSource.next(data);
       }
 
       myMethod(data) {
@@ -55,7 +63,7 @@ export class BackendApiService {
        }
 
 
-    
+
 
 
     /* post service */

@@ -36,6 +36,13 @@ app.use(cors({
    exposedHeaders : ['x-auth-token']
 }));
 app.use('/api',userRoutes);
+
+app.use(function (err,req,res,next) {
+  logger.error(err.stack);
+    res.status(500).send( {
+    err: 'something blew up'
+  });
+})
 var mongoose = require('mongoose');
 var config = require("./config");
 

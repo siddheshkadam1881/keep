@@ -121,7 +121,7 @@ exports.readActiveUser = function(req, res) {
 
     userService.showProfile(req.decoded,function(err, note) {
      if (err)
-     res.send(500, { err: 'something blew up' });
+     return next(err);
      //res.send(err);
      res.json(note);
 
@@ -150,7 +150,7 @@ exports.activeUser = function(req, res) {
  },
  function(err, note) {
      if (err)
-     res.send(err);
+      return next(err);
    res.json(note);
    });
  });
@@ -342,7 +342,7 @@ exports.passport = function(passport) {
    //pull in our app id and secret from our auth.js file
   passport.use('facebook-token', new FacebookTokenStrategy(fbConfig.facebookAuth, function(accessToken, refreshToken, profile, done) {
 
-  
+
 
      User.upsertFbUser(accessToken, refreshToken, profile, function(err, user) {
           return done(err, user);

@@ -107,8 +107,17 @@ NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
 //todoService.serachResult(req.decoded, req.params,
 
 
-NoteSchema.statics.searchTodos = function (userId,paramId,cb) {
-  this.find({ user_id:userId,title: paramId.id}).exec(cb);
+NoteSchema.statics.searchTodos = function (userId,searchKey,cb) {
+   this.find ({ $and: [{ user_id:userId },
+               {$or: [
+               {title: { $regex: searchKey, $options: "i"}},
+               {note: { $regex: searchKey, $options: "i"}},
+
+               ]}]}).exec(cb);
+  //this.find({ user_id : userId, $or : [ {title: { $regex: searchKey, $options: "i"}}] }).exec(cb);
+
+
+    //this.find({ $or:[ user_id:userId,title: searchKey]}).exec(cb);
   //this.findOne({ note:paramId,title:paramId,note_chip:paramId,note_color:paramId,label:paramId}).exec(cb);
 }
 

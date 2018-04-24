@@ -62,20 +62,11 @@ var redisSet =  function(user_id,user) {
   */
 
 exports.createNote = function(req, res) {
-  // console.log(req.body);
-  // console.log(req.decoded);
-  todoService.createUserTodo(req.body, req.decoded, function(err, user) {
+
+  todoService.createUserTodo(req.body, req.decoded, function(err, note) {
     if (err)
-      res.json({
-        success: false,
-        message: 'Note cannot create'
-      })
-    res.json({
-      success: true,
-      message: 'Note successfully create'
-    });
-  // (req.decoded._id,user);
-   //redisSet(req.decoded._id,user);
+      return next(err);
+      res.json(note);
   });
 }
 
@@ -90,9 +81,8 @@ exports.readTodos = function(req, res) {
 
   todoService.readUserTodo(req.decoded, function(err, note) {
     if (err)
-      res.status(500).send( {
-        err: 'something blew up'
-      });
+     return next(err);
+
     //res.send(err);
     res.json(note);
   });
@@ -118,7 +108,7 @@ exports.update = function(req, res) {
       },
       function(err, note) {
         if (err)
-          res.send(err);
+        return next(err);
         res.json(note);
       });
   });
@@ -127,12 +117,13 @@ exports.update = function(req, res) {
 
 
 exports.searchTodos = function(req, res) {
-   console.log(req.params);
-  todoService.searchTodos(req.decoded,req.params, function(err, note) {
+
+  todoService.searchTodos(req.decoded,req.params.searchKey, function(err, note) {
     if (err)
-      res.status(500).send( {
-        err: 'something blew up'
-      });
+      return next(err);
+      // res.status(500).send( {
+      //   err: 'something blew up'
+      // });
     //res.send(err);
     res.json(note);
   });
@@ -178,7 +169,7 @@ exports.labelToNoteHandler = function(req, res) {
           }
         },
         function(err, updatedNoteData) {
-          if (err) throw err;
+          if (err) return next(err);
           else {
             res.send({
               'message': 'label has removed for note'
@@ -208,8 +199,9 @@ exports.delete = function(req, res) {
 
   todoService.deleteUserTodo(req.decoded, req.params, function(err, note) {
     if (err)
-      res.send(err);
-    res.json({
+      // res.send(err);
+      return next(err);
+     res.json({
       message: 'Note successfully deleted'
     });
   });

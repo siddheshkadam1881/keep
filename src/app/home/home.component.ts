@@ -17,6 +17,9 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ISubscription } from "rxjs/Subscription";
 import { Pipe, PipeTransform } from '@angular/core';
+import { Output, EventEmitter} from '@angular/core'
+import {FormsModule, FormGroup, FormControl, FormBuilder} from '@angular/forms'
+//import {DataService} from './data.service'
 
 //import {HttpModule} from '@angular/http';
 @Component({
@@ -30,6 +33,9 @@ export class HomeComponent  implements OnInit {
   showFiller = false;
    @ViewChild(DashboardComponent)
    private Dashboard: DashboardComponent;
+   brotherForm: FormGroup;
+ inputFormControl: FormControl;
+
 
    isClassVisible: false;
   public Users;
@@ -66,12 +72,16 @@ export class HomeComponent  implements OnInit {
 
    private _mobileQueryListener: () => void;
 
-   constructor(private location: Location,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
+   constructor(private builder: FormBuilder,private location: Location,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
      this.mobileQuery = media.matchMedia('(max-width: 600px)',);
      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
      this.mobileQuery.addListener(this._mobileQueryListener);
-
       this.commonService.myMethod(this.searchNote);
+   //obeservale bother varibles
+      this.inputFormControl = new FormControl();
+      this.brotherForm = this.builder.group({
+      inputFormControl: this.inputFormControl
+       });
 
     }
 
@@ -81,6 +91,11 @@ export class HomeComponent  implements OnInit {
       this.refreshlabels();
       this.refreshProfile();
       //this.onKey(event);
+
+      this.brotherForm.valueChanges.subscribe(
+       (formData) => {
+        this.commonService.onDataChangeInBrother(formData.inputFormControl);
+      });
    }
 
 

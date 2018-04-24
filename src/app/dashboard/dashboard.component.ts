@@ -1,4 +1,4 @@
-import { Component, OnInit,VERSION, Renderer2} from '@angular/core';
+import { Component, OnInit,VERSION, Renderer2,Input, Output, EventEmitter} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef} from '@angular/core';
 import { BackendApiService } from '../services/backend-api.service';
@@ -11,7 +11,7 @@ import {MatChipInputEvent} from '@angular/material';
 import {ENTER, COMMA} from '@angular/cdk/keycodes';
 import {NgModule, forwardRef, ViewChild, ElementRef} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
-import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR,FormControl, FormBuilder, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs/Rx';
 import { Location } from '@angular/common';
 import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
@@ -20,6 +20,7 @@ import { OnDestroy } from "@angular/core";
 import { ISubscription } from "rxjs/Subscription";
 import { RequestOptions } from '@angular/http';
 import { FilterPipe} from '../services/filter.pipe';
+
 // import * as $ from "jquery";
 
 @Component({
@@ -74,6 +75,9 @@ export class DashboardComponent implements OnInit {
   public show1:boolean = false;
   responseStatus:Object= [];
   private subscription: ISubscription;
+
+  inputFormControl:FormControl;
+  dataFromBrotherComponent: string;
   //status:boolean ;
   searchData= '';
   //hide and show grid
@@ -89,7 +93,7 @@ export class DashboardComponent implements OnInit {
 
   private _mobileQueryListener: () => void;
 
-  constructor(private location: Location,private rd: Renderer2,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
+  constructor(private builder:FormBuilder,private location: Location,private rd: Renderer2,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -99,13 +103,21 @@ export class DashboardComponent implements OnInit {
       }
     },
     error => console.log("Error while retrieving"));
-    this.commonService.myMethod$.subscribe((model) =>
-                                 {
-                                    this.model = model; // And he have data here too!
-                                    console.log(this.model);
-                                 });
+    // this.commonService.myMethod$.subscribe((model) =>
+    //                              {
+    //                                 this.model = model; // And he have data here too!
+    //                                 console.log(this.model);
+    //                              });
 
-
+    this.subscription = commonService.brotherObservable$
+                                       .subscribe(formData => {
+                                                                this.dataFromBrotherComponent = formData;
+                                                                 this.subscription = this.commonService.getData('searchTodos/'+ this.dataFromBrotherComponent)
+                                                                                                        .subscribe(searchNotes =>{
+                                                                                                                                   this.searchNotes=searchNotes;
+                                                                                                                                   console.log(this.searchNotes);
+                                                                                                                     });
+                                                        });
 
   }
 
@@ -127,30 +139,12 @@ export class DashboardComponent implements OnInit {
     this.readNotes();
     this.refreshLabel();
     this.gridView();
-    this.dataTake();
+    //this.dataTake();
 
   }
 
 
-  dataTake(){
-            this.searchData = localStorage.getItem("searchData");
 
-
-             // this.subscription = this.commonService.getData('searchTodos/'+ this.searchData)
-             //                                        .subscribe(data =>{
-             //                                        // this.ngOnInit();
-             //                                          console.log(data);
-             //                                          this.readNotes();
-             //                                      });
-
-            // this.subscription = this.commonService.getData('searchTodos/'+ this.searchData)
-            //                                        .subscribe(searchNotes =>{
-            //                                        this.searchNotes=searchNotes;
-            //                                         console.log("siddheshwar " ,searchNotes);
-            //                                      });
-
-
-       }
 
 
 
