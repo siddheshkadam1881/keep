@@ -58,7 +58,7 @@
     <input  placeholder="search text goes here" style="height:30px;" [(ngModel)]="searchText" >
   </div> -->
   <!-- <div  *ngFor="let data of dashDataFirst | noteFilter : { is_pinned : true } | searchfilter: searchText" class={{statusClass}}> -->
-  <div  *ngFor="let data of searchNotes " class={{statusClass}}>
+  <div  *ngFor="let data of searchNotes" class={{statusClass}}>
 
 
       <div class="allnotes" fxLayoutWrap fxLayoutAlign="center center">
@@ -129,7 +129,7 @@
 
               </mat-menu>
             </mat-menu>
-            <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
+            <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg" (click)="openDialogcollabrator(data)">
             <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg" [matMenuTriggerFor]="menu1">
             <mat-menu #menu1="matMenu">
               <div>
@@ -216,6 +216,7 @@
     </div>
     <div (click)="openDialog(data)">
       <div *ngIf="data.image">
+
         <img [src]='"http://localhost:3000/"+data.image' height="100px" width="250px" />
 
       </div>
@@ -273,7 +274,7 @@
 
         </mat-menu>
       </mat-menu>
-      <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
+      <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg" (click)="openDialogcollabrator(data)">
       <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg" [matMenuTriggerFor]="menu1">
       <mat-menu #menu1="matMenu">
         <div>

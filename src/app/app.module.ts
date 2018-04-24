@@ -59,6 +59,7 @@ import { NoteFilterPipe } from './note-filter.pipe';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { LabelCheckedMapFilterPipe } from './label-checked-map-filter.pipe';
 import { SearchfilterPipe } from './searchfilter.pipe';
+import { OpenDialogcollabratorComponent } from './open-dialogcollabrator/open-dialogcollabrator.component';
 
 
 
@@ -132,7 +133,8 @@ const routes: Routes = [
     DummyComponent,
     NoteFilterPipe,
     LabelCheckedMapFilterPipe,
-    SearchfilterPipe
+    SearchfilterPipe,
+    OpenDialogcollabratorComponent
   ],
   imports: [
     SocialLoginModule,
@@ -175,7 +177,8 @@ const routes: Routes = [
      OpenDialogImageComponent,
      OpenDialogProfileComponent,
      OpenDialogLabelComponent,
-     OpenDialogAddLabelComponent
+     OpenDialogAddLabelComponent,
+     OpenDialogcollabratorComponent
    ],
 
   providers: [UserService, { provide: AuthHttp, useFactory: getAuthHttp, deps: [Http] },BackendApiService, AuthGuard, LoggedInAuthGuard ,{ provide: AuthServiceConfig, useFactory: provideConfig }, {

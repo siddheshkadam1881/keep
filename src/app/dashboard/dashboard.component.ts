@@ -15,6 +15,7 @@ import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR,FormControl, FormB
 import {Observable} from 'rxjs/Rx';
 import { Location } from '@angular/common';
 import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
+import { OpenDialogcollabratorComponent } from '../open-dialogcollabrator/open-dialogcollabrator.component';
 import { OpenDialogAddLabelComponent } from '../open-dialog-add-label/open-dialog-add-label.component';
 import { OnDestroy } from "@angular/core";
 import { ISubscription } from "rxjs/Subscription";
@@ -37,6 +38,7 @@ export class DashboardComponent implements OnInit {
   private lastActivityTime: Date;
   private lastActivityTime1: Date;
   private lastActivityTime2: Date;
+  public Users;
 //CHIP EVENT
   //var storageId;
   visible: boolean = true;
@@ -141,6 +143,30 @@ export class DashboardComponent implements OnInit {
     this.gridView();
     //this.dataTake();
 
+  }
+  refreshProfile()
+     {
+     this.subscription=  this.commonService.getprofile()
+                                           .subscribe(response => {
+                                                      if (response)
+                                                   {
+                                                          this.Users = response;
+                                                   }
+                             })
+    }
+
+
+
+  openDialogcollabrator(data)
+  {
+  let dialogRef = this.dialog.open(OpenDialogcollabratorComponent, {
+   width: '600px',
+   height:'190px',
+   data:data
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+  });
   }
 
 

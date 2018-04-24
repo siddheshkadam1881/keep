@@ -1,0 +1,38 @@
+<!-- <p>
+  open-dialogcollabrator works!
+  {{currentUser}}
+</p> -->
+
+<div class="card-container" fxLayout="column" *ngFor="let user of currentUser">
+  <div fxFlex="05">
+        <h3> Label note</h3>
+  </div>
+  <hr>
+  <div fxFlex="10">
+    <div fxLayout="row">
+      <div fxFlex="">
+      <img [src]='"http://localhost:3000/"+user.image' class="cropcircle" fxLayout="row"  fxLayoutAlign="start"/>
+      </div>
+      <div fxFlex="5">
+      </div>
+      <div fxFlex="25">
+      {{user.username}}
+      {{user.email}}
+    </div>
+    <div fxFlex="95">
+    <!-- {{user.email}} -->
+  </div>
+  </div>
+</div>
+  <div fxFlex="40" fxLayoutAlign="start start">
+   <div fxFlex="05">
+      <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg" >
+    </div>
+    <div fxFlex="05">
+    </div>
+    <div contenteditable="true" style="outline:none;" type="text" name="note" (input)="model.note=$event.target.innerHTML"></div>
+  </div>
+  <div fxFlex="40" fxLayout="row" fxLayoutAlign="end end">
+    <button matTooltip="Done" matTooltipShowDelay="100" mat-button mat-raised-button type="submit" (click)="!toggle1();submitNote()">Done</button>
+  </div>
+  </div>

@@ -104,5 +104,5 @@ refreshProfile()
                                       this.dashDataFirst = response;
                                       }
                   })
-                }
+}
 }

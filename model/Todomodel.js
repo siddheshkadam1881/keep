@@ -112,7 +112,7 @@ NoteSchema.statics.searchTodos = function (userId,searchKey,cb) {
                {$or: [
                {title: { $regex: searchKey, $options: "i"}},
                {note: { $regex: searchKey, $options: "i"}},
-
+               {note_color : { $regex: searchKey, $options: "i"}}
                ]}]}).exec(cb);
   //this.find({ user_id : userId, $or : [ {title: { $regex: searchKey, $options: "i"}}] }).exec(cb);
 

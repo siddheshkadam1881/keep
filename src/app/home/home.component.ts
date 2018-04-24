@@ -136,12 +136,14 @@ export class HomeComponent  implements OnInit {
          });
    }
 
-   refreshProfile()
-      {
-      this.subscription=  this.commonService.getprofile().subscribe(response => {
-                                if (response) {
-                                   this.Users = response;
-                                  }
+      refreshProfile()
+    {
+      this.subscription=  this.commonService.getprofile()
+                                            .subscribe(response => {
+                                                       if (response)
+                                                    {
+                                                           this.Users = response;
+                                                    }
                               })
      }
 
