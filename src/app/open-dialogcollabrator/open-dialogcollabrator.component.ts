@@ -15,7 +15,9 @@ export class OpenDialogcollabratorComponent implements OnInit {
   private subscription: ISubscription;
    public currentUser;
    public response;
+   public notes;
    model:any={};
+   arrayOne:Array<string> = [];
    // constructor() { }
   constructor(private route: ActivatedRoute, private router: Router,public dialogRef: MatDialogRef<OpenDialogcollabratorComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any,private commonService:BackendApiService)
@@ -23,7 +25,8 @@ export class OpenDialogcollabratorComponent implements OnInit {
 
 
   ngOnInit() {
-    this.refreshProfile()
+    this.refreshProfile();
+    this.readNotes();
   }
   //refresh profile here...
   refreshProfile()
@@ -37,13 +40,25 @@ export class OpenDialogcollabratorComponent implements OnInit {
                                         })
  }
 
+   readNotes():void {
+     this.subscription = this.commonService.getAllNotes()
+                                           .subscribe(response => {
+                                              if (response) {
+                                               this.notes = response;
+                                                //console.log(response);
+
+                                                // arrayOne
+                                               }
+                                             },
+                                              error => console.log("Error while retrieving"))
+ }
  submitCollabrator(data)
  {
     //console.log(this.model);
   var collaborate = {
       collabrator_ids:this.model.collabrator_ids
    }
-   console.log(collaborate);
+   //console.log(collaborate);
    this.subscription=this.commonService.updateData('updateNote/' + data._id,collaborate)
                                        .subscribe(
                                                    response =>{
@@ -54,4 +69,8 @@ export class OpenDialogcollabratorComponent implements OnInit {
 
 
  }
+
+  ngOnDestroy(): void {
+                         this.subscription.unsubscribe();
+                     }
 }
