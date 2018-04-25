@@ -96,6 +96,7 @@ exports.readTodos = function(req, res) {
 
 exports.update = function(req, res) {
   upload(req, res, function(err) {
+    console.log(req.body)
     var todoObj = req.body || {};
     if (req.file && req.file.path) {
       todoObj.image = req.file.path;
@@ -108,12 +109,21 @@ exports.update = function(req, res) {
       },
       function(err, note) {
         if (err)
-        return next(err);
+        //return next(err);
+        res.status(500).send( {
+           err: 'something blew up'
+         });
         res.json(note);
       });
   });
 };
 
+
+/**
+  * @description searchTodos function to search Todo a notes..
+  * @class update
+  * @extends {req, res}
+  */
 
 
 exports.searchTodos = function(req, res) {
@@ -132,7 +142,48 @@ exports.searchTodos = function(req, res) {
 
 
 
-
+/**
+  * @description searchTodos function to search Todo a notes..
+  * @class addAndUpdateCollab
+  * @extends {req, res}
+  */
+//
+// exports.addAndUpdateCollab = function(req, res) {
+//   console.log(req.body.email);
+//   User.findOne({'local.email':req.body.email},{'local.password':0,'local.profile':0},function(err,user) {
+// console.log(user);
+// try {
+//   if(err) res.send(err)
+//   if(!user) res.json('user not found');
+//
+//   var data  = {
+//     collaborators_id:user._id
+//   }
+//   var sharedNote = {
+//     shared_id:user._id,
+//     collaborator:user.local.email
+//   }
+//
+//   Note.findOneAndUpdate({
+//     _id: req.params.noteId,
+//   },{$push:sharedNote},{new:true}, function(err, note) {
+//     if (err)
+//       res.send(err);
+//       Collab.findOneAndUpdate({ note_id:req.params.noteId},{$push:data},{new:true},
+//         function(err,res) {
+//           console.log(res);
+//       })
+//       // redisSet(req.user.id,note);
+//
+//     res.json(note);
+//   });
+//
+// } catch (e) {
+//
+// }
+//
+//   })
+// };
 
 /**
 *   @description addNoteToLabel function to add Label to note

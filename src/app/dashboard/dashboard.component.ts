@@ -110,14 +110,14 @@ export class DashboardComponent implements OnInit {
     //                                 this.model = model; // And he have data here too!
     //                                 console.log(this.model);
     //                              });
-
     this.subscription = commonService.brotherObservable$
                                        .subscribe(formData => {
                                                                 this.dataFromBrotherComponent = formData;
+                                                                if(this.dataFromBrotherComponent)
                                                                  this.subscription = this.commonService.getData('searchTodos/'+ this.dataFromBrotherComponent)
                                                                                                         .subscribe(searchNotes =>{
                                                                                                                                    this.searchNotes=searchNotes;
-                                                                                                                                   console.log(this.searchNotes);
+
                                                                                                                      });
                                                         });
 

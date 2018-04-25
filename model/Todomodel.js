@@ -21,6 +21,10 @@ var NoteSchema = new mongoose.Schema({
     type : mongoose.Schema.Types.ObjectId,
     ref: 'Label'
   }],
+  collabrator_ids:[{
+  type: String,
+  default: ""
+  }],
    label:
    {
      type: String,
@@ -63,6 +67,8 @@ var NoteSchema = new mongoose.Schema({
      type: Date,
      default: null
    },
+
+
 
   note_chip: {
     type: String
@@ -114,11 +120,6 @@ NoteSchema.statics.searchTodos = function (userId,searchKey,cb) {
                {note: { $regex: searchKey, $options: "i"}},
                {note_color : { $regex: searchKey, $options: "i"}}
                ]}]}).exec(cb);
-  //this.find({ user_id : userId, $or : [ {title: { $regex: searchKey, $options: "i"}}] }).exec(cb);
-
-
-    //this.find({ $or:[ user_id:userId,title: searchKey]}).exec(cb);
-  //this.findOne({ note:paramId,title:paramId,note_chip:paramId,note_color:paramId,label:paramId}).exec(cb);
 }
 
 

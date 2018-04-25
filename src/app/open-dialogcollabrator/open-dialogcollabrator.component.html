@@ -30,9 +30,21 @@
     </div>
     <div fxFlex="05">
     </div>
-    <div contenteditable="true" style="outline:none;" type="text" name="note" (input)="model.note=$event.target.innerHTML"></div>
+    <div >
+
+               <!-- <div contenteditable="true"  style="outline:none;" type="text" [(ngModel)]="model.collabrator_ids"></div> -->
+               <input  style="outline:none;border: none"   matInput placeholder="add  new collabrator" type="text" [(ngModel)]="model.collabrator_ids">
+               <!-- <input contenteditable="true" matInput placeholder="create new label" onfocus="this.value=''" type="text" name="title"  [(ngModel)]="model.title" (click)="changeShowStatus()"> -->
+
+    </div>
+
+
+        <!-- <input contenteditable="true"  matInput [(ngModel)]="index.title" > -->
+
+
+
   </div>
   <div fxFlex="40" fxLayout="row" fxLayoutAlign="end end">
-    <button matTooltip="Done" matTooltipShowDelay="100" mat-button mat-raised-button type="submit" (click)="!toggle1();submitNote()">Done</button>
+    <button matTooltip="Done" matTooltipShowDelay="100" mat-button mat-raised-button type="submit" (click)="submitCollabrator(data)">Done</button>
   </div>
   </div>
