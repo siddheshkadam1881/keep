@@ -50,24 +50,20 @@
 <!-- note create here -->
 
 
-<div class="note" fxLayout="row" fxLayoutAlign="none">
-  <h3>Pinned</h3></div>
+<div class="note" fxLayout="row" fxLayoutAlign="none"><h3>Pinned</h3></div>
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center center">
-  <!-- <input type="text"  [(ngModel)]="term"> -->
-  <!-- <div>
-    <input  placeholder="search text goes here" style="height:30px;" [(ngModel)]="searchText" >
-  </div> -->
-  <!-- <div  *ngFor="let data of dashDataFirst | noteFilter : { is_pinned : true } | searchfilter: searchText" class={{statusClass}}> -->
-  <div  *ngFor="let data of searchNotes" class={{statusClass}}>
+
+  <div  *ngFor="let data of dashDataFirst  | noteFilter : { is_pinned:true,is_archieved:false,is_deleted:false}" class={{statusClass}}>
 
 
       <div class="allnotes" fxLayoutWrap fxLayoutAlign="center center">
 
-    <!-- <div *ngIf="!data.is_deleted && !data.is_archieved && data.is_pinned"> -->
-
-      <!-- component create here  and pipe filter -->
 
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" fxLayoutWrap>
+
+
+        <!-- <app-dummy [data]="data"></app-dummy> -->
+
         <mat-card class="writeNotes1"  [style.background]="data.note_color">
           <div fxLayout="row" fxLayoutAlign="end end">
             <img class="img-responsive" matTooltip="Unpin note" (click)="pinNotes(data)" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/unpin.png">
@@ -94,8 +90,6 @@
              <div *ngIf="data.label">
 
               <mat-form-field class="demo-chip-list">
-
-                <!-- <div *ngFor="let labelchip of data.label"> -->
 
 
                     <mat-chip-list class="chip">
@@ -147,10 +141,6 @@
                 <button class="dot" style="background-color:pink;" (click)="changeColor(data,'pink')"></button>
               </div>
             </mat-menu>
-            <!-- <input #fileInput (change)="fileUpload()" type="file" name="pic" accept="image/*"> -->
-            <!-- <img src="{{empProfile?(empProfile):('assets/images/employee.jpg')}}" class="profile-img" (click)="profileUpdate($event,'.picUpload')"> -->
-            <!-- <input type="file" style="display:none" class="picUpload" /> -->
-
             <img class="img-responsive" #fileInput type="file" name="image" accept="image/*" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg" (click)="openDialogImage(data)">
             <input type="file" style="display:none" class="picUpload" />
 
@@ -175,14 +165,13 @@
                 <form #f="ngForm" novalidate>
                   <div class="modal_line"></div>
                   <!-- <div class="checkbox " *ngFor="let label of Labels;let i=index;">
-
                     <input type="checkbox" name="label[{{i}}]" [checked]="label.selected" value="label.selected" id="{{label.name}}" (change)="label.selected = !(label.selected)" />
                     <label for="{{label.title}}">{{label.title}}</label>
                   </div> -->
-                  <!-- <input type="button" (click)="ApplyFilters(f.valid,data)" class="btn btn-primary filters_btn" value="submit"> -->
-<!-- | labelCheckedMapFilter : data.label_ids  -->
-<!-- [(ngModel)]="label.checked" -->
-<!-- [checked]="isLabelChecked(label,data)" -->
+                    <!-- <input type="button" (click)="ApplyFilters(f.valid,data)" class="btn btn-primary filters_btn" value="submit"> -->
+                    <!-- | labelCheckedMapFilter : data.label_ids  -->
+                  <!-- [(ngModel)]="label.checked" -->
+                  <!-- [checked]="isLabelChecked(label,data)" -->
                 <div *ngFor="let label of Labels;let i=index;">
                      <label>
                        <input type="checkbox" name="labels" [checked]="isLabelChecked(label,data)" (click)="labelClick(label,data)"  (change)="checkSelectlabel(label.checked,label,data);submitlabel(label.checked,label,data)"/>{{label.title}}
@@ -202,13 +191,8 @@
 
   <div class="other" fxLayout="row" fxLayoutAlign=" none"><h3>Other</h3></div>
   <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center center">
-  <!-- <div class="other"><b>other</b></div> | noteFilter:{is_pinned:false,is_archieved:false,is_deleted:false}"-->
-<!-- <div>
-  <input  placeholder="search text goes here" style="height:30px;" [(ngModel)]="searchText" >
-</div> -->
-  <div class="allnotes" *ngFor="let data of dashDataFirst  | noteFilter : { is_pinned : false} | searchfilter: searchText " class={{statusClass}} >
+  <div class="allnotes" *ngFor="let data of dashDataFirst  | noteFilter : { is_pinned:false,is_archieved:false,is_deleted:false} " class={{statusClass}} >
 
-  <!-- <div *ngIf= "!data.is_deleted && !data.is_archieved && !data.is_pinned"> -->
 
   <mat-card class="writeNotes1"  [style.background]="data.note_color">
     <div fxLayout="row" fxLayoutAlign="end end">
@@ -239,7 +223,6 @@
 
         <mat-form-field class="demo-chip-list">
 
-          <!-- <div *ngFor="let labelchip of data.label"> -->
 
 
               <mat-chip-list class="chip">
@@ -320,7 +303,6 @@
           <form #f="ngForm" novalidate>
             <div class="modal_line"></div>
             <!-- <div class="checkbox " *ngFor="let label of Labels;let i=index;">
-
               <input type="checkbox" name="label[{{i}}]" [checked]="label.selected" value="label.selected" id="{{label.name}}" (change)="label.selected = !(label.selected)" />
               <label for="{{label.title}}">{{label.title}}</label>
             </div> -->

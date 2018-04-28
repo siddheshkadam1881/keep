@@ -94,9 +94,11 @@ router.use(function(req, res, next) {
  router.get('/readTodos',todoController.readTodos);
  router.get('/searchTodos/:searchKey',todoController.searchTodos);
  router.put('/updateNote/:id',todoController.update);
+ router.put('/addAndUpdateCollab/:id/:',todoController.addAndUpdateCollab);
  router.delete('/deletenote/:id',todoController.delete);
  router.get('/readActiveUser',userController.readActiveUser);
- router.post('/labelToNoteHandler/:id/:labelId',todoController.labelToNoteHandler);
+ router.put('/addAndUpdateCollab/:email/:noteId',todoController.addAndUpdateCollab);
+
  // router.post('/removeLabelToNote/:labelIdToAddNote/:id',todoController.removeLabelToNote);
 
 /*

@@ -1,4 +1,4 @@
-import { Component, OnInit,VERSION, Renderer2} from '@angular/core';
+import { Component, OnInit,VERSION, Renderer2,Input} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef} from '@angular/core';
 import { BackendApiService } from '../services/backend-api.service';
@@ -26,6 +26,7 @@ import { FilterPipe} from '../services/filter.pipe';
   styleUrls: ['./dummy.component.css']
 })
 export class DummyComponent implements OnInit {
+    @Input() data : any;
 
 
   private timerSubscription: any = null;

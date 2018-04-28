@@ -148,11 +148,11 @@ export class ArchieveComponent implements OnInit {
   //delete note forever
       deleteNote(id)
     {
-    this.subscription= this.commonService.deleteData('delete/'+id)
+    this.subscription= this.commonService.deleteData('deletenote/'+id)
                                          .subscribe( data => {
-                                           this.readNotes();
-                                          this.refreshNotes();
-                                         });
+                                                               this.readNotes();
+                                                    });
+     this.refreshNotes();
    }
        changeColor(data,color)
        {

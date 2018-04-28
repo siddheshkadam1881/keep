@@ -7,15 +7,15 @@ export class NoteFilterPipe implements PipeTransform {
 
 
 
-  transform(noteArray: Array<any>, args?: any): any {
+  transform(noteArray: Array<any>, option?: any): any {
     if(!noteArray) return [];
-  
+
     return noteArray.filter((noteObj)=>{
-      if(args){
+      if(option){
         var flag = true;
-        for(var index in args)
+        for(var index in option)
         {
-          if(noteObj[index] != args[index])
+          if(noteObj[index] != option[index])
           {
             flag = false;
             break;
@@ -23,7 +23,7 @@ export class NoteFilterPipe implements PipeTransform {
         }
         return flag;
       }
-     return noteObj.is_pinned == false;
+     return flag;
 
     });
   }

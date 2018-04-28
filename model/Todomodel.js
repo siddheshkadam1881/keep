@@ -67,9 +67,12 @@ var NoteSchema = new mongoose.Schema({
      type: Date,
      default: null
    },
-
-
-
+  collaborator: [{
+    type: String
+  }],
+  shared_id:[{
+    type:String
+  }],
   note_chip: {
     type: String
   },
@@ -128,85 +131,5 @@ NoteSchema.statics.searchTodos = function (userId,searchKey,cb) {
 //    this.findOneAndUpdate({ _id:paramId.id, user_id: userId._id,todoObj}).exec(cb);
 // }
 
-var Todomodel  = mongoose.model('todo', NoteSchema);
+var Todomodel  = mongoose.model('Todo', NoteSchema);
 module.exports = Todomodel;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// is_pinned: {
-//   type: Boolean,
-//   default: false
-// },
-// is_archieved: {
-//   type: Boolean,
-//   default: false
-// },
-// is_deleted: {
-//   type: Boolean,
-//   default: false
-// },
-// label: [{
-//   type: String
-// }],
-// reminder: {
-//   type: Date,
-//   default: null
-// },
-//
-// collaborator: [{
-//   type: String
-// }],
-// shared_id:[{
-//   type:String
-// }],
-// edited: {
-//   type: Date,
-//   default: Date.now()
-// },
-//

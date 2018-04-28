@@ -23,7 +23,6 @@ import { RequestOptions } from '@angular/http';
 import { FilterPipe} from '../services/filter.pipe';
 
 // import * as $ from "jquery";
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -127,7 +126,6 @@ export class DashboardComponent implements OnInit {
 
 
   ////////////////////////////////read the data by calling service method//////////////////////////////////////////////
-
   ngOnInit():void {
 
     let timer = Observable.timer(1000, 1000);
@@ -142,7 +140,6 @@ export class DashboardComponent implements OnInit {
     this.refreshLabel();
     this.gridView();
     //this.dataTake();
-
   }
   refreshProfile()
      {
@@ -591,7 +588,6 @@ chipShowMonday(data, chip1)
 
              // label.checked = label.checked ? false : true;
 
-
              if(check){
                          this.reqLabelDto.check=true;
                          //localStorage.setItem('storageId', this.reqLabelDto.check);
@@ -606,7 +602,6 @@ chipShowMonday(data, chip1)
                    {
                          this.reqLabelDto.check=false;
                          //localStorage.setItem('storageId', this.reqLabelDto.check);
-
                           var labeldata = {
                                             label_ids :null
                                           }
@@ -616,7 +611,6 @@ chipShowMonday(data, chip1)
                     }
 
          // this.labelClick(label,data)
-
 
      }
 
@@ -652,7 +646,6 @@ submitlabel(check,label,data)
     if(check){
       this.reqLabelDto.check=true;
       //localStorage.setItem('storageId', this.reqLabelDto.check);
-
       var labeldata = {
                         label :label.title
                        }
@@ -667,7 +660,6 @@ submitlabel(check,label,data)
    {
           this.reqLabelDto.check=false;
         //  localStorage.setItem('storageId, this.reqLabelDto.check);
-
           var labeldata ={
               label :null
           }
@@ -698,7 +690,6 @@ submitlabel(check,label,data)
     if (!isValid) return;
 
    // this.subscription=this.commonService.postServiceData('labelToNoteHandler/' + data._id + '/' + mapped + "/", {},{operation:"add"})
-
    this.subscription=this.commonService.updateData('updateNote/' + data._id,labeldata)
                                        .subscribe(
                                          model =>{

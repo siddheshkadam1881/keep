@@ -87,11 +87,13 @@ private subscription: ISubscription;
   //refresh notes here
   refreshNotes()
   {
-  this.commonService.getData('readTodos').subscribe(response => {
-    if (response) {
-     this.dashDataFirst = response.reverse();
-    }
-  })
+  this.commonService.getData('readTodos')
+                      .subscribe(
+                         response => {
+                                      if (response) {
+                                                      this.dashDataFirst = response.reverse();
+                                                     }
+                                  })
   }
 
   //delete note forever
@@ -107,17 +109,17 @@ private subscription: ISubscription;
           this.refreshNotes();
   }
 
-  // trashNotes(data)
-  // {
-  //   var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
-  //    this.commonService.updateData('update/'+data._id,data1)
-  //                      .subscribe(model => {
-  //                                            this.readNotes();
-  //                                         });
-  //                       this.refreshNotes();
-  //
-  //
-  // }
+  trashNotes(data)
+  {
+    var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
+     this.commonService.updateData('updateNote/'+data._id,data1)
+                       .subscribe(model => {
+                                             this.readNotes();
+                                          });
+                        this.refreshNotes();
+
+
+  }
   readNotes():void {
       this.subscription = this.commonService.getAllNotes()
                                             .subscribe(response => {
