@@ -16,6 +16,7 @@ export class OpenDialogcollabratorComponent implements OnInit {
    public currentUser;
    public response;
    public notes;
+   public dashDataFirst;
    model:any={};
    arrayOne:Array<string> = [];
    // constructor() { }
@@ -52,22 +53,19 @@ export class OpenDialogcollabratorComponent implements OnInit {
                                              },
                                               error => console.log("Error while retrieving"))
  }
+
+
+
  submitCollabrator(data)
  {
-    //console.log(this.model);
-  var collaborate = {
-      collabrator_ids:this.model.collabrator_ids
-   }
-   //console.log(collaborate);
-   this.subscription=this.commonService.updateData('updateNote/' + data._id,collaborate)
-                                       .subscribe(
+    //console.log(this.model.collabrator_ids);
+    this.subscription=this.commonService.updateData('addAndUpdateCollab/'+this.model.collabrator_ids+'/'+data._id,null)
+                                          .subscribe(
                                                    response =>{
                                                              this.response=response;
+                                                              this.readNotes();
                                                           });
-                                        //this.refreshNotes();
-
-
-
+              this.refreshNotes();
  }
 
   ngOnDestroy(): void {

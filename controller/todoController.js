@@ -183,7 +183,6 @@ exports.searchTodos = function(req, res) {
  }
 
  })
-
 };
 
 /**
@@ -257,48 +256,4 @@ exports.delete = function(req, res) {
       message: 'Note successfully deleted'
     });
   });
-};
-
-
-
-
-/**
-* @description delete function to delete a current note
-**/
-
-exports.collab = function(req, res) {
-  console.log(req.body.email);
-  User.findOne({'local.email':req.body.email},function(err,user) {
-  console.log(user);
-  try {
-  if(err) res.send(err)
-  if(!user) res.json('user not found');
-
-  var data  = {
-    collaborators_id:user._id
-  }
-  var sharedNote = {
-    shared_id:user._id,
-    collaborator:user.local.email
-  }
-
-  Note.findOneAndUpdate({
-    _id: req.params.noteId,
-  },{$push:sharedNote},{new:true}, function(err, note) {
-    if (err)
-      res.send(err);
-      Collab.findOneAndUpdate({ note_id:req.params.noteId},{$push:data},{new:true},
-        function(err,res) {
-          console.log(res);
-      })
-      redisSet(req.user.id,note);
-
-    res.json(note);
-  });
-
-} catch (e) {
-
-}
-
-  })
 };
