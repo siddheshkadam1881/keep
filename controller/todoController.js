@@ -144,14 +144,13 @@ exports.searchTodos = function(req, res) {
 
 
 /**
-  * @description searchTodos function to search Todo a notes..
-  * @class addAndUpdateCollab
+  * @description addAndUpdateCollab function to add collaborator in Todonotes..
+  * @class  addAndUpdateCollab
   * @extends {req, res}
   */
 
  exports.addAndUpdateCollab = function(req, res) {
-   //console.log(req.params.noteId);
-   //console.log(req.params.email);
+
    User.findOne({'email':req.params.email},function(err,user) {
    try {
    if(err) return next(err);
@@ -159,21 +158,18 @@ exports.searchTodos = function(req, res) {
     if(user)
     {
     var sharedNote = {
-                      collaborator:req.params.email
-                  }
+                       collaborator:req.params.email
+                     }
     }
    // console.log(sharedNote);
 
    Todo.findOneAndUpdate({
-     _id: req.params.noteId,
-  },{$addToSet:sharedNote},{new:true}, function(err, note) {
-     if (err)
+    _id: req.params.noteId,
+    },{$addToSet:sharedNote},{new:true}, function(err, note) {
+       if (err)
        return next(err);
-       // Collab.findOneAndUpdate({ note_id:req.params.noteId},{$push:data},{new:true},
-       //   function(err,res) {
-       //     console.log(res);
-       // })
-//       // redisSet(req.user.id,note);
+
+       // redisSet(req.user.id,note);
 
      res.json(note);
    });

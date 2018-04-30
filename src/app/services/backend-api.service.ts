@@ -50,15 +50,15 @@ export class BackendApiService {
 
 
 
-       toggleView(){
-                 this.status = !this.status;
-                 this.viewSubject.next(this.status);
-         }
-
+       toggleView()
+       {
+          this.status = !this.status;
+          this.viewSubject.next(this.status);
+       }
         getStatus()
-        {
-         setTimeout(this.toggleView);
-         return this.viewSubject.asObservable();
+       {
+          setTimeout(this.toggleView.bind(this));
+          return this.viewSubject.asObservable();
        }
 
 

@@ -321,7 +321,7 @@ export class DashboardComponent implements OnInit {
                                           model => {
                                                      this.model = model;
                                                      this.readNotes();
-                                           });
+                                                });
      this.refreshNotes();
   }
 
@@ -329,12 +329,12 @@ export class DashboardComponent implements OnInit {
   {
     this.commonService.loadAllLabels();
     // this.refreshImage();
-    this.subscription=  this.commonService.getAllNotes()
-                                          .subscribe(response => {
-                                                  if (response) {
-                                                                  this.dashDataFirst = response;
-                                                                }
-                                          })
+    // this.subscription=  this.commonService.getAllNotes()
+    //                                       .subscribe(response => {
+    //                                               if (response) {
+    //                                                               this.dashDataFirst = response;
+    //                                                             }
+    //                                       })
   }
 
 
@@ -345,9 +345,9 @@ export class DashboardComponent implements OnInit {
        this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                             .subscribe(
                                              model => {
-                                             this.model = model;
-                                             this.readNotes();
-                                             });
+                                                         this.model = model;
+                                                         this.readNotes();
+                                                      });
         this.refreshNotes();
    }
 
@@ -358,11 +358,11 @@ export class DashboardComponent implements OnInit {
 
     this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                          .subscribe(model =>  {
-                                           this.model = model;
-                                                      this.readNotes();
-                                                  }
-                                     );
-    this.refreshNotes();
+                                                                this.model = model;
+                                                                this.readNotes();
+                                                               }
+                                                   );
+       this.refreshNotes();
   }
 
 

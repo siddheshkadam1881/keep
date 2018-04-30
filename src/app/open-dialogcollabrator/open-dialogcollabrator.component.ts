@@ -65,7 +65,7 @@ export class OpenDialogcollabratorComponent implements OnInit {
                                                              this.response=response;
                                                               this.readNotes();
                                                           });
-              this.refreshNotes();
+              //this.refreshNotes();
  }
 
   ngOnDestroy(): void {
