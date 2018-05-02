@@ -61,8 +61,8 @@
 
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" fxLayoutWrap>
 
-
-        <!-- <app-dummy [data]="data"></app-dummy> -->
+<!--
+        <app-dummy [data]="data"></app-dummy> -->
 
         <mat-card class="writeNotes1"  [style.background]="data.note_color">
           <div fxLayout="row" fxLayoutAlign="end end">
@@ -70,7 +70,7 @@
           </div>
           <div (click)="openDialog(data)">
             <div *ngIf="data.image">
-              <img [src]='"http://localhost:3000/"+data.image' height="100px" width="250px" />
+              <img [src]='urlImage+data.image' height="100px" width="250px" />
 
             </div>
             <p>{{data.title}}</p>
@@ -201,7 +201,7 @@
     <div (click)="openDialog(data)">
       <div *ngIf="data.image">
 
-        <img [src]='"http://localhost:3000/"+data.image' height="100px" width="250px" />
+        <img [src]='urlImage+data.image' height="100px" width="250px" />
 
       </div>
       <p>{{data.title}}</p>

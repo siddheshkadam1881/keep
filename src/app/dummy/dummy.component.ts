@@ -1,4 +1,4 @@
-import { Component, OnInit,VERSION, Renderer2,Input} from '@angular/core';
+import { Component, OnInit,VERSION, Renderer2,Input, Output, EventEmitter} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef} from '@angular/core';
 import { BackendApiService } from '../services/backend-api.service';
@@ -11,10 +11,11 @@ import {MatChipInputEvent} from '@angular/material';
 import {ENTER, COMMA} from '@angular/cdk/keycodes';
 import {NgModule, forwardRef, ViewChild, ElementRef} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
-import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR,FormControl, FormBuilder, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs/Rx';
 import { Location } from '@angular/common';
 import { OpenDialogImageComponent } from '../open-dialog-image/open-dialog-image.component';
+import { OpenDialogcollabratorComponent } from '../open-dialogcollabrator/open-dialogcollabrator.component';
 import { OpenDialogAddLabelComponent } from '../open-dialog-add-label/open-dialog-add-label.component';
 import { OnDestroy } from "@angular/core";
 import { ISubscription } from "rxjs/Subscription";
@@ -27,68 +28,91 @@ import { FilterPipe} from '../services/filter.pipe';
 })
 export class DummyComponent implements OnInit {
     @Input() data : any;
+    // remainder
+      private timerSubscription: any = null;
+      private lastActivityTime: Date;
+      private lastActivityTime1: Date;
+      private lastActivityTime2: Date;
+      public Users;
+      public urlImage ="http://localhost:3000/";
+    //CHIP EVENT
+      //var storageId;
+      visible: boolean = true;
+      selectable: boolean = true;
+      removable: boolean = true;
+      addOnBlur: boolean = true;
+      separatorKeysCodes = [ENTER, COMMA];
+      check = false;
+      fruits = [
+        // { name: 'Lemon' },
+        // { name: 'Lime' },
+        // { name: 'Apple' },
+      ];
+     // public chipData;
+     chipData: Array<Object>[];
+      showFiller = false;
+      isClassVisible: false;
+      public dashDataFirst;
+      public Labels;
+      public labelchip;
+      public searchNotes;
+      reqLabelDto:any={};
+      public myData=[];
+      note:string;
+      checked : false;
+       title:string;
+       values:any={};
+       model:any={};
+       item:any={};
+       status:any={};
+       statusClass : string = "grid-view";
+       //notes array
+       notes: Array<any>;
+      //hide and see logic
+      public show:boolean = false;
+      public show1:boolean = false;
+      responseStatus:Object= [];
+      private subscription: ISubscription;
 
+      inputFormControl:FormControl;
+      dataFromBrotherComponent: string;
+      //status:boolean ;
+      searchData= '';
+      //hide and show grid
+      showHide:boolean;
+      showtoggle1:boolean;
+      loading = false;
+      returnUrl: string;
+      invalidCredentialMsg: string;
+      mobileQuery: MediaQueryList;
+      fillerNav = Array(1).fill(0).map((_, i) => `Nav Item ${i + 1}`);
 
-  private timerSubscription: any = null;
-  private lastActivityTime: Date;
-  private lastActivityTime1: Date;
-  private lastActivityTime2: Date;
-  //CHIP EVENT
-  //var storageId;
-  visible: boolean = true;
-  selectable: boolean = true;
-  removable: boolean = true;
-  addOnBlur: boolean = true;
-  separatorKeysCodes = [ENTER, COMMA];
-  check = true;
-  fruits = [
-    // { name: 'Lemon' },
-    // { name: 'Lime' },
-    // { name: 'Apple' },
-  ];
-  // public chipData;
+      fillerContent = Array(1).fill(1).map(() =>'');
 
-  //label.checked:boolean = true;
-  chipData: Array<Object>[];
-  showFiller = false;
-  isClassVisible: false;
-  public dashDataFirst;
-  public Labels;
-  public labelchip;
-  reqLabelDto:any={};
-    public myData=[];
-  note:string;
-  checked : false;
-   title:string;
-   values:any={};
-   model:any={};
-   item:any={};
-  //notes array
-   notes: Array<any>;
-  //hide and see logic
-  public show:boolean = false;
-  public show1:boolean = false;
-  responseStatus:Object= [];
-  private subscription: ISubscription;
-  status:boolean ;
-  //hide and show grid
-  showHide:boolean;
-  showtoggle1:boolean;
-  loading = false;
-  returnUrl: string;
-  invalidCredentialMsg: string;
-  mobileQuery: MediaQueryList;
-  fillerNav = Array(1).fill(0).map((_, i) => `Nav Item ${i + 1}`);
+  constructor(private builder:FormBuilder,private rd: Renderer2,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
 
-  fillerContent = Array(1).fill(1).map(() =>'');
+//read label
+    this.commonService.getData('readLabel').subscribe(response => {
+      if (response) {
+      }
+    },
+    error => console.log("Error while retrieving"));
+    // this.commonService.myMethod$.subscribe((model) =>
+    //                              {
+    //                                 this.model = model; // And he have data here too!
+    //                                 console.log(this.model);
+    //                              });
+    this.subscription = commonService.brotherObservable$
+                                       .subscribe(formData => {
+                                                                this.dataFromBrotherComponent = formData;
+                                                                if(this.dataFromBrotherComponent)
+                                                                 this.subscription = this.commonService.getData('searchTodos/'+ this.dataFromBrotherComponent)
+                                                                                                        .subscribe(searchNotes =>{
+                                                                                                                                   this.searchNotes=searchNotes;
 
-  private _mobileQueryListener: () => void;
+                                                                                                                     });
+                                                        });
 
-  constructor(private location: Location,private rd: Renderer2,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
-   //read label
   }
 
     ngOnInit():void {
@@ -98,13 +122,79 @@ export class DummyComponent implements OnInit {
        this.timerTommarrowExecuted();
        this.timerTodayExecuted();
        this.timerMondayExecuted();
+      // labelClick(labelObj , noteObj);
      });
      this.refreshNotes();
-      this.readNotes();
+      //this.readNotes();
       this.refreshLabel();
+      this.gridView();
+      //this.dataTake();
+    }
+    refreshProfile()
+       {
+       this.subscription=  this.commonService.getprofile()
+                                             .subscribe(response => {
+                                                        if (response)
+                                                     {
+                                                            this.Users = response;
+                                                     }
+                               })
+      }
+
+
+
+    openDialogcollabrator(data)
+    {
+    let dialogRef = this.dialog.open(OpenDialogcollabratorComponent, {
+     width: '600px',
+     height:'190px',
+     data:data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+    }
+
+
+
+
+
+
+
+    labelClick(labelObj , noteObj):void{
+
+      if(labelObj.checked === null || labelObj.checked === undefined)
+        labelObj.checked = this.isLabelChecked(labelObj , noteObj);
+        labelObj.checked = labelObj.checked ? false : true;
+
 
     }
 
+    isLabelChecked( labelObj , noteObj ):boolean{
+      let flag = false;
+      if(noteObj.label_ids && noteObj.label_ids.length >0 && noteObj.label_ids.indexOf(labelObj._id) >= 0 ){
+        flag = true;
+      }
+      // labelObj.checked = flag;
+      return flag;
+    }
+
+       gridView()
+     {
+        this.commonService.getStatus().subscribe((status)=>{
+
+         // if(status){
+         //  localStorage.setItem('class','list-view');
+         // }else{
+         //   localStorage.setItem('class','grid-view');
+         // }
+         this.statusClass = status? "grid-view":"list-view";
+
+            this.refreshNotes();
+          });
+
+        //this.refreshNotes();
+    }
 
 
     add(event: MatChipInputEvent): void {
@@ -124,7 +214,7 @@ export class DummyComponent implements OnInit {
      }
 
 
-   remove(data): void {
+     remove(data): void {
     var chip=
     {
       note_chip: null
@@ -134,10 +224,10 @@ export class DummyComponent implements OnInit {
                                         .subscribe(model =>
                                           {
                                             this.model=model;
-                                            this.readNotes();
+                                              this.refreshNotes();
                                           }
                                         );
-        this.refreshNotes();
+        //this.refreshNotes();
 
          var chip1=
        {
@@ -149,19 +239,19 @@ export class DummyComponent implements OnInit {
                                              .subscribe(model =>
                                               {
                                                 this.model = model;
-                                                this.readNotes();
+                                                this.refreshNotes();
                                               });
-          this.refreshNotes();
+          //this.refreshNotes();
     }
 
 
 
     ngOnDestroy(): void {
-      this.mobileQuery.removeListener(this._mobileQueryListener);
+      //this.mobileQuery.removeListener(this._mobileQueryListener);
       //unsubscribe the subscription in ngDestroy
       if (this.timerSubscription != null)
           this.timerSubscription.unsubscribe();
-        this.subscription.unsubscribe();
+          this.subscription.unsubscribe();
     }
 
     toggle1() {
@@ -186,10 +276,10 @@ export class DummyComponent implements OnInit {
                                                  model =>
                                                   {
                                                   this.model = model;
-                                                  this.readNotes();
+                                                  this.refreshNotes();
                                                   }
                                               );
-                 this.refreshNotes();
+
         }
 
     copyNote(model)
@@ -198,10 +288,11 @@ export class DummyComponent implements OnInit {
        this.subscription=this.commonService.postServiceData('create/Note',model)
                                            .subscribe(model => {
                                             this.model = model;
-                                            this.readNotes();
+                                            //this.readNotes();
+                                            this.refreshNotes();
                                             }
                                             );
-                                            this.refreshNotes();
+
     }
 
     logout() {
@@ -217,7 +308,6 @@ export class DummyComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-     console.log('The dialog was closed');
     });
     }
 
@@ -227,21 +317,22 @@ export class DummyComponent implements OnInit {
                                            .subscribe(
                                             model => {
                                                        this.model = model;
-                                                       this.readNotes();
-                                             });
-       this.refreshNotes();
+                                                       //this.readNotes();
+                                                       this.refreshNotes();
+                                                  });
+       //this.refreshNotes();
     }
 
     refreshNotes()
     {
-      this.commonService.loadAllLabels();
+      //this.commonService.loadAllLabels();
       // this.refreshImage();
-      this.subscription=  this.commonService.getAllNotes()
-                                            .subscribe(response => {
-                                                    if (response) {
-                                                                    this.dashDataFirst = response;
-                                                                  }
-                                            })
+       this.subscription=  this.commonService.getAllNotes()
+                                             .subscribe(response => {
+                                                     if (response) {
+                                                                     this.dashDataFirst = response;
+                                                                   }
+                                             })
     }
 
 
@@ -252,10 +343,10 @@ export class DummyComponent implements OnInit {
          this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                               .subscribe(
                                                model => {
-                                               this.model = model;
-                                               this.readNotes();
-                                               });
-          this.refreshNotes();
+                                                           this.model = model;
+                                                           this.refreshNotes();
+                                                        });
+          //this.refreshNotes();
      }
 
 
@@ -265,11 +356,11 @@ export class DummyComponent implements OnInit {
 
       this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                            .subscribe(model =>  {
-                                             this.model = model;
-                                                        this.readNotes();
-                                                    }
-                                       );
-      this.refreshNotes();
+                                                                  this.model = model;
+                                                                  this.refreshNotes();
+                                                                 }
+                                                     );
+         //this.refreshNotes();
     }
 
 
@@ -281,9 +372,9 @@ export class DummyComponent implements OnInit {
        this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                             .subscribe(model =>  {
                                              this.model = model;
-                                             this.readNotes();
+                                             this.refreshNotes();
                                              });
-       this.refreshNotes();
+       //this.refreshNotes();
      }
 
      unpinNotes(data)
@@ -292,10 +383,10 @@ export class DummyComponent implements OnInit {
           this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                               .subscribe(model =>  {
                                               this.model = model;
-                                              this.readNotes();
+                                              this.refreshNotes();
                                               }
                                               );
-          this.refreshNotes();
+          //this.refreshNotes();
       }
 
 
@@ -306,10 +397,11 @@ export class DummyComponent implements OnInit {
                                             .subscribe(model =>
                                              {
                                               this.model = model;
-                                              this.readNotes();
-                                             });
-        this.refreshNotes();
-      }
+                                              this.refreshNotes();//
+                                             }
+                                            );
+        //this.refreshNotes();
+        }
 
       chipShowtoday(data, chip1)
     {
@@ -322,7 +414,7 @@ export class DummyComponent implements OnInit {
                                            .subscribe(model =>
                                              {
                                               this.model = model;
-                                              this.readNotes();
+                                              this.refreshNotes();
                                              }
                                           );
 
@@ -335,10 +427,10 @@ export class DummyComponent implements OnInit {
                                          .subscribe(model =>
                                            {
                                             this.model = model;
-                                            this.readNotes();
+                                            this.refreshNotes();
                                            }
                                         );
-    this.refreshNotes();
+    //this.refreshNotes();
   }
 
     chipShowTommarrow(data, chip1)
@@ -352,7 +444,7 @@ export class DummyComponent implements OnInit {
                                            .subscribe(model =>
                                              {
                                               this.model = model;
-                                              this.readNotes();
+                                              this.refreshNotes();
                                              }
                                           );
 
@@ -366,10 +458,10 @@ export class DummyComponent implements OnInit {
                                           .subscribe(model =>
                                             {
                                              this.model = model;
-                                             this.readNotes();
+                                             this.refreshNotes();
                                             }
                                           );
-      this.refreshNotes();
+      //this.refreshNotes();
   }
 
 
@@ -380,9 +472,9 @@ export class DummyComponent implements OnInit {
             note_chip: chip1
           }
         this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
-                                           .subscribe(model => {
+                                              .subscribe(model => {
                                                      this.model = model;
-                                                     this.readNotes();
+                                                     this.refreshNotes();
                                                   }
                                               );
 
@@ -395,10 +487,10 @@ export class DummyComponent implements OnInit {
        this.subscription=this.commonService.updateData('updateNote/' + data._id, reminder2)
                                       .subscribe(model => {
                                       this.model = model;
-                                      this.readNotes();
+                                      this.refreshNotes();
                                       }
                                       );
-              this.refreshNotes();
+              //this.refreshNotes();
   }
 
      submitReminder(data)
@@ -411,24 +503,25 @@ export class DummyComponent implements OnInit {
        this.subscription=this.commonService.updateData('updateNote/' + data._id, reminder1)
                                             .subscribe(model => {
                                             this.model = model;
-                                            this.readNotes();
+                                             this.refreshNotes();
                                             }
                                            );
-       this.refreshNotes();
+      // this.refreshNotes();
    }
 
-  removelabel(data)
-
+    removelabel(data,label)
     {
+
       this.reqLabelDto.check=false;
-      var labeldata ={
-        label :null
-        }
+       var labeldata = {
+                         label :null
+                      }
       this.commonService.updateData('updateNote/'+ data._id,labeldata)
-                       .subscribe(res => {
-                         this.readNotes();
-      });
-       this.refreshNotes();
+                          .subscribe(res => {
+                                              this.refreshNotes();
+                                            });
+       //this.refreshNotes();
+       //this.labelClick(label , data);
     }
 
 
@@ -489,9 +582,9 @@ export class DummyComponent implements OnInit {
        }
 
        checkSelectlabel(check,label,data)
-     {
+       {
 
-               console.log(label);
+               // label.checked = label.checked ? false : true;
 
                if(check){
                            this.reqLabelDto.check=true;
@@ -507,7 +600,6 @@ export class DummyComponent implements OnInit {
                      {
                            this.reqLabelDto.check=false;
                            //localStorage.setItem('storageId', this.reqLabelDto.check);
-
                             var labeldata = {
                                               label_ids :null
                                             }
@@ -516,6 +608,7 @@ export class DummyComponent implements OnInit {
                                               });
                       }
 
+           // this.labelClick(label,data)
 
        }
 
@@ -528,10 +621,10 @@ export class DummyComponent implements OnInit {
                                             model =>
                                              {
                                                this.model=model;
-                                               this.readNotes();
+                                               this.refreshNotes();
                                              }
                                           );
-       this.refreshNotes();
+       //this.refreshNotes();
     }
 
   refreshLabel()
@@ -547,35 +640,36 @@ export class DummyComponent implements OnInit {
 
   submitlabel(check,label,data)
   {
-     console.log(label.title);
+
       if(check){
         this.reqLabelDto.check=true;
         //localStorage.setItem('storageId', this.reqLabelDto.check);
-
         var labeldata = {
                           label :label.title
                          }
         this.commonService.updateData('updateNote/'+ data._id,labeldata)
                           .subscribe(res =>
                             {
-                                this.readNotes();
+                                this.refreshNotes();
                             });
-        // this.refreshNotes();
+
     }
     else
      {
             this.reqLabelDto.check=false;
           //  localStorage.setItem('storageId, this.reqLabelDto.check);
-
             var labeldata ={
                 label :null
             }
             this.commonService.updateData('updateNote/'+ data._id,labeldata)
                               .subscribe(res =>
                                         {
-                                          this.readNotes();
+                                          this.refreshNotes();
                                         });
-          //    this.refreshNotes();
+
+
+                                      //  label.checked = label.checked ? false : true;
+            //this.refreshNotes();
     }
 
 
@@ -586,8 +680,6 @@ export class DummyComponent implements OnInit {
      var selectedLables  = this.Labels.filter(function (data1) { return data1.selected == true });
      var mapped = selectedLables.map((labelObj)=> labelObj._id);
 
-      // console.log(mapped.join(","));
-      // console.log(mapped.join(",").split(","));
       var labeldata ={
      label_ids :mapped
     }
@@ -595,7 +687,6 @@ export class DummyComponent implements OnInit {
       if (!isValid) return;
 
      // this.subscription=this.commonService.postServiceData('labelToNoteHandler/' + data._id + '/' + mapped + "/", {},{operation:"add"})
-
      this.subscription=this.commonService.updateData('updateNote/' + data._id,labeldata)
                                          .subscribe(
                                            model =>{
@@ -603,7 +694,4 @@ export class DummyComponent implements OnInit {
                                            });
                                           this.refreshNotes();
   }
-
-
-
 }

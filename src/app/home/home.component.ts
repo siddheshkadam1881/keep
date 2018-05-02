@@ -92,10 +92,11 @@ export class HomeComponent  implements OnInit {
       this.refreshProfile();
       //this.onKey(event);
 
-      this.brotherForm.valueChanges.subscribe(
-       (formData) => {
-        this.commonService.onDataChangeInBrother(formData.inputFormControl);
-      });
+      this.brotherForm.valueChanges
+                       .subscribe(
+                          (formData) => {
+                           this.commonService.onDataChangeInBrother(formData.inputFormControl);
+                            });
    }
 
 

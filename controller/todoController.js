@@ -109,21 +109,13 @@ exports.update = function(req, res) {
     if (req.file && req.file.path) {
       todoObj.image = req.file.path;
     }
-      //var email=req.decoded.email;
-      console.log(email);
+      var collaboratoremail=req.decoded.email;
+      //console.log(email);
     Todo.findOneAndUpdate({
       $and: [{user_id: req.decoded._id,_id: req.params.id},
-            {$or: [
-            { collaborator:{email}}]}
-
-      // {$or: [{ collaborator: {req.decoded.email} }]}
-
-      ]
-        // _id: req.params.id,
-        // user_id: req.decoded._id,
-       //collaborator:req.decoded.email
-       // { $or: { collaborator:req.decoded.email }},
-      }, todoObj, {
+             //{$or: [
+            // { collaborator:{collaboratoremail}}]}
+      ]}, todoObj, {
         new: true
       },
       function(err, note) {

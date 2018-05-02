@@ -64,7 +64,7 @@ export class ArchieveComponent implements OnInit {
 
 
    ngOnInit():void {
-       this.readNotes();
+       //this.readNotes();
        this.refreshNotes();
    }
 
@@ -150,9 +150,9 @@ export class ArchieveComponent implements OnInit {
     {
     this.subscription= this.commonService.deleteData('deletenote/'+id)
                                          .subscribe( data => {
-                                                               this.readNotes();
+                                                               this.refreshNotes();
                                                     });
-     this.refreshNotes();
+    // this.refreshNotes();
    }
        changeColor(data,color)
        {
@@ -161,9 +161,9 @@ export class ArchieveComponent implements OnInit {
           this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                               .subscribe(model => {
                                                                     this.refreshNotes();
-                                                                    this.readNotes();
+                                                                    //this.readNotes();
                                                                   });
-          this.refreshNotes();
+          //this.refreshNotes();
       }
 
 
@@ -173,19 +173,11 @@ export class ArchieveComponent implements OnInit {
 
      this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                           .subscribe(model => {
-                                                                this.readNotes()
+                                                                this.refreshNotes();
                                                              });
-       this.refreshNotes();
+       //this.refreshNotes();
   }
-  readNotes():void {
-      this.subscription = this.commonService.getAllNotes()
-                                            .subscribe(response => {
-                                               if (response) {
-                                                 this.dashDataFirst = response;
-                                                }
-                                              },
-                                               error => console.log("Error while retrieving"))
-  }
+
 
 chipShow(data, chip1)
 {
@@ -196,10 +188,10 @@ chipShow(data, chip1)
 
          this.subscription= this.commonService.updateData('updateNote/' + data._id, chip)
                                               .subscribe(model => {
-                                              this.readNotes();
-                                               this.refreshNotes();
-                                              });
-          this.refreshNotes();
+                                              //this.readNotes();
+                                                                    this.refreshNotes();
+                                                                });
+          //this.refreshNotes();
   }
     submitReminder(data)
   {
@@ -209,9 +201,9 @@ chipShow(data, chip1)
               }
                 this.subscription=this.commonService.updateData('updateNote/' + data._id, reminder1)
                                                         .subscribe(model => {
-                                                        this.readNotes();
-                                                });
-                this.refreshNotes();
+                                                                               this.refreshNotes();
+                                                                            });
+
 
    }
 }

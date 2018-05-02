@@ -4,7 +4,7 @@
 
 
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
-  <div class="allnotes"  *ngFor="let data of dashDataFirst  | noteFilter : { is_pinned:false,is_archieved:false,is_deleted : true }" >
+  <div class="allnotes"  *ngFor="let data of dashDataFirst  | noteFilter : { is_deleted : true }" >
   <!-- <div *ngIf="data.is_deleted" > -->
   <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}" [style.background]="data.note_color">
           <div (click)="openDialog(data)">

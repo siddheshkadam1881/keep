@@ -1,76 +1,120 @@
-<!-- <div class="allnotes" *ngFor="let data of dashDataFirst | noteFilter : { is_pinned : true } " fxLayoutWrap fxLayoutAlign="center center">
- -->
+<mat-card class="writeNotes1"  [style.background]="data.note_color">
+  <div fxLayout="row" fxLayoutAlign="end end">
+    <img class="img-responsive" matTooltip="Unpin note" (click)="pinNotes(data)" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/unpin.png">
+  </div>
+  <div (click)="openDialog(data)">
+    <div *ngIf="data.image">
+      <img [src]='urlImage+data.image' height="100px" width="250px" />
 
-<mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}"  [style.background]="data.note_color">
-  <div fxLayout="row" fxLayoutAlign="end end" >
-  <img class="img-responsive" matTooltip="Pin note" (click)="pinNotes(data)"  matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/pin.svg">
-       </div>
-       <div (click)="openDialog(data)"  >
-           <p>{{data.title}}</p>
-           <p [innerHTML]="data.note"></p>
-           <div  *ngIf="data.note_chip || data.reminder">
-              <mat-form-field class="demo-chip-list">
-                <mat-chip-list>
-               <mat-chip  [removable]="removable" (remove)="remove(data)">
-                 <p>{{data.note_chip}}</p>
-                 <!-- <p>{{data.reminder}}</p> -->
-                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-               </mat-chip>
-               </mat-chip-list>
-             </mat-form-field>
+    </div>
+    <p>{{data.title}}</p>
+    <p [innerHTML]="data.note"></p>
+    <div *ngIf="data.note_chip || data.reminder">
+      <mat-form-field class="demo-chip-list">
+        <mat-chip-list>
+          <mat-chip [removable]="removable" (remove)="remove(data)">
+            <p>{{data.note_chip}}</p>
+            <!-- <p>{{data.reminder}}</p> -->
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </mat-form-field>
+    </div>
+
+     <div *ngIf="data.label">
+
+      <mat-form-field class="demo-chip-list">
+
+
+            <mat-chip-list class="chip">
+              <mat-chip [removable]="removable" (remove)="removelabel(data,labelchip,chip_id)">
+                <p>{{data.label}}</p>
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+
+
+        <!-- </div> -->
+      </mat-form-field>
+
+    </div>
+  </div>
+  <div class="imageNotes" [style.background]="data.note_color">
+    <img class="img-responsive" y-position="below" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg" [matMenuTriggerFor]="menu2" />
+    <mat-menu #menu2="matMenu">
+      <button mat-menu-item style="word-spacing: 30px;" (click)="chipShowtoday(data,'Later Today 20.00')">LaterToday  20.00</button>
+      <button mat-menu-item style="word-spacing: 30px;" (click)="chipShowTommarrow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
+      <button mat-menu-item style="word-spacing: 30px;" (click)="chipShowMonday(data,'NextWeek  Mon,08.00')">NextWeek   Mon,08.00</button>
+      <button mat-menu-item [matMenuTriggerFor]="menu3"><img class="img-responsive"  style="width:18px;" src="assets/icon/watch.svg" >select date and time</button>
+      <mat-menu #menu3="matMenu">
+
+        Date Time:
+        <input [(ngModel)]="invalidMoment" [min]="min" [max]="max" [owlDateTimeTrigger]="dt11" [owlDateTime]="dt11" #dateTime="ngModel" name="reminder" [(ngModel)]="model.reminder" required/>
+        <owl-date-time #dt11></owl-date-time>
+        <div fxLayout="row" fxLayoutAlign="end center" style="margin-top:5px;">
+          <button mat-button mat-raised-button color="primary" type="submit" (click)="submitReminder(data)" style="font-size: 10px;">save</button>
+        </div>
+
+      </mat-menu>
+    </mat-menu>
+    <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg" (click)="openDialogcollabrator(data)">
+    <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg" [matMenuTriggerFor]="menu1">
+    <mat-menu #menu1="matMenu">
+      <div>
+        <button class="dot" style="background-color:green;" (click)="changeColor(data,'green')"></button>
+        <button class="dot" style="background-color:red;" (click)="changeColor(data,'red')"></button>
+        <button class="dot" style="background-color:yellow;" (click)="changeColor(data,'yellow')"></button>
+        <button class="dot" style="background-color:orange;" (click)="changeColor(data,'orange')"></button>
+        <button class="dot" style="background-color:blue;" (click)="changeColor(data,'blue')"></button>
+      </div>
+      <div>
+        <button class="dot" style="background-color:Teal;" (click)="changeColor(data,'Teal')"></button>
+        <button class="dot" style="background-color:grey;" (click)="changeColor(data,'grey')"></button>
+        <button class="dot" style="background-color:purple;" (click)="changeColor(data,'purple')"></button>
+        <button class="dot" style="background-color:brown;" (click)="changeColor(data,'brown')"></button>
+        <button class="dot" style="background-color:pink;" (click)="changeColor(data,'pink')"></button>
+      </div>
+    </mat-menu>
+    <img class="img-responsive" #fileInput type="file" name="image" accept="image/*" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg" (click)="openDialogImage(data)">
+    <input type="file" style="display:none" class="picUpload" />
+
+    <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100" (click)="archiveNotes(data)" style="width: 22px;margin-left: 10px" src="assets/icon/archive.svg">
+
+    <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg" [matMenuTriggerFor]="menu">
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item type="submit" (click)="trashNotes(data)" style="font-size: 13px;">Delete note</button>
+      <!-- label add here -->
+      <button mat-menu-item type="submit" style="font-size: 13px;" [matMenuTriggerFor]="menu4">Add label</button>
+      <mat-menu #menu4="matMenu">
+
+        <div fxLayout="row" fxLayoutAlign="start center">
+          Label note
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <input matInput placeholder="Enter Label name" name="label" [(ngModel)]="model.title">
+          <input type="button" (click)="createNewlabel(label)" value="create">
+        </div>
+
+
+        <form #f="ngForm" novalidate>
+          <div class="modal_line"></div>
+          <!-- <div class="checkbox " *ngFor="let label of Labels;let i=index;">
+            <input type="checkbox" name="label[{{i}}]" [checked]="label.selected" value="label.selected" id="{{label.name}}" (change)="label.selected = !(label.selected)" />
+            <label for="{{label.title}}">{{label.title}}</label>
+          </div> -->
+            <!-- <input type="button" (click)="ApplyFilters(f.valid,data)" class="btn btn-primary filters_btn" value="submit"> -->
+            <!-- | labelCheckedMapFilter : data.label_ids  -->
+          <!-- [(ngModel)]="label.checked" -->
+          <!-- [checked]="isLabelChecked(label,data)" -->
+        <div *ngFor="let label of Labels;let i=index;">
+             <label>
+               <input type="checkbox" name="labels" [checked]="isLabelChecked(label,data)" (click)="labelClick(label,data)"  (change)="checkSelectlabel(label.checked,label,data);submitlabel(label.checked,label,data)"/>{{label.title}}
+             </label>
            </div>
-       </div>
-       <div class="imageNotes" [style.background]="data.note_color">
-           <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg"  [matMenuTriggerFor]="menu2">
-           <mat-menu #menu2="matMenu">
-             <button mat-menu-item style="word-spacing: 30px;" (click)="chipShowtoday(data,'Later Today 20.00')">LaterToday  20.00</button>
-             <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShowTommarrow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
-              <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShowMonday(data,'NextWeek  Mon,08.00')" >NextWeek   Mon,08.00</button>
-                <button mat-menu-item  [matMenuTriggerFor]="menu3"><img class="img-responsive"  style="width:18px;" src="assets/icon/watch.svg" >select date and time</button>
-              <mat-menu #menu3="matMenu">
+        </form>
+      </mat-menu>
 
-                Date Time:
-                <input [(ngModel)]="invalidMoment"
-                [min]="min" [max]="max"
-                [owlDateTimeTrigger]="dt11" [owlDateTime]="dt11"
-                #dateTime="ngModel" name="reminder"  [(ngModel)]="model.reminder" required/>
-                <owl-date-time #dt11></owl-date-time>
-
-
-              <div fxLayout="row" fxLayoutAlign="end center" style="margin-top:5px;">
-              <button  mat-button mat-raised-button color="primary" type="submit" (click)="submitReminder(data)" style="font-size: 10px;">save</button>
-               </div>
-
-
-              </mat-menu>
-
-       </mat-menu>
-           <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
-           <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg" [matMenuTriggerFor]="menu1">
-           <mat-menu #menu1="matMenu">
-                <div>
-                  <button class="dot" style="background-color:green;" (click)="changeColor(data,'green')"></button>
-                    <button class="dot"  style="background-color:red;" (click)="changeColor(data,'red')" ></button>
-                    <button class="dot"  style="background-color:yellow;" (click)="changeColor(data,'yellow') "></button>
-                    <button class="dot"  style="background-color:orange;" (click)="changeColor(data,'orange')" ></button>
-                    <button class="dot"  style="background-color:blue;" (click)="changeColor(data,'blue')"></button>
-                  </div>
-                  <div>
-                    <button class="dot"  style="background-color:Teal;" (click)="changeColor(data,'Teal')"></button>
-                    <button class="dot"  style="background-color:grey;" (click)="changeColor(data,'grey')"></button>
-                    <button class="dot"  style="background-color:purple;"(click)="changeColor(data,'purple')"></button>
-                    <button class="dot"  style="background-color:brown;" (click)="changeColor(data,'brown')"></button>
-                   <button class="dot"  style="background-color:pink;" (click)="changeColor(data,'pink')"></button>
-                </div>
-           </mat-menu>
-           <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg">
-           <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="100" (click)="archiveNotes(data)" style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
-           <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
-           <mat-menu #menu="matMenu" >
-                  <button mat-menu-item type="submit" (click)="trashNotes(data)" style="font-size: 13px;">Delete note</button>
-                   <button mat-menu-item type="submit" (click)="trashNotes(data)" style="font-size: 13px;">Add label</button>
-                  <button mat-menu-item type="submit" (click)="copyNote(data)" style="font-size: 13px;">copy note</button>
-           </mat-menu>
-     </div>
- </mat-card>
-<!-- </div> -->
+      <button mat-menu-item type="submit" (click)="copyNote(data)" style="font-size: 13px;">copy note</button>
+    </mat-menu>
+  </div>
+</mat-card>
