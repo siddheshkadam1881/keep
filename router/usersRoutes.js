@@ -98,7 +98,7 @@ router.use(function(req, res, next) {
  router.delete('/deletenote/:id',todoController.delete);
  router.get('/readActiveUser',userController.readActiveUser);
  router.put('/addAndUpdateCollab/:email/:noteId',todoController.addAndUpdateCollab);
-
+ router.put('/deleteAndUpdateCollab/:email/:noteId',todoController.deleteAndUpdateCollab);
  // router.post('/removeLabelToNote/:labelIdToAddNote/:id',todoController.removeLabelToNote);
 
 /*

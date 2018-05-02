@@ -71,4 +71,14 @@ export class OpenDialogcollabratorComponent implements OnInit {
   ngOnDestroy(): void {
                          this.subscription.unsubscribe();
                      }
+ deleteCollaborator(note)
+ {
+   this.subscription=this.commonService.updateData('deleteAndUpdateCollab/'+note.collaborator+'/'+note._id,null)
+                                         .subscribe(
+                                                  response =>{
+                                                            this.response=response;
+                                                             this.readNotes();
+                                                         });
+             //this.refreshNotes();
+ }
 }

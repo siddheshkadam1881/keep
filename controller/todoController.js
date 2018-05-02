@@ -192,6 +192,47 @@ exports.searchTodos = function(req, res) {
  })
 };
 
+
+
+/**
+  * @description addAndUpdateCollab function to add collaborator in Todonotes..
+  * @class  addAndUpdateCollab
+  * @extends {req, res}
+  */
+
+ exports.deleteAndUpdateCollab = function(req, res) {
+
+   User.findOne({'email':req.params.email},function(err,user) {
+   try {
+   if(err) return next(err);
+   if(!user) res.json('user not found');
+    if(user)
+    //console.log(user._id);
+    {
+    var sharedNote = {
+                       collaborator:req.params.email
+                     }
+    }
+   // console.log(sharedNote);
+
+   Todo.findOneAndUpdate({
+      _id: req.params.noteId,
+    },{$pull:sharedNote},{new:true}, function(err, note) {
+     if (err)
+       return next(err);
+
+       // redisSet(req.user.id,note);
+
+     res.json(note);
+   });
+
+ }
+  catch (e) {
+ }
+
+ })
+};
+
 /**
 *   @description addNoteToLabel function to add Label to note
 *   @class addLabelToNote

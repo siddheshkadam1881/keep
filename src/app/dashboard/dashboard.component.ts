@@ -21,21 +21,23 @@ import { OnDestroy } from "@angular/core";
 import { ISubscription } from "rxjs/Subscription";
 import { RequestOptions } from '@angular/http';
 import { FilterPipe} from '../services/filter.pipe';
+
+// import * as $ from "jquery";
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-
-
 export class DashboardComponent implements OnInit {
+
+
+
 // remainder
   private timerSubscription: any = null;
   private lastActivityTime: Date;
   private lastActivityTime1: Date;
   private lastActivityTime2: Date;
   public Users;
-  public urlImage ="http://localhost:3000/";
 //CHIP EVENT
   //var storageId;
   visible: boolean = true;
@@ -102,7 +104,11 @@ export class DashboardComponent implements OnInit {
       }
     },
     error => console.log("Error while retrieving"));
-
+    // this.commonService.myMethod$.subscribe((model) =>
+    //                              {
+    //                                 this.model = model; // And he have data here too!
+    //                                 console.log(this.model);
+    //                              });
     this.subscription = commonService.brotherObservable$
                                        .subscribe(formData => {
                                                                 this.dataFromBrotherComponent = formData;
@@ -118,6 +124,8 @@ export class DashboardComponent implements OnInit {
 
 
 
+
+  ////////////////////////////////read the data by calling service method//////////////////////////////////////////////
   ngOnInit():void {
 
     let timer = Observable.timer(1000, 1000);
@@ -128,7 +136,7 @@ export class DashboardComponent implements OnInit {
     // labelClick(labelObj , noteObj);
    });
    this.refreshNotes();
-    //this.readNotes();
+  //  this.readNotes();
     this.refreshLabel();
     this.gridView();
     //this.dataTake();
@@ -186,17 +194,12 @@ export class DashboardComponent implements OnInit {
    {
       this.commonService.getStatus().subscribe((status)=>{
 
-       // if(status){
-       //  localStorage.setItem('class','list-view');
-       // }else{
-       //   localStorage.setItem('class','grid-view');
-       // }
        this.statusClass = status? "grid-view":"list-view";
 
-          this.refreshNotes();
+        this.refreshNotes();
         });
 
-      //this.refreshNotes();
+
   }
 
 
@@ -227,10 +230,10 @@ export class DashboardComponent implements OnInit {
                                       .subscribe(model =>
                                         {
                                           this.model=model;
-                                            this.refreshNotes();
+                                          this.refreshNotes();
                                         }
                                       );
-      //this.refreshNotes();
+
 
        var chip1=
      {
@@ -244,7 +247,7 @@ export class DashboardComponent implements OnInit {
                                               this.model = model;
                                               this.refreshNotes();
                                             });
-        //this.refreshNotes();
+
   }
 
 
@@ -262,15 +265,7 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  readNotes():void {
-      this.subscription = this.commonService.getAllNotes()
-                                            .subscribe(response => {
-                                               if (response) {
-                                                 this.dashDataFirst = response;
-                                                }
-                                              },
-                                               error => console.log("Error while retrieving"))
-  }
+
 
   submitNote() {
 
@@ -279,10 +274,10 @@ export class DashboardComponent implements OnInit {
                                                model =>
                                                 {
                                                 this.model = model;
-                                                this.refreshNotes();
+                                                 this.refreshNotes();
                                                 }
                                             );
-
+               //this.refreshNotes();
       }
 
   copyNote(model)
@@ -291,11 +286,10 @@ export class DashboardComponent implements OnInit {
      this.subscription=this.commonService.postServiceData('create/Note',model)
                                          .subscribe(model => {
                                           this.model = model;
-                                          //this.readNotes();
-                                          this.refreshNotes();
+                                           this.refreshNotes();
                                           }
                                           );
-
+                                          //this.refreshNotes();
   }
 
   logout() {
@@ -320,21 +314,20 @@ export class DashboardComponent implements OnInit {
                                          .subscribe(
                                           model => {
                                                      this.model = model;
-                                                     //this.readNotes();
-                                                     this.refreshNotes();
+                                                      this.refreshNotes();
                                                 });
-     //this.refreshNotes();
+
   }
 
   refreshNotes()
   {
     //this.commonService.loadAllLabels();
     // this.refreshImage();
-     this.subscription=  this.commonService.getAllNotes()
-                                           .subscribe(response => {
+    this.subscription=  this.commonService.getAllNotes()
+                                          .subscribe(response => {
                                                    if (response) {
                                                                    this.dashDataFirst = response;
-                                                                 }
+                                                                }
                                            })
   }
 
@@ -349,7 +342,7 @@ export class DashboardComponent implements OnInit {
                                                          this.model = model;
                                                          this.refreshNotes();
                                                       });
-        //this.refreshNotes();
+
    }
 
 
@@ -363,7 +356,7 @@ export class DashboardComponent implements OnInit {
                                                                 this.refreshNotes();
                                                                }
                                                    );
-       //this.refreshNotes();
+
   }
 
 
@@ -377,7 +370,7 @@ export class DashboardComponent implements OnInit {
                                            this.model = model;
                                            this.refreshNotes();
                                            });
-     //this.refreshNotes();
+
    }
 
    unpinNotes(data)
@@ -389,7 +382,7 @@ export class DashboardComponent implements OnInit {
                                             this.refreshNotes();
                                             }
                                             );
-        //this.refreshNotes();
+
     }
 
 
@@ -400,10 +393,10 @@ export class DashboardComponent implements OnInit {
                                           .subscribe(model =>
                                            {
                                             this.model = model;
-                                            this.refreshNotes();//
+                                            this.refreshNotes();
                                            }
                                           );
-      //this.refreshNotes();
+
       }
 
     chipShowtoday(data, chip1)
@@ -433,7 +426,7 @@ export class DashboardComponent implements OnInit {
                                           this.refreshNotes();
                                          }
                                       );
-  //this.refreshNotes();
+
 }
 
   chipShowTommarrow(data, chip1)
@@ -464,7 +457,7 @@ export class DashboardComponent implements OnInit {
                                            this.refreshNotes();
                                           }
                                         );
-    //this.refreshNotes();
+
 }
 
 
@@ -475,7 +468,7 @@ chipShowMonday(data, chip1)
           note_chip: chip1
         }
       this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
-                                            .subscribe(model => {
+                                         .subscribe(model => {
                                                    this.model = model;
                                                    this.refreshNotes();
                                                 }
@@ -493,7 +486,7 @@ chipShowMonday(data, chip1)
                                     this.refreshNotes();
                                     }
                                     );
-            //this.refreshNotes();
+
 }
 
    submitReminder(data)
@@ -506,10 +499,10 @@ chipShowMonday(data, chip1)
      this.subscription=this.commonService.updateData('updateNote/' + data._id, reminder1)
                                           .subscribe(model => {
                                           this.model = model;
-                                           this.refreshNotes();
+                                            this.refreshNotes();
                                           }
                                          );
-    // this.refreshNotes();
+
  }
 
   removelabel(data,label)
@@ -523,7 +516,7 @@ chipShowMonday(data, chip1)
                         .subscribe(res => {
                                             this.refreshNotes();
                                           });
-     //this.refreshNotes();
+
      //this.labelClick(label , data);
   }
 
@@ -627,7 +620,7 @@ createNewlabel(data)
                                              this.refreshNotes();
                                            }
                                         );
-     //this.refreshNotes();
+
   }
 
 refreshLabel()
@@ -667,12 +660,13 @@ submitlabel(check,label,data)
           this.commonService.updateData('updateNote/'+ data._id,labeldata)
                             .subscribe(res =>
                                       {
+
                                         this.refreshNotes();
                                       });
 
 
                                     //  label.checked = label.checked ? false : true;
-          //this.refreshNotes();
+
   }
 
 

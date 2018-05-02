@@ -26,7 +26,15 @@
   </div>
 </div>
 <div fxFlex="40" fxLayoutAlign="center center" *ngFor="let note of notes" >
+  <div  *ngIf="note.collaborator.length >0" fxLayout="row">
+    <div fxFlex="">
     {{note.collaborator}}
+  </div>
+  <div fxFlex="">
+     <img class="img-responsive" (click)="deleteCollaborator(note)" matTooltip="delete" matTooltipShowDelay="100" style="width: 22px;margin-left: 25px" src="assets/icon/clear.svg">
+  </div>
+  </div>
+
   </div>
 
   <div fxFlex="40" fxLayoutAlign="start start" >

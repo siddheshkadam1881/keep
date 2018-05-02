@@ -91,27 +91,11 @@ export class DummyComponent implements OnInit {
 
   constructor(private builder:FormBuilder,private rd: Renderer2,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
 
-//read label
     this.commonService.getData('readLabel').subscribe(response => {
       if (response) {
       }
     },
     error => console.log("Error while retrieving"));
-    // this.commonService.myMethod$.subscribe((model) =>
-    //                              {
-    //                                 this.model = model; // And he have data here too!
-    //                                 console.log(this.model);
-    //                              });
-    this.subscription = commonService.brotherObservable$
-                                       .subscribe(formData => {
-                                                                this.dataFromBrotherComponent = formData;
-                                                                if(this.dataFromBrotherComponent)
-                                                                 this.subscription = this.commonService.getData('searchTodos/'+ this.dataFromBrotherComponent)
-                                                                                                        .subscribe(searchNotes =>{
-                                                                                                                                   this.searchNotes=searchNotes;
-
-                                                                                                                     });
-                                                        });
 
   }
 
@@ -584,11 +568,11 @@ export class DummyComponent implements OnInit {
        checkSelectlabel(check,label,data)
        {
 
-               // label.checked = label.checked ? false : true;
+
 
                if(check){
                            this.reqLabelDto.check=true;
-                           //localStorage.setItem('storageId', this.reqLabelDto.check);
+
                            var labeldata = {
                                              label_ids :label
                                             }
@@ -599,7 +583,7 @@ export class DummyComponent implements OnInit {
                else
                      {
                            this.reqLabelDto.check=false;
-                           //localStorage.setItem('storageId', this.reqLabelDto.check);
+
                             var labeldata = {
                                               label_ids :null
                                             }
