@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
    model:any={};
    item:any={};
    status:any={};
-   statusClass : string="grid-view";
+   statusClass : string = "grid-view";
    //notes array
    notes: Array<any>;
   //hide and see logic
@@ -193,7 +193,14 @@ export class DashboardComponent implements OnInit {
      gridView()
    {
       this.commonService.getStatus().subscribe((status)=>{
+
+       // if(status){
+       //  localStorage.setItem('class','list-view');
+       // }else{
+       //   localStorage.setItem('class','grid-view');
+       // }
        this.statusClass = status? "grid-view":"list-view";
+
         this.readNotes();
         });
 

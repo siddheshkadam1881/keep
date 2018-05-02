@@ -95,16 +95,34 @@ exports.readTodos = function(req, res) {
   * @extends {req, res}
   */
 
+
+  // ({ $and: [{ user_id:userId },
+  //             {$or: [
+  //             {title: { $regex: searchKey, $options: "i"}},
+  //             {note: { $regex: searchKey, $options: "i"}},
+  //             {note_color : { $regex: searchKey, $options: "i"}}
+  //             ]}]}).exec(cb);
 exports.update = function(req, res) {
   upload(req, res, function(err) {
-    console.log(req.body)
+    //console.log(req.body)
     var todoObj = req.body || {};
     if (req.file && req.file.path) {
       todoObj.image = req.file.path;
     }
+      //var email=req.decoded.email;
+      console.log(email);
     Todo.findOneAndUpdate({
-        _id: req.params.id,
-        user_id: req.decoded._id
+      $and: [{user_id: req.decoded._id,_id: req.params.id},
+            {$or: [
+            { collaborator:{email}}]}
+
+      // {$or: [{ collaborator: {req.decoded.email} }]}
+
+      ]
+        // _id: req.params.id,
+        // user_id: req.decoded._id,
+       //collaborator:req.decoded.email
+       // { $or: { collaborator:req.decoded.email }},
       }, todoObj, {
         new: true
       },
@@ -114,7 +132,7 @@ exports.update = function(req, res) {
         res.status(500).send( {
            err: 'something blew up'
          });
-        res.json(note);
+      res.status(200).send(note);
       });
   });
 };
@@ -156,6 +174,7 @@ exports.searchTodos = function(req, res) {
    if(err) return next(err);
    if(!user) res.json('user not found');
     if(user)
+    //console.log(user._id);
     {
     var sharedNote = {
                        collaborator:req.params.email
@@ -164,9 +183,9 @@ exports.searchTodos = function(req, res) {
    // console.log(sharedNote);
 
    Todo.findOneAndUpdate({
-    _id: req.params.noteId,
-    },{$addToSet:sharedNote},{new:true}, function(err, note) {
-       if (err)
+      _id: req.params.noteId,
+      },{$addToSet:sharedNote},{new:true}, function(err, note) {
+     if (err)
        return next(err);
 
        // redisSet(req.user.id,note);

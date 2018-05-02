@@ -107,12 +107,12 @@ var NoteSchema = new mongoose.Schema({
 
 NoteSchema.statics.readUserTodo = function (userId,cb) {
   // console.log(userId.email);
-   this.find({ $or: [{user_id:userId},{collaborator:userId.email}]}).exec(cb);
+     this.find({ $or: [{user_id:userId},{collaborator:userId.email}]}).exec(cb);
 }
 
 NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
 
-  this.remove({ user_id: userId,_id: paramId.id}).exec(cb);
+  this.remove({ $or: [ {user_id: userId},{_id: paramId.id},{collaborator:userId.email}]}).exec(cb);
 }
 
 //todoService.serachResult(req.decoded, req.params,
