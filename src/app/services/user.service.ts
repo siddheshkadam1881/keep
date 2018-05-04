@@ -27,7 +27,7 @@ export class UserService {
             // , {access_token: result.authResponse.accessToken})
             .toPromise()
               .then(response => {
-                
+
 
                  var token = response.headers.get('x-auth-token');
                   console.log(token)
@@ -49,18 +49,18 @@ export class UserService {
     localStorage.removeItem('token');
   }
 
-  isLoggedIn() {
-    return new Promise((resolve, reject) => {
-      this.getCurrentUser().then(user => resolve(true)).catch(() => reject(false));
-    });
-  }
-
-  getCurrentUser() {
-    return new Promise((resolve, reject) => {
-      return this.http.get(`http://localhost:3000/auth/me`).toPromise().then(response => {
-        console.log(response)
-        resolve(response.json());
-      }).catch(() => reject());
-    });
-  }
+  // isLoggedIn() {
+  //   return new Promise((resolve, reject) => {
+  //     this.getCurrentUser().then(user => resolve(true)).catch(() => reject(false));
+  //   });
+  // }
+  //
+  // getCurrentUser() {
+  //   return new Promise((resolve, reject) => {
+  //     return this.http.get(`http://localhost:3000/auth/me`).toPromise().then(response => {
+  //       console.log(response)
+  //       resolve(response.json());
+  //     }).catch(() => reject());
+  //   });
+  // }
 }
