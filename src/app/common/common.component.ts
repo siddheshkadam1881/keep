@@ -42,7 +42,7 @@ export class CommonComponent implements OnInit {
                                                 this.model=model;
                                                 this.refreshNotes();
                                               });
-     this.refreshNotes();
+     //this.refreshNotes();
     }
 
      deleteNote(id)
@@ -52,12 +52,12 @@ export class CommonComponent implements OnInit {
                              this.model=model;
                              this.refreshNotes();
                            });
-          this.refreshNotes();
+          //this.refreshNotes();
     }
 //refresh purpose
 refreshNotes()
 {
-  this.commonService.loadAllLabels();
+  //this.commonService.loadAllLabels();
   // this.refreshImage();
   this.subscription=  this.commonService.getAllNotes()
                                         .subscribe(response => {
@@ -71,12 +71,12 @@ refreshNotes()
    {
        var note_color =
             {   note_color: color }
-            this.subscription = this.commonService.updateData('updateNote/'+data._id,note_color)
-                                                  .subscribe(model => {
-                                                    this.model=model;
-                                                    this.refreshNotes();
-                         });
-           this.refreshNotes();
+      this.subscription = this.commonService.updateData('updateNote/'+data._id,note_color)
+                                             .subscribe(model => {
+                                                                   this.model=model;
+                                                                   this.refreshNotes();
+                                                                });
+           //this.refreshNotes();
    }
        chipShow(data, chip1)
       {
@@ -84,11 +84,11 @@ refreshNotes()
          {
           note_chip: chip1
          }
-      this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
-                                          .subscribe(model => {
-                                            this.model=model;
-                                            this.refreshNotes();
-                    });
+       this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
+                                            .subscribe(model => {
+                                                  this.model=model;
+                                                  this.refreshNotes();
+                                           });
       this.refreshNotes();
     }
 

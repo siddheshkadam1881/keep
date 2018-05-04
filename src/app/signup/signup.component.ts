@@ -53,7 +53,7 @@ export class SignupComponent
    }
 
    registerUser(data) {
-            this.subscription=this.commonService.postServiceData('#signup',data)
+            this.commonService.postServiceData('signup',data)
                                                 .subscribe(
                                                   data =>  this.toastr.success(data),
                                                   err => this.toastr.error(err)

@@ -68,7 +68,8 @@ var NoteSchema = new mongoose.Schema({
      default: null
    },
   collaborator: [{
-    type: String
+    type: String,
+    default: ""
   }],
   shared_id:[{
     type:String

@@ -67,7 +67,7 @@ exports.createNote = function(req, res) {
   todoService.createUserTodo(req.body, req.decoded, function(err, note) {
     if (err)
       return next(err);
-      res.json(note);
+      res.status(200).json(note);
   });
 }
 
@@ -85,9 +85,41 @@ exports.readTodos = function(req, res) {
      return next(err);
 
     //res.send(err);
-    res.json(note);
+    res.status(200).json(note);
   });
 }
+
+
+
+
+// exports.update = function(req, res) {
+//   upload(req, res, function(err) {
+//     //console.log(req.body)
+//     var todoObj = req.body || {};
+//     if (req.file && req.file.path) {
+//       todoObj.image = req.file.path;
+//     }
+//       var collaboratoremail=req.decoded.email;
+//       //console.log(email);
+//     Todo.findOneAndUpdate({
+//       _id: req.params.id,
+//       $or: [
+//             { collaborator:{collaboratoremail}},
+//             { user_id: req.decoded._id}
+//           ]
+//       }, todoObj, {
+//         new: true
+//       },
+//       function(err, note) {
+//         if (err)
+//         //return next(err);
+//         res.status(500).send( {
+//            err: 'something blew up'
+//          });
+//       res.status(200).send(note);
+//       });
+//   });
+// };
 
 /**
   * @description update function to update a current note
@@ -142,11 +174,7 @@ exports.searchTodos = function(req, res) {
   todoService.searchTodos(req.decoded,req.params.searchKey, function(err, note) {
     if (err)
       return next(err);
-      // res.status(500).send( {
-      //   err: 'something blew up'
-      // });
-    //res.send(err);
-    res.json(note);
+      res.status(200).json(note);
   });
 }
 
@@ -182,7 +210,7 @@ exports.searchTodos = function(req, res) {
 
        // redisSet(req.user.id,note);
 
-     res.json(note);
+     res.status(200).json(note);
    });
 
  }
@@ -223,7 +251,7 @@ exports.searchTodos = function(req, res) {
 
        // redisSet(req.user.id,note);
 
-     res.json(note);
+     res.status(200).json(note);
    });
 
  }
@@ -300,7 +328,7 @@ exports.delete = function(req, res) {
     if (err)
       // res.send(err);
       return next(err);
-     res.json({
+      res.status(200).json({
       message: 'Note successfully deleted'
     });
   });

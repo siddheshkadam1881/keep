@@ -38,6 +38,7 @@ export class DashboardComponent implements OnInit {
   private lastActivityTime1: Date;
   private lastActivityTime2: Date;
   public Users;
+  public urlImage="http://localhost:3000/"
 //CHIP EVENT
   //var storageId;
   visible: boolean = true;
@@ -150,6 +151,16 @@ export class DashboardComponent implements OnInit {
                                                           this.Users = response;
                                                    }
                              })
+    }
+
+    deleteCollaborator(note)
+    {
+      this.subscription=this.commonService.updateData('deleteAndUpdateCollab/'+note.collaborator+'/'+note._id,null)
+                                            .subscribe( model =>{
+                                                                this.model=model;
+                                                                this.refreshNotes();
+                                                            });
+                //this.refreshNotes();
     }
 
 

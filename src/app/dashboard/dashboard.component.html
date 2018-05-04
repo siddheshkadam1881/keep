@@ -86,7 +86,18 @@
                 </mat-chip-list>
               </mat-form-field>
             </div>
-
+            <div *ngIf="data.collaborator.length>0">
+              <mat-form-field class="demo-chip-list">
+                <mat-chip-list>
+                  <mat-chip [removable]="removable" (remove)="deleteCollaborator(data)">
+                    <p>{{data.note_chip}}</p>
+                    <!-- <p>{{data.reminder}}</p> -->
+                  <p>{{data.collaborator}}</p>
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </mat-form-field>
+            </div>
              <div *ngIf="data.label">
 
               <mat-form-field class="demo-chip-list">
