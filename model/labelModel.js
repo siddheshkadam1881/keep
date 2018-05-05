@@ -10,6 +10,10 @@ var labelSchema = new mongoose.Schema({
   title: {
     type:String
   },
+  created_date: {
+    type: Date,
+    default: Date.now
+  },
   user_id: { type : mongoose.Schema.Types.ObjectId, ref: 'User'}
 
 });
@@ -25,12 +29,12 @@ label.save(cb);
 
 
 labelSchema.statics.readUserlabel = function (userId,cb) {
-  this.find ({ user_id:userId}).exec(cb);
+  this.find ({ user_id:userId}).sort({created_date: -1}).exec(cb);
 }
 //
 
 labelSchema.statics.deleteUserlabel = function (userId,paramId,cb) {
-  
+
   this.remove({ user_id: userId,_id: paramId.id}).exec(cb);
 }
 

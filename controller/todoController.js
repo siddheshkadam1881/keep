@@ -144,7 +144,8 @@ exports.update = function(req, res) {
       var collaboratoremail=req.decoded.email;
       //console.log(email);
     Todo.findOneAndUpdate({
-      user_id: req.decoded._id,_id: req.params.id,
+      user_id: req.decoded._id,
+      _id: req.params.id,
              //{$or: [
             // { collaborator:{collaboratoremail}}]}
       }, todoObj, {

@@ -115,7 +115,7 @@ NoteSchema.statics.readUserTodo = function (userId,cb) {
 
 NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
 
-  this.remove({ $or: [ {user_id: userId},{_id: paramId.id}]}).exec(cb);
+  this.remove({ user_id: userId, _id:paramId.id }).exec(cb);
 }
 
 //,{collaborator:userId.email}

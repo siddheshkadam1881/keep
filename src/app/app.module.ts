@@ -24,7 +24,6 @@ import io from 'socket.io-client';
 import { BackendApiService } from './services/backend-api.service';
 import { FilterPipe} from './services/filter.pipe';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
-import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { ForgetComponent } from './forget/forget.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
@@ -60,8 +59,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { LabelCheckedMapFilterPipe } from './label-checked-map-filter.pipe';
 import { SearchfilterPipe } from './searchfilter.pipe';
 import { OpenDialogcollabratorComponent } from './open-dialogcollabrator/open-dialogcollabrator.component';
-
-
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
 
 export function getAuthHttp(http: Http) {
   return new AuthHttp(new AuthConfig({
@@ -169,6 +167,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     ToastModule.forRoot(),
+    BrowserModule,
     // RouterModule.forChild(routes),
     SocialLoginModule.initialize(config)
   ],

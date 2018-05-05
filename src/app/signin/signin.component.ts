@@ -15,7 +15,6 @@ import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login'
 import { UserService } from '../services/user.service';
 import { ISubscription } from "rxjs/Subscription";
-
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -28,9 +27,12 @@ export class SigninComponent implements OnInit{
  returnUrl: string;
   user: SocialUser;
   invalidCredentialMsg: string;
+  private viewContainerRef: ViewContainerRef;
   private subscription: ISubscription;
-  constructor(private userService: UserService,private authService: AuthService,private route: ActivatedRoute, private router: Router , private commonService:BackendApiService, public toastr: ToastsManager, vcr: ViewContainerRef)
-  { this.toastr.setRootViewContainerRef(vcr); }
+  constructor(private userService: UserService,private authService: AuthService,private route: ActivatedRoute, private router: Router , private commonService:BackendApiService,public toastr: ToastsManager, vcr: ViewContainerRef)
+  {
+    this.toastr.setRootViewContainerRef(vcr);
+   }
   //password validation
   hide = true;
   //declare object of FormControl for email validator
@@ -41,14 +43,21 @@ export class SigninComponent implements OnInit{
        this.email.hasError('email') ? 'Not a valid email' :
            '';
   }
+  showSuccess() {
+       this.toastr.success('Login Successfully!');
+     }
 
       signInUser(data)
       {
         localStorage.setItem('email',data.email);
         this.commonService.postServiceData('signin',data)
                                              .subscribe(data => {
+
                                                    localStorage.setItem('token',data.token);
+                                                   this.showSuccess();
+                                                   setTimeout (() => {
                                                    this.router.navigate(['/home']);
+                                                    }, 2000)
                                                    });
      }
 
@@ -59,7 +68,12 @@ ngOnInit() {
 
  fbLogin() {
    this.userService.fbLogin().then(() => {
-     this.router.navigate(['/home']);
+   //this.toastr.success('You are awesome!', 'Success!');
+   this.showSuccess();
+   setTimeout (() => {
+   this.router.navigate(['/home']);
+    }, 2000)
+
    });  }
 
 

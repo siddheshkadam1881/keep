@@ -97,11 +97,11 @@ User.statics.upsertFbUser = function(accessToken, refreshToken, profile, cb) {
     }, function(err, user) {
 
       if (!user) {
-        console.log(profile.picture)
+        console.log(profile)
         var newUser = new that({
           username: profile.displayName,
           email: profile.emails[0].value,
-          image:profile.photos,
+          image:profile.photos[0].value,
           facebookProvider: {
             id: profile.id
             // token: accessToken
