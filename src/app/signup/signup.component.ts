@@ -14,6 +14,7 @@ import { BackendApiService } from '../services/backend-api.service';
 import { ViewContainerRef} from '@angular/core';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ISubscription } from "rxjs/Subscription";
+import { Router, ActivatedRoute } from '@angular/router';
 //import {SignupService}from './signup.component.spec';
 @Component({
   selector: 'app-signup',
@@ -39,7 +40,7 @@ export class SignupComponent
     //validation of full name
     options: FormGroup;
     //constructor for BackendApiService
-    constructor(fb: FormBuilder,private commonService:BackendApiService, public toastr: ToastsManager, vcr: ViewContainerRef)
+    constructor(fb: FormBuilder,private commonService:BackendApiService, public toastr: ToastsManager, vcr: ViewContainerRef,private route: ActivatedRoute, private router: Router )
    { this.toastr.setRootViewContainerRef(vcr);
      this.options = fb.group
      ({
@@ -48,15 +49,24 @@ export class SignupComponent
      });
 
    }
+
+   showSuccess() {
+        this.toastr.success('signup Successfully!');
+      }
+
    ngOnDestroy(): void {
-      this.subscription.unsubscribe();
+    //  this.subscription.unsubscribe();
    }
 
    registerUser(data) {
             this.commonService.postServiceData('signup',data)
-                                                .subscribe(
-                                                  data =>  this.toastr.success(data),
-                                                  err => this.toastr.error(err)
-                                                 );
-                                                }
+                                  .subscribe(data => {
+
+                                        //localStorage.setItem('token',data.token);
+                                        this.showSuccess();
+                                        setTimeout (() => {
+                                        this.router.navigate(['/signin']);
+                                         }, 2000)
+                                        });
+}
 }
