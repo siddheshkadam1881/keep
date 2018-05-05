@@ -19,14 +19,23 @@ private subscription: ISubscription;
  token:string;
   constructor(private route: ActivatedRoute, private router: Router ,private commonService:BackendApiService,public toastr: ToastsManager, vcr: ViewContainerRef)
    {
-     this.token = route.snapshot.params['token']
+     this.token = route.snapshot.params['token'];
+     this.toastr.setRootViewContainerRef(vcr);
   }
+
+  showWarning() {
+        this.toastr.success('password reset done!');
+      }
 
   submitpassword(data) {
           this.subscription=this.commonService.postServiceData('reset_password/'+ this.token,data)
                                               .subscribe(
                                                data => {
+                                                //this.router.navigate(['/signin']);
+                                                this.showWarning();
+                                                setTimeout (() => {
                                                 this.router.navigate(['/signin']);
+                                               }, 2000)
                                              });
   }
   ngOnDestroy(): void {

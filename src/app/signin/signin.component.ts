@@ -1,3 +1,4 @@
+
 import { Component,OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -66,23 +67,18 @@ ngOnInit() {
  }
 
 
- fbLogin() {
+   fbLogin() {
    this.userService.fbLogin().then(() => {
-   //this.toastr.success('You are awesome!', 'Success!');
-   this.showSuccess();
-   setTimeout (() => {
-   this.router.navigate(['/home']);
-    }, 2000)
 
-   });  }
+                                   this.showSuccess();
+                                   setTimeout (() => {
+                                   this.router.navigate(['/home']);
+                                }, 2000)
+                              });
+   }
 
 
 signOut(): void {
     this.authService.signOut();
   }
-
-
-
-
-
 }

@@ -23,13 +23,29 @@ export class ForgetComponent  {
            '';
   }
 
-  constructor(private route: ActivatedRoute, private router: Router ,private commonService:BackendApiService,public toastr: ToastsManager, vcr: ViewContainerRef) { this.toastr.setRootViewContainerRef(vcr); }
+  showWarning() {
+        this.toastr.warning('after enter ur mail id check ur email', 'Alert!');
+      }
+  constructor(private route: ActivatedRoute, private router: Router ,private commonService:BackendApiService,public toastr: ToastsManager, vcr: ViewContainerRef)
+     {
+      this.toastr.setRootViewContainerRef(vcr);
+     }
   forgetUser(data) {
           this.subscription= this.commonService.postServiceData('forgot_password',data)
                                                 .subscribe(
                                                   data => {
-                                                  this.router.navigate(['/forget']);
-                       });
+                                                    this.showWarning();
+                                                    setTimeout (() => {
+                                                    this.router.navigate(['/forget']);
+                                                 }, 1000)
+                                                 });
+
+
+                                              //    this.showWarning();
+                                              //    setTimeout (() => {
+                                              //    this.router.navigate(['/forget']);
+                                              // }, 2000)
+
      }
 
 ngOnDestroy(): void {

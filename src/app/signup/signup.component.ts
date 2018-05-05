@@ -51,7 +51,7 @@ export class SignupComponent
    }
 
    showSuccess() {
-        this.toastr.success('signup Successfully!');
+        this.toastr.success('Congratulations, your account has been Successfully Register...!');
       }
 
    ngOnDestroy(): void {
@@ -61,7 +61,6 @@ export class SignupComponent
    registerUser(data) {
             this.commonService.postServiceData('signup',data)
                                   .subscribe(data => {
-
                                         //localStorage.setItem('token',data.token);
                                         this.showSuccess();
                                         setTimeout (() => {
