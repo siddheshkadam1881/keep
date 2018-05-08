@@ -3,57 +3,57 @@
 
     <div class="innerCardDiv" [style.background]="data.note_color">
       <div>
-        <div *ngIf= "data.image">
-        <img [src]='"http://localhost:3000/"+data.image'  height="100px" width="250px" />
+        <div *ngIf="data.image">
+          <img [src]='"http://localhost:3000/"+data.image' height="100px" width="250px" />
+        </div>
+        <div>
+          <mat-form-field>
+            <input contenteditable="true" matInput [(ngModel)]="data.title">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input contenteditable="true" matInput [(ngModel)]="data.note">
+          </mat-form-field>
+        </div>
       </div>
-      <div>
-      <mat-form-field>
-        <input contenteditable="true" matInput [(ngModel)]="data.title">
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field>
-         <input contenteditable="true" matInput [(ngModel)]="data.note">
-      </mat-form-field>
-        </div>
-        </div>
       <div class="updatebtn">
-        <div class="imageNotes"  [style.background]="data.note_color" >
-          <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg"  [matMenuTriggerFor]="menu2">
+        <div class="imageNotes" [style.background]="data.note_color">
+          <img class="img-responsive" matTooltip="remind me" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/remind me.svg" [matMenuTriggerFor]="menu2">
           <mat-menu #menu2="matMenu">
-              <button mat-menu-item style="word-spacing: 30px;" (click)="chipShow(data,'Later Today 20.00')">LaterToday  20.00</button>
-              <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
-               <button mat-menu-item  style="word-spacing: 30px;" (click)="chipShow(data,'NextWeek  Mon,08.00')" >NextWeek   Mon,08.00</button>
+            <button mat-menu-item style="word-spacing: 30px;" (click)="chipShow(data,'Later Today 20.00')">LaterToday  20.00</button>
+            <button mat-menu-item style="word-spacing: 30px;" (click)="chipShow(data,'Tommorrow 08.00')">Tommorrow  08.00</button>
+            <button mat-menu-item style="word-spacing: 30px;" (click)="chipShow(data,'NextWeek  Mon,08.00')">NextWeek   Mon,08.00</button>
           </mat-menu>
-            <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="1000" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
-            <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100"  style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg" [matMenuTriggerFor]="menu1">
-              <mat-menu #menu1="matMenu">
-                   <div>
-                     <button class="dot" style="background-color:green;" (click)="changeColor(data,'green')"></button>
-                       <button class="dot"  style="background-color:red;" (click)="changeColor(data,'red')" ></button>
-                       <button class="dot"  style="background-color:yellow;" (click)="changeColor(data,'yellow')"></button>
-                       <button class="dot"  style="background-color:orange;" (click)="changeColor(data,'orange')" ></button>
-                       <button class="dot"  style="background-color:blue;" (click)="changeColor(data,'blue')"></button>
-                     </div>
-                     <div>
-                       <button class="dot"  style="background-color:Teal;" (click)="changeColor(data,'Teal')"></button>
-                       <button class="dot"  style="background-color:grey;" (click)="changeColor(data,'grey')"></button>
-                       <button class="dot"  style="background-color:purple;"(click)="changeColor(data,'purple')"></button>
-                       <button class="dot"  style="background-color:brown;" (click)="changeColor(data,'brown')"></button>
-                      <button class="dot"  style="background-color:pink;" (click)="changeColor(data,'pink')"></button>
-                   </div>
+          <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="1000" style="width: 22px;margin-left: 12px" src="assets/icon/collabrator.svg">
+          <img class="img-responsive" matTooltip="color change" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/color change.svg" [matMenuTriggerFor]="menu1">
+          <mat-menu #menu1="matMenu">
+            <div>
+              <button class="dot" style="background-color:green;" (click)="changeColor(data,'green')"></button>
+              <button class="dot" style="background-color:red;" (click)="changeColor(data,'red')"></button>
+              <button class="dot" style="background-color:yellow;" (click)="changeColor(data,'yellow')"></button>
+              <button class="dot" style="background-color:orange;" (click)="changeColor(data,'orange')"></button>
+              <button class="dot" style="background-color:blue;" (click)="changeColor(data,'blue')"></button>
+            </div>
+            <div>
+              <button class="dot" style="background-color:Teal;" (click)="changeColor(data,'Teal')"></button>
+              <button class="dot" style="background-color:grey;" (click)="changeColor(data,'grey')"></button>
+              <button class="dot" style="background-color:purple;" (click)="changeColor(data,'purple')"></button>
+              <button class="dot" style="background-color:brown;" (click)="changeColor(data,'brown')"></button>
+              <button class="dot" style="background-color:pink;" (click)="changeColor(data,'pink')"></button>
+            </div>
           </mat-menu>
-            <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="1000" style="width: 22px;margin-left: 12px"src="assets/icon/image  add.svg">
-            <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="1000"  style="width: 22px;margin-left: 10px"src="assets/icon/archive.svg">
+          <img class="img-responsive" matTooltip="image  add" matTooltipShowDelay="1000" style="width: 22px;margin-left: 12px" src="assets/icon/image  add.svg">
+          <img class="img-responsive" matTooltip="archive" matTooltipShowDelay="1000" style="width: 22px;margin-left: 10px" src="assets/icon/archive.svg">
 
-            <img class="img-responsive" matTooltip="more" matTooltipShowDelay="1000" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
-            <mat-menu #menu="matMenu" >
-                   <button mat-menu-item type="submit" (click)="deleteNote(data._id)" style="font-size: 13px;">Delete note</button>
-                     <button mat-menu-item type="submit" (click)="copyNote(data)" style="font-size: 13px;">copy note</button>
-            </mat-menu>
-        <button mat-raised-button matTooltip="Save Note" matTooltipShowDelay="1000"  type="submit" (click)="updateNote(data,data._id)">Done</button>
-      </div>
+          <img class="img-responsive" matTooltip="more" matTooltipShowDelay="1000" style="width:22px;margin-left: 12px" src="assets/icon/more.svg" [matMenuTriggerFor]="menu">
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item type="submit" (click)="deleteNote(data._id)" style="font-size: 13px;">Delete note</button>
+            <button mat-menu-item type="submit" (click)="copyNote(data)" style="font-size: 13px;">copy note</button>
+          </mat-menu>
+          <button mat-raised-button matTooltip="Save Note" matTooltipShowDelay="1000" type="submit" (click)="updateNote(data,data._id)">Done</button>
+        </div>
       </div>
     </div>
   </div>
-  </div>
+</div>

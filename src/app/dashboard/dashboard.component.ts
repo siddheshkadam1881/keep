@@ -238,12 +238,11 @@ export class DashboardComponent implements OnInit {
   }
 
   this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
-                                      .subscribe(model =>
-                                        {
-                                          this.model=model;
-                                          this.refreshNotes();
-                                        }
-                                      );
+                                      .subscribe(model =>{
+                                                            this.model=model;
+                                                            this.refreshNotes();
+                                                          }
+                                                );
 
 
        var chip1=
@@ -253,27 +252,27 @@ export class DashboardComponent implements OnInit {
 
 
        this.subscription=this.commonService.updateData('updateNote/' + data._id, chip1)
-                                           .subscribe(model =>
-                                            {
-                                              this.model = model;
-                                              this.refreshNotes();
-                                            });
+                                           .subscribe(model =>{
+                                                                this.model = model;
+                                                                this.refreshNotes();
+                                                            });
 
   }
 
 
 
-  ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
-    //unsubscribe the subscription in ngDestroy
-    if (this.timerSubscription != null)
-        this.timerSubscription.unsubscribe();
+  ngOnDestroy(): void
+  {
+      this.mobileQuery.removeListener(this._mobileQueryListener);
+      //unsubscribe the subscription in ngDestroy
+      if (this.timerSubscription != null)
+      this.timerSubscription.unsubscribe();
       this.subscription.unsubscribe();
   }
 
-  toggle1() {
-   this.show = !this.show;
-
+  toggle1()
+  {
+    this.show = !this.show;
   }
 
 
@@ -281,13 +280,11 @@ export class DashboardComponent implements OnInit {
   submitNote() {
 
           this.subscription=this.commonService.postServiceData('create/Note',this.model)
-                                              .subscribe(
-                                               model =>
-                                                {
-                                                this.model = model;
-                                                 this.refreshNotes();
-                                                }
-                                            );
+                                              .subscribe(model =>
+                                               {
+                                                     this.model = model;
+                                                     this.refreshNotes();
+                                                });
                //this.refreshNotes();
       }
 
@@ -298,8 +295,7 @@ export class DashboardComponent implements OnInit {
                                          .subscribe(model => {
                                           this.model = model;
                                            this.refreshNotes();
-                                          }
-                                          );
+                                          });
                                           //this.refreshNotes();
   }
 
@@ -325,7 +321,7 @@ export class DashboardComponent implements OnInit {
                                          .subscribe(
                                           model => {
                                                      this.model = model;
-                                                      this.refreshNotes();
+                                                     this.refreshNotes();
                                                 });
 
   }
@@ -378,9 +374,9 @@ export class DashboardComponent implements OnInit {
 
      this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                           .subscribe(model =>  {
-                                           this.model = model;
-                                           this.refreshNotes();
-                                           });
+                                                                 this.model = model;
+                                                                 this.refreshNotes();
+                                                               });
 
    }
 
@@ -389,9 +385,9 @@ export class DashboardComponent implements OnInit {
         var data1 = { is_pinned: data.is_pinned ? 'false' : 'true'}
         this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                             .subscribe(model =>  {
-                                            this.model = model;
-                                            this.refreshNotes();
-                                            }
+                                                                  this.model = model;
+                                                                  this.refreshNotes();
+                                                                }
                                             );
 
     }
@@ -402,11 +398,10 @@ export class DashboardComponent implements OnInit {
       var data1 = { note_color: color }
       this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
                                           .subscribe(model =>
-                                           {
-                                            this.model = model;
-                                            this.refreshNotes();
-                                           }
-                                          );
+                                                            {
+                                                              this.model = model;
+                                                              this.refreshNotes();
+                                                            });
 
       }
 
@@ -448,12 +443,10 @@ export class DashboardComponent implements OnInit {
   }
 
     this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
-                                         .subscribe(model =>
-                                           {
-                                            this.model = model;
-                                            this.refreshNotes();
-                                           }
-                                        );
+                                         .subscribe(model =>{
+                                                              this.model = model;
+                                                              this.refreshNotes();
+                                                            });
 
 
       var reminder1 =
@@ -461,7 +454,7 @@ export class DashboardComponent implements OnInit {
       reminder: this.lastActivityTime1
       }
 
-   this.subscription=this.commonService.updateData('updateNote/' + data._id, reminder1)
+     this.subscription=this.commonService.updateData('updateNote/' + data._id, reminder1)
                                         .subscribe(model =>
                                           {
                                            this.model = model;

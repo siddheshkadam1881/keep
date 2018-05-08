@@ -26,6 +26,10 @@ export class BackendApiService {
     result:any;
     public urlpath;
     options: RequestOptions;
+    private changeColorSource = new Subject<any>();
+    currentMessage = this.changeColorSource.asObservable();
+
+    //changeColorObservable$ = this.changeColorSource.asObservable();
 
     //  const requestOptions = {
     //     params: new HttpParams()
@@ -38,6 +42,17 @@ export class BackendApiService {
       this.myMethod$ = this.myMethodSubject.asObservable();
       }
 
+      changeColor(message: string) {
+
+      this.changeColorSource.next(message)
+      }
+
+
+      // getcssColor(): Observable<any>{
+      //    this.changeColor(data);
+      //    //return this.labelSubjectObj.asObservable();
+      //    return this.changeColorSource.asObservable();
+      //   }
 
       onDataChangeInBrother(data: any) {
       this.brotherSource.next(data);

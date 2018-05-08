@@ -17,28 +17,30 @@ export class ForgetComponent  {
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
-  getErrorMessage() {
-   return this.email.hasError('required') ? 'You must enter a value like john@abc.com' :
-       this.email.hasError('email') ? 'Not a valid email' :
-           '';
-  }
+  getErrorMessage()
+   {
+       return this.email.hasError('required') ? 'You must enter a value like john@abc.com' :
+       this.email.hasError('email') ? 'Not a valid email' :'';
+   }
 
-  showWarning() {
+  showWarning()
+   {
         this.toastr.warning('after enter ur mail id check ur email', 'Alert!');
-      }
-  constructor(private route: ActivatedRoute, private router: Router ,private commonService:BackendApiService,public toastr: ToastsManager, vcr: ViewContainerRef)
-     {
+    }
+      constructor(private route: ActivatedRoute, private router: Router ,private commonService:BackendApiService,public toastr: ToastsManager, vcr: ViewContainerRef)
+    {
       this.toastr.setRootViewContainerRef(vcr);
-     }
+    }
   forgetUser(data) {
           this.subscription= this.commonService.postServiceData('forgot_password',data)
-                                                .subscribe(
-                                                  data => {
+                                                .subscribe(data =>
+                                                 {
                                                     this.showWarning();
-                                                    setTimeout (() => {
-                                                    this.router.navigate(['/forget']);
-                                                 }, 1000)
-                                                 });
+                                                    setTimeout (() =>
+                                                    {
+                                                      this.router.navigate(['/forget']);
+                                                    }, 1000)
+                                                  });
 
 
                                               //    this.showWarning();
@@ -48,8 +50,8 @@ export class ForgetComponent  {
 
      }
 
-ngOnDestroy(): void {
+    ngOnDestroy(): void
+     {
         this.subscription.unsubscribe();
-
-  }
+     }
 }

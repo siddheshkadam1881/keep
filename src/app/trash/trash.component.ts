@@ -56,10 +56,9 @@ private subscription: ISubscription;
 
    }
 
-  ////////////////////////////////read the data by calling service method//////////////////////////////////////////////
 
    ngOnInit():void {
-     this.readNotes();
+     //this.readNotes();
       this.refreshNotes();
    }
 
@@ -87,13 +86,14 @@ private subscription: ISubscription;
   //refresh notes here
   refreshNotes()
   {
-  this.commonService.getData('readTodos')
-                      .subscribe(
-                         response => {
-                                      if (response) {
-                                                      this.dashDataFirst = response.reverse();
-                                                     }
-                                  })
+    //this.commonService.loadAllLabels();
+    // this.refreshImage();
+    this.subscription=  this.commonService.getAllNotes()
+                                          .subscribe(response => {
+                                                   if (response) {
+                                                                   this.dashDataFirst = response;
+                                                                }
+                                           })
   }
 
   //delete note forever
@@ -102,11 +102,12 @@ private subscription: ISubscription;
          this.commonService.deleteData('deletenote/'+id)
                            .subscribe(
                              model =>  {
-                                        this.readNotes();
+
                                         this.model=model;
+                                          this.refreshNotes();
                                       }
                                   );
-          this.refreshNotes();
+
   }
 
   trashNotes(data)
@@ -114,19 +115,11 @@ private subscription: ISubscription;
     var data1 = { is_deleted: data.is_deleted ?  'false' : 'true'}
      this.commonService.updateData('updateNote/'+data._id,data1)
                        .subscribe(model => {
-                                             this.readNotes();
+                                            this.refreshNotes();
                                           });
-                        this.refreshNotes();
+
 
 
   }
-  readNotes():void {
-      this.subscription = this.commonService.getAllNotes()
-                                            .subscribe(response => {
-                                               if (response) {
-                                                 this.dashDataFirst = response;
-                                                }
-                                              },
-                                               error => console.log("Error while retrieving"))
-  }
+
 }

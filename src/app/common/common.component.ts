@@ -25,7 +25,7 @@ export class CommonComponent implements OnInit {
               this.refreshNotes();
         }
 
-   ngOnDestroy(): void {
+     ngOnDestroy(): void {
 
            this.subscription.unsubscribe();
      }
@@ -48,24 +48,22 @@ export class CommonComponent implements OnInit {
      deleteNote(id)
      {
           this.subscription=this.commonService.deleteData('delete/'+id)
-                           .subscribe(model => {
-                             this.model=model;
-                             this.refreshNotes();
-                           });
-          //this.refreshNotes();
+                                              .subscribe(model => {
+                                                  this.model=model;
+                                                  this.refreshNotes();
+                                              });
+
     }
 //refresh purpose
-refreshNotes()
-{
-  //this.commonService.loadAllLabels();
-  // this.refreshImage();
-  this.subscription=  this.commonService.getAllNotes()
-                                        .subscribe(response => {
-                                             if (response) {
-                                             this.dashDataFirst = response;
-                                            }
-                                        })
-}
+       refreshNotes()
+    {
+      this.subscription=  this.commonService.getAllNotes()
+                                            .subscribe(response => {
+                                                 if (response) {
+                                                 this.dashDataFirst = response;
+                                                }
+                                            })
+    }
 
   changeColor(data,color)
    {
@@ -89,7 +87,6 @@ refreshNotes()
                                                   this.model=model;
                                                   this.refreshNotes();
                                            });
-      this.refreshNotes();
     }
 
 
@@ -101,11 +98,11 @@ refreshNotes()
     }
 
        this.subscription = this.commonService.updateData('updateNote/' + data._id, reminder1)
-                                            .subscribe(model => {
-                                              this.model=model;
-                                              this.refreshNotes();
-                                            });
-      this.refreshNotes();
+                                              .subscribe(model => {
+                                                                    this.model=model;
+                                                                    this.refreshNotes();
+                                                                });
+
 
   }
 

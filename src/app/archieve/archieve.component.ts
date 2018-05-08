@@ -98,9 +98,9 @@ export class ArchieveComponent implements OnInit {
 
 
       this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
-        .subscribe(model => {
-          this.refreshNotes();
-        });
+                                           .subscribe(model => {
+                                                                 this.refreshNotes();
+                                                               });
 
 
         var chip1=
@@ -109,9 +109,9 @@ export class ArchieveComponent implements OnInit {
         }
 
       this.subscription=  this.commonService.updateData('updateNote/' + data._id, chip1)
-          .subscribe(model => {
-            this.refreshNotes();
-          });
+                                               .subscribe(model => {
+                                                                   this.refreshNotes();
+                                                                });
     }
 
 
@@ -136,8 +136,8 @@ export class ArchieveComponent implements OnInit {
   //refresh notes here
   refreshNotes()
   {
-  this.subscription=this.commonService.getData('readTodos')
-                                      .subscribe(response => {
+    this.subscription=this.commonService.getData('readTodos')
+                                         .subscribe(response => {
                                                                     if(response)
                                                                     {
                                                                       this.dashDataFirst = response;
@@ -148,18 +148,18 @@ export class ArchieveComponent implements OnInit {
   //delete note forever
       deleteNote(id)
     {
-    this.subscription= this.commonService.deleteData('deletenote/'+id)
-                                         .subscribe( data => {
-                                                               this.refreshNotes();
-                                                    });
-    // this.refreshNotes();
-   }
+       this.subscription= this.commonService.deleteData('deletenote/'+id)
+                                             .subscribe( data => {
+                                                                   this.refreshNotes();
+                                                               });
+       // this.refreshNotes();
+     }
        changeColor(data,color)
        {
          var data1 =
          {   note_color: color }
           this.subscription=this.commonService.updateData('updateNote/'+data._id,data1)
-                                              .subscribe(model => {
+                                               .subscribe(model => {
                                                                     this.refreshNotes();
                                                                     //this.readNotes();
                                                                   });
@@ -187,9 +187,9 @@ chipShow(data, chip1)
        }
 
          this.subscription= this.commonService.updateData('updateNote/' + data._id, chip)
-                                              .subscribe(model => {
-                                              //this.readNotes();
-                                                                    this.refreshNotes();
+                                               .subscribe(model => {
+                                                                    //this.readNotes();
+                                                                     this.refreshNotes();
                                                                 });
           //this.refreshNotes();
   }

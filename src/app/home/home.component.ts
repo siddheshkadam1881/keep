@@ -34,14 +34,13 @@ export class HomeComponent  implements OnInit {
    @ViewChild(DashboardComponent)
    private Dashboard: DashboardComponent;
    brotherForm: FormGroup;
- inputFormControl: FormControl;
-
-
+   inputFormControl: FormControl;
    isClassVisible: false;
   public Users;
   public Labels;
   public currentlabel;
   public dashDataFirst;
+  color: string;
   private subscription: ISubscription;
   public myData=[];
   note:string;
@@ -68,7 +67,7 @@ export class HomeComponent  implements OnInit {
    fillerNav = Array(1).fill(0).map((_, i) => `Nav Item ${i + 1}`);
 
    fillerContent = Array(1).fill(1).map(() =>'');
-
+  showStyle: false;
 
    private _mobileQueryListener: () => void;
 
@@ -83,13 +82,22 @@ export class HomeComponent  implements OnInit {
       inputFormControl: this.inputFormControl
        });
 
+
+       // this.commonService.currentMessage.subscribe(message =>
+       //                               this.color = message;
+       //                               console.log( "hosanna",this.color);
+       //                             )
+
+
     }
+
 
 
    ngOnInit():void {
       this.refreshNotes();
       this.refreshlabels();
       this.refreshProfile();
+      //this.getcssColors()
       //this.onKey(event);
 
       this.brotherForm.valueChanges
@@ -97,6 +105,8 @@ export class HomeComponent  implements OnInit {
                           (formData) => {
                            this.commonService.onDataChangeInBrother(formData.inputFormControl);
                             });
+
+
    }
 
 
@@ -111,12 +121,35 @@ export class HomeComponent  implements OnInit {
        //                                      });
     }
 
+       changeColor(color)
+       {
+          this.commonService.changeColor(color);
+       }
+
+
+      //  getcssColors()
+      // {
+      //    this.subscription=this.commonService.getcssColor()
+      //                                        .subscribe(response => {
+      //                                         if (response) {
+      //                                         console.log("hii color",response);
+      //                                         this.color = response;
+      //                                      }
+      //                        })
+      // }
+       // this.commonService.getcssColor
+       //                     .subscribe(response => {
+       //                                if (response)
+       //                              {      console.log("hii color",response);
+       //                                     this.color = response;
+       //                              }
+       //                         })
+
 
 
 
    changeCSS(){
     // console.log("hii");
-
      this.commonService.toggleView();
    }
 
@@ -186,6 +219,7 @@ export class HomeComponent  implements OnInit {
                                            }
                               });
    }
+
     openLabel(data)
    {
     localStorage.setItem('label',data.title);
@@ -201,7 +235,7 @@ export class HomeComponent  implements OnInit {
        currentlabel: data.title
       }
 
-    this.subscription = this.commonService.updateData('updateLabel/' + data._id, data1)
+      this.subscription = this.commonService.updateData('updateLabel/' + data._id, data1)
                                           .subscribe(model => {
                                          this.model = model;
                                       });
@@ -215,7 +249,7 @@ export class HomeComponent  implements OnInit {
                                                this.Labels = response;
                                                }
                                             });
-    }
+     }
 
 
 }

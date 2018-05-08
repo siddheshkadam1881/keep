@@ -16,6 +16,7 @@ import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login'
 import { UserService } from '../services/user.service';
 import { ISubscription } from "rxjs/Subscription";
+// import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -30,6 +31,7 @@ export class SigninComponent implements OnInit{
   invalidCredentialMsg: string;
   private viewContainerRef: ViewContainerRef;
   private subscription: ISubscription;
+
   constructor(private userService: UserService,private authService: AuthService,private route: ActivatedRoute, private router: Router , private commonService:BackendApiService,public toastr: ToastsManager, vcr: ViewContainerRef)
   {
     this.toastr.setRootViewContainerRef(vcr);
@@ -44,6 +46,13 @@ export class SigninComponent implements OnInit{
        this.email.hasError('email') ? 'Not a valid email' :
            '';
   }
+
+  // startLoading() {
+  //       this.slimLoadingBarService.start(() => {
+  //           console.log('Loading complete');
+  //       });
+  //   }
+
   showSuccess() {
        this.toastr.success('Login Successfully!');
      }

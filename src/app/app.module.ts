@@ -60,6 +60,8 @@ import { LabelCheckedMapFilterPipe } from './label-checked-map-filter.pipe';
 import { SearchfilterPipe } from './searchfilter.pipe';
 import { OpenDialogcollabratorComponent } from './open-dialogcollabrator/open-dialogcollabrator.component';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import { ColorDirectiveDirective } from './color-directive.directive';
+
 
 export function getAuthHttp(http: Http) {
   return new AuthHttp(new AuthConfig({
@@ -132,7 +134,8 @@ const routes: Routes = [
     NoteFilterPipe,
     LabelCheckedMapFilterPipe,
     SearchfilterPipe,
-    OpenDialogcollabratorComponent
+    OpenDialogcollabratorComponent,
+    ColorDirectiveDirective
   ],
   imports: [
     SocialLoginModule,
