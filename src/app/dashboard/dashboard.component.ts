@@ -214,21 +214,21 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  add(event: MatChipInputEvent): void {
-     let input = event.input;
-     let value = event.value;
-
-     // Add our fruit
-     if ((value || '').trim()) {
-       this.fruits.push({ name: value.trim() });
-     }
-
-     // Reset the input value
-     if (input) {
-       this.chipData=[];
-
-     }
-   }
+  // add(event: MatChipInputEvent): void {
+  //    let input = event.input;
+  //    let value = event.value;
+  //
+  //    // Add our fruit
+  //    if ((value || '').trim()) {
+  //      this.fruits.push({ name: value.trim() });
+  //    }
+  //
+  //    // Reset the input value
+  //    if (input) {
+  //      this.chipData=[];
+  //
+  //    }
+  //  }
 
 
    remove(data): void {
