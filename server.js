@@ -19,7 +19,7 @@ var cors = require('cors');
 // };
 // app.use(cors(corsOption));
 
-var expressJwt = require('express-jwt');
+ var expressJwt = require('express-jwt');
  var  passport = require('passport');
  var logger=require('./config/logger');
  var userRoutes=require('./router/usersRoutes.js');

@@ -18,7 +18,7 @@ export class ColorDirectiveDirective {
 
    @HostListener('mouseleave') onMouseLeave() {
      this.highlight("blue");
-   }
+   } 
 
    @HostListener('document:click', ['$event'])
     handleClick(event: Event) {

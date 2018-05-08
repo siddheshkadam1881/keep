@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit {
  chipData: Array<Object>[];
   showFiller = false;
   isClassVisible: false;
-  public dashDataFirst;
+  public notesData;
   public Labels;
   public labelchip;
   public searchNotes;
@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit {
 
   private _mobileQueryListener: () => void;
 
-  constructor(private builder:FormBuilder,private location: Location,private rd: Renderer2,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
+   constructor(private builder:FormBuilder,private location: Location,private rd: Renderer2,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private commonService:BackendApiService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -333,7 +333,7 @@ export class DashboardComponent implements OnInit {
     this.subscription=  this.commonService.getAllNotes()
                                           .subscribe(response => {
                                                    if (response) {
-                                                                   this.dashDataFirst = response;
+                                                                   this.notesData = response;
                                                                 }
                                            })
   }

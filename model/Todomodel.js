@@ -95,6 +95,7 @@ var NoteSchema = new mongoose.Schema({
    // req.checkBody("note", "Enter title.").notEmpty();
 
   var new_note = new this();
+
   new_note.title = todoObj.title;
   new_note.note = todoObj.note;
   new_note.label_ids= todoObj.label_ids;
@@ -102,7 +103,6 @@ var NoteSchema = new mongoose.Schema({
   //new_note.email = req.body.email;
   new_note.user_id =userObj._id;
   new_note.label =userObj.label;
-
   new_note.save(cb);
 }
 

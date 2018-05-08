@@ -53,16 +53,15 @@
 <div class="note" fxLayout="row" fxLayoutAlign="none"><h3>Pinned</h3></div>
 <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center center">
 
-  <div  *ngFor="let data of dashDataFirst  | noteFilter : { is_pinned:true,is_archieved:false,is_deleted:false}" class={{statusClass}}>
+  <div  *ngFor="let data of notesData  | noteFilter : { is_pinned:true,is_archieved:false,is_deleted:false}" class={{statusClass}}>
 
 
       <div class="allnotes" fxLayoutWrap fxLayoutAlign="center center">
-
-
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" fxLayoutWrap>
 
 <!--
         <app-dummy [data]="data"></app-dummy> -->
+
 
         <mat-card class="writeNotes1"  [style.background]="data.note_color">
           <div fxLayout="row" fxLayoutAlign="end end">
@@ -202,7 +201,7 @@
 
   <div class="other" fxLayout="row" fxLayoutAlign=" none"><h3>Other</h3></div>
   <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center center">
-  <div class="allnotes" *ngFor="let data of dashDataFirst  | noteFilter : { is_pinned:false,is_archieved:false,is_deleted:false} " class={{statusClass}} >
+  <div class="allnotes" *ngFor="let data of notesData  | noteFilter : { is_pinned:false,is_archieved:false,is_deleted:false} " class={{statusClass}} >
 
 
   <mat-card class="writeNotes1"  [style.background]="data.note_color">

@@ -56,7 +56,7 @@ var redisSet =  function(user_id,user) {
 }
 
 /**
-  * @description Class createNote craete note here
+  * @description Class createNote create note here
   *
   * @class createNote
   * @extends {req, res}
@@ -92,34 +92,6 @@ exports.readTodos = function(req, res) {
 
 
 
-// exports.update = function(req, res) {
-//   upload(req, res, function(err) {
-//     //console.log(req.body)
-//     var todoObj = req.body || {};
-//     if (req.file && req.file.path) {
-//       todoObj.image = req.file.path;
-//     }
-//       var collaboratoremail=req.decoded.email;
-//       //console.log(email);
-//     Todo.findOneAndUpdate({
-//       _id: req.params.id,
-//       $or: [
-//             { collaborator:{collaboratoremail}},
-//             { user_id: req.decoded._id}
-//           ]
-//       }, todoObj, {
-//         new: true
-//       },
-//       function(err, note) {
-//         if (err)
-//         //return next(err);
-//         res.status(500).send( {
-//            err: 'something blew up'
-//          });
-//       res.status(200).send(note);
-//       });
-//   });
-// };
 
 /**
   * @description update function to update a current note
@@ -127,13 +99,6 @@ exports.readTodos = function(req, res) {
   * @extends {req, res}
   */
 
-
-  // ({ $and: [{ user_id:userId },
-  //             {$or: [
-  //             {title: { $regex: searchKey, $options: "i"}},
-  //             {note: { $regex: searchKey, $options: "i"}},
-  //             {note_color : { $regex: searchKey, $options: "i"}}
-  //             ]}]}).exec(cb);
 exports.update = function(req, res) {
   upload(req, res, function(err) {
     //console.log(req.body)
@@ -141,13 +106,11 @@ exports.update = function(req, res) {
     if (req.file && req.file.path) {
       todoObj.image = req.file.path;
     }
-      var collaboratoremail=req.decoded.email;
+
+    //var collaboratoremail=req.decoded.email;
       //console.log(email);
-    Todo.findOneAndUpdate({
-      user_id: req.decoded._id,
+     Todo.findOneAndUpdate({
       _id: req.params.id,
-             //{$or: [
-            // { collaborator:{collaboratoremail}}]}
       }, todoObj, {
         new: true
       },
@@ -194,9 +157,9 @@ exports.searchTodos = function(req, res) {
     if(user)
     //console.log(user._id);
     {
-    var sharedNote = {
-                       collaborator:req.params.email
-                     }
+      var sharedNote = {
+                         collaborator:req.params.email
+                       }
     }
    // console.log(sharedNote);
 
