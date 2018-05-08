@@ -24,6 +24,8 @@ var cors = require('cors');
  var logger=require('./config/logger');
  var userRoutes=require('./router/usersRoutes.js');
  var port = process.env.PORT || 3000;
+ var expressValidator = require('express-validator');
+ app.use(expressValidator());
 
 //passport Strategy
 app.use(passport.initialize());

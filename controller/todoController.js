@@ -47,7 +47,6 @@ var redisSet =  function(user_id,user) {
   cache.get(user_id,function(err,note) {
   var noteCache = [];
   noteCache =JSON.parse(note);
-
   cache.set(user_id,JSON.stringify(noteCache.concat(user)), redis.print);
   // console.log("hydsbvvv");
 
@@ -61,15 +60,62 @@ var redisSet =  function(user_id,user) {
   * @class createNote
   * @extends {req, res}
   */
+ //  try {
+ //         req.checkBody("title", "Enter the title please").notEmpty();
+ //         req.checkBody("description", "Enter the description.").notEmpty();
+ //         var errors = req.validationErrors();
+ //         if (errors) {
+ //             res.send(errors[0]);
+ //             return;
+ //         } else {
+ //             todo.create(req.body, function(err, todos) {
+ //                 try {
+ //                     if (!req.body.description && !req.body.title) throw err;
+ //                     res.send({
+ //                         "status": true,
+ //                         "message": "Success"
+ //                     });
+ //                 } catch (e) {
+ //                     res.send({
+ //                         "status": false,
+ //                         "message": "Fail"
+ //                     });
+ //                 }
+ //             });
+ //         }
+ //     } catch (e) {
+ //         res.send({
+ //             "status": false,
+ //             "message": "Fail"
+ //         });
+ //     }
+ // });
+
 
 exports.createNote = function(req, res) {
-
-  todoService.createUserTodo(req.body, req.decoded, function(err, note) {
-    if (err)
+ try {
+  req.checkBody("title", "Enter the title please").notEmpty();
+  req.checkBody("note", "Enter the description.").notEmpty();
+  var errors = req.validationErrors();
+    if (errors)
+  {
+    res.send(errors);
+    return;
+  }
+ else
+ {
+      todoService.createUserTodo(req.body, req.decoded, function(err, note) {
+      if (err)
       return next(err);
       res.status(200).json(note);
   });
 }
+}
+catch (err) {
+         return next(err);
+     }
+}
+
 
 /**
   * @description Class readTodos use for craete notes here
@@ -83,7 +129,6 @@ exports.readTodos = function(req, res) {
   todoService.readUserTodo(req.decoded, function(err, note) {
     if (err)
      return next(err);
-
     //res.send(err);
     res.status(200).json(note);
   });
@@ -102,8 +147,15 @@ exports.readTodos = function(req, res) {
 exports.update = function(req, res) {
   upload(req, res, function(err) {
     //console.log(req.body)
-    var todoObj = req.body || {};
-    if (req.file && req.file.path) {
+    if(Object.keys(req.body).length === 0)
+    {
+      //return next(err);
+      return res.status(400).send("Your request is missing details.");
+    }
+    else
+    {
+      var todoObj = req.body || {};
+      if(req.file && req.file.path) {
       todoObj.image = req.file.path;
     }
 
@@ -115,10 +167,11 @@ exports.update = function(req, res) {
         new: true
       },
       function(err, note) {
-        if (err)
+      if (err)
       return next(err);
        res.status(200).send(note);
       });
+    }
   });
 };
 
@@ -168,14 +221,12 @@ exports.searchTodos = function(req, res) {
       },{$addToSet:sharedNote},{new:true}, function(err, note) {
      if (err)
        return next(err);
-
        // redisSet(req.user.id,note);
-
      res.status(200).json(note);
    });
-
  }
-  catch (e) {
+  catch (err) {
+    return next(err);
  }
 
  })
@@ -216,66 +267,13 @@ exports.searchTodos = function(req, res) {
    });
 
  }
-  catch (e) {
- }
-
- })
-};
-
-/**
-*   @description addNoteToLabel function to add Label to note
-*   @class addLabelToNote
-*  @extends {req, res}
-*/
-
-exports.labelToNoteHandler = function(req, res) {
-  var operation = req.query.operation;
-  if (operation == "add") {
-    Todo.update({
-        _id: req.params.id,
-    user_id: req.decoded._id
-      }, {
-        $push: {
-          label_ids: req.param.labelId
-        }
-      },
-      function(err, updatedNoteData) {
-        if (err) throw err;
-        else {
-          res.send({
-            'message': 'label has added for note'
-          });
-        }
-      })
-  }else if (operation == "remove") {
-      Todo.update({
-          _id: req.params.id,
-      user_id: req.decoded._id
-        }, {
-          $pull: {
-            label_ids:req.param.labelId
-          }
-        },
-        function(err, updatedNoteData) {
-          if (err) return next(err);
-          else {
-            res.send({
-              'message': 'label has removed for note'
-            });
-          }
-        })
-  }else {
-
-      res.send({
-        status :false,
-        'message': 'Invalid Opertion'
-      });
-  }
-
+ catch (err) {
+   return next(err);
 }
 
 
-
+ })
+};
 
 /**
 *   @description delete function to delete a current note
