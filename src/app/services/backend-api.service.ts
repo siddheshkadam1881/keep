@@ -126,8 +126,6 @@ export class BackendApiService {
         //get token from the local storage
         let token = localStorage.getItem("token");
 
-        console.log( localStorage.getItem("token"));
-
 
         //set the token to header
         const headers = new Headers();

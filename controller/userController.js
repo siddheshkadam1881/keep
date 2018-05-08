@@ -342,8 +342,6 @@ exports.passport = function(passport) {
    //pull in our app id and secret from our auth.js file
   passport.use('facebook-token', new FacebookTokenStrategy(fbConfig.facebookAuth, function(accessToken, refreshToken, profile, done) {
 
-
-
      User.upsertFbUser(accessToken, refreshToken, profile, function(err, user) {
           return done(err, user);
         });

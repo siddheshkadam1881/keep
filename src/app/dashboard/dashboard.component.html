@@ -203,7 +203,6 @@
   <div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="center center">
   <div class="allnotes" *ngFor="let data of notesData  | noteFilter : { is_pinned:false,is_archieved:false,is_deleted:false} " class={{statusClass}} >
 
-
   <mat-card class="writeNotes1"  [style.background]="data.note_color">
     <div fxLayout="row" fxLayoutAlign="end end">
       <img class="img-responsive" matTooltip="Unpin note" (click)="pinNotes(data)" matTooltipShowDelay="100" style="width: 22px;margin-left: 12px" src="assets/icon/unpin.png">
