@@ -102,7 +102,6 @@ exports.updateLabel = function(req, res) {
   labelService.deleteUserlabel(req.decoded,req.params,function(err, label) {
     if (err)
     return next(err);
-
     res.json({
       message: 'labels successfully deleted'
     });

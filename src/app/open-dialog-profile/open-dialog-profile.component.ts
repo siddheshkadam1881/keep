@@ -23,11 +23,16 @@ export class OpenDialogProfileComponent implements OnInit {
     { }
 
 
-ngOnInit()
-{
-  this.refreshProfile();
+    ngOnInit()
+    {
+      this.refreshProfile();
+      //this.onNoClick();
+    }
 
-}
+    onNoClick(): void {
+       this.dialogRef.close();
+     }
+
 ngOnDestroy(): void {
    this.subscription.unsubscribe();
 }
@@ -60,7 +65,9 @@ saveImage(image, data)
                                             // location.reload();
                                           this.refreshProfile();
                                           this.imageChangedEvent = event;
+                                           //this.thisDialogRef.close();
                                         });
+                                        this.dialogRef.close();
 }
 //choose image from file here...
 handleFileInput(event, data) {

@@ -34,7 +34,7 @@ export class OpenDialogImageComponent implements OnInit {
       this.subscription=this.commonService.updateData('updateNote/' + data._id, formObj)
                         .subscribe(model => {
                          this.commonService.loadAllNotes();
-                         }
-           );
+                         });
+      this.dialogRef.close();
    }
  }

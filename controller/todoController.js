@@ -13,7 +13,6 @@
 var express = require("express");
 var Todo = require("../model/Todomodel");
 var User = require("../model/User");
-var Collab =require("../model/CollaboratorModel.js");
 var multer = require('multer');
 var todoService = require("../service/todo.service");
 const redis = require('redis');
@@ -60,56 +59,27 @@ var redisSet =  function(user_id,user) {
   * @class createNote
   * @extends {req, res}
   */
- //  try {
- //         req.checkBody("title", "Enter the title please").notEmpty();
- //         req.checkBody("description", "Enter the description.").notEmpty();
- //         var errors = req.validationErrors();
- //         if (errors) {
- //             res.send(errors[0]);
- //             return;
- //         } else {
- //             todo.create(req.body, function(err, todos) {
- //                 try {
- //                     if (!req.body.description && !req.body.title) throw err;
- //                     res.send({
- //                         "status": true,
- //                         "message": "Success"
- //                     });
- //                 } catch (e) {
- //                     res.send({
- //                         "status": false,
- //                         "message": "Fail"
- //                     });
- //                 }
- //             });
- //         }
- //     } catch (e) {
- //         res.send({
- //             "status": false,
- //             "message": "Fail"
- //         });
- //     }
- // });
 
 
 exports.createNote = function(req, res) {
- try {
-  req.checkBody("title", "Enter the title please").notEmpty();
-  req.checkBody("note", "Enter the description.").notEmpty();
-  var errors = req.validationErrors();
-    if (errors)
+ try
   {
-    res.send(errors);
-    return;
-  }
+    req.checkBody("title", "Enter the title please").notEmpty();
+    req.checkBody("note", "Enter the description.").notEmpty();
+    var errors = req.validationErrors();
+    if (errors)
+    {
+      res.send(errors);
+      return;
+    }
  else
- {
+   {
       todoService.createUserTodo(req.body, req.decoded, function(err, note) {
       if (err)
       return next(err);
       res.status(200).json(note);
-  });
-}
+      });
+   }
 }
 catch (err) {
          return next(err);
@@ -147,13 +117,8 @@ exports.readTodos = function(req, res) {
 exports.update = function(req, res) {
   upload(req, res, function(err) {
     //console.log(req.body)
-    if(Object.keys(req.body).length === 0)
-    {
-      //return next(err);
-      return res.status(400).send("Your request is missing details.");
-    }
-    else
-    {
+
+
       var todoObj = req.body || {};
       if(req.file && req.file.path) {
       todoObj.image = req.file.path;
@@ -171,7 +136,7 @@ exports.update = function(req, res) {
       return next(err);
        res.status(200).send(note);
       });
-    }
+
   });
 };
 

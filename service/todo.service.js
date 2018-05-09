@@ -7,32 +7,48 @@ function Todo(){
 }
 
 Todo.prototype.createUserTodo = function (todoObj,userObj,callback) {
-  TodoModel.createUserTodo(todoObj,userObj,callback);
+  var new_note = new TodoModel();
+  new_note.title = todoObj.title;
+  new_note.note = todoObj.note;
+  new_note.label_ids= todoObj.label_ids;
+  new_note.collaborator=todoObj.collaborator;
+  //new_note.email = req.body.email;
+  new_note.user_id =userObj._id;
+  new_note.label =userObj.label;
+  new_note.save(callback);
 };
 
 
 Todo.prototype.readUserTodo = function (userId,callback) {
-  TodoModel.readUserTodo(userId,callback);
+  TodoModel.find({ $or: [{user_id:userId},{collaborator:userId.email}]}).sort({created_date: -1}).limit(10).exec(callback);
 };
 
 Todo.prototype.deleteUserTodo = function (userId,paramId,callback) {
-
-  TodoModel.deleteUserTodo(userId,paramId,callback);
+  TodoModel.remove({ user_id: userId, _id:paramId.id }).exec(callback);
 };
 
+ // Todo.prototype.updateUserTodo(paramId,todoObj,callback){
+ //   // TodoModel.findOneAndUpdate({
+ //   //  _id: paramId.id,
+ //   //  }, todoObj, {
+ //   //    new: true
+ //   //  }).exec(callback);
+ //  console.log(paramId);
+ //  console.log(todoObj);
+ //  //TodoModel.findOneAndUpdate({ _id:paramId.id,todoObj,{new: true}}).exec(callback);
+ // };
 
-//todoService.serachResult(req.decoded, req.params,
 
-  Todo.prototype.searchTodos = function (userId,paramId,callback) {
+  Todo.prototype.searchTodos = function (userId,searchKey,callback)
+   {
 
-    TodoModel.searchTodos(userId,paramId,callback);
+       TodoModel.find({ $and: [{ user_id:userId },
+                   {$or: [
+                   {title: { $regex: searchKey, $options: "i"}},
+                   {note: { $regex: searchKey, $options: "i"}},
+                   {note_color : { $regex: searchKey, $options: "i"}}
+                   ]}]}).exec(cllback);
+
   };
-
-
-// Todo.prototype.updateUserTodo = function (paramId,userId,todoObj,callback) {
-//
-//   TodoModel.updateUserTodo(paramId,userId,todoObj,callback);
-// };
-
 
 module.exports = new Todo();
