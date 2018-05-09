@@ -21,7 +21,6 @@ export class CommonComponent implements OnInit {
 
     }
     ngOnInit():void {
-
               this.refreshNotes();
         }
 
@@ -65,7 +64,7 @@ export class CommonComponent implements OnInit {
                                             })
     }
 
-  changeColor(data,color)
+     changeColor(data,color)
    {
        var note_color =
             {   note_color: color }
@@ -82,8 +81,8 @@ export class CommonComponent implements OnInit {
          {
           note_chip: chip1
          }
-       this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
-                                            .subscribe(model => {
+         this.subscription=this.commonService.updateData('updateNote/' + data._id, chip)
+                                              .subscribe(model => {
                                                   this.model=model;
                                                   this.refreshNotes();
                                            });
@@ -98,7 +97,7 @@ export class CommonComponent implements OnInit {
     }
 
        this.subscription = this.commonService.updateData('updateNote/' + data._id, reminder1)
-                                              .subscribe(model => {
+                                               .subscribe(model => {
                                                                     this.model=model;
                                                                     this.refreshNotes();
                                                                 });

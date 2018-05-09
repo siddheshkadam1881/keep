@@ -23,7 +23,17 @@ var User = require("../model/User");
 * @extends {req, res}
 **/
  exports.createLabel = function(req, res) {
-
+  try
+  {
+  req.checkBody("title", "Enter the title please").notEmpty();
+  var errors = req.validationErrors();
+  if (errors)
+  {
+    res.send(errors);
+    return;
+  }
+else
+ {
    labelService.createUserlabel(req.body,req.decoded,function(err, user) {
      if (err)
      return next(err);
@@ -33,7 +43,11 @@ var User = require("../model/User");
    });
 
  }
-
+}
+catch (err) {
+         return next(err);
+     }
+}
 /****************************
 * @description Class read Label  use for create note here
 *
@@ -69,6 +83,20 @@ var User = require("../model/User");
  //     });
  //  };
 
+/**
+* @description Class deleteLabel  use for delete Label here
+* @class delete Label
+* @extends {req, res}
+ **/
+ exports.deleteLabel = function(req, res) {
+  labelService.deleteUserlabel(req.decoded,req.params,function(err, label) {
+    if (err)
+    return next(err);
+    res.json({
+      message: 'labels successfully deleted'
+    });
+  });
+ };
 
 
  /**
@@ -90,20 +118,3 @@ exports.updateLabel = function(req, res) {
      res.json(label);
  });
 };
-
-
-
-/**
-* @description Class deleteLabel  use for delete Label here
-* @class delete Label
-* @extends {req, res}
- **/
- exports.deleteLabel = function(req, res) {
-  labelService.deleteUserlabel(req.decoded,req.params,function(err, label) {
-    if (err)
-    return next(err);
-    res.json({
-      message: 'labels successfully deleted'
-    });
-  });
- };

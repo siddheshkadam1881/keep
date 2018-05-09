@@ -104,6 +104,23 @@ exports.readTodos = function(req, res) {
   });
 }
 
+/**
+*   @description delete function to delete a current note
+*  @class delete
+*  @extends {req, res}
+*/
+
+exports.delete = function(req, res) {
+
+  todoService.deleteUserTodo(req.decoded, req.params, function(err, note) {
+    if (err)
+      // res.send(err);
+      return next(err);
+      res.status(200).json({
+      message: 'Note successfully deleted'
+    });
+  });
+};
 
 
 
@@ -201,7 +218,7 @@ exports.searchTodos = function(req, res) {
 
 /**
   * @description addAndUpdateCollab function to add collaborator in Todonotes..
-  * @class  addAndUpdateCollab
+  * @class  deleteAndUpdateCollab
   * @extends {req, res}
   */
 
@@ -238,22 +255,4 @@ exports.searchTodos = function(req, res) {
 
 
  })
-};
-
-/**
-*   @description delete function to delete a current note
-*  @class delete
-*  @extends {req, res}
-*/
-
-exports.delete = function(req, res) {
-
-  todoService.deleteUserTodo(req.decoded, req.params, function(err, note) {
-    if (err)
-      // res.send(err);
-      return next(err);
-      res.status(200).json({
-      message: 'Note successfully deleted'
-    });
-  });
 };

@@ -52,9 +52,9 @@
 <!-- </div> -->
 
     </mat-toolbar>
-    <mat-sidenav-container class="example-sidenav-container" fxLayout="column" >
+    <mat-sidenav-container class="example-sidenav-container" fxLayout="column">
 
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" style="width:180px;background-color:#E6E6FA;">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" style="width:180px;background-color: #fafafa;">
       <mat-nav-list>
         <!-- <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a> -->
        <a mat-list-item [routerLink]="['/home']"  routerLinkActive="active" class="btn">Notes</a>
