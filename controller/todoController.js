@@ -218,7 +218,7 @@ exports.update = function(req, res) {
 
  exports.deleteAndUpdateCollab = function(req, res) {
    let collaborate_email=req.params.email;
-   userService.addAndUpdateCollab(collaborate_email,function(err,user) {
+   userService.deleteAndUpdateCollab(collaborate_email,function(err,user) {
    try {
    if(err) return next(err);
    if(!user) res.json('user not found');
@@ -232,7 +232,7 @@ exports.update = function(req, res) {
    // console.log(sharedNote);
 
    let noteId=req.params.noteId;
-   todoService.addAndUpdateCollab(noteId ,sharedNote,function(err, note) {
+   todoService.deleteAndUpdateCollab(noteId ,sharedNote,function(err, note) {
     if (err)
     return next(err);
     res.status(200).json(note);

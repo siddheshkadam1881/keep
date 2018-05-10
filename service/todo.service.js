@@ -38,7 +38,7 @@ Todo.prototype.addAndUpdateCollab =function(noteId,sharedNote,callback)
 
 Todo.prototype.deleteAndUpdateCollab =function(noteId,sharedNote,callback)
 {
- TodoModel.findOneAndUpdate({_id: noteId },{$addToSet:sharedNote},{new:true}).exec(callback);
+ TodoModel.findOneAndUpdate({_id: noteId },{$pull:sharedNote},{new:true}).exec(callback);
 };
 
 
