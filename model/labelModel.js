@@ -38,5 +38,10 @@ labelSchema.statics.deleteUserlabel = function (userId,paramId,cb) {
   this.remove({ user_id: userId,_id: paramId.id}).exec(cb);
 }
 
+labelSchema.statics.updateLabel = function (labelId,userId,requestbody,cb) {
+  this.findOneAndUpdate({_id: labelId,user_id:userId},requestbody,{new: true}).exec(cb);
+}
+
+
 var labelModel = mongoose.model('labels',labelSchema);
 module.exports = labelModel;

@@ -2,16 +2,11 @@
 *
 */
 var secretConfig = require('../config/config');
-
 // var secret = 'my-secret'; //Read from config
 var UserModel = require("../model/User");
-
-
-
 var jwt = require('jsonwebtoken');
 
 function User(){
-
 }
 
 User.prototype.generateJwt = function (userObj) {

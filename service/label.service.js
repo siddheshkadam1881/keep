@@ -45,7 +45,7 @@ var User = require("../model/User");
 
 Label.prototype.updateLabel = function (labelId,userId,requestbody,callback)
 {
-  labelModel.findOneAndUpdate({_id: labelId,user_id:userId},requestbody,{new: true}).exec(callback);
+   labelModel.updateLabel(labelId,userId,requestbody,callback);
 };
 
 
