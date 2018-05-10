@@ -27,16 +27,10 @@ Todo.prototype.deleteUserTodo = function (userId,paramId,callback) {
   TodoModel.remove({ user_id: userId, _id:paramId.id }).exec(callback);
 };
 
- // Todo.prototype.updateUserTodo(paramId,todoObj,callback){
- //   // TodoModel.findOneAndUpdate({
- //   //  _id: paramId.id,
- //   //  }, todoObj, {
- //   //    new: true
- //   //  }).exec(callback);
- //  console.log(paramId);
- //  console.log(todoObj);
- //  //TodoModel.findOneAndUpdate({ _id:paramId.id,todoObj,{new: true}}).exec(callback);
- // };
+ Todo.prototype.updateUserTodo = function(userId,noteId,todoObj,callback){
+  TodoModel.findOneAndUpdate({ _id:noteId},todoObj,{new: true}).exec(callback);
+ };
+ 
 
 
   Todo.prototype.searchTodos = function (userId,searchKey,callback)

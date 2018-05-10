@@ -308,7 +308,7 @@ export class DashboardComponent implements OnInit {
   let dialogRef = this.dialog.open(CommonComponent, {
    // width: '400px',
    // height:'450px',
-   data: data;
+   data: data
   });
 
   dialogRef.afterClosed().subscribe(result => {

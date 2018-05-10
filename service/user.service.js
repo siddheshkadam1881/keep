@@ -35,6 +35,18 @@ User.prototype.signUp = function (userObj,callback) {
 };
 
 
+User.prototype.addAndUpdateCollab = function (userObj,callback) {
+  UserModel.findOne({'email':userObj},callback);
+};
+
+
+User.prototype.deleteAndUpdateCollab = function (userObj,callback) {
+  UserModel.findOne({'email':userObj},callback);
+};
+
+
+
+
 
 
 

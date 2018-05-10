@@ -15,6 +15,7 @@ var Todo = require("../model/Todomodel");
 var User = require("../model/User");
 var multer = require('multer');
 var todoService = require("../service/todo.service");
+var userService = require("../service/user.service");
 const redis = require('redis');
 const TokenGenerator = require('uuid-token-generator');
 var ids = require('short-id');
@@ -141,14 +142,10 @@ exports.update = function(req, res) {
       todoObj.image = req.file.path;
     }
 
-    //var collaboratoremail=req.decoded.email;
-      //console.log(email);
-     Todo.findOneAndUpdate({
-      _id: req.params.id,
-      }, todoObj, {
-        new: true
-      },
-      function(err, note) {
+      let noteId =req.params.id;
+      let userId =req.decoded;
+
+      todoService.updateUserTodo(userId,noteId,todoObj ,function(err, note) {
       if (err)
       return next(err);
        res.status(200).send(note);
@@ -160,15 +157,15 @@ exports.update = function(req, res) {
 
 /**
   * @description searchTodos function to search Todo a notes..
-  * @class update
+  * @class searchTodos
   * @extends {req, res}
   */
 
-
-exports.searchTodos = function(req, res) {
-
-  todoService.searchTodos(req.decoded,req.params.searchKey, function(err, note) {
-    if (err)
+  exports.searchTodos = function(req, res) {
+  let userId =req.decoded;
+  let searchKey =req.params.searchKey;
+  todoService.searchTodos(userId,searchKey, function(err, note) {
+      if (err)
       return next(err);
       res.status(200).json(note);
   });
@@ -185,7 +182,9 @@ exports.searchTodos = function(req, res) {
 
  exports.addAndUpdateCollab = function(req, res) {
 
-   User.findOne({'email':req.params.email},function(err,user) {
+//User.findOne({'email':req.params.email}
+  let collaborate_email=req.params.email;
+   userService.addAndUpdateCollab(collaborate_email,function(err,user) {
    try {
    if(err) return next(err);
    if(!user) res.json('user not found');
@@ -218,13 +217,15 @@ exports.searchTodos = function(req, res) {
 
 /**
   * @description addAndUpdateCollab function to add collaborator in Todonotes..
-  * @class  deleteAndUpdateCollab
+  * @class  addAndUpdateCollab
   * @extends {req, res}
   */
 
  exports.deleteAndUpdateCollab = function(req, res) {
+   let collaborate_email=req.params.email;
+    //userService.addAndUpdateCollab(collaborate_email
 
-   User.findOne({'email':req.params.email},function(err,user) {
+   userService.deleteAndUpdateCollab(collaborate_email,function(err,user) {
    try {
    if(err) return next(err);
    if(!user) res.json('user not found');
