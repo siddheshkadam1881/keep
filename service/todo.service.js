@@ -21,10 +21,11 @@ Todo.prototype.createUserTodo = function (todoObj,userObj,callback) {
   * @class  readUserTodo
   * @extends {userId,callback}
   */
-Todo.prototype.readUserTodo = function (userId,callback) {
-  TodoModel.readUserTodo(userId,callback);
-  //TodoModel.find({ $or: [{user_id:userId},{collaborator:userId.email}]}).sort({created_date: -1}).limit(10).exec(callback);
-};
+
+  Todo.prototype.readUserTodo = function (userId,callback) {
+   TodoModel.readUserTodo(userId,callback);
+    //TodoModel.find({ $or: [{user_id:userId},{collaborator:userId.email}]}).sort({created_date: -1}).limit(10).exec(callback);
+  };
 
 /**
   * @description readUserTodo function to read User Todonotes
@@ -70,14 +71,11 @@ Todo.prototype.deleteAndUpdateCollab =function(noteId,sharedNote,callback)
  //TodoModel.findOneAndUpdate({_id: noteId },{$pull:sharedNote},{new:true}).exec(callback);
 };
 
-
 /**
   * @description searchTodos function to search User Todonotes
   * @class  searchTodos
   * @extends {userId,searchKey,callback}
   */
-
-
   Todo.prototype.searchTodos = function (userId,searchKey,callback)
    {
        TodoModel.searchTodos(userId,searchKey,callback);
