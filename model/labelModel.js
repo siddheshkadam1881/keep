@@ -18,7 +18,13 @@ var labelSchema = new mongoose.Schema({
 
 });
 
+labelSchema.statics.getLabel = function (user){
+}
+
+
 var labelModel = mongoose.model('labels',labelSchema);
+
+
 module.exports = labelModel;
 
 

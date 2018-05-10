@@ -83,91 +83,62 @@ var NoteSchema = new mongoose.Schema({
 });
 
 
+// Todomodel.findOne().populate('label_ids').exec(function(err, labes) {
+//   if (err) { return console.log(err); }
+//
+//   console.log(labes.label_ids.title);
+// });
+
+  NoteSchema.statics.createUserTodo = function createUserTodo (todoObj,userObj,callback) {
+  var new_note = new this();
+  new_note.title = todoObj.title;
+  new_note.note = todoObj.note;
+  new_note.label_ids= todoObj.label_ids;
+  new_note.collaborator=todoObj.collaborator;
+  //new_note.email = req.body.email;
+  new_note.user_id =userObj._id;
+  new_note.label =userObj.label;
+  new_note.save(callback);
+}
+
+
+//collection.find().sort({created_date: -1},
+NoteSchema.statics.readUserTodo = function (userId,cb) {
+this.find({ $or: [{user_id:userId},{collaborator:userId.email}]}).sort({created_date: -1}).exec(cb);
+}
+
+NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
+this.remove({ user_id: userId, _id:paramId.id }).exec(cb);
+  //this.remove({ user_id: userId, _id:paramId.id }).exec(cb);
+}
+
+NoteSchema.statics.searchTodos = function (userId,searchKey,cb) {
+     this.find({ $and: [{ user_id:userId },
+               {$or: [
+               {title: { $regex: searchKey, $options: "i"}},
+               {note: { $regex: searchKey, $options: "i"}},
+               {note_color : { $regex: searchKey, $options: "i"}}
+               ]}]}).exec(cb);
+}
+
+NoteSchema.statics.updateUserTodo=function (userId,noteId,todoObj,callback)
+{
+   this.findOneAndUpdate({ _id:noteId},todoObj,{new: true}).exec(callback);
+}
+
+NoteSchema.statics.addAndUpdateCollab = function (noteId,sharedNote,callback)
+{
+  this.findOneAndUpdate({_id: noteId },{$addToSet:sharedNote},{new:true}).exec(callback);
+}
+
+NoteSchema.statics.deleteAndUpdateCollab =function(noteId,sharedNote,callback)
+{
+  this.findOneAndUpdate({_id: noteId },{$pull:sharedNote},{new:true}).exec(callback);
+}
+
+
+
+
+
 var Todomodel  = mongoose.model('Todo', NoteSchema);
 module.exports = Todomodel;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-// // Todomodel.findOne().populate('label_ids').exec(function(err, labes) {
-// //   if (err) { return console.log(err); }
-// //
-// //   console.log(labes.label_ids.title);
-// // });
-//
-//   NoteSchema.statics.createUserTodo = function createUserTodo (todoObj,userObj,cb) {
-//
-//   var new_note = new this();
-//
-//   new_note.title = todoObj.title;
-//   new_note.note = todoObj.note;
-//   new_note.label_ids= todoObj.label_ids;
-//   new_note.collaborator=todoObj.collaborator;
-//   //new_note.email = req.body.email;
-//   new_note.user_id =userObj._id;
-//   new_note.label =userObj.label;
-//   new_note.save(cb);
-// }
-//
-//
-// //collection.find().sort({created_date: -1},
-// NoteSchema.statics.readUserTodo = function (userId,cb) {
-//   // console.log(userId.email);
-//      this.find({ $or: [{user_id:userId},{collaborator:userId.email}]}).sort({created_date: -1}).exec(cb);
-// }
-//
-// NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
-//
-//   this.remove({ user_id: userId, _id:paramId.id }).exec(cb);
-// }
-//
-// //,{collaborator:userId.email}
-// //todoService.serachResult(req.decoded, req.params,
-//
-//
-// NoteSchema.statics.searchTodos = function (userId,searchKey,cb) {
-//    this.find ({ $and: [{ user_id:userId },
-//                {$or: [
-//                {title: { $regex: searchKey, $options: "i"}},
-//                {note: { $regex: searchKey, $options: "i"}},
-//                {note_color : { $regex: searchKey, $options: "i"}}
-//                ]}]}).exec(cb);
-// }
-//
-//
-// // NoteSchema.updateUserTodo(paramId,userId,todoObj,callback)
-// // {
-// //    this.findOneAndUpdate({ _id:paramId.id, user_id: userId._id,todoObj}).exec(cb);
-// // }

@@ -172,8 +172,6 @@ exports.update = function(req, res) {
 }
 
 
-
-
 /**
   * @description addAndUpdateCollab function to add collaborator in Todonotes..
   * @class  addAndUpdateCollab
@@ -232,7 +230,7 @@ exports.update = function(req, res) {
    // console.log(sharedNote);
 
    let noteId=req.params.noteId;
-   todoService.deleteAndUpdateCollab(noteId ,sharedNote,function(err, note) {
+   todoService.deleteAndUpdateCollab(noteId,sharedNote,function(err, note) {
     if (err)
     return next(err);
     res.status(200).json(note);

@@ -13,15 +13,7 @@ function Todo(){
   */
 
 Todo.prototype.createUserTodo = function (todoObj,userObj,callback) {
-  var new_note = new TodoModel();
-  new_note.title = todoObj.title;
-  new_note.note = todoObj.note;
-  new_note.label_ids= todoObj.label_ids;
-  new_note.collaborator=todoObj.collaborator;
-  //new_note.email = req.body.email;
-  new_note.user_id =userObj._id;
-  new_note.label =userObj.label;
-  new_note.save(callback);
+  TodoModel.createUserTodo(todoObj,userObj,callback);
 };
 
 /**
@@ -30,7 +22,8 @@ Todo.prototype.createUserTodo = function (todoObj,userObj,callback) {
   * @extends {userId,callback}
   */
 Todo.prototype.readUserTodo = function (userId,callback) {
-  TodoModel.find({ $or: [{user_id:userId},{collaborator:userId.email}]}).sort({created_date: -1}).limit(10).exec(callback);
+  TodoModel.readUserTodo(userId,callback);
+  //TodoModel.find({ $or: [{user_id:userId},{collaborator:userId.email}]}).sort({created_date: -1}).limit(10).exec(callback);
 };
 
 /**
@@ -40,7 +33,8 @@ Todo.prototype.readUserTodo = function (userId,callback) {
   */
 
 Todo.prototype.deleteUserTodo = function (userId,paramId,callback) {
-  TodoModel.remove({ user_id: userId, _id:paramId.id }).exec(callback);
+   TodoModel.deleteUserTodo(userId,paramId,callback);
+  //TodoModel.remove({ user_id: userId, _id:paramId.id }).exec(callback);
 };
 
 /**
@@ -49,7 +43,9 @@ Todo.prototype.deleteUserTodo = function (userId,paramId,callback) {
   * @extends {userId,noteId,todoObj,callback}
   */
  Todo.prototype.updateUserTodo = function(userId,noteId,todoObj,callback){
-  TodoModel.findOneAndUpdate({ _id:noteId},todoObj,{new: true}).exec(callback);
+  // TodoModel.updateUserTodo(userId,paramId,callback);
+  TodoModel.updateUserTodo(userId,noteId,todoObj,callback);
+  // TodoModel.findOneAndUpdate({ _id:noteId},todoObj,{new: true}).exec(callback);
  };
 
  /**
@@ -59,7 +55,8 @@ Todo.prototype.deleteUserTodo = function (userId,paramId,callback) {
    */
 Todo.prototype.addAndUpdateCollab =function(noteId,sharedNote,callback)
 {
- TodoModel.findOneAndUpdate({_id: noteId },{$addToSet:sharedNote},{new:true}).exec(callback);
+ TodoModel.addAndUpdateCollab(noteId,sharedNote,callback);
+ // TodoModel.findOneAndUpdate({_id: noteId },{$addToSet:sharedNote},{new:true}).exec(callback);
 };
 
 /**
@@ -69,7 +66,8 @@ Todo.prototype.addAndUpdateCollab =function(noteId,sharedNote,callback)
   */
 Todo.prototype.deleteAndUpdateCollab =function(noteId,sharedNote,callback)
 {
- TodoModel.findOneAndUpdate({_id: noteId },{$pull:sharedNote},{new:true}).exec(callback);
+ TodoModel.deleteAndUpdateCollab(noteId,sharedNote,callback);
+ //TodoModel.findOneAndUpdate({_id: noteId },{$pull:sharedNote},{new:true}).exec(callback);
 };
 
 
@@ -82,14 +80,7 @@ Todo.prototype.deleteAndUpdateCollab =function(noteId,sharedNote,callback)
 
   Todo.prototype.searchTodos = function (userId,searchKey,callback)
    {
-
-       TodoModel.find({ $and: [{ user_id:userId },
-                   {$or: [
-                   {title: { $regex: searchKey, $options: "i"}},
-                   {note: { $regex: searchKey, $options: "i"}},
-                   {note_color : { $regex: searchKey, $options: "i"}}
-                   ]}]}).exec(cllback);
-
+       TodoModel.searchTodos(userId,searchKey,callback);
   };
 
 module.exports = new Todo();
