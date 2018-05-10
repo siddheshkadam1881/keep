@@ -30,7 +30,19 @@ Todo.prototype.deleteUserTodo = function (userId,paramId,callback) {
  Todo.prototype.updateUserTodo = function(userId,noteId,todoObj,callback){
   TodoModel.findOneAndUpdate({ _id:noteId},todoObj,{new: true}).exec(callback);
  };
- 
+
+Todo.prototype.addAndUpdateCollab =function(noteId,sharedNote,callback)
+{
+ TodoModel.findOneAndUpdate({_id: noteId },{$addToSet:sharedNote},{new:true}).exec(callback);
+};
+
+Todo.prototype.deleteAndUpdateCollab =function(noteId,sharedNote,callback)
+{
+ TodoModel.findOneAndUpdate({_id: noteId },{$addToSet:sharedNote},{new:true}).exec(callback);
+};
+
+
+
 
 
   Todo.prototype.searchTodos = function (userId,searchKey,callback)

@@ -181,8 +181,7 @@ exports.update = function(req, res) {
   */
 
  exports.addAndUpdateCollab = function(req, res) {
-
-//User.findOne({'email':req.params.email}
+  //User.findOne({'email':req.params.email}
   let collaborate_email=req.params.email;
    userService.addAndUpdateCollab(collaborate_email,function(err,user) {
    try {
@@ -195,19 +194,15 @@ exports.update = function(req, res) {
                          collaborator:req.params.email
                        }
     }
-   // console.log(sharedNote);
-
-   Todo.findOneAndUpdate({
-      _id: req.params.noteId,
-      },{$addToSet:sharedNote},{new:true}, function(err, note) {
+    let noteId=req.params.noteId;
+    todoService.addAndUpdateCollab(noteId ,sharedNote,function(err, note) {
      if (err)
-       return next(err);
-       // redisSet(req.user.id,note);
+     return next(err);
      res.status(200).json(note);
    });
  }
   catch (err) {
-    return next(err);
+  return next(err);
  }
 
  })
@@ -223,9 +218,7 @@ exports.update = function(req, res) {
 
  exports.deleteAndUpdateCollab = function(req, res) {
    let collaborate_email=req.params.email;
-    //userService.addAndUpdateCollab(collaborate_email
-
-   userService.deleteAndUpdateCollab(collaborate_email,function(err,user) {
+   userService.addAndUpdateCollab(collaborate_email,function(err,user) {
    try {
    if(err) return next(err);
    if(!user) res.json('user not found');
@@ -238,18 +231,13 @@ exports.update = function(req, res) {
     }
    // console.log(sharedNote);
 
-   Todo.findOneAndUpdate({
-      _id: req.params.noteId,
-    },{$pull:sharedNote},{new:true}, function(err, note) {
-     if (err)
-       return next(err);
-
-       // redisSet(req.user.id,note);
-
-     res.status(200).json(note);
-   });
-
- }
+   let noteId=req.params.noteId;
+   todoService.addAndUpdateCollab(noteId ,sharedNote,function(err, note) {
+    if (err)
+    return next(err);
+    res.status(200).json(note);
+  });
+}
  catch (err) {
    return next(err);
 }
