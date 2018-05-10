@@ -23,5 +23,12 @@ var User = require("../model/User");
    //labelModel.deleteUserlabel(userId,paramId,callback);
    labelModel.remove({ user_id: userId,_id: paramId.id}).exec(callback);
  };
+Label.prototype.updateLabel = function (labelId,userId,requestbody,callback)
+{
+  labelModel.findOneAndUpdate({_id: labelId,user_id:userId},requestbody,{new: true}).exec(callback);
+};
+
+
+
 
  module.exports = new Label();

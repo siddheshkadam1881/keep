@@ -1,3 +1,4 @@
+
 /******************************************************************************
 *  Purpose         : Rest api of label write here..
 *
@@ -66,22 +67,6 @@ catch (err) {
 
 
 
-/**
-* @description Class readLabel  use for particular label note here
-*
-* @class  Label
-* @extends {req, res}
- */
- // exports.label= function(req, res) {
- //
- //      Label.findOne({
- //       _id : req.params.id
- //  }, function(err, label) {
- //        if (err)
- //        return next(err);
- //        res.json(label);
- //     });
- //  };
 
 /**
 * @description Class deleteLabel  use for delete Label here
@@ -106,14 +91,10 @@ catch (err) {
  */
 
 exports.updateLabel = function(req, res) {
-
- Label.findOneAndUpdate({
-   _id: req.params.id,
-  user_id:req.decoded._id
-  },req.body, {
-   new: true
- }, function(err, label) {
-   if (err)
+  let labelId =req.params.id;
+  let user_id =req.decoded._id;
+  labelService.updateLabel(labelId,user_id,req.body, function(err, label) {
+     if (err)
      return next(err);
      res.json(label);
  });
