@@ -13,7 +13,6 @@ var User = require("../model/User");
 
 
  Label.prototype.createUserlabel = function (labelObj,userObj,callback) {
-   //labelModel.createUserlabel(labelObj,userObj,callback);
    var label = new labelModel();
    label.title = labelObj.title;
    label.user_id =userObj._id;
@@ -29,7 +28,6 @@ var User = require("../model/User");
 
 
  Label.prototype.readUserlabel = function (userId,callback) {
-   //labelModel.readUserlabel(userId,callback);
   labelModel.find ({ user_id:userId}).sort({created_date: -1}).exec(callback);
  };
 
@@ -40,7 +38,6 @@ var User = require("../model/User");
    */
 
  Label.prototype.deleteUserlabel = function (userId,paramId,callback) {
-   //labelModel.deleteUserlabel(userId,paramId,callback);
    labelModel.remove({ user_id: userId,_id: paramId.id}).exec(callback);
  };
 
