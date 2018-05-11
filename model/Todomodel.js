@@ -83,11 +83,6 @@ var NoteSchema = new mongoose.Schema({
 });
 
 
-// Todomodel.findOne().populate('label_ids').exec(function(err, labes) {
-//   if (err) { return console.log(err); }
-//
-//   console.log(labes.label_ids.title);
-// });
 
   NoteSchema.statics.createUserTodo = function createUserTodo (todoObj,userObj,callback) {
   var new_note = new this();

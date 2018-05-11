@@ -11,7 +11,6 @@ function Todo(){
   * @class  createUserTodo
   * @extends {todoObj,userObj,callback}
   */
-
       Todo.prototype.createUserTodo = function (todoObj,userObj,callback) {
          TodoModel.createUserTodo(todoObj,userObj,callback);
       };
@@ -55,6 +54,7 @@ function Todo(){
       {
        TodoModel.addAndUpdateCollab(noteId,sharedNote,callback);
       };
+
 
     /**
       * @description deleteAndUpdateCollab function to delete and update User Todonotes

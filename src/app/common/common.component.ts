@@ -25,7 +25,6 @@ export class CommonComponent implements OnInit {
         }
 
      ngOnDestroy(): void {
-
            this.subscription.unsubscribe();
      }
 
@@ -36,11 +35,11 @@ export class CommonComponent implements OnInit {
       updateNote(data,id)
     {
       this.subscription = this.commonService.updateData('updateNote/'+id,data)
-                                            .subscribe(
-                                              model => {
-                                                this.model=model;
-                                                this.refreshNotes();
-                                              });
+                                               .subscribe(
+                                                model => {
+                                                  this.model=model;
+                                                  this.refreshNotes();
+                                                });
      //this.refreshNotes();
     }
 

@@ -62,6 +62,7 @@ import { OpenDialogcollabratorComponent } from './open-dialogcollabrator/open-di
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import { ColorDirectiveDirective } from './color-directive.directive';
 
+import {NavbarDirective} from './directives/navbar.directive';
 
 export function getAuthHttp(http: Http) {
   return new AuthHttp(new AuthConfig({
@@ -135,7 +136,8 @@ const routes: Routes = [
     LabelCheckedMapFilterPipe,
     SearchfilterPipe,
     OpenDialogcollabratorComponent,
-    ColorDirectiveDirective
+    ColorDirectiveDirective,
+    NavbarDirective
   ],
   imports: [
     SocialLoginModule,

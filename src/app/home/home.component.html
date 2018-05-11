@@ -1,7 +1,7 @@
 <div   class="example-container" style="background-color: Gray;" [class.example-is-mobile]="mobileQuery.matches" >
 
 
-  <mat-toolbar  color="primary" class="example-toolbar" *ngFor="let user of Users">
+  <mat-toolbar  color="primary" class="example-toolbar" *ngFor="let user of Users" appColor>
     <!-- <div [appColorDirective]="color"> -->
    <div fxFlex="100"  fxLayout="row" fxLayoutAlign="center center">
      <div  fxLayout="row" fxFlex.lg="" fxFlex.md="" fxFlex.sm="" fxFlex.xs="">
@@ -9,7 +9,7 @@
          <button mat-button matTooltip="main menu" matTooltipShowDelay="100" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
        </div>
         <div >
-           <h1 [appColorDirective]="color" matTooltip="Google keep" matTooltipShowDelay="100" class="example-app-name">Google keep</h1>
+           <h1  matTooltip="Google keep" matTooltipShowDelay="100" class="example-app-name">Google keep</h1>
         </div>
         <!-- <p [appHighlight]="color">Highlight me!</p> -->
        </div>
