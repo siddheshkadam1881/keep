@@ -10,7 +10,7 @@ var labelModel = require("../model/labelModel");
 
 var NoteSchema = new mongoose.Schema({
 
-  
+
   created_date: {
     type: Date,
     default: Date.now

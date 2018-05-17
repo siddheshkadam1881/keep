@@ -21,6 +21,12 @@ jwt.verify(token,secretConfig.secret ,callback);
 User.prototype.showProfile = function (paramId,callback) {
   UserModel.showProfile(paramId,callback);
 };
+//getAllUser
+User.prototype.getAllUser = function (paramId,callback) {
+  UserModel.getAllUser(paramId,callback);
+};
+
+
 User.prototype.signIn = function (userObj,callback) {
   UserModel.signIn(userObj,callback);
 };

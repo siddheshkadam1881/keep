@@ -15,9 +15,7 @@
        </div>
 
       <div fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="50">
-        <form [formGroup]="brotherForm">
-        <input  placeholder="search text goes here" style="width:300px;height:40px;"   [formControl]="inputFormControl" (keyup)="onKey($event)"   value="{{ searchText }}" [(ngModel)]="searchText" >
-      </form>
+
         <!-- <p>{{values}}</p> -->
       </div>
 
@@ -53,6 +51,14 @@
 
     </mat-toolbar>
     <mat-sidenav-container class="example-sidenav-container" fxLayout="column">
+      <div fxFlex="100"  fxLayout="row" fxLayoutAlign="center center">
+        <div   fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="20">
+        </div>
+        <div   fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="20">
+         <h2>Admin Window</h2>
+        </div>
+
+     </div>
 
    <!-- <DashboardComponent [values]= values></DashboardComponent> -->
    <!-- <router-outlet></router-outlet> -->

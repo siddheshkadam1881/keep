@@ -77,6 +77,11 @@ User.statics.showProfile = function(paramId,cb)
   this.find({ email: paramId.email }).exec(cb);
 }
 
+User.statics.getAllUser = function(paramId,cb)
+{
+  this.find({$or: [{ role:"User"},{ role:""}]}).exec(cb);
+}
+
 User.statics.signIn = function(userObj,cb)
 {
    this.findOne({email: userObj.email}).exec(cb);

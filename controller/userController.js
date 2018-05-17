@@ -129,6 +129,21 @@ exports.readActiveUser = function(req, res) {
 }
 
 
+/****************************
+* @description Class readActiveUser use for read user
+* @class getallUser
+* @extends {req, res}
+*****************************/
+
+exports.getAllUser = function(req, res) {
+   //console.log("hii");
+    userService.getAllUser(req.decoded,function(err, note) {
+     if (err)
+     return next(err);
+     //res.send(err);
+     res.json(note);
+   });
+}
 
 /*********************************************
 * @description Class activeUser use for update user
