@@ -1,0 +1,68 @@
+<div class="form1">
+<mat-toolbar color="primary" >
+<div class="title-center">
+
+<h1><strong>TODO</strong></h1>
+</div>
+  <!-- This fills the remaining space of the current row -->
+</mat-toolbar>
+</div>
+
+ <form class="form"  fxLayout="column" fxFlexAlign="auto" #signupForm="ngForm" (ngSubmit)="signupForm.form.valid && registerUser(signupForm.value)">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <div fxFlex="67">
+
+    </div>
+    <div fxFlex="17">
+
+    </div>
+  </div>
+
+   <!-- <div fxLayout="row" fxLayoutAlign="center center">
+     <mat-radio-group [(ngModel)]="selected">
+       <mat-radio-button *ngFor="let role of roleArray" [value]="role"
+         (change)="radioChange($event)">
+           {{role}}
+          </mat-radio-button>
+     </mat-radio-group>
+   </div> -->
+
+   <div class="form-group" fxLayout="row" fxLayoutAlign="center center">
+  <div class="radio" *ngFor="let role of roleArray">
+    <label>
+      <input type="radio" name="role"  [value]="role" [(ngModel)]="currentItem" required>
+       {{ role }}
+    </label>
+  </div>
+</div>
+
+    <div>
+        <mat-form-field class="full_width1">
+           <input matInput placeholder="user name" name="username" id ="userid" ngModel required />
+        </mat-form-field>
+    </div>
+    <div>
+
+  </div>
+    <mat-form-field class="full_width">
+      <input matInput placeholder="Enter your email" type="email"  name="email"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"  ngModel required />
+      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+  <div>
+    <mat-form-field class="full_width">
+   <input matInput placeholder="Enter your password"  type="password" name="userpass"   id ="userpass" ngModel required />
+   <mat-icon matSuffix (click)="hide = !hide"></mat-icon>
+   </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="full_width" >
+        <input matInput placeholder="User mobile number" name="usermobile" id ="usermobile" pattern="[0-9]*"
+         minlength="10"
+         maxlength="10" ngModel required />
+        </mat-form-field>
+    </div>
+   <div class="button">
+      <button mat-button mat-raised-button color="primary" type="submit">SUBMIT</button>
+    </div>
+ </form>

@@ -1,0 +1,21 @@
+<div class="form1">
+<mat-toolbar color="primary" >
+<div class="title-center">
+
+<h1><strong>TODO</strong></h1>
+</div>
+  <!-- This fills the remaining space of the current row -->
+</mat-toolbar>
+</div>
+
+ <form class="form"  fxLayout="column" fxFlexAlign="auto" #emailForm="ngForm" (ngSubmit)="emailForm.form.valid && forgetUser(emailForm.value)">
+   <div>
+     <mat-form-field class="full_width">
+       <input matInput placeholder="Enter your email" type="email"  name="email"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"  ngModel required />
+       <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+     </mat-form-field>
+    </div>
+       <div class="Signbutton">
+        <button mat-button mat-raised-button color="primary" >Submit</button>
+      </div>
+      </form>

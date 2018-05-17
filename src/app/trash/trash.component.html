@@ -1,0 +1,26 @@
+
+
+
+
+
+<div class="card-container" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="space-around center">
+  <div class="allnotes"  *ngFor="let data of dashDataFirst  | noteFilter : { is_deleted : true }" >
+  <!-- <div *ngIf="data.is_deleted" > -->
+  <mat-card class="writeNotes1"  [ngClass]="{'writeNotes2':isClassVisible}" [style.background]="data.note_color">
+          <div (click)="openDialog(data)">
+              <p>{{data.title}}</p>
+              <p>{{data.note}}</p>
+          </div>
+          <div class="imageNotes" [style.background]="data.note_color">
+
+
+              <img class="img-responsive" matTooltip="more" matTooltipShowDelay="100" style="width:22px;margin-left: 12px" src="assets/icon/more.svg"  [matMenuTriggerFor]="menu">
+              <mat-menu #menu="matMenu" >
+                     <button mat-menu-item type="submit" (click)="deleteNote(data._id)" style="font-size: 13px;">Delete note</button>
+                     <button mat-menu-item type="submit" (click)="trashNotes(data)" style="font-size: 13px;">restore</button>
+              </mat-menu>
+        </div>
+    </mat-card>
+<!-- </div> -->
+  </div>
+</div>

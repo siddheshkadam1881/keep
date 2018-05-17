@@ -1,0 +1,7 @@
+.cropcircle {
+width: 35px;
+height: 35px;
+border-radius: 100%;
+background: #eee no-repeat center;
+background-size: cover;
+}

@@ -1,0 +1,63 @@
+<!-- <p>
+  open-dialogcollabrator works!
+  {{currentUser}}
+</p> -->
+
+<div class="card-container" fxLayout="column" *ngFor="let user of currentUser">
+  <div fxFlex="05">
+        <h3> Label note</h3>
+  </div>
+  <hr>
+  <div fxFlex="10">
+    <div fxLayout="row">
+      <div fxFlex="">
+      <img [src]='"http://localhost:3000/"+user.image' class="cropcircle" fxLayout="row"  fxLayoutAlign="start"/>
+      </div>
+      <div fxFlex="5">
+      </div>
+      <div fxFlex="25">
+      {{user.username}}
+      {{user.email}}
+    </div>
+    <div fxFlex="95">
+    <!-- {{user.email}} -->
+    {{note}}
+  </div>
+  </div>
+</div>
+<div fxFlex="40" fxLayoutAlign="center center" *ngFor="let note of notes" >
+  <div  *ngIf="note.collaborator.length >0" fxLayout="row">
+    <div fxFlex="">
+    {{note.collaborator}}
+  </div>
+  <div fxFlex="">
+     <img class="img-responsive" (click)="deleteCollaborator(note)" matTooltip="delete" matTooltipShowDelay="100" style="width: 22px;margin-left: 25px" src="assets/icon/clear.svg">
+  </div>
+  </div>
+
+  </div>
+
+  <div fxFlex="40" fxLayoutAlign="start start" >
+   <div fxFlex="05">
+      <img class="img-responsive" matTooltip="collabrator" matTooltipShowDelay="100" style="width: 22px;" src="assets/icon/collabrator.svg" >
+    </div>
+    <div fxFlex="05" >
+
+    </div>
+    <div>
+    <!-- <div contenteditable="true"  style="outline:none;" type="text" [(ngModel)]="model.collabrator_ids"></div> -->
+    <input  style="outline:none;border: none"   matInput placeholder="add  new collabrator" type="text" [(ngModel)]="model.collabrator_ids">
+   <!-- <input contenteditable="true" matInput placeholder="create new label" onfocus="this.value=''" type="text" name="title"  [(ngModel)]="model.title" (click)="changeShowStatus()"> -->
+
+    </div>
+
+
+        <!-- <input contenteditable="true"  matInput [(ngModel)]="index.title" > -->
+
+
+
+  </div>
+  <div fxFlex="10" fxLayout="row" fxLayoutAlign="end end">
+    <button matTooltip="Done" matTooltipShowDelay="100" mat-button mat-raised-button type="submit" (click)="submitCollabrator(data)">Done</button>
+  </div>
+  </div>
