@@ -44,6 +44,7 @@ export class AdmindashboardComponent implements OnInit {
   searchText:string;
   public searchNote;
    title:string;
+   public urlImage="http://localhost:3000/"
   // values:any={};
    model:any={};
   //notes array
