@@ -28,6 +28,7 @@ export class SigninComponent implements OnInit{
  loading = false;
  returnUrl: string;
   user: SocialUser;
+   public Users;
   invalidCredentialMsg: string;
   private viewContainerRef: ViewContainerRef;
   private subscription: ISubscription;
@@ -62,11 +63,36 @@ export class SigninComponent implements OnInit{
         localStorage.setItem('email',data.email);
         this.commonService.postServiceData('signin',data)
                                              .subscribe(data => {
-                                                   localStorage.setItem('token',data.token);
-                                                   this.showSuccess();
-                                                   setTimeout (() => {
-                                                   this.router.navigate(['/home']);
-                                                    }, 2000)
+                                              localStorage.setItem('token',data.token);
+                                              this.showSuccess();
+                                              this.subscription=  this.commonService.getprofile()
+                                                                                     .subscribe(response => {
+                                                                                         if (response)
+                                                                                          {
+
+                                                                                            response.forEach(currentUser=>{
+                                                                                             if(currentUser.role=="user")
+                                                                                             {
+                                                                                               setTimeout (() => {
+                                                                                               this.router.navigate(['/home']);
+                                                                                              }, 2000);
+
+                                                                                             }
+                                                                                             else
+                                                                                             {
+                                                                                               console.log("i m admin")
+                                                                                                 setTimeout (() => {
+                                                                                                 this.router.navigate(['/home']);
+                                                                                              }, 2000);
+                                                                                             }
+                                                                                            //this.UrlDataResList=this.noteService.getData(obj.description,obj.noteId);
+                                                                                            });
+
+                                                                                          }
+                                                   })
+
+
+
                                                    });
      }
 

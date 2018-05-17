@@ -82,13 +82,6 @@ export class HomeComponent  implements OnInit {
       inputFormControl: this.inputFormControl
        });
 
-
-       // this.commonService.currentMessage.subscribe(message =>
-       //                               this.color = message;
-       //                               console.log( "hosanna",this.color);
-       //                             )
-
-
     }
 
 
@@ -97,14 +90,11 @@ export class HomeComponent  implements OnInit {
       this.refreshNotes();
       this.refreshlabels();
       this.refreshProfile();
-      //this.getcssColors()
-      //this.onKey(event);
-
       this.brotherForm.valueChanges
                        .subscribe(
                           (formData) => {
                            this.commonService.onDataChangeInBrother(formData.inputFormControl);
-                            });
+                      });
 
 
    }
@@ -125,28 +115,6 @@ export class HomeComponent  implements OnInit {
        {
           this.commonService.changeColor(color);
        }
-
-
-      //  getcssColors()
-      // {
-      //    this.subscription=this.commonService.getcssColor()
-      //                                        .subscribe(response => {
-      //                                         if (response) {
-      //                                         console.log("hii color",response);
-      //                                         this.color = response;
-      //                                      }
-      //                        })
-      // }
-       // this.commonService.getcssColor
-       //                     .subscribe(response => {
-       //                                if (response)
-       //                              {      console.log("hii color",response);
-       //                                     this.color = response;
-       //                              }
-       //                         })
-
-
-
 
    changeCSS(){
     // console.log("hii");
