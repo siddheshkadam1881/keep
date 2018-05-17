@@ -57,8 +57,13 @@
         <div   fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="20">
          <h2>Admin Window</h2>
         </div>
-
      </div>
+
+    <div  *ngFor="let user of usersArray">
+     <p><b>{{user.email}}</b></p>
+    </div>
+
+
 
    <!-- <DashboardComponent [values]= values></DashboardComponent> -->
    <!-- <router-outlet></router-outlet> -->

@@ -36,6 +36,7 @@ export class AdmindashboardComponent implements OnInit {
   public Labels;
   public currentlabel;
   public dashDataFirst;
+  public usersArray;
   color: string;
   private subscription: ISubscription;
   public myData=[];
@@ -83,7 +84,7 @@ export class AdmindashboardComponent implements OnInit {
 
 
    ngOnInit():void {
-
+     this.getAllUsersPofile();
       this.refreshProfile();
       this.brotherForm.valueChanges
                        .subscribe(
@@ -136,6 +137,18 @@ export class AdmindashboardComponent implements OnInit {
              console.log('The dialog was closed');
         });
     }
+
+    getAllUsersPofile()
+  {
+    this.subscription=  this.commonService.getAllUsers("getAllUser")
+                                           .subscribe(response => {
+                                                     if (response)
+                                                  {
+                                                      this.usersArray=response;
+                                                         //this.Users = response;
+                                                  }
+                            })
+   }
 
      logout()
      {

@@ -164,6 +164,26 @@ export class BackendApiService {
 
 
 
+       getAllUsers(path): Observable<any>{
+          this.loadAllUsers(path);
+          return this.noteSubjectObj.asObservable();
+         }
+
+         loadAllUsers(path):void{
+                //let path = "readTodos";
+                let urlpath = this.base_url.concat(path);
+                let token = localStorage.getItem("token");
+                //set the token to header
+                const headers = new Headers();
+                headers.append('token', token);
+                this.http.get(urlpath, { headers: headers })
+                            .toPromise()
+                              .then((response: Response)=>{
+                                 this.noteSubjectObj.next(response.json());
+                               });
+          }
+
+
          loadAllLabels():void{
             let path = "readLabel";
             let urlpath = this.base_url.concat(path);
