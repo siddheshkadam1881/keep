@@ -80,9 +80,9 @@ export class SigninComponent implements OnInit{
                                                                                              }
                                                                                              else
                                                                                              {
-                                                                                               console.log("i m admin")
+
                                                                                                  setTimeout (() => {
-                                                                                                 this.router.navigate(['/home']);
+                                                                                                 this.router.navigate(['/AdminDashboard']);
                                                                                               }, 2000);
                                                                                              }
                                                                                             //this.UrlDataResList=this.noteService.getData(obj.description,obj.noteId);

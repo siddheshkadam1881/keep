@@ -125,7 +125,6 @@ exports.readActiveUser = function(req, res) {
      return next(err);
      //res.send(err);
      res.json(note);
-
    });
 }
 

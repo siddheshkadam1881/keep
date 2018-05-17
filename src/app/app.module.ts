@@ -63,6 +63,7 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import { ColorDirectiveDirective } from './color-directive.directive';
 import {NavbarDirective} from './directives/navbar.directive';
 import {MatRadioModule} from '@angular/material/radio';
+import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
 
 export function getAuthHttp(http: Http) {
   return new AuthHttp(new AuthConfig({
@@ -92,6 +93,7 @@ const routes: Routes = [
   { path: 'signin', component: SigninComponent,canActivate : [LoggedInAuthGuard] },
   // { path: 'note', component: NoteComponentComponent,canActivate :  [LoggedInAuthGuard] } ,
   { path: 'signup', component: SignupComponent },
+  {path:'AdminDashboard',component: AdmindashboardComponent},
   { path: 'home', component: HomeComponent,
    canActivate: [ AuthGuard ],
    children: [
@@ -136,7 +138,8 @@ const routes: Routes = [
     SearchfilterPipe,
     OpenDialogcollabratorComponent,
     ColorDirectiveDirective,
-    NavbarDirective
+    NavbarDirective,
+    AdmindashboardComponent
   ],
   imports: [
     SocialLoginModule,
