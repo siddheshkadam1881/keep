@@ -21,6 +21,7 @@ const TokenGenerator = require('uuid-token-generator');
 var ids = require('short-id');
 const tokgen = new TokenGenerator(); // Default is a 128-bit token encoded in base58
  var random=tokgen.generate();
+ var totalCount,imageTodos;
 //var cache = new redis.createClient( process.env.PORT);
 var storage = multer.diskStorage({
 destination: function(req, file, callback) {
@@ -104,6 +105,38 @@ exports.readTodos = function(req, res) {
     res.status(200).json(note);
   });
 }
+//readTodosCount
+
+exports.readTodosCount = function(req, res) {
+
+
+  todoService.readUserTodoCount(req.decoded, function(err, note) {
+    if (err)
+     return next(err);
+    //res.send(err);
+    totalCount=note;
+    console.log( "count of note",totalCount);
+    //res.status(200).json(note);
+  });
+
+  // todoService.readImageTodoCount(req.decoded, function(err, note) {
+  //   if (err)
+  //    return next(err);
+  //   //res.send(err);
+  //   imageTodos=note;
+  //   //res.status(200).json(note);
+  // });
+  //
+  // todoService.notesCounts(totalCount,imageTodos,function(err, note)
+  // {
+  //   if (err)
+  //    return next(err);
+  //    console.log(note);
+  //    res.status(200).json(note);
+  // });
+
+
+ }
 
 /**
 *   @description delete function to delete a current note

@@ -18,6 +18,7 @@
      default: "",
      trim: true
    },
+
    username: {
     type: String,
     // unique: true,
@@ -55,7 +56,7 @@
         token: String
       },
       select: false
-    }
+    },
 });
 
  User.methods.comparePassword=function(userpass){

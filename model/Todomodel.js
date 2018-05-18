@@ -81,7 +81,20 @@ var NoteSchema = new mongoose.Schema({
   },
   image: {
      data: Buffer
+  },
+  texttodos: {
+    type: Number,
+    default: ""
+  },
+  totalCount: {
+    type: Number,
+    default: ""
+  },
+  imageTodos: {
+    type: Number,
+    default: ""
   }
+
 });
 
 
@@ -103,6 +116,25 @@ var NoteSchema = new mongoose.Schema({
 NoteSchema.statics.readUserTodo = function (userId,cb) {
 this.find({ $or: [{user_id:userId},{collaborator:userId.email}]}).sort({created_date: -1}).exec(cb);
 }
+
+NoteSchema.statics.readUserTodoCount = function (userId,cb) {
+this.find({ $or: [{user_id:userId},{collaborator:userId.email}]}).count().sort({created_date: -1}).exec(cb);
+}
+//readImageTodoCount
+NoteSchema.statics.readImageTodoCount = function (userId,cb) {
+this.find({ $and: [{ image:{$ne:null} },{ $or: [{user_id:userId},{collaborator:userId.email}]}]}).count().sort({created_date: -1}).exec(cb);
+}
+
+////notesCounts(totalCount,imageTodos
+NoteSchema.statics.notesCounts = function (totalCount,imageTodos,cb) {
+var new_note = new this();
+new_note.totaltodos =totalCount;
+new_note.imagetodos =imageTodos;
+new_note.texttodos= totalCount-imageTodos;
+new_note.save(cb);
+//this.find({ $and: [{ image:{$ne:null} },{ $or: [{user_id:userId},{collaborator:userId.email}]}]}).count().sort({created_date: -1}).exec(cb);
+}
+
 
 NoteSchema.statics.deleteUserTodo = function (userId,paramId,cb) {
 this.remove({ user_id: userId, _id:paramId.id }).exec(cb);

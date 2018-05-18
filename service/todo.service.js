@@ -24,6 +24,21 @@ function Todo(){
     Todo.prototype.readUserTodo = function (userId,callback) {
      TodoModel.readUserTodo(userId,callback);
    };
+   //readUserTodoCount
+
+   Todo.prototype.readUserTodoCount = function (userId,callback) {
+    TodoModel.readUserTodoCount(userId,callback);
+  };
+  //readImageTodoCount
+
+  Todo.prototype.readImageTodoCount = function (userId,callback) {
+   TodoModel.readImageTodoCount(userId,callback);
+ };
+//notesCounts(totalCount,imageTodos
+Todo.prototype.notesCounts = function (totalCount,imageTodos,callback) {
+ TodoModel.notesCounts(totalCount,imageTodos,callback);
+};
+
 
 /**
   * @description readUserTodo function to read User Todonotes

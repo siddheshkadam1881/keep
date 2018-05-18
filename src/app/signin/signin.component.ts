@@ -71,7 +71,7 @@ export class SigninComponent implements OnInit{
                                                                                           {
 
                                                                                             response.forEach(currentUser=>{
-                                                                                             if(currentUser.role=="user")
+                                                                                             if(currentUser.role!= "Admin")
                                                                                              {
                                                                                                setTimeout (() => {
                                                                                                this.router.navigate(['/home']);

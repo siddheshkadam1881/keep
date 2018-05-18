@@ -74,6 +74,11 @@
          <img  class="cropcircle" style="width: 100px; height:100px ;border-radius: 100%; margin-top: 25px; background: #eee no-repeat center; background-size: cover;" src="assets/icon/person.png" height="100px" width="250px"/>
       </ng-template>
          <p><b>{{user.username}}</b></p>
+         <p><b>{{user.totalCount}}</b></p>
+         <p><b>{{user.texttodos}}</b></p>
+         <p><b>{{user.imageTodos}}</b></p>
+
+         <!-- new_note.texttodos= totalCount-imageTodos; -->
      </div>
     </div>
    </mat-card>

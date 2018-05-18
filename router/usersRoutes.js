@@ -92,6 +92,7 @@ router.use(function(req, res, next) {
 
  router.post('/create/Note',todoController.createNote);
  router.get('/readTodos',todoController.readTodos);
+ router.get('/readTodosCount',todoController.readTodosCount);
  router.get('/searchTodos/:searchKey',todoController.searchTodos);
  router.put('/updateNote/:id',todoController.update);
  router.put('/addAndUpdateCollab/:id/:',todoController.addAndUpdateCollab);
