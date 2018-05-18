@@ -54,3 +54,21 @@ background-size: cover;
   height: 165px;
   flex: 1 0 auto;
 }
+
+
+.mat-card {
+    transition: box-shadow 280ms cubic-bezier(.4,0,.2,1);
+    display: block;
+    position: relative;
+    padding: 24px;
+    border-radius: 2px;
+    width: 250px;
+    word-wrap: break-word;
+    word-break: break-all;
+    -webkit-user-modify: read-only;
+    direction: ltr;
+    unicode-bidi: isolate;
+    -webkit-user-modify: read-only;
+     direction: ltr;
+     unicode-bidi: isolate
+  }

@@ -59,22 +59,27 @@
         </div>
      </div>
 
-    <div fxLayout="row" fxLayoutGap="10px">
-      <div fxLayout="column" fxLayoutGap="10px" *ngFor="let user of usersArray" >
-
+    <div  fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+      <div profileCard  fxLayout="column" fxLayoutGap="25px" *ngFor="let user of usersArray">
+       <div fxFlex="25">
+        </div>
+      <div fxFlex="50">
      <mat-card>
+    <div  fxLayout="row" fxLayoutAlign="center center">
      <div>
-
        <div  *ngIf="user.image; else elseImageBlock">
-         <img  class="cropcircle1" style="width: 100px; height:100px ;border-radius: 100%; margin-top: 25px; background: #eee no-repeat center; background-size: cover;" [src]='urlImage+user.image' height="100px" width="250px"/>
+         <img  class="cropcircle" style="width: 100px; height:100px ;border-radius: 100%; margin-top: 25px; background: #eee no-repeat center; background-size: cover;" [src]='urlImage+user.image' height="100px" width="250px"/>
        </div>
        <ng-template #elseImageBlock>
-         <img  class="cropcircle1" style="width: 100px; height:100px ;border-radius: 100%; margin-top: 25px; background: #eee no-repeat center; background-size: cover;" [src]='urlImage+user.image' height="100px" width="250px"/>
-            <b>Eligible to vote.</b>
+         <img  class="cropcircle" style="width: 100px; height:100px ;border-radius: 100%; margin-top: 25px; background: #eee no-repeat center; background-size: cover;" src="assets/icon/person.png" height="100px" width="250px"/>
       </ng-template>
          <p><b>{{user.username}}</b></p>
      </div>
+    </div>
    </mat-card>
+    </div>
+    <div fxFlex="25">
+    </div>
     </div>
   </div>
 
